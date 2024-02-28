@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style> 
-    body {
-        font-family: 'Cambria', serif; /* Use Cambria if available, otherwise fall back to a generic serif font */
-		font-size: 20px; /* Set font size to 16 pixels */
-        margin-left: 5%; /* This will add a 5% margin on the left side */
-        margin-right: 5%; /* This will add a 5% margin on the right side */
-        margin-top: 10%;
-		margin-bottom: 10%;
-    }
-    a:link, a:visited, a:active {
-        color: #548DD4; /* Set your desired color */
-        text-decoration: none; /* Optional: removes underline from links */
-    }
-    h1 {
-        font-family: 'Cambria', serif; /* Use Cambria if available, otherwise fall back to a generic serif font */
-        font-size: 30px; /* Set font size to 16 pixels */
-    }
-    </style> 
+<head>
+    <!-- Your existing head elements -->
+    <style>
+        /* Your existing styles */
+        
+        /* Add the following styles for the Table of Contents */
+        .table-of-contents {
+          position: -webkit-sticky; /* For Safari */
+          position: sticky;
+          top: 0; /* Adjust this value as needed */
+          right: 0;
+          width: 300px; /* Adjust width as needed */
+          max-height: 100vh; /* Adjust height as needed */
+          overflow-y: auto; /* Enables scrolling within the Table of Contents */
+          margin-left: auto; /* This pushes the div to the right */
+        }
+
+        /* Additional styles for main content */
+        .main-content {
+          margin-right: 320px; /* Adjust to match the width + margin of the Table of Contents */
+        }
+    </style>
 </head>
 <body>
+
+    <div class="main-content">
     <h1>Table of Contents</h1>
     <ul>
         <li><a href="./docs/Protocol 165-rev0 JAVA.html">Java</a></li>
@@ -28,5 +34,12 @@
         <li><a href="./docs/Protocol 143-rev0 SLIVAR.html">Slivar (draft)</a></li>
         <!-- Add more list items for each HTML page in ./docs/ -->
     </ul>
+    </div>
+    <div class="table-of-contents">
+        <li><a href="./docs/Protocol 165-rev0 JAVA.html">Java</a></li>
+        <li><a href="./docs/Protocol 152-rev0 DSL2.html">Nextflow DSL2 (draft)</a></li>
+        <li><a href="./docs/Protocol 143-rev0 SLIVAR.html">Slivar (draft)</a></li>
+        <!-- Add more list items for each HTML page in ./docs/ -->
+    </div>
 </body>
 </html>
