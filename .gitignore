@@ -1,0 +1,4 @@
+# temporary folders of tools/build.py and tools/docx2md.py
+.build_*/
+__pycache__/
+*.pyc

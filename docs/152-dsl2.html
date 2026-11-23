@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Nextflow DSL2 · protocol 152 · Bioinformatics protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="044-bash.html"><span class="nav-num">44</span>Bash</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux (WSL)</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="084-python.html"><span class="nav-num">84</span>Python</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="165-java.html"><span class="nav-num">165</span>Java</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul class="current">
+          <li class="toctree-l1"><a class="reference internal" href="134-docker.html"><span class="nav-num">134</span>Docker</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a></li>
+          <li class="toctree-l1 current"><a class="reference internal current" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#documentations"><span class="sec-num">1</span>Documentations</a></li><li class="toctree-l2"><a class="reference internal" href="#acronyms"><span class="sec-num">2</span>Acronyms</a></li><li class="toctree-l2"><a class="reference internal" href="#very-important-to-understand-how-nextflow-works"><span class="sec-num">3</span>Very important to understand how nextflow works</a><ul><li class="toctree-l3"><a class="reference internal" href="#names-of-the-files"><span class="sec-num">3.1</span>Names of the files</a></li><li class="toctree-l3"><a class="reference internal" href="#work-folders"><span class="sec-num">3.2</span>work folders</a></li><li class="toctree-l3"><a class="reference internal" href="#symbolic-links"><span class="sec-num">3.3</span>symbolic links</a></li><li class="toctree-l3"><a class="reference internal" href="#the-resume-option"><span class="sec-num">3.4</span>The resume option</a></li><li class="toctree-l3"><a class="reference internal" href="#variable-declaration-in-processes"><span class="sec-num">3.5</span>Variable declaration in processes</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#installation"><span class="sec-num">4</span>Installation</a><ul><li class="toctree-l3"><a class="reference internal" href="#local-linux-kernel"><span class="sec-num">4.1</span>Local Linux kernel</a><ul><li class="toctree-l4"><a class="reference internal" href="#linux-and-wsl2"><span class="sec-num">4.1.1</span>Linux and WSL2</a></li><li class="toctree-l4"><a class="reference internal" href="#macos"><span class="sec-num">4.1.2</span>MacOS</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#cluster"><span class="sec-num">4.2</span>Cluster</a></li><li class="toctree-l3"><a class="reference internal" href="#old-version-previous-release"><span class="sec-num">4.3</span>Old version / previous release</a></li><li class="toctree-l3"><a class="reference internal" href="#installation-of-dsl1-together-with-dsl2-already-installed"><span class="sec-num">4.4</span>Installation of DSL1 together with DSL2 already installed</a><ul><li class="toctree-l4"><a class="reference internal" href="#classic-way"><span class="sec-num">4.4.1</span>classic way</a></li><li class="toctree-l4"><a class="reference internal" href="#sdk-management"><span class="sec-num">4.4.2</span>sdk management</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#upgrade"><span class="sec-num">5</span>Upgrade</a></li><li class="toctree-l2"><a class="reference internal" href="#switch-between-different-versions-of-nextflow"><span class="sec-num">6</span>Switch between different versions of nextflow</a><ul><li class="toctree-l3"><a class="reference internal" href="#using-path"><span class="sec-num">6.1</span>Using path</a></li><li class="toctree-l3"><a class="reference internal" href="#using-environment-variables"><span class="sec-num">6.2</span>Using Environment Variables</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#warning-efficiency-of-dsl2"><span class="sec-num">7</span>Warning: efficiency of DSL2</a></li><li class="toctree-l2"><a class="reference internal" href="#dsl1-or-dsl2-by-default"><span class="sec-num">8</span>DSL1 or DSL2 by default</a></li><li class="toctree-l2"><a class="reference internal" href="#nexflow-usage"><span class="sec-num">9</span>nexflow usage</a><ul><li class="toctree-l3"><a class="reference internal" href="#dsl1-and-dsl2"><span class="sec-num">9.1</span>DSL1 and DSL2</a></li><li class="toctree-l3"><a class="reference internal" href="#commands"><span class="sec-num">9.2</span>Commands</a></li><li class="toctree-l3"><a class="reference internal" href="#main-options"><span class="sec-num">9.3</span>Main options</a></li><li class="toctree-l3"><a class="reference internal" href="#main-run-options"><span class="sec-num">9.4</span>Main run options</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#basic-description"><span class="sec-num">10</span>Basic description</a></li><li class="toctree-l2"><a class="reference internal" href="#variables"><span class="sec-num">11</span>Variables</a><ul><li class="toctree-l3"><a class="reference internal" href="#empty-file"><span class="sec-num">11.1</span>Empty file</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#console"><span class="sec-num">12</span>Console</a></li><li class="toctree-l2"><a class="reference internal" href="#main-groovy-commands"><span class="sec-num">13</span>Main groovy commands</a><ul><li class="toctree-l3"><a class="reference internal" href="#basic"><span class="sec-num">13.1</span>basic</a></li><li class="toctree-l3"><a class="reference internal" href="#condition"><span class="sec-num">13.2</span>condition</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#condition-with-if"><span class="sec-num">14</span>Condition with if(){}</a></li><li class="toctree-l2"><a class="reference internal" href="#main-differences-with-nextflow-dsl1"><span class="sec-num">15</span>Main differences with Nextflow DSL1</a></li><li class="toctree-l2"><a class="reference internal" href="#functions-and-operators"><span class="sec-num">16</span>Functions and operators</a></li><li class="toctree-l2"><a class="reference internal" href="#docker-images"><span class="sec-num">17</span>docker images</a></li><li class="toctree-l2"><a class="reference internal" href="#process"><span class="sec-num">18</span>Process</a><ul><li class="toctree-l3"><a class="reference internal" href="#executor"><span class="sec-num">18.1</span>executor</a></li><li class="toctree-l3"><a class="reference internal" href="#container"><span class="sec-num">18.2</span>container</a></li><li class="toctree-l3"><a class="reference internal" href="#errorstrategy-and-maxretries"><span class="sec-num">18.3</span>errorStrategy and maxRetries</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#input"><span class="sec-num">19</span>input</a><ul><li class="toctree-l3"><a class="reference internal" href="#example"><span class="sec-num">19.1</span>Example</a></li><li class="toctree-l3"><a class="reference internal" href="#tuple"><span class="sec-num">19.2</span>Tuple</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#output"><span class="sec-num">20</span>output</a><ul><li class="toctree-l3"><a class="reference internal" href="#quotes-and-no-quotes"><span class="sec-num">20.1</span>Quotes and no quotes</a></li><li class="toctree-l3"><a class="reference internal" href="#stdout-in-output"><span class="sec-num">20.2</span>Stdout in output</a></li><li class="toctree-l3"><a class="reference internal" href="#emit-in-channel"><span class="sec-num">20.3</span>Emit in channel</a></li><li class="toctree-l3"><a class="reference internal" href="#optional"><span class="sec-num">20.4</span>Optional</a></li><li class="toctree-l3"><a class="reference internal" href="#two-different-file-names"><span class="sec-num">20.5</span>two different file names</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#workflow-writing"><span class="sec-num">21</span>Workflow writing</a></li><li class="toctree-l2"><a class="reference internal" href="#running"><span class="sec-num">22</span>running</a><ul><li class="toctree-l3"><a class="reference internal" href="#defaults-names"><span class="sec-num">22.1</span>Defaults names</a></li><li class="toctree-l3"><a class="reference internal" href="#basic-instruction-for-execution"><span class="sec-num">22.2</span>Basic instruction for execution</a><ul><li class="toctree-l4"><a class="reference internal" href="#local-running"><span class="sec-num">22.2.1</span>Local running</a></li><li class="toctree-l4"><a class="reference internal" href="#using-a-distant-repository"><span class="sec-num">22.2.2</span>Using a distant repository</a></li><li class="toctree-l4"><a class="reference internal" href="#on-clusters"><span class="sec-num">22.2.3</span>On clusters</a></li><li class="toctree-l4"><a class="reference internal" href="#check-that-a-distant-server-is-mounted"><span class="sec-num">22.2.4</span>Check that a distant server is mounted</a></li><li class="toctree-l4"><a class="reference internal" href="#error-messages-and-solutions"><span class="sec-num">22.2.5</span>Error messages and solutions</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#resume-option"><span class="sec-num">23</span>-resume option</a><ul><li class="toctree-l3"><a class="reference internal" href="#general"><span class="sec-num">23.1</span>general</a></li><li class="toctree-l3"><a class="reference internal" href="#resume-from-the-last-run"><span class="sec-num">23.2</span>resume from the last run</a></li><li class="toctree-l3"><a class="reference internal" href="#resume-from-an-old-run"><span class="sec-num">23.3</span>resume from an old run</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#protection-of-the-initial-files-if-modified-in-processes"><span class="sec-num">24</span>Protection of the initial files if modified in processes</a></li><li class="toctree-l2"><a class="reference internal" href="#manipulation-of-channels"><span class="sec-num">25</span>Manipulation of channels</a><ul><li class="toctree-l3"><a class="reference internal" href="#parallelization"><span class="sec-num">25.1</span>Parallelization</a></li><li class="toctree-l3"><a class="reference internal" href="#concatenation-post-parallelized-process"><span class="sec-num">25.2</span>Concatenation post parallelized process</a></li><li class="toctree-l3"><a class="reference internal" href="#several-directories-into-a-channel"><span class="sec-num">25.3</span>several directories into a channel</a></li><li class="toctree-l3"><a class="reference internal" href="#get-the-name-of-a-file-or-folder-together-with-a-path"><span class="sec-num">25.4</span>Get the name of a file or folder together with a path</a><ul><li class="toctree-l4"><a class="reference internal" href="#simplest-instruction"><span class="sec-num">25.4.1</span>Simplest instruction</a></li><li class="toctree-l4"><a class="reference internal" href="#pity-but-map-does-not-work"><span class="sec-num">25.4.2</span>Pity but map{} does not work</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#simple-writting"><span class="sec-num">26</span>Simple writting</a></li><li class="toctree-l2"><a class="reference internal" href="#config-file"><span class="sec-num">27</span>config file</a></li></ul></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">Clusters, containers and
+workflows</li>
+            <li class="breadcrumb-item active">Protocol 152</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/152-dsl2.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Nextflow DSL2</h1>
+<p class="protocol-meta"><span>Protocol 152</span><span>revision 0</span><span>last update 2026-11-21</span><span class="draft-flag">draft</span></p>
+<h2 id="documentations"><span class="header-section-number">1</span>
+Documentations<a class="headerlink" href="#documentations" title="Link to this heading"></a></h2>
+<p><a href="https://www.nextflow.io/docs/latest/dsl2.html"
+class="uri">https://www.nextflow.io/docs/latest/dsl2.html</a></p>
+<p><a href="https://carpentries-incubator.github.io/workflows-nextflow/"
+class="uri">https://carpentries-incubator.github.io/workflows-nextflow/</a></p>
+<p><a
+href="http://www.ens-lyon.fr/LBMC/intranet/services-communs/pole-bioinformatique/bioinfoclub_list/nextflow-dsl2-laurent-modolo"
+class="uri">http://www.ens-lyon.fr/LBMC/intranet/services-communs/pole-bioinformatique/bioinfoclub_list/nextflow-dsl2-laurent-modolo</a></p>
+<p>Pro and con of Nextflow, comparison with snakemake:</p>
+<p><a href="https://flowdeploy.com/blog"
+class="uri">https://flowdeploy.com/blog</a></p>
+<p><a
+href="https://medium.com/@MarinaBioinfoStarter/bioinformatics-tools-nextflow-snakemake-how-they-are-integrated-with-ci-cd-pipeline-c9f02781ccf7"
+class="uri">https://medium.com/@MarinaBioinfoStarter/bioinformatics-tools-nextflow-snakemake-how-they-are-integrated-with-ci-cd-pipeline-c9f02781ccf7</a></p>
+<p><img src="../md/img/152-dsl2/image1.png" style="width:91.0%"
+loading="lazy" /></p>
+<h2 id="acronyms"><span class="header-section-number">2</span>
+Acronyms<a class="headerlink" href="#acronyms" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>DAG</td>
+<td>Directed Acyclic Graph</td>
+</tr>
+<tr>
+<td>DSL</td>
+<td>Domain Specific Language. See <a
+href="https://en.wikipedia.org/wiki/Domain-specific_language"
+class="uri">https://en.wikipedia.org/wiki/Domain-specific_language</a></td>
+</tr>
+<tr>
+<td>DSL2</td>
+<td>Version 2 of Nextflow. See <a
+href="https://www.nextflow.io/blog/2020/dsl2-is-here.html"
+class="uri">https://www.nextflow.io/blog/2020/dsl2-is-here.html</a></td>
+</tr>
+<tr>
+<td>nf</td>
+<td>nextflow</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="very-important-to-understand-how-nextflow-works"><span
+class="header-section-number">3</span> Very important to understand how
+nextflow
+works<a class="headerlink" href="#very-important-to-understand-how-nextflow-works" title="Link to this heading"></a></h2>
+<h3 id="names-of-the-files"><span
+class="header-section-number">3.1</span> Names of the
+files<a class="headerlink" href="#names-of-the-files" title="Link to this heading"></a></h3>
+<p>The nextflow pipeline file is named by default main.nf.</p>
+<p>The nextflow config file must are named by default
+nextflow.config.</p>
+<p>It is possible to modify these two names. But it will not work if the
+idea is to work from a distant repository (see section <a
+href="#_Ref83385591"><span class="red"><strong>Error! Reference source
+not found.</strong></span></a>).</p>
+<h3 id="work-folders"><span class="header-section-number">3.2</span>
+work
+folders<a class="headerlink" href="#work-folders" title="Link to this heading"></a></h3>
+<p>Nextflow create a folder for each process of the .nf file (or each
+parallelization of each process) in the work directory. For instance,
+<em>00/5bf63033e13094f180fe69c583ce3c</em>. Then, everything of the
+process is performed in this folder, which becomes the working
+environment (a kind of home). If INPUT is present, then files or values
+are imported. For the files, a <u>symbolic link</u> is created pointing
+to the initial file (in another folder of the work directory, or in a
+dataset folder). All the new files are created here. If publishDir is
+used, then the files referenced in OUTPUT are <u>copy/paste</u> into the
+designed publishDir folder.</p>
+<h3 id="symbolic-links"><span class="header-section-number">3.3</span>
+symbolic
+links<a class="headerlink" href="#symbolic-links" title="Link to this heading"></a></h3>
+<p>Warning, because of the symbolic links, every imported file that is
+modified by the process is not only modified in the work folder but also
+were the link point, meaning that initial input data can be modifed
+!</p>
+<p>To prevent that:</p>
+<p>1) always use input files that are "write" protected (read and
+execute only).</p>
+<p>2) Copy the input file in the process before working:</p>
+<pre><code>input:
+file fs
+
+script:
+&quot;&quot;&quot;
+cp ${fs} tempo.txt
+chmod 777 tempo.txt
+...</code></pre>
+<p>See also section <a href="#_Ref82445048"><span
+class="red"><strong>Error! Reference source not
+found.</strong></span></a> for a better example of copy.</p>
+<h3 id="the-resume-option"><span
+class="header-section-number">3.4</span> The resume
+option<a class="headerlink" href="#the-resume-option" title="Link to this heading"></a></h3>
+<p>A strong advantage of nextflow is to rerun the pipeline using the
+<code>-resume</code> option of the <code>run</code> command. In such
+case, all the processes that are <code>cache 'true'</code> are not run
+but linked to the previous same process execution, which save lots of
+time!</p>
+<p>However, all the variables of the .config used in the process must be
+declared in the input section of the process. Otherwise, nextflow will
+not rerun a <code>cache 'true'</code> process using a variable modified
+in the .config file.</p>
+<h3 id="variable-declaration-in-processes"><span
+class="header-section-number">3.5</span> Variable declaration in
+processes<a class="headerlink" href="#variable-declaration-in-processes" title="Link to this heading"></a></h3>
+<p>The scope of a process is such that if a variable is not in the input
+section, it looks for variables in the working environment of nextflow,
+which has notably sourced the <code>env{}</code> environment of the
+config file. Thus, it is not mandatory to use the input section to
+declare variables. <u>However</u>, in that case, nextflow will not rerun
+a <code>cache 'true'</code> process using a variable modified in the
+.config file.</p>
+<h2 id="installation"><span class="header-section-number">4</span>
+Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p><span class="red">update using DSL1</span></p>
+<p><a href="https://www.nextflow.io/"
+class="uri">https://www.nextflow.io/</a></p>
+<p>The best is to install in our home/bin/ the nextflow software and
+dependencies (java and singularity).</p>
+<h3 id="local-linux-kernel"><span
+class="header-section-number">4.1</span> Local Linux
+kernel<a class="headerlink" href="#local-linux-kernel" title="Link to this heading"></a></h3>
+<h4 id="linux-and-wsl2"><span class="header-section-number">4.1.1</span>
+Linux and
+WSL2<a class="headerlink" href="#linux-and-wsl2" title="Link to this heading"></a></h4>
+<p>Tested on Ubuntu 26.04 (WSL2) on 2026-11-21: nextflow 24.10.4 with
+Java 21.0.13, apptainer 1.4.5 and graphviz 14.1.2.</p>
+<p>Java install: see <a href="165-java.html">protocol 165</a>. Each
+nextflow version only accepts a range of Java versions:</p>
+<div class="wy-table-responsive">
+<table>
+<thead>
+<tr>
+<th>Nextflow</th>
+<th>Java</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24.10.x</td>
+<td>11 to 23</td>
+</tr>
+<tr>
+<td>26.10.x</td>
+<td>17 to 26</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the default java is out of the range (for instance Java 25 with
+nextflow 24.10.4, refused with the message
+<code>ERROR: Cannot find Java or it's a wrong version</code>), install a
+compatible java next to it (see <a
+href="165-java.html#linux-and-wsl2">protocol 165</a>) and give it to
+nextflow only, with the NXF_JAVA_HOME variable, before installing and
+running nextflow:</p>
+<pre><code>export NXF_JAVA_HOME=&quot;$HOME/.sdkman/candidates/java/21.0.13.0+9-tem&quot; # java used by nextflow only, the default java is unchanged</code></pre>
+<p>Add this line at the end of the ~/.bashrc file to set it in every new
+terminal (see <a href="140-wsl2-linux-on-windows.html#bashrc">protocol
+140</a> for the .bashrc file).</p>
+<p>Specific version of Nextflow install (here 24.10.4):</p>
+<pre><code>wget -qO- https://github.com/nextflow-io/nextflow/releases/download/v24.10.4/nextflow | bash # creates the nextflow file of this version in the current folder and downloads its jar file (needs a compatible java, see above)
+chmod +x nextflow
+sudo mv nextflow /usr/local/bin/
+nextflow -version # must display version 24.10.4</code></pre>
+<p>To keep the version already installed, rename it before the
+<code>sudo mv</code> above. Example:</p>
+<pre><code>nextflow -version # version of the installed nextflow, for instance 26.10.6
+sudo mv /usr/local/bin/nextflow /usr/local/bin/nextflow-26.10.6 # this version is then run with the nextflow-26.10.6 command</code></pre>
+<p><span class="red">Warning</span>: nextflow 26.04 and later use the
+strict syntax by default, which refuses the code of many pipelines
+written before (for instance repertoire_profiler). For these pipelines,
+use nextflow 24.10.4, or run the recent version with the former
+syntax:</p>
+<pre><code>export NXF_SYNTAX_PARSER=v1 # v2 (strict syntax) by default</code></pre>
+<p>Last version of Nextflow install:</p>
+<pre><code>sudo chmod 777 /usr/local
+sudo chmod 777 /usr/local/bin
+cd /usr/local/bin
+sudo curl -s https://get.nextflow.io | bash
+chmod 777 nextflow</code></pre>
+<p>PATH checking:</p>
+<pre><code>echo $PATH # to check that the string &quot;/usr/local/bin&quot; is included between colons in this variable</code></pre>
+<p>PATH update (if required)</p>
+<pre><code>export PATH=&quot;/usr/local/bin:$PATH&quot; # add the nextflow path into this variable</code></pre>
+<p>Apptainer has to be installed. See <a
+href="135-apptainer.html">protocol 135</a>.</p>
+<h4 id="macos"><span class="header-section-number">4.1.2</span>
+MacOS<a class="headerlink" href="#macos" title="Link to this heading"></a></h4>
+<p>Check Java version:</p>
+<pre><code>java -version # Check that java 11 to 18 is installed</code></pre>
+<p>Java install:</p>
+<p><a
+href="https://download.oracle.com/java/17/latest/jdk-17_macos-x64_bin.tar.gz"
+class="uri">https://download.oracle.com/java/17/latest/jdk-17_macos-x64_bin.tar.gz</a></p>
+<p>Then open the terminal and check the Java version again.</p>
+<p>If several versions are installed, it is possible to select the
+appropriate version like this:</p>
+<pre><code>VERSION=17 # version to use
+/usr/libexec/java_home -V
+echo $JAVA_HOME
+export JAVA_HOME=$(/usr/libexec/java_home -v $VERSION)
+java -version</code></pre>
+<p>Then check if wget is present, otherwise:</p>
+<pre><code>sudo port install wget</code></pre>
+<p>Then:</p>
+<pre><code>wget -qO- https://get.nextflow.io | bash
+# Weirdly, nextflow command is installed in the Users directory. Thus, check that install is correct:
+cd /Users/username/
+nextflow # should display options. If not:
+echo $PATH
+export PATH=&quot;/Users/username:$PATH&quot;
+echo $PATH
+nextflow # should display options</code></pre>
+<p>If it does not work, notably because of Java, then test:</p>
+<pre><code>brew install nextflow</code></pre>
+<p>Apptainer has to be installed. See <a
+href="135-apptainer.html">protocol 135</a>.</p>
+<h3 id="cluster"><span class="header-section-number">4.2</span>
+Cluster<a class="headerlink" href="#cluster" title="Link to this heading"></a></h3>
+<p>Connect to sonic.</p>
+<p>Then</p>
+<pre><code>cd $ZEUSHOME
+cd bin
+module load java
+curl -s https://get.nextflow.io | bash</code></pre>
+<p>Of note, this is specified but Fred Lemoine confirmed that does not
+work:</p>
+<pre><code>wget -qO- https://github.com/nextflow-io/nextflow/releases/download/v21.04.1/nextflow-21.04.1-all</code></pre>
+<p>Then, update the for_sonic.profile and for_sonic.bashrc</p>
+<pre><code>export PATH=&quot;/pasteur/zeus/projets/p01/BioIT/gmillot/bin:$PATH&quot; # for nextflow
+
+alias nextflow=&quot;module load java/13.0.2 ; nextflow&quot;</code></pre>
+<h3 id="old-version-previous-release"><span
+class="header-section-number">4.3</span> Old version / previous
+release<a class="headerlink" href="#old-version-previous-release" title="Link to this heading"></a></h3>
+<p>See also <a href="#linux-and-wsl2">Linux and WSL2</a> above for the
+compatible java (NXF_JAVA_HOME) and to keep the version already
+installed.</p>
+<pre><code>wget -qO- https://github.com/nextflow-io/nextflow/releases/download/v24.10.4/nextflow | bash
+chmod +x nextflow
+sudo mv nextflow /usr/local/bin/</code></pre>
+<h3 id="installation-of-dsl1-together-with-dsl2-already-installed"><span
+class="header-section-number">4.4</span> Installation of DSL1 together
+with DSL2 already
+installed<a class="headerlink" href="#installation-of-dsl1-together-with-dsl2-already-installed" title="Link to this heading"></a></h3>
+<p>Of note, java 11 works for both DSL1 and DSL2, but when using DSL2,
+is is better to use the last compatible java version for security
+reasons.</p>
+<h4 id="classic-way"><span class="header-section-number">4.4.1</span>
+classic
+way<a class="headerlink" href="#classic-way" title="Link to this heading"></a></h4>
+<p>When nextflow (DSL2 only is already installed):</p>
+<pre><code>wget -qO nextflow https://github.com/nextflow-io/nextflow/releases/download/v20.10.0/nextflow # replace 20.10.0 by the desired version
+sudo mv nextflow /usr/local/bin/nextflow-dsl1
+nextflow-dsl1 -v</code></pre>
+<p>Then to use the old version of nextflow (DSL1):</p>
+<pre><code>sdk default java 11.0.22-amzn #see protocol 165 for java
+nextflow-dsl1 run main.nf</code></pre>
+<p>To use the nex DSL2 version of nextflow:</p>
+<pre><code>sdk default java 11.0.22-amzn #see protocol 165 for java
+nextflow-dsl1 run main.nf</code></pre>
+<h4 id="sdk-management"><span class="header-section-number">4.4.2</span>
+sdk
+management<a class="headerlink" href="#sdk-management" title="Link to this heading"></a></h4>
+<p>Install SDKMAN if you haven't installed it yet.</p>
+<pre><code>curl -s &quot;https://get.sdkman.io&quot; | bash
+source &quot;$HOME/.sdkman/bin/sdkman-init.sh&quot;</code></pre>
+<p>Install the versions of Nextflow you want. For instance, if you want
+to install Nextflow 20.10.0 and 21.04.0, you would run the following
+commands:</p>
+<pre><code>sdk install nextflow 20.10.0
+sdk install nextflow 23.04.4.5881</code></pre>
+<p>Set the desired Nextflow version as the default. For instance, to set
+20.10.0 as the default, you would run:</p>
+<pre><code>sdk default java 11.0.22-amzn #see protocol 165 for java
+sdk default nextflow 20.10.0 # or sdk use nextflow 20.10.0</code></pre>
+<pre><code>sdk default java 11.0.22-amzn #see protocol 165 for java
+sdk default nextflow 20.10.0 # or sdk use nextflow 20.10.0</code></pre>
+<h2 id="upgrade"><span class="header-section-number">5</span>
+Upgrade<a class="headerlink" href="#upgrade" title="Link to this heading"></a></h2>
+<pre><code>nextflow -self-update</code></pre>
+<p>Update the version where it is already installed.</p>
+<p><span class="red">Warning</span>: <code>-self-update</code> always
+installs the last version, even when the installed nextflow is a
+specific version (for instance 24.10.4, installed as above for a
+pipeline that requires it). To change for another specific version,
+install it as explained in <a href="#linux-and-wsl2">Linux and
+WSL2</a>.</p>
+<h2 id="switch-between-different-versions-of-nextflow"><span
+class="header-section-number">6</span> Switch between different versions
+of
+nextflow<a class="headerlink" href="#switch-between-different-versions-of-nextflow" title="Link to this heading"></a></h2>
+<h3 id="using-path"><span class="header-section-number">6.1</span> Using
+path<a class="headerlink" href="#using-path" title="Link to this heading"></a></h3>
+<pre><code>/path/to/nextflow-&lt;version&gt;/nextflow run your_workflow.nf</code></pre>
+<p>Replace /path/to/nextflow-&lt;version&gt;/ with the path where the
+specific version of Nextflow is installed, and your_workflow.nf with the
+actual filename of your Nextflow workflow.</p>
+<h3 id="using-environment-variables"><span
+class="header-section-number">6.2</span> Using Environment
+Variables<a class="headerlink" href="#using-environment-variables" title="Link to this heading"></a></h3>
+<p>You can also use the NXF_VER environment variable to set the Nextflow
+version for a particular session. For example:</p>
+<pre><code>export NXF_VER=20.10.0
+nextflow run your_workflow.nf</code></pre>
+<p>This will set the Nextflow version to 20.10.0 for the current
+terminal session.</p>
+<h2 id="warning-efficiency-of-dsl2"><span
+class="header-section-number">7</span> Warning: efficiency of
+DSL2<a class="headerlink" href="#warning-efficiency-of-dsl2" title="Link to this heading"></a></h2>
+<p>Make sure your Nextflow project and input/output data are located in
+the Linux file system under /home or another native WSL2 directory. If
+files are stored in the Windows file system (e.g., /mnt/c/... in WSL),
+I/O performance frequently degrades and can greatly increase overhead
+for each job.</p>
+<h2 id="dsl1-or-dsl2-by-default"><span
+class="header-section-number">8</span> DSL1 or DSL2 by
+default<a class="headerlink" href="#dsl1-or-dsl2-by-default" title="Link to this heading"></a></h2>
+<p>As of version 22.03.0-edge Nextflow defaults to DSL 2 if no version
+is specified explicitly. You can restore the previous behavior setting
+in into your environment the following variable:</p>
+<pre><code>export NXF_DEFAULT_DSL=1</code></pre>
+<p>See section <a href="#dsl1-and-dsl2">DSL1 and DSL2</a>.</p>
+<h2 id="nexflow-usage"><span class="header-section-number">9</span>
+nexflow
+usage<a class="headerlink" href="#nexflow-usage" title="Link to this heading"></a></h2>
+<h3 id="dsl1-and-dsl2"><span class="header-section-number">9.1</span>
+DSL1 and
+DSL2<a class="headerlink" href="#dsl1-and-dsl2" title="Link to this heading"></a></h3>
+<p>Always start a .nf script by:</p>
+<pre><code>nextflow.enable.dsl=2</code></pre>
+<p>With value 1 or 2 depending on the desired DSL.</p>
+<h3 id="commands"><span class="header-section-number">9.2</span>
+Commands<a class="headerlink" href="#commands" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>clean</td>
+<td>Clean up project cache and work directories</td>
+</tr>
+<tr>
+<td>clone</td>
+<td>Clone a project into a folder</td>
+</tr>
+<tr>
+<td>config</td>
+<td>Print a project configuration</td>
+</tr>
+<tr>
+<td>console</td>
+<td>Launch Nextflow interactive console</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>Delete the local copy of a project</td>
+</tr>
+<tr>
+<td>help</td>
+<td>Print the usage help for a command</td>
+</tr>
+<tr>
+<td>info</td>
+<td>Print project and system runtime information</td>
+</tr>
+<tr>
+<td>kuberun</td>
+<td>Execute a workflow in a Kubernetes cluster (experimental)</td>
+</tr>
+<tr>
+<td>list</td>
+<td>List all downloaded projects</td>
+</tr>
+<tr>
+<td>log</td>
+<td>Print executions log and runtime info</td>
+</tr>
+<tr>
+<td>pull</td>
+<td>Download or update a project</td>
+</tr>
+<tr>
+<td>run</td>
+<td>Execute a pipeline project</td>
+</tr>
+<tr>
+<td>self-update</td>
+<td>Update nextflow runtime to the latest available version</td>
+</tr>
+<tr>
+<td>view</td>
+<td>View project script file(s)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>nextflow run main.nf</code></pre>
+<h3 id="main-options"><span class="header-section-number">9.3</span>
+Main
+options<a class="headerlink" href="#main-options" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>-C</td>
+<td>Use the specified configuration file(s) overriding any defaults</td>
+</tr>
+<tr>
+<td>-D</td>
+<td>Set JVM properties</td>
+</tr>
+<tr>
+<td>-bg</td>
+<td>Execute nextflow in background</td>
+</tr>
+<tr>
+<td>-c, -config</td>
+<td>Add the specified file to configuration set</td>
+</tr>
+<tr>
+<td>-d, -dockerize</td>
+<td>Launch nextflow via Docker (experimental)</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>Print this help</td>
+</tr>
+<tr>
+<td>-log</td>
+<td>Set nextflow log file path</td>
+</tr>
+<tr>
+<td>-q, -quiet</td>
+<td>Do not print information messages</td>
+</tr>
+<tr>
+<td>-syslog</td>
+<td>Send logs to syslog server (eg. localhost:514)</td>
+</tr>
+<tr>
+<td>-v, -version</td>
+<td>Print the program version</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>nextflow -v</code></pre>
+<h3 id="main-run-options"><span class="header-section-number">9.4</span>
+Main run
+options<a class="headerlink" href="#main-run-options" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>-cache</td>
+<td>Enable/disable processes caching</td>
+<td></td>
+</tr>
+<tr>
+<td>-h, -help</td>
+<td>Print the command usage</td>
+<td>Default: false</td>
+</tr>
+<tr>
+<td>-main-script</td>
+<td>The script file to be executed when launching a project directory or
+repository</td>
+<td></td>
+</tr>
+<tr>
+<td>-name</td>
+<td>Assign a mnemonic name to the run pipeline</td>
+<td></td>
+</tr>
+<tr>
+<td>-resume</td>
+<td>Execute the script using the cached results, useful to continue
+executions that were stopped by an error. Warning: as soon as a cache =
+false in a process, all the process that uses a channel from this
+process will be re-executed. Thus, if the first process is cache = false
+and that it channels toward the second process, then every process would
+be re-executed</td>
+<td></td>
+</tr>
+<tr>
+<td>-r, -revision</td>
+<td>Revision of the project to run (either a git branch, tag or commit
+SHA</td>
+<td>number)</td>
+</tr>
+<tr>
+<td>-test</td>
+<td>Test a script function with the name specified</td>
+<td></td>
+</tr>
+<tr>
+<td>-N, -with-notification</td>
+<td>Send a notification email on workflow completion to the
+specified</td>
+<td>recipients</td>
+</tr>
+<tr>
+<td>-with-weblog</td>
+<td>Send workflow status messages via HTTP to target URL</td>
+<td></td>
+</tr>
+<tr>
+<td>-w, -work-dir</td>
+<td>Directory where intermediate result files are stored</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>nextflow run main.nf -resume</code></pre>
+<h2 id="basic-description"><span class="header-section-number">10</span>
+Basic
+description<a class="headerlink" href="#basic-description" title="Link to this heading"></a></h2>
+<p>See <a
+href="https://www.nextflow.io/docs/latest/process.html?highlight=tuple"
+class="uri">https://www.nextflow.io/docs/latest/process.html?highlight=tuple</a></p>
+<p><img src="../md/img/152-dsl2/image2.png" style="width:61.0%"
+loading="lazy" /></p>
+<p>Nextflow is a DSL (see section <a href="#acronyms">Acronyms</a>).</p>
+<p>Comparison with other workflow managers:</p>
+<p><img src="../md/img/152-dsl2/image3.png" loading="lazy" /></p>
+<p><a href="https://www.nature.com/articles/s41592-021-01254-9"
+class="uri">https://www.nature.com/articles/s41592-021-01254-9</a></p>
+<p>Nextflow uses the Groovy language.</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/script.html#language-basics"
+class="uri">https://www.nextflow.io/docs/latest/script.html#language-basics</a></p>
+<p><a href="https://groovy-lang.org/"
+class="uri">https://groovy-lang.org/</a></p>
+<p><a href="https://groovy-lang.org/syntax.html"
+class="uri">https://groovy-lang.org/syntax.html</a></p>
+<p><a href="https://www.tutorialspoint.com/groovy/index.htm"
+class="uri">https://www.tutorialspoint.com/groovy/index.htm</a></p>
+<p>Regex:</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/script.html#regular-expressions"
+class="uri">https://www.nextflow.io/docs/latest/script.html#regular-expressions</a></p>
+<p><a
+href="https://web.archive.org/web/20170621185113/http:/naleid.com/blog/2008/05/19/dont-fear-the-regexp/">https://web.archive.org/web/20170621185113/http://naleid.com/blog/2008/05/19/dont-fear-the-regexp/</a></p>
+<p><a
+href="https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob"
+class="uri">https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob</a></p>
+<p><a
+href="https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html"
+class="uri">https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</a></p>
+<h2 id="variables"><span class="header-section-number">11</span>
+Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<h3 id="empty-file"><span class="header-section-number">11.1</span>
+Empty
+file<a class="headerlink" href="#empty-file" title="Link to this heading"></a></h3>
+<p>This can be convenient when a file is missing:</p>
+<pre><code>tbi_file = file(&quot;NULL&quot;)</code></pre>
+<h2 id="console"><span class="header-section-number">12</span>
+Console<a class="headerlink" href="#console" title="Link to this heading"></a></h2>
+<p>Very useful to test groovy code.</p>
+<p>On the cluster:</p>
+<pre><code>module load java
+nextflow console</code></pre>
+<p>Nice Web console:</p>
+<p><a href="https://groovyide.com/playground"
+class="uri">https://groovyide.com/playground</a></p>
+<p><a href="http://groovyconsole.appspot.com/edit/34004"
+class="uri">http://groovyconsole.appspot.com/edit/34004</a></p>
+<h2 id="main-groovy-commands"><span
+class="header-section-number">13</span> Main groovy
+commands<a class="headerlink" href="#main-groovy-commands" title="Link to this heading"></a></h2>
+<h3 id="basic"><span class="header-section-number">13.1</span>
+basic<a class="headerlink" href="#basic" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>x.first()</code></td>
+<td>If parallelization due to another channel in the same input section,
+specify that the x channel has to be used each time</td>
+</tr>
+<tr>
+<td><code>x.name</code></td>
+<td>take the name of the variable x. To assign the name, use
+<code>val(x.name) into y</code></td>
+</tr>
+<tr>
+<td><code>${x}</code></td>
+<td>value of the variable x, defined at the beginning of the file</td>
+</tr>
+<tr>
+<td><code>//</code></td>
+<td>comment</td>
+</tr>
+<tr>
+<td><code>channel.</code></td>
+<td>function that defines a channel. Must be followed by another
+function (see below)</td>
+</tr>
+<tr>
+<td><code>channel.from(1,2)</code></td>
+<td>channel for the value 1 and 2</td>
+</tr>
+<tr>
+<td><code>Channel.fromPath("x")</code></td>
+<td>define a channel from the path x. Warning: a channel can be called
+only once, contrary to variables</td>
+</tr>
+<tr>
+<td><code>Channel.fromFilePairs("x")</code></td>
+<td>take as argument a pathway of two files. If several couples of
+files, regular expressions are used. The result is a tuple</td>
+</tr>
+<tr>
+<td><code>file()</code></td>
+<td>define a path variable. For instance <code>file("x")</code> defines
+the path x as a variable, that can be used several times in a nextflow
+script if defined at the beginning of a nf script</td>
+</tr>
+<tr>
+<td><code>x.first()</code></td>
+<td>take the first element of channel x</td>
+</tr>
+<tr>
+<td><code>x.collectFile()</code></td>
+<td>collect all the files of channel x, means that it waits for the end
+of the parallelization of the process using the output channel x.
+Warning: see section <a href="#_Ref135663204"><strong>Error! Reference
+source not found.</strong></a>. Optional:
+<code>x.collectFile(name:"all_consensus.fasta", skip: 1, keepHeader: true)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre><code>x.collect()
+x.mix(y, z)</code></pre>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>x.flatten()</code></td>
+<td>split a list of file inside a single channel x into several channels
+with one file per channel</td>
+</tr>
+<tr>
+<td><code>publishDir "x/", mode: 'copy'</code></td>
+<td>copy the output files defined in the output section into the x
+folder. The <code>mode: 'copy'</code> precises that we do not want a
+symbolic file into the x folder pointing to the work folder (default)
+but that we want a real copy. This avoid breaking symbolic links if the
+wok folder is removed for instance</td>
+</tr>
+<tr>
+<td><code>tuple</code></td>
+<td>create a channel containing several info (like a list). Example:
+<code>tuple val(name), file(f1), file(f2) from data</code></td>
+</tr>
+<tr>
+<td><code>val(y) from x</code></td>
+<td>recover a value from x and assign to y. Can be an integer,
+character, etc.</td>
+</tr>
+<tr>
+<td><code>file(y) from x</code></td>
+<td>recover a file from x and assign to y. In <code>input:</code>
+section</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="condition"><span class="header-section-number">13.2</span>
+condition<a class="headerlink" href="#condition" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>||</code></td>
+<td>ou</td>
+</tr>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td>and</td>
+</tr>
+<tr>
+<td><code>!=</code></td>
+<td>different</td>
+</tr>
+<tr>
+<td><code>==</code></td>
+<td>equal</td>
+</tr>
+<tr>
+<td><code>if(){}else if(){}else{}</code></td>
+<td>if</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="condition-with-if"><span class="header-section-number">14</span>
+Condition with
+if(){}<a class="headerlink" href="#condition-with-if" title="Link to this heading"></a></h2>
+<p>In the <code>workflow{}</code> section, it is possible to check
+variables and so on:</p>
+<pre><code>workflow {
+    if( ! (sample_path in String) ){
+        error &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION\n\nINVALID sample_path PARAMETER IN repertoire_profiler.config FILE:\n${sample_path}\nMUST BE A SINGLE CHARACTER STRING\n\n========\n\n&quot;
+    }else if( ! (file(sample_path).exists()) ){
+        error &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION\n\nINVALID sample_path PARAMETER IN repertoire_profiler.config FILE (DOES NOT EXIST): ${sample_path}\nIF POINTING TO A DISTANT SERVER, CHECK THAT IT IS MOUNTED\n\n========\n\n&quot;
+    }
+}</code></pre>
+<p>Warning: in the <code>workflow{}</code> section, <code>if(){}</code>
+are checked immediately, wherever the code is written. This means that
+end of processes are not waited. For instance:</p>
+<pre><code>process igblast{
+    input:
+    path f
+
+    output:
+    path &quot;*.out&quot;
+
+    script:
+    &quot;&quot;&quot;
+    $f &gt; ${f.baseName}.out
+    &quot;&quot;&quot;
+}
+
+igblast.out.collectFile().view()
+workflow{
+    fs_ch = Channel.fromPath(&quot;/Users/Gael/f*.test&quot;, checkIfExists: false) // two files made of different nb of lines
+    igblast(fs_ch)
+    if( igblast.out.collectFile().countLines() != fs_ch.collectFile().countLines() ){
+        error &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION\n\nTHE NUMBER OF LINES IN THE OUTPUT OF IGBLAST IS NOT EQUAL TO THE NUMBER OF LINES IN THE SUBMITTED FILES\n========\n\n&quot;
+    }
+}</code></pre>
+<p>The error message will come even before the
+<code>igblast.out.collectFile().view()</code>.</p>
+<p>The only way to have the condition testing waiting for the end of a
+process is to use <code>subscribe()</code>. Example:</p>
+<pre><code>process igblast{
+    input:
+    path f
+
+    output:
+    path &quot;*.out&quot;
+
+    script:
+    &quot;&quot;&quot;
+    $f &gt; ${f.baseName}.out
+    &quot;&quot;&quot;
+}
+
+igblast.out.collectFile().view()
+workflow{
+    fs_ch = Channel.fromPath(&quot;/Users/Gael/f*.test&quot;, checkIfExists: false) // two files made of different nb of lines
+    igblast(fs_ch)
+    nblines1 = igblast.out.collectFile().countLines()
+    nblines2 = fs_ch.collectFile().countLines()
+    nblines1.combine(nblines2).subscribe{n1,n2 -&gt; if(n1!=n2){
+        error &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION\n\nTHE NUMBER OF LINES IN THE OUTPUT OF IGBLAST IS NOT EQUAL TO THE NUMBER OF LINES IN THE SUBMITTED FILES\n========\n\n&quot;
+    }
+}</code></pre>
+<h2 id="main-differences-with-nextflow-dsl1"><span
+class="header-section-number">15</span> Main differences with Nextflow
+DSL1<a class="headerlink" href="#main-differences-with-nextflow-dsl1" title="Link to this heading"></a></h2>
+<p>See <a href="136-nextflow-dsl1.html">protocol 136</a> for nextflow
+DSL1.</p>
+<p>1) Now custom functions can be designed in the .nf script. See <a
+href="https://www.nextflow.io/docs/latest/dsl2.html#function"
+class="uri">https://www.nextflow.io/docs/latest/dsl2.html#function</a></p>
+<p>2) Process section identical except that the <code>from</code> and
+<code>into</code> channel declarations have to be omitted.</p>
+<p>3) Output section. See section <a href="#output">output</a>.</p>
+<p>4) Processes are executed using a new section
+<code>workflow{}</code>. See <a
+href="https://www.nextflow.io/docs/latest/dsl2.html#workflow"
+class="uri">https://www.nextflow.io/docs/latest/dsl2.html#workflow</a></p>
+<blockquote>
+<p>3.1) Workflow inputs are always channels by definition. If a basic
+data type is provided instead, such as a number, string, list, etc, it
+is implicitly converted to a value channel.</p>
+<p>3.2) A workflow definition which does not declare any name (also
+known as implicit workflow) is the entry point of execution for the
+workflow application.</p>
+<p>3.3) Several workflow sections can be defined and then used inside
+another workflow section.</p>
+<p>3.4) Channels can be used several times (no need to define same
+channels with different names).</p>
+</blockquote>
+<p>5) Modules. See <a
+href="https://www.nextflow.io/docs/latest/dsl2.html#modules"
+class="uri">https://www.nextflow.io/docs/latest/dsl2.html#modules</a></p>
+<p>6) Other things. See <a
+href="https://www.nextflow.io/docs/latest/dsl2.html#dsl2-migration-notes"
+class="uri">https://www.nextflow.io/docs/latest/dsl2.html#dsl2-migration-notes</a></p>
+<p>7) Deprecation:</p>
+<blockquote>
+<p>1) <code>from</code> or <code>file()</code> use <code>path</code> or
+<code>path()</code> instead (notably in input and output processes).</p>
+</blockquote>
+<p>8) Values or path specified in the env{} section of the .config file
+do not have to be declared as input in processes, and as arguments of
+processes in the workflow{} section. Example in the .config file (on
+value and one path parameter):</p>
+<pre><code>env {
+    REPLACE_SPACE_CONF=&quot;_._&quot;
+    BASH_FUNCTIONS_CONF=&quot;/mnt/c/Users/Gael/Documents/Git_projects/little_bash_functions/little_bash_functions.sh&quot;
+}</code></pre>
+<p>And in the .nf file (no input declared):</p>
+<pre><code>process lodscore {
+    label &#39;bash&#39;
+
+    script:
+    &quot;&quot;&quot;
+    eval lodscore.sh
+    &quot;&quot;&quot;
+}
+
+workflow {
+    lodscore(
+    )
+}</code></pre>
+<p>However, is something is declared in the input section of a process,
+it must also be declared as argument in the core of the process in the
+workflow{} section:</p>
+<pre><code>process lodscore {
+    label &#39;bash&#39;
+
+    input:
+    path BASH_FUNCTIONS_CONF
+
+    script:
+    &quot;&quot;&quot;
+    eval lodscore.sh
+    &quot;&quot;&quot;
+}
+
+workflow {
+    lodscore(
+        BASH_FUNCTIONS_CONF
+    )
+}</code></pre>
+<p>9) for parallelization of a process for each file in a folder, one
+way is to write this:</p>
+<pre><code>process lodscore {
+    label &#39;bash&#39;
+
+    input:
+    path DIR_ch
+
+    script:
+    &quot;&quot;&quot;
+    #!/bin/bash -ue
+    eval lodscore.sh
+    &quot;&quot;&quot;
+}
+
+
+workflow {
+    if( ! file(DIR).exists()){
+        error &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION\n\nINVALID DIR PARAMETER IN linkage.config FILE (DOES NOT EXIST): ${DIR}\nIF POINTING TO A DISTANT SERVER, CHECK THAT IT IS MOUNTED\n\n========\n\n&quot;
+    }else{
+        DIR_ch = Channel.fromPath(&quot;${DIR}/*.*&quot;, checkIfExists: false)
+    }
+
+    lodscore(
+        DIR_ch
+    )
+}</code></pre>
+<p><span class="red">10)</span></p>
+<p><span class="red">Gael MILLOT la prochaine version de nextflow
+intégrera une commande apptainer à utiliser à la place de singularity.
+Par contre, elle ne gèrera plus DSL1.</span></p>
+<p><span class="red">Si tu veux déjà tester, tu peux faire:</span></p>
+<pre><code>export NXF_EDGE=1
+nextflow self-update</code></pre>
+<h2 id="functions-and-operators"><span
+class="header-section-number">16</span> Functions and
+operators<a class="headerlink" href="#functions-and-operators" title="Link to this heading"></a></h2>
+<p>Functions are objects that can modify, read, etc. an object. Example
+of function usage using the x object:</p>
+<pre><code>x = &quot;Hello&quot;
+print(x)</code></pre>
+<p>Most functions are from the groovy language.</p>
+<p>Custom (home made) functions:</p>
+<p><a href="https://www.nextflow.io/docs/latest/dsl2.html#function"
+class="uri">https://www.nextflow.io/docs/latest/dsl2.html#function</a></p>
+<p>Operators allow to manipulate channels (see <a
+href="https://www.nextflow.io/docs/latest/operator.html"
+class="uri">https://www.nextflow.io/docs/latest/operator.html</a>).
+Example of operator usage using the x channel:</p>
+<pre><code>x = Channel.fromPath(&quot;./file.txt&quot;)
+x.view()</code></pre>
+<p>Thus, operators are used with a dot, but not groovy or home made
+functions.</p>
+<h2 id="docker-images"><span class="header-section-number">17</span>
+docker
+images<a class="headerlink" href="#docker-images" title="Link to this heading"></a></h2>
+<p>Nextflow uses containers to run processes. Example on how a docker
+image is set in the nextflow.config file:</p>
+<pre><code>process {
+    withLabel: bash {
+        container=&#39;gmillot/alohomora_merlin_v2.1:gitlab_v9.5&#39;
+        cpus=1
+        memory=&#39;6G&#39;
+    }
+}</code></pre>
+<p>1) Nextflow can automately convert docker images to singularity,
+using this in the nextflow.config file</p>
+<pre><code>singularity {
+    enabled = true
+    autoMounts = true // automatically mounts host paths in the executed container
+    if(system_exec == &#39;slurm&#39; || system_exec == &#39;slurm_local&#39;){
+        runOptions = &#39;--no-home --bind /pasteur -B /run/shm:/run/shm&#39;
+    }else{
+        runOptions = &#39;--no-home -B /run/shm:/run/shm&#39; // --no-home prevent singularity to mount the $HOME path and thus forces singularity to work with only what is inside the container
+    }
+    //runOptions = &#39;--home $HOME:/home/$USER --bind /pasteur&#39; // provide any extra command line options supported by the singularity exec. Here, fait un bind de tout /pasteur dans /pasteur du container. Sinon pas d accès
+    if(system_exec == &#39;slurm&#39;){
+        cacheDir = &#39;/pasteur/zeus/projets/p01/BioIT/gmillot/singularity&#39; // name of the directory where remote Singularity images are stored. When rerun, the exec directly uses these without redownloading them. When using a computing cluster it must be a shared folder accessible to all computing nodes
+    }else if(system_exec == &#39;slurm_local&#39;){
+        cacheDir = &#39;singularity&#39; // &quot;$baseDir/singularity&quot; can be used but do not forget double quotes.
+    }else{
+        cacheDir = &#39;/mnt/c/Users/gmillot/singularity&#39; // &quot;$baseDir/singularity&quot; can be used but do not forget double quotes.
+    }
+}</code></pre>
+<p>2) Warning: nextflow does not use the entrypoint of the images. It
+systematically uses --entrypoint bash, i.e., open the container in the
+system environment.</p>
+<h2 id="process"><span class="header-section-number">18</span>
+Process<a class="headerlink" href="#process" title="Link to this heading"></a></h2>
+<h3 id="executor"><span class="header-section-number">18.1</span>
+executor<a class="headerlink" href="#executor" title="Link to this heading"></a></h3>
+<p>Different way to execute:</p>
+<p>Local (default), SGE, slurm, PBS, Kubernetes, AWS Batch, Google,
+etc.</p>
+<pre><code>process igblast {
+    executor =&quot;local&quot;</code></pre>
+<h3 id="container"><span class="header-section-number">18.2</span>
+container<a class="headerlink" href="#container" title="Link to this heading"></a></h3>
+<p>Warning: by default, execute on the local environment (no container).
+For instance, using <code>executor ="slurm"</code>, the process is run
+on the head of the cluster. If modules are imported in my session before
+using <code>nextflow run</code>, they are found. But this is not a
+proper way to work.</p>
+<pre><code>process igblast {
+    container = &quot;evolbioinfo / goalign : v0 .3.2&quot;</code></pre>
+<h3 id="errorstrategy-and-maxretries"><span
+class="header-section-number">18.3</span> errorStrategy and
+maxRetries<a class="headerlink" href="#errorstrategy-and-maxretries" title="Link to this heading"></a></h3>
+<pre><code>process igblast {
+    maxRetries=3
+    errorStrategy = {task.exitStatus in 137..143 ? &#39;retry&#39; : &#39;terminate&#39; }</code></pre>
+<p>Here is to indicate that if the exit status is between 137 and 143,
+then retry the number of times indicated by maxRetries. Otherwise
+terminate.</p>
+<p>See protocol 74 SLURM.</p>
+<h2 id="input"><span class="header-section-number">19</span>
+input<a class="headerlink" href="#input" title="Link to this heading"></a></h2>
+<h3 id="example"><span class="header-section-number">19.1</span>
+Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<p>Warning: inputs defined in a process inside <code>workflow{}</code>
+must be in the same order as in the input section of the process before
+<code>workflow{}</code>. Example:</p>
+<pre><code>process igblast {
+    ...
+
+    input:
+    val(&quot;CHROMO_NB&quot;), path(&quot;DIR&quot;) // from channel x1_ch
+    val x2
+    ...
+}
+
+workflow {
+    igblast(
+        x1_ch,
+        x2
+    )
+}</code></pre>
+<p>Here, the channel x1_ch is a tuple that is split in the input section
+of the igblast process.</p>
+<h3 id="tuple"><span class="header-section-number">19.2</span>
+Tuple<a class="headerlink" href="#tuple" title="Link to this heading"></a></h3>
+<pre><code>process fisher {
+
+    input:
+    tuple val(region2), path(vcf) // parallelization expected for each value of region_ch
+
+
+workflow {
+    vcf_ch = Channel.fromPath(sample_path) # sample_path from the nextflow.config file
+    if(region == &#39;none&#39;){ # region from the nextflow.config file
+        region_ch = Channel.from(&quot;chr1&quot;, &quot;chr2&quot;, &quot;chr3&quot;, &quot;chr4&quot;, &quot;chr5&quot;, &quot;chr6&quot;, &quot;chr7&quot;, &quot;chr8&quot;, &quot;chr9&quot;, &quot;chr10&quot;, &quot;chr11&quot;, &quot;chr12&quot;, &quot;chr13&quot;, &quot;chr14&quot;, &quot;chr15&quot;, &quot;chr16&quot;, &quot;chr17&quot;, &quot;chr18&quot;, &quot;chr19&quot;, &quot;chr20&quot;, &quot;chr21&quot;, &quot;chr22&quot;, &quot;chr23&quot;, &quot;chr24&quot;, &quot;chr25&quot;, &quot;chrY&quot;, &quot;chrX&quot;, &quot;chrM&quot;)
+    }else{
+        if(region =~ /,/){
+            tempo = region.replaceAll(&#39;:.+,&#39;, &#39;,&#39;)
+        }else{
+            tempo = region
+        }
+        tempo2 = tempo.replaceAll(&#39;:.+$&#39;, &#39;&#39;)
+        tempo3 = tempo2.replaceAll(&#39; &#39;, &#39;&#39;)
+        tempo4 = tempo3.split(&quot;,&quot;) // .split(&quot;,&quot;) split according to comma and create an array https://www.tutorialspoint.com/groovy/groovy_split.htm
+        region_ch = Channel.from(tempo4)
+    }
+
+    fisher(
+        region_ch.combine(vcf_ch2) // combine the vcf file and each value of region_ch
+    )
+}</code></pre>
+<h2 id="output"><span class="header-section-number">20</span>
+output<a class="headerlink" href="#output" title="Link to this heading"></a></h2>
+<h3 id="quotes-and-no-quotes"><span
+class="header-section-number">20.1</span> Quotes and no
+quotes<a class="headerlink" href="#quotes-and-no-quotes" title="Link to this heading"></a></h3>
+<p>Warning: in the output section, variable with no quotes means that
+the variable is a nextflow variable. Quotes mean that the output is a
+string and that glob (wildcard) can be used. Strings work for path
+outputs. However, it is not possible to add a variable created in the
+script section as val output. Only stdout can do it but forward all the
+stdout of the script section.</p>
+<p>Example:</p>
+<pre><code>process igblast {
+    ...
+    output:
+    val TEMPO
+    path &quot;*.log&quot;
+
+    script:
+    TEMPO=4</code></pre>
+<p>TEMPO without quotes produces an error because TEMPO is not defined
+as a nextflow variable, and TEMPO with quotes send "TEMPO".</p>
+<p>See <a
+href="https://www.nextflow.io/docs/latest/process.html?highlight=tuple#output-type-tuple"
+class="uri">https://www.nextflow.io/docs/latest/process.html?highlight=tuple#output-type-tuple</a></p>
+<p>See section <a href="#stdout-in-output">Stdout in output</a> to solve
+this.</p>
+<h3 id="stdout-in-output"><span
+class="header-section-number">20.2</span> Stdout in
+output<a class="headerlink" href="#stdout-in-output" title="Link to this heading"></a></h3>
+<p>The only way to have a value in output, potentially sent into a
+channel is to use the stdout of the script section. Example:</p>
+<pre><code>process standardout_test {
+    label &#39;bash&#39; // see the withLabel: bash in the nextflow config file    cache &#39;true&#39;
+
+    input:
+    path vcf_header // no parall
+
+    output:
+    stdout
+
+    script:
+    &quot;&quot;&quot;
+    #!/bin/bash -ue
+    cat ${vcf_header} | wc -l
+    &quot;&quot;&quot;
+}
+
+
+workflow{
+    standardout_test(
+        header.out.vcf_header_ch
+    )
+
+    standardout_test.out[0].view()
+}</code></pre>
+<p>The number of lines of the vcf header is the stdout and is emitted in
+<code>vcf_header_line_nb</code></p>
+<p>Warning: \n (end of lines) can impair the correct use of the
+variable. See trim in groovy or printf in bash to solve that.</p>
+<h3 id="emit-in-channel"><span class="header-section-number">20.3</span>
+Emit in
+channel<a class="headerlink" href="#emit-in-channel" title="Link to this heading"></a></h3>
+<p>If output are not named (emitted), then:</p>
+<pre><code>process igblast {
+    ...
+    output:
+    path &quot;*.tsv&quot;
+    path &quot;*.log&quot;</code></pre>
+<p>Then, outputs of the igblast process can be used like this:</p>
+<pre><code>igblast.out[0].view() // for the first output of igblast
+igblast.out[1].view() // for the second output of igblast</code></pre>
+<p>If output are named, then:</p>
+<pre><code>process igblast {
+    ...
+    output:
+    path &quot;*.tsv&quot;, emit: tsv_ch1
+    path &quot;*.log&quot;, emit: log_ch</code></pre>
+<p>Then, outputs of the igblast process can be used like this:</p>
+<pre><code>igblast.out.tsv_ch1.view()
+igblast.out.log_ch.view()</code></pre>
+<p>Thus, channels in outputs are not necessarily named and
+<code>emit</code> only facilitate the use of a channel several
+times.</p>
+<h3 id="optional"><span class="header-section-number">20.4</span>
+Optional<a class="headerlink" href="#optional" title="Link to this heading"></a></h3>
+<pre><code>process igblast {
+    ...
+    output:
+    path &quot;*.tsv&quot;, emit: tsv_ch1, optional: true</code></pre>
+<p>With or without <code>emit</code>.</p>
+<h3 id="two-different-file-names"><span
+class="header-section-number">20.5</span> two different file
+names<a class="headerlink" href="#two-different-file-names" title="Link to this heading"></a></h3>
+<p>Use this writting if the output file is either file.tsv or NULL:</p>
+<pre><code>path &#39;{file.tsv,NULL}&#39;, includeInputs: true, emit: meta_file_ch</code></pre>
+<p>includeInputs: true means that any files with the glob of
+<code>{file.tsv,NULL}</code> will be added into the channel.</p>
+<h2 id="workflow-writing"><span class="header-section-number">21</span>
+Workflow
+writing<a class="headerlink" href="#workflow-writing" title="Link to this heading"></a></h2>
+<p>2 options:</p>
+<pre><code>process writeFiles {
+    input :
+        val odd
+    output :
+        file &quot;*. txt &quot;
+    script :
+&quot;&quot;&quot;
+echo &quot; Value = ${ odd }&quot; &gt; file_$ { odd }. txt
+&quot;&quot;&quot;
+}
+workflow {
+ch = Channel .of( 1, 3, 5, 7 )
+oddfiles = writeFiles(ch) // equivalent to
+}</code></pre>
+<pre><code>workflow {
+    ch = Channel .of( 1, 3, 5, 7 )
+    writeFiles(ch)
+    oddfiles = writeFiles.out[0]
+}</code></pre>
+<p>oddfiles gather all the outputs, which can be called using [0], [1],
+etc.</p>
+<p>oddfiles is a channel.</p>
+<p>Warning: emit is optional. It is just to give a name to the
+channel.</p>
+<pre><code>process writeFiles {
+input :
+val odd
+output :
+file &quot;*. txt &quot;, emit: out_ch
+script :
+&quot;&quot;&quot;
+echo &quot; Value = ${ odd }&quot; &gt; file_$ { odd }. txt
+&quot;&quot;&quot;
+}
+workflow {
+    ch = Channel .of( 1, 3, 5, 7 )
+    writeFiles(ch)
+    oddfiles = writeFiles.out.out_ch
+}</code></pre>
+<h2 id="running"><span class="header-section-number">22</span>
+running<a class="headerlink" href="#running" title="Link to this heading"></a></h2>
+<h3 id="defaults-names"><span class="header-section-number">22.1</span>
+Defaults
+names<a class="headerlink" href="#defaults-names" title="Link to this heading"></a></h3>
+<p>Nextflow recognizes main.nf and nextflow.config as the two nf and
+config files by default.</p>
+<p>When using <code>nextflow run</code>, this means that:</p>
+<p>1) it is not mandatory to specify the config file name if it is in
+the same path as the main.nf file and if it is named nextflow.config.
+Example:</p>
+<pre><code>nextflow run /home/gmillot/tmp/main.nf</code></pre>
+<p>2) Running from a distant repository, the two files are
+recognized</p>
+<pre><code>nextflow run https://gitlab.pasteur.fr/gmillot/project_a -r master</code></pre>
+<h3 id="basic-instruction-for-execution"><span
+class="header-section-number">22.2</span> Basic instruction for
+execution<a class="headerlink" href="#basic-instruction-for-execution" title="Link to this heading"></a></h3>
+<h4 id="local-running"><span class="header-section-number">22.2.1</span>
+Local
+running<a class="headerlink" href="#local-running" title="Link to this heading"></a></h4>
+<p>Where the instruction is executed is important. Indeed, several files
+and folders are created at this place: result, work, .nexflow, etc. Once
+the location chosen using cd, do:</p>
+<pre><code>nextflow run /home/gmillot/tmp/main.nf</code></pre>
+<p>The main.nf file is executed. Parameters are in the nextflow.config
+file in the same folder as main.nf.</p>
+<p>To specifiy the file name and path of the config file:</p>
+<pre><code>nextflow run /home/gmillot/tmp/main.nf -c /home/gmillot/tmp/nextflow.config</code></pre>
+<p>See section <a href="#check-that-a-distant-server-is-mounted">Check
+that a distant server is mounted</a> if nothing happens, like:</p>
+<p><img src="../md/img/152-dsl2/image4.png" loading="lazy" /></p>
+<h4 id="using-a-distant-repository"><span
+class="header-section-number">22.2.2</span> Using a distant
+repository<a class="headerlink" href="#using-a-distant-repository" title="Link to this heading"></a></h4>
+<p><u>If the linkage.nf file in a public gitlab repository</u></p>
+<p>Run the following command from where you want the results:</p>
+<pre><code>nextflow run -hub pasteur gmillot/genetic_linkage -r v1.0.0</code></pre>
+<p>-r for the tagged version of the file.</p>
+<p>Warning: the .config file used by default is the one present in the
+distant repository. The config file can be on the local computer but -c
+option has to be used.</p>
+<p><u>If the linkage.nf file in a private gitlab repository</u></p>
+<p>Create the scm file:</p>
+<pre><code>providers {
+    pasteur {
+        server = &#39;https://gitlab.pasteur.fr&#39;
+        platform = &#39;gitlab&#39;
+    }
+}</code></pre>
+<p>And save it as 'scm' in the .nextflow folder. For instance in:</p>
+<p>\\wsl$\Ubuntu-20.04\home\gmillot\.nextflow</p>
+<p>Warning: ssh key must be set for gitlab, to be able to use this
+procedure.</p>
+<p>Then run the following command (example: from here
+\\wsl$\Ubuntu-20.04\home\gmillot):</p>
+<pre><code>nextflow run -hub pasteur gmillot/genetic_linkage -r v1.0.0</code></pre>
+<h4 id="on-clusters"><span class="header-section-number">22.2.3</span>
+On
+clusters<a class="headerlink" href="#on-clusters" title="Link to this heading"></a></h4>
+<p>Warning: the workflow{} section is made of processes that are
+executed in nodes but the inter process code is executed on the node
+where the <code>nexflow run</code> command is executed. This means that
+the head od the cluster can be saturated if used for
+<code>nexflow run</code>.</p>
+<h4 id="check-that-a-distant-server-is-mounted"><span
+class="header-section-number">22.2.4</span> Check that a distant server
+is
+mounted<a class="headerlink" href="#check-that-a-distant-server-is-mounted" title="Link to this heading"></a></h4>
+<p>See <a href="140-wsl2-linux-on-windows.html">protocol 140</a>.</p>
+<p>Example:</p>
+<pre><code>DRIVE=&quot;C&quot;
+sudo mkdir /mnt/share
+sudo mount -t drvfs $DRIVE: /mnt/share</code></pre>
+<p>Warning: if no mounting, it is possible that nextflow does nothing,
+or displays a message like:</p>
+<pre><code>Launching `linkage.nf` [loving_morse] - revision: d5aabe528b
+/mnt/share/Users</code></pre>
+<h4 id="error-messages-and-solutions"><span
+class="header-section-number">22.2.5</span> Error messages and
+solutions<a class="headerlink" href="#error-messages-and-solutions" title="Link to this heading"></a></h4>
+<p>1)</p>
+<pre><code>Unknown error accessing project `gmillot/genetic_linkage` -- Repository may be corrupted: /pasteur/sonic/homes/gmillot/.nextflow/assets/gmillot/genetic_linkage</code></pre>
+<p>Purge using:</p>
+<pre><code>rm -rf /pasteur/sonic/homes/gmillot/.nextflow/assets/gmillot*</code></pre>
+<p>2)</p>
+<pre><code>WARN: Cannot read project manifest -- Cause: Remote resource not found: https://gitlab.pasteur.fr/api/v4/projects/gmillot%2Flinkage</code></pre>
+<p>Make the distant repo public.</p>
+<p>In settings/General/Visibility, project features, permissions, check
+that every item is "on" with "Everyone With Access" and then save the
+changes.</p>
+<p>3)</p>
+<pre><code>permission denied</code></pre>
+<p>Use chmod to change the user rights.</p>
+<p>4)</p>
+<p>Warning: if no mounting, it is possible that nextflow does nothing,
+or displays a message like:</p>
+<pre><code>Launching `linkage.nf` [loving_morse] - revision: d5aabe528b
+/mnt/share/Users</code></pre>
+<h2 id="resume-option"><span class="header-section-number">23</span>
+-resume
+option<a class="headerlink" href="#resume-option" title="Link to this heading"></a></h2>
+<h3 id="general"><span class="header-section-number">23.1</span>
+general<a class="headerlink" href="#general" title="Link to this heading"></a></h3>
+<p>The <code>-resume</code> option of nextflow has a considerable
+benefit, as it prevent the running of long processes. For instance, when
+changing a parameter in the .config file, nextflow will rerun only the
+processes that is impacted by the change and all the subsequent
+ones.</p>
+<p>However, this benefit comes with tricky behaviors that must be
+anticipated:</p>
+<p>1) modification inside a file (see section <a
+href="#protection-of-the-initial-files-if-modified-in-processes">Protection
+of the initial files if modified in processes</a>).</p>
+<p>2) if the code inside the script section of a process A is unchanged
+and the input are the same, nextflow uses the last work folder created
+during the last time that the process A has been run. And Nextflow
+indicates that process A is "cached". This is the expected behavior.
+However, if modifications of the script section of a process A, goes
+back to a previous one (word to word), it seems that Nextflow uses the
+last work folder created using this previous script. It should be
+logical. But because of 1), this can generate behaviors difficult to
+understand.</p>
+<p>Of note, both the work and .nextflow folders are used by the
+<code>-resume</code> option. Erasing the work folder is sometimes not
+sufficient to prevent this option to run. Only the .nextflow deletion
+will trigger the message:</p>
+<p>WARN: It appears you have never run this project before -- Option
+<code>-resume</code> is ignored</p>
+<h3 id="resume-from-the-last-run"><span
+class="header-section-number">23.2</span> resume from the last
+run<a class="headerlink" href="#resume-from-the-last-run" title="Link to this heading"></a></h3>
+<pre><code>nextflow run main.nf -resume</code></pre>
+<h3 id="resume-from-an-old-run"><span
+class="header-section-number">23.3</span> resume from an old
+run<a class="headerlink" href="#resume-from-an-old-run" title="Link to this heading"></a></h3>
+<p>Display fisrt the nextflow log:</p>
+<pre><code>nextflow log</code></pre>
+<pre><code>TIMESTAMP               DURATION        RUN NAME                STATUS  REVISION ID     SESSION ID                              COMMAND
+2024-11-26 16:57:48     -               confident_bardeen       -       75061c2cbc      8706e4a5-f463-4d2e-8a18-8db7b3a04aa4    nextflow main.nf
+2024-11-26 16:59:05     -               reverent_goldwasser     -       75061c2cbc      d27e1dfb-581e-414f-8b0d-5f8fb3a6cf22    nextflow main.nf
+2024-11-26 17:00:29     -               boring_lamarck          -       75061c2cbc      87ab72d8-0170-40b9-a532-2fce350ab825    nextflow main.nf
+2024-11-26 17:01:34     -               confident_wegener       -       75061c2cbc      58ee84a8-58fd-43dc-b71f-0f048c1c7938    nextflow main.nf
+2024-11-26 17:05:49     6.9s            drunk_bhabha            ERR     62866b504a      8fd3ee8c-cdb3-4671-ac8f-277831c3dcbd    nextflow main.nf
+2024-11-27 14:13:30     -               adoring_shockley        -       62866b504a      951ca0b2-6b23-4f15-bcb6-5c15f4c1fcd0    nextflow main.nf
+2024-11-27 14:13:55     -               nasty_sax               -       62866b504a      8e36b1a8-9289-4d18-bda6-9ffa1756c99f    nextflow main.nf
+2024-11-27 14:14:26     6.9s            elegant_banach          ERR     62866b504a      5aa0f39b-ddd7-499b-b5bd-b69a08dfcf31    nextflow main.nf
+2024-11-27 14:31:27     7.3s            insane_montalcini       ERR     62866b504a      757205fe-72ca-4c78-af2b-a7865ed90e60    nextflow main.nf
+2024-11-27 14:51:11     7.2s            mad_pare                ERR     62866b504a      f52b68f4-7c88-44d5-b4f1-2023885ee04f    nextflow main.nf
+2024-11-27 14:58:25     5.9s            adoring_mahavira        ERR     62866b504a      69057232-bdf5-4710-95a0-5cc63eb774d1    nextflow main.nf
+2024-11-27 15:00:02     9.2s            grave_ride              ERR     62866b504a      693aef98-d81c-4a14-b5b7-12b2d36fe5ae    nextflow main.nf -c nextflow.config
+nextflow.config -resume drunk_kalman</code></pre>
+<p>Select the SESSION ID of the job to rerun and do</p>
+<pre><code>nextflow run main.nf -resume &lt;SESSION ID&gt;</code></pre>
+<h2 id="protection-of-the-initial-files-if-modified-in-processes"><span
+class="header-section-number">24</span> Protection of the initial files
+if modified in
+processes<a class="headerlink" href="#protection-of-the-initial-files-if-modified-in-processes" title="Link to this heading"></a></h2>
+<p>If an input file is modified in a process, we could imagine that only
+the file present in the work directory is modified. But due to the
+symbolic link, the initial file will be also modified. To prevent
+this:</p>
+<p>- NEVER modify a file using the same name. always change the mane of
+the modified file.</p>
+<p>- ALWAYS copy these files in the process that modifies the file, not
+in another process (to optimize the -resume option of nextflow run).</p>
+<h2 id="manipulation-of-channels"><span
+class="header-section-number">25</span> Manipulation of
+channels<a class="headerlink" href="#manipulation-of-channels" title="Link to this heading"></a></h2>
+<h3 id="parallelization"><span class="header-section-number">25.1</span>
+Parallelization<a class="headerlink" href="#parallelization" title="Link to this heading"></a></h3>
+<p>The output channel of a parallelized process A, containing a single
+value or path, will induce parallelization of the next process B if the
+channel is not assembled between the A and B process in the
+<code>workflow{}</code>.</p>
+<h3 id="concatenation-post-parallelized-process"><span
+class="header-section-number">25.2</span> Concatenation post
+parallelized
+process<a class="headerlink" href="#concatenation-post-parallelized-process" title="Link to this heading"></a></h3>
+<pre><code>process igblast {
+    ...
+
+    output:
+    path &quot;*.tsv&quot;, emit: tsv_ch1, optional: true
+
+    ...
+}
+
+workflow {
+    igblast()
+    igblast.out.tsv_ch1.collectFile()
+}</code></pre>
+<h3 id="several-directories-into-a-channel"><span
+class="header-section-number">25.3</span> several directories into a
+channel<a class="headerlink" href="#several-directories-into-a-channel" title="Link to this heading"></a></h3>
+<p>See the linkage.nf script.</p>
+<pre><code>process splitting{
+    ...
+
+    output:
+    path &quot;Group*&quot;, emit: group_dir_ch
+
+    ...
+}
+
+workflow {
+    alohomora(
+        splitting.out.group_dir_ch.flatten()
+}</code></pre>
+<p>The <code>flatten()</code> operator splits the list into several
+objects.</p>
+<h3 id="get-the-name-of-a-file-or-folder-together-with-a-path"><span
+class="header-section-number">25.4</span> Get the name of a file or
+folder together with a
+path<a class="headerlink" href="#get-the-name-of-a-file-or-folder-together-with-a-path" title="Link to this heading"></a></h3>
+<p>See the linkage.nf script.</p>
+<h4 id="simplest-instruction"><span
+class="header-section-number">25.4.1</span> Simplest
+instruction<a class="headerlink" href="#simplest-instruction" title="Link to this heading"></a></h4>
+<p>If the input is several path, generated by the previous process like
+this:</p>
+<pre><code>    output:
+    path &quot;Group*&quot;, emit: group_dir_ch</code></pre>
+<p>Then the name can be recover just by using the file method
+<code>baseName</code>: in the output and in the script section:</p>
+<pre><code>process alohomora {
+    ...
+
+    input:
+    path group_dir_ch
+
+    output:
+    tuple val(group_dir_ch.baseName), path(&quot;Group*/merlin/c*&quot;), emit: chr_dir_ch // Warning: a tuple with a single group_name associated with 23 path
+
+    script:
+    &quot;&quot;&quot;
+    #!/bin/bash -ue
+    GROUP_NAME=${group_dir_ch.baseName}
+}
+
+workflow {
+    alohomora(
+        splitting.out.group_dir_ch.flatten()
+    )
+}</code></pre>
+<h4 id="pity-but-map-does-not-work"><span
+class="header-section-number">25.4.2</span> Pity but map{} does not
+work<a class="headerlink" href="#pity-but-map-does-not-work" title="Link to this heading"></a></h4>
+<p>From <a
+href="https://www.nextflow.io/docs/latest/faq.html?highlight=map#how-do-i-get-a-unique-id-based-on-the-file-name"
+class="uri">https://www.nextflow.io/docs/latest/faq.html?highlight=map#how-do-i-get-a-unique-id-based-on-the-file-name</a></p>
+<pre><code>process splitting{
+    ...
+
+    output:
+    path &quot;Group*&quot;, emit: group_dir_ch
+
+    ...
+}
+
+process alohomora{
+    ...
+
+    input:
+    tuple val(group_name), path(group_dir_ch)
+
+    ...
+}
+
+
+workflow {
+    alohomora(
+        splitting.out.group_dir_ch.flatten().map{it -&gt; [it.baseName(), it]}
+}</code></pre>
+<p>The <code>map{}</code> operator convert the path into a tuple
+according to what is written between brackets.</p>
+<pre><code>process alohomora {
+    ...
+
+    input:
+    tuple val(group_name), path(group_dir_ch)
+
+    output:
+    tuple val(group_dir_ch.baseName), path(&quot;Group*/merlin/c*&quot;), emit: chr_dir_ch</code></pre>
+<p>The output tuple can also be:</p>
+<pre><code>    tuple val(group_name), path(&quot;Group*/merlin/c*&quot;), emit: chr_dir_ch</code></pre>
+<p>Here the channel is complicate because it is intricated lists,
+like:</p>
+<pre><code>Channel.of(
+    [&#39;a&#39;, [&#39;p&#39;, &#39;q&#39;], [&#39;u&#39;,&#39;v&#39;]],
+    [&#39;b&#39;, [&#39;s&#39;, &#39;t&#39;], [&#39;x&#39;,&#39;y&#39;]]
+    )</code></pre>
+<p>To correctly split the channel during the next step, the operator to
+use is <code>transpose()</code>:</p>
+<pre><code>[a, p, u]
+[a, q, v]
+[b, s, x]
+[b, t, y]</code></pre>
+<p>So the instruction in the <code>workflow{}</code> would be:</p>
+<pre><code>    alohomora.out.chr_dir_ch.transpose()</code></pre>
+<p>No need to flatten if we use a tuple as input.</p>
+<h2 id="simple-writting"><span class="header-section-number">26</span>
+Simple
+writting<a class="headerlink" href="#simple-writting" title="Link to this heading"></a></h2>
+<h2 id="config-file"><span class="header-section-number">27</span>
+config
+file<a class="headerlink" href="#config-file" title="Link to this heading"></a></h2>
+<p>Can be called by nextflow when in the same repertoire as main.nf or
+if the full path is specified with the -c option:</p>
+<pre><code>nextflow run -c /mnt/c/Users/Gael/Documents/Git_projects/repertoire_profiler/nextflow.config main.nf</code></pre>
+<p>Example of nextflow.config file:</p>
+<pre><code>/*
+#########################################################################
+##                                                                     ##
+##     repertoire_profiler.config                                      ##
+##                                                                     ##
+##     Gael A. Millot                                                  ##
+##     Bioinformatics and Biostatistics Hub                            ##
+##     Computational Biology Department                                ##
+##     Institut Pasteur Paris                                          ##
+##                                                                     ##
+#########################################################################
+*/
+
+/*
+#########################################################################
+##                                                                     ##
+##     Parameters that must be set by the user                         ##
+##                                                                     ##
+#########################################################################
+*/
+
+/*
+##########################
+##                      ##
+##     Ig Clustering    ##
+##                      ##
+##########################
+*/
+
+env {
+    sample_path = &quot;/mnt/c/Users/Gael/Documents/Git_projects/repertoire_profiler/dataset/ig_clustering_test_1/VH&quot; // single character string of the path of the fasta files directory. The last / can be added or not, as it is removed by nextflow file(). Warning: the fasta names must not start by a digit, before alakazam::readChangeoDb() function is fixed by the maintainer. Example : sample_path=&quot;/mnt/c/Users/Gael/Documents/Git_projects/repertoire_profiler/dataset/A1_IgG_H_fw.fasta&quot; or sample_path=&quot;/pasteur/appa/homes/gmillot/dataset/20210707_sample1_plate3_IgK_sanger_seq&quot;. Example with spaces in the path: sample_path=&quot;/mnt/x/ROCURONIUM PROJECT/01 Primary data/04.Repertoire analysis/SORT1/SORT1 Seq-original/xlsx_to_fasta_1669018924/All/VL&quot;
+    igblast_database_path = &quot;germlines/imgt/mouse/vdj&quot; // single character string of the path of the database provided by igblast indicating a folder of fasta files, WITHOUT the last /. See \\wsl$\Ubuntu-20.04\home\gael\share for the different possibilities of paths. Example: igblast_database_path=&quot;germlines/imgt/human/vdj&quot;. Warning: change this code in the .nf file &quot; MakeDb.py igblast -i \${FILE}_igblast.fmt7 -s ${fs} -r \${REPO_PATH}/imgt_human_IGHV.fasta \${REPO_PATH}/imgt_human_IGHD.fasta \${REPO_PATH}/imgt_human_IGHJ.fasta --extended&quot; if the present path is modified
+    igblast_organism = &quot;mouse&quot; // single character string of the value of the --organism option of AssignGenes.py igblast. Example: igblast_organism=&quot;human&quot;. Example: igblast_organism=&quot;mouse&quot;
+    igblast_loci = &quot;ig&quot; // single character string of the value of the --loci option of AssignGenes.py igblast. Example: igblast_loci=&quot;ig&quot;
+    igblast_aa = &quot;false&quot; // single character string either of the igblast protein (true) or nucleic (false) aligmnent. Either &quot;true&quot; or &quot;false&quot; in lower capitals. Warning: &quot;true&quot; means that the fasta sequences in sample_path must be aa sequences. Example: igblast_aa = &quot;false&quot;. igblast_aa = &quot;true&quot; does not work for the moment because no j data in the imgt database (compare AssignGenes.py igblast --help and AssignGenes.py igblast-aa --help). In addition, no junction data are returned by igblast-aa, which block the clone_assignment process
+    igblast_files = &quot;imgt_mouse_IGHV.fasta imgt_mouse_IGHD.fasta imgt_mouse_IGHJ.fasta&quot; // single character string of the files of igblast_database_path parameter to use (-r option of MakeDb.py igblast). Each file msut be separated by a single space. Example for human IGH: igblast_files=&quot;imgt_human_IGHV.fasta imgt_human_IGHD.fasta imgt_human_IGHJ.fasta&quot;. Example for human IGK: igblast_files=&quot;imgt_human_IGKV.fasta imgt_human_IGKJ.fasta&quot;. Example for mouse IGK: igblast_files=&quot;imgt_mouse_IGKV.fasta imgt_mouse_IGKJ.fasta&quot;. Example for human IGK + IGL: igblast_files = &quot;imgt_human_IGLV.fasta imgt_human_IGLJ.fasta imgt_human_IGKV.fasta imgt_human_IGKJ.fasta&quot;
+    clone_nb_seq = &quot;3&quot; // single character string of a positive integer value greater or equal to 3. Minimun number of non-identical sequences per clonal group for tree plotting. Example: clone_nb_seq = &quot;5&quot;. Cannot be below 3 as dowser::getTrees(clones, build=&quot;igphyml&quot;) needs at least three different sequences
+    clone_model = &quot;ham&quot; // single character string of the model used to compute the distance between sequences, before clutering them to clonal groups. Either &quot;ham&quot;, &quot;aa&quot;, &quot;hh_s1f&quot;, &quot;hh_s5f&quot;, &quot;mk_rs1nf&quot;, &quot;mk_rs5nf&quot;, &quot;m1n_compat&quot;, &quot;hs1f_compat&quot;. Warning. Must be &quot;aa&quot; if aa are used. See https://shazam.readthedocs.io/en/stable/topics/distToNearest/ and https://shazam.readthedocs.io/en/stable/vignettes/DistToNearest-Vignette/
+    clone_normalize = &quot;len&quot; // single character string of the normalization used to compute the distance between sequences, before clutering them to clonal groups. Either &quot;len&quot; or &quot;none&quot;. See the links in clone_model
+    clone_distance = &quot;0.15&quot; // single character string of a positive proportion value, setting the distance threhold that defines the appartenance of 2 sequences to a same clonal group or not. See https://shazam.readthedocs.io/en/stable/vignettes/DistToNearest-Vignette/. Example: clone_distance = &quot;0.15&quot;
+}
+
+/*
+########################
+##                    ##
+##     Graphics       ##
+##                    ##
+########################
+*/
+
+env {
+    meta_path = &quot;/mnt/c/Users/Gael/Documents/Git_projects/repertoire_profiler/dataset/ig_clustering_test_1/metadata.tsv&quot; // single character string of a valid path of a metadata file for adding additional info to the trees. Write &quot;NULL&quot; if no metadata to add. WARNING: the metadata .tsv table must include a first column named &quot;Label&quot; containing sequence names, i.e., the header of some of the fasta files from sample_path, without the &quot;&gt;&quot; of the header. Additionnal columns (quanti or quali) can then be added after the fisrt column to modify the leafs of the tree. For instance: &quot;KD&quot;, or Antibody name. Example: tree_meta_path = &quot;/mnt/c/Users/Gael/Documents/Git_projects/repertoire_profiler/dataset/metadata.tsv&quot;. Example: tree_meta_path = &quot;NULL&quot;
+    meta_name_replacement = &quot;Name&quot; // single character string of the name of the columns of the table indicated in the tree_meta_path parameter. This column will be used to replace the sequence names (header of the fasta files) by more appropriate names. Write &quot;NULL&quot; if not required and if tree_meta_path is not &quot;NULL&quot;. Ignored if tree_meta_path = &quot;NULL&quot;. Ignored if tree_meta_path = &quot;NULL&quot;. Example: tree_meta_name_replacement = &quot;KD&quot;. Of note, tree_leaf_size parameter is ignored if tree_meta_name_replacement is a numeric column ,and tree_leaf_shape is ignored if the column is another mode
+    meta_legend = &quot;KD&quot; // single character string of the name of the columns of the table indicated in the tree_meta_path parameter. This column will be used to add a legend in trees, in order to visualize an additionnal parameter like KD, names, etc. Ignored if tree_meta_path = &quot;NULL&quot;. Example: tree_meta_legend = &quot;KD&quot;. Of note, tree_leaf_size parameter is ignored if tree_meta_legend is a numeric column ,and tree_leaf_shape is ignored if the column is another mode
+    tree_kind = &quot;rectangular&quot; // single character string of the kind of tree. Can be &quot;rectangular&quot;, &quot;roundrect&quot;, &quot;slanted&quot;, &quot;ellipse&quot;, &quot;circular&quot;, &quot;fan&quot;, &quot;equal_angle&quot;, &quot;daylight&quot;. See https://yulab-smu.top/treedata-book/chapter4.html#tree-layouts
+    tree_duplicate_seq = &quot;FALSE&quot; // single character string indicating if identical sequences (with difference cell or sequence names) must be removed from trees or not. Either &quot;TRUE&quot; for keeping or &quot;FALSE&quot; for removing
+    tree_leaf_color = &quot;NULL&quot; // single character string of the color of leaf tip. Ignored if tree_meta_legend parameter is a name of a non numeric column of the tree_meta_path parameter
+    tree_leaf_shape = &quot;23&quot; // single character string of the shape of leaf tip. See http://127.0.0.1:25059/library/graphics/html/points.html
+    tree_leaf_size = &quot;3&quot; // single character string of the size of leafs (positive numeric value in mm, the size of the plot being 120 x 120 mm). Ignored if tree_meta_legend parameter is a name of a numeric column of the tree_meta_path parameter
+    tree_label_size = &quot;2&quot; // single character string of the size of leaf labeling (positive numeric value in mm, the size of the plot being 120 x 120 mm)
+    tree_label_hjust = &quot;-0.5&quot; // single character string of the adjustment of leaf labeling (numeric value)
+    tree_label_rigth = &quot;FALSE&quot; // single character string of the position of the labeling. Either &quot;TRUE&quot; or &quot;FALSE&quot;. Only works for tree_kind = &quot;rectangular&quot; and users need to use theme() to adjust tip labels in this case
+    tree_label_outside = &quot;TRUE&quot; // single character string of the display of the labeling outside of the plot region (if labels are truncated). Either &quot;TRUE&quot; or &quot;FALSE&quot;
+    tree_right_margin = &quot;1.5&quot; // single character string of the positive numeric value for the right margin in inches, considering 5 inches the width of the graphic device
+    tree_legend = &quot;TRUE&quot; // single character string of the display of the legend. Either &quot;TRUE&quot; or &quot;FALSE&quot;
+    donut_palette = &quot;NULL&quot; // single character string of the color palette of the donut. Write &quot;NULL&quot; for default. Example: donut_palette = &quot;Accent&quot;. See https://ggplot2.tidyverse.org/reference/scale_brewer.html#palettes
+    donut_hole_size = &quot;0.5&quot; // single character string of the positive proportion of donut central hole, 0 meaning no hole (pie chart) and 1 no plot (donut with a null thickness)
+    donut_hole_text = &quot;TRUE&quot; // single character string of the display of the sum of frequencies. Either &quot;TRUE&quot; or &quot;FALSE&quot;
+    donut_hole_text_size = &quot;14&quot; // single character string of the positive numeric value of the title font size in mm. Ignored if hole.text is FALSE
+    donut_border_color = &quot;gray50&quot; // single character string of the color of the donut borders. Either &quot;black&quot; or &quot;white&quot;. Example: donut_border_colors = &quot;black&quot;
+    donut_border_size = &quot;0.2&quot; // single character string of the size of the donut borders (positive numeric value in mm, the size of the plot being 120 x 120 mm)
+    donut_annotation_distance = &quot;0.8&quot; // single character string of the distance from the center of the slice. 0 means center of the slice, 0.5 means at the edge (positive numeric value ). Above 0.5, the donut will be reduced to make place for the annotation. Ignored if tree_meta_path is NULL
+    donut_annotation_size = &quot;4&quot; // single character string of the annotation font size in mm (numeric value). Ignored if tree_meta_path is NULL
+    donut_annotation_force = &quot;100&quot; // single character string of the force of repulsion between overlapping text labels (numeric value). See ?ggrepel::geom_text_repel() in R. Ignored if tree_meta_path is NULL
+    donut_annotation_force_pull = &quot;1&quot; // single character string of the force of attraction between a text label and its corresponding data point (numeric value). See ?ggrepel::geom_text_repel() in R. Ignored if tree_meta_path is NULL
+    donut_legend_width = &quot;0.5&quot; // single character string indicating the relative width of the legend sector (on the right of the plot) relative to the width of the plot (single proportion between 0 and 1). Value 1 means that the window device width is split in 2, half for the plot and half for the legend. Value 0 means no room for the legend, which will overlay the plot region. Write NULL to inactivate the legend sector. In such case, ggplot2 will manage the room required for the legend display, meaning that the width of the plotting region can vary between graphs, depending on the text in the legend
+    donut_legend_text_size = &quot;7&quot; // single character string of the font size in mm of the legend labels (numeric value)
+    donut_legend_box_size = &quot;3&quot; // single character string of the size of the legend squares in mm (numeric value)
+    donut_legend_box_space = &quot;2&quot; // single character string of the space between the legend boxes in mm (numeric value)
+    donut_legend_limit = &quot;0.05&quot; // single character string of the classes displayed in the legend for which the corresponding proportion is over the mentionned proportion threshold (positive proportion). Example: donut_legend_limit = 0.4 means that only the sectors over 40% of the donut will be in the legend. Write &quot;NULL&quot; for all the sectors in the legend (no limit required).
+}
+
+/*
+############################
+##                        ##
+##     Local / Cluster    ##
+##                        ##
+############################
+*/
+
+// see https://confluence.pasteur.fr/pages/viewpage.action?pageId=69304504
+system_exec = &#39;local&#39; // single character string of the system that runs the workflow. Either &#39;local&#39; to run on our own computer or &#39;slurm&#39; to run on the pasteur cluster. Example: system_exec = &#39;local&#39;
+queue = &#39;common,dedicated&#39; // single character string of the -p option of slurm. Example: queue = &#39;common,dedicated&#39;. Example: queue = &#39;hubbioit&#39;
+qos = &#39;--qos=ultrafast&#39; // single character string of the --qos option of slurm. Example: qos= &#39;--qos=fast&#39;. Example: qos = &#39;--qos=ultrafast&#39;. Example: qos = &#39;--qos=hubbioit&#39;
+add_options = &#39; &#39; // single character string of the additional option of slurm. Example: add_options = &#39;--exclude=maestro-1101,maestro-1034&#39; or add_options = &#39; &#39;, add_options = &#39;--time=70:00:00&#39; (acceptable time formats include &quot;minutes&quot;, &quot;minutes:seconds&quot;, &quot;hours:minutes:seconds&quot;, &quot;days-hours&quot;, &quot;days-hours:minutes&quot; and &quot;days-hours:minutes:seconds&quot;). See https://slurm.schedmd.com/sbatch.html#OPT_time for other options
+
+/*
+#############################
+##                         ##
+##     Other (optional)    ##
+##                         ##
+#############################
+*/
+
+env{
+    cute_path = &quot;https://gitlab.pasteur.fr/gmillot/cute_little_R_functions/-/raw/v12.4.0/cute_little_R_functions.R&quot; // single character string indicating the file (and absolute pathway) of the required cute_little_R_functions toolbox. With ethernet connection available, this can also be used: &quot;https://gitlab.pasteur.fr/gmillot/cute_little_R_functions/raw/v5.1.0/cute_little_R_functions.R&quot; or local &quot;C:\\Users\\Gael\\Documents\\Git_projects\\cute_little_R_functions\\cute_little_R_functions.R&quot;
+    igphylm_exe_path = &quot;/usr/local/share/igphyml/src/igphyml&quot; // single character string indicating the path of the igphyml exec file. Not it to change that path when using the containers defined below. Example: igphylm_exe_path = &quot;/usr/local/share/igphyml/src/igphyml&quot;. Example: igphylm_exe_path = &quot;\\\\wsl$\\Ubuntu-20.04\\home\\gael\\bin\\igphyml\\src\\igphyml&quot;
+}
+
+singularity_path = &quot;NULL&quot; // single character string of the path of the singularity folder (where all the singularity images are are pulled and stored for proper nextflow execution). Write &quot;NULL&quot; for default path (but will not work in most cases). Example: singularity_path=&#39;/pasteur/zeus/projets/p01/BioIT/gmillot/singularity&#39;. Example: singularity_path=&#39;/mnt/c/Users/gmillot/singularity&#39;. Example: singularity_path=&quot;$baseDir/singularity&quot; # do not forget double quotes
+out_path_ini = &quot;$baseDir/results&quot; // single character string of where the output files will be saved. Example out_path_ini = &#39;.&#39; for where the main.nf run is executed or out_path_ini = &quot;$baseDir/results&quot; to put the results in a result folder (created if required), $baseDir indicating where the main.nf run is executed. Example: out_path_ini = &#39;/mnt/c/Users/Gael/Desktop&#39;. Example : out_path_ini=&quot;/pasteur/zeus/projets/p01/BioIT/gmillot/project_c/results&quot;. Warning: this does not work: out_path_ini = &quot;/mnt/share/Users/gael/Desktop&quot;
+result_folder_name=&quot;repertoire_profiler&quot; // single character string.of the name of the folder where the results files are dorpped
+
+
+/*
+#########################################################################
+##                                                                     ##
+##     End Parameters that must be set by the user                     ##
+##                                                                     ##
+#########################################################################
+*/
+
+
+
+
+
+
+
+
+//////// Pre processing
+
+int secs = (new Date().getTime())/1000
+out_path=&quot;${out_path_ini}/${result_folder_name}_${secs}&quot;
+
+//////// end Pre processing
+
+
+
+//////// variables used here and also in the main.nf file
+
+env {
+    system_exec = &quot;${system_exec}&quot;
+    out_path_ini = &quot;${out_path_ini}&quot;
+    out_path = &quot;${out_path}&quot;
+    queue = &quot;${queue}&quot;
+    qos = &quot;${qos}&quot;
+    add_options = &quot;${add_options}&quot;
+}
+
+//////// variables used here and also in the main.nf file
+
+
+
+
+
+//////// Scopes
+
+// kind of execution. Either &#39;local&#39; or &#39;slurm&#39;
+// those are closures. See https://www.nextflow.io/docs/latest/script.html#closures
+executor {
+    name = &quot;${system_exec}&quot;
+    queueSize = 2000
+}
+
+// create a report folder and print a html report file . If no absolute path, will be where the run is executed
+// see https://www.nextflow.io/docs/latest/config.html#config-report
+report {
+       enabled = true
+       file = &quot;${out_path}/reports/report.html&quot; // warning: here double quotes to get the nextflow variable interpretation
+}
+
+// txt file with all the processes and info
+trace {
+    enabled = true
+    file = &quot;${out_path}/reports/trace.txt&quot;
+}
+
+// html file with all the processes
+timeline {
+    enabled = true
+    file = &quot;${out_path}/reports/timeline.html&quot;
+}
+
+// .dot picture of the workflow
+dag {
+    enabled = true
+    file = &quot;${out_path}/reports/nf_dag.png&quot;
+}
+
+
+// define singularity parameters
+singularity {
+    enabled = true
+    autoMounts = true // automatically mounts host paths in the executed container
+    if(system_exec == &#39;slurm&#39; || system_exec == &#39;slurm_local&#39;){
+        runOptions = &#39;--no-home --bind /pasteur&#39; //-B /run/shm:/run/shm has been removed because block the pipeline. Warning: clone_assignment process use python. Thus, -B /run/shm:/run/shm should be required normally
+    }else{
+        runOptions = &#39;--no-home -B /run/shm:/run/shm&#39; // --no-home prevent singularity to mount the $HOME path and thus forces singularity to work with only what is inside the container
+    }
+    //runOptions = &#39;--home $HOME:/home/$USER --bind /pasteur&#39; // provide any extra command line options supported by the singularity exec. Here, fait un bind de tout /pasteur dans /pasteur du container. Sinon pas d accès
+    if(singularity_path == &quot;NULL&quot;){
+        if(system_exec == &#39;slurm&#39;){
+            cacheDir = &#39;/pasteur/zeus/projets/p01/BioIT/gmillot/singularity&#39; // name of the directory where remote Singularity images are stored. When rerun, the exec directly uses these without redownloading them. When using a computing cluster it must be a shared folder accessible to all computing nodes
+        }else if(system_exec == &#39;slurm_local&#39;){
+            cacheDir = &#39;singularity&#39; // &quot;$baseDir/singularity&quot; can be used but do not forget double quotes.
+        }else{
+            cacheDir = &#39;/mnt/c/Users/gmillot/singularity&#39; // &quot;$baseDir/singularity&quot; can be used but do not forget double quotes.
+        }
+    }else{
+        cacheDir = &quot;${singularity_path}&quot;
+    }
+}
+
+//////// end Scopes
+
+
+
+//////// directives
+
+// provide the default directives for all the processes in the main.nf pipeline calling this config file
+process {
+// directives for all the processes
+    // executor=&#39;local&#39; // no need because already defined above in the executor scope
+    if(system_exec == &#39;slurm&#39;){
+        queue = &quot;$queue&quot;
+        clusterOptions = &quot;$qos $add_options&quot;
+        scratch=false
+        maxRetries=3
+        errorStrategy{ task.exitStatus in 137..143 ? &#39;retry&#39; : &#39;terminate&#39; }
+    }else{
+        maxRetries=0
+        errorStrategy=&#39;terminate&#39;
+    }
+
+    withLabel: bash {
+        container = &#39;gmillot/bash-extended_v4.0:gitlab_v8.0&#39;
+        cpus = 1
+        memory = &#39;500M&#39;
+    }
+
+    withLabel: immcantation {
+        container = &#39;gmillot/immcantation_v1.2:gitlab_v10.1&#39;
+        cpus = 1
+        memory = &#39;3G&#39;
+    }
+
+    withLabel: immcantation_10cpu {
+        container = &#39;gmillot/immcantation_v1.2:gitlab_v10.1&#39;
+        cpus = 10
+        memory = &#39;30G&#39;
+    }
+
+    withLabel: r_ext {
+        container=&#39;gmillot/r_v4.1.2_ig_clustering_v1.3:gitlab_v9.9&#39;
+        cpus=1 // only used when name = &quot;local&quot; in the executor part above
+        memory=&#39;3G&#39; // only used when name = &quot;local&quot; in the executor part above
+    }
+
+    withLabel: seqkit {
+        container=&#39;pegi3s/seqkit:2.3.0&#39;
+        cpus=1 // only used when name = &quot;local&quot; in the executor part above
+        memory=&#39;3G&#39; // only used when name = &quot;local&quot; in the executor part above
+    }
+
+}
+
+//////// end directives</code></pre>
+<p>A way to control number of attempts when failing process, depending
+on the kind of submission:</p>
+<pre><code>process {
+        queue = {task.attempt&gt;1 ? &quot;$normalqueue&quot; : &quot;$fastqueue&quot; }
+        clusterOptions = {task.attempt &gt; 1  ? &quot;$normalqos&quot; : &quot;$fastqos&quot; }
+        time = {task.attempt&gt;1 ? &#39;10h&#39; : &#39;10m&#39; }
+
+        memory={50.GB * task.attempt}
+}</code></pre>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>withLabel</td>
+<td>take the name of the label defined with the label tag.</td>
+</tr>
+<tr>
+<td>withName</td>
+<td>take the name of the process (only)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="136-nextflow-dsl1.html" class="btn btn-neutral float-left" title="Nextflow
+DSL1" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>

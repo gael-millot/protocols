@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Windows Subsystem for Linux (WSL) · protocol 140 · Bioinformatics
+protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul class="current">
+          <li class="toctree-l1"><a class="reference internal" href="044-bash.html"><span class="nav-num">44</span>Bash</a></li>
+          <li class="toctree-l1 current"><a class="reference internal current" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux
+(WSL)</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#documentations"><span class="sec-num">1</span>Documentations</a></li><li class="toctree-l2"><a class="reference internal" href="#description"><span class="sec-num">2</span>Description</a></li><li class="toctree-l2"><a class="reference internal" href="#installation-of-wsl2"><span class="sec-num">3</span>Installation of WSL2</a><ul><li class="toctree-l3"><a class="reference internal" href="#new-way-windows-11"><span class="sec-num">3.1</span>New way (windows 11)</a></li><li class="toctree-l3"><a class="reference internal" href="#old-way-windows-10"><span class="sec-num">3.2</span>old way (windows 10)</a></li><li class="toctree-l3"><a class="reference internal" href="#install-several-ubuntu-versions"><span class="sec-num">3.3</span>install several ubuntu versions</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#uninstall-wsl"><span class="sec-num">4</span>uninstall WSL</a></li><li class="toctree-l2"><a class="reference internal" href="#wslconfig"><span class="sec-num">5</span>.wslconfig</a></li><li class="toctree-l2"><a class="reference internal" href="#home-of-wsl"><span class="sec-num">6</span>Home of WSL</a></li><li class="toctree-l2"><a class="reference internal" href="#bashrc-and-.profile"><span class="sec-num">7</span>.bashrc and .profile</a><ul><li class="toctree-l3"><a class="reference internal" href="#bashrc"><span class="sec-num">7.1</span>.bashrc</a></li><li class="toctree-l3"><a class="reference internal" href="#profile"><span class="sec-num">7.2</span>.profile</a></li><li class="toctree-l3"><a class="reference internal" href="#inactivate-ctrlc"><span class="sec-num">7.3</span>Inactivate ctrl+C</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#open-a-session"><span class="sec-num">8</span>Open a session</a></li><li class="toctree-l2"><a class="reference internal" href="#drvfs"><span class="sec-num">9</span>DrvFs</a></li><li class="toctree-l2"><a class="reference internal" href="#go-into-mounted-volums"><span class="sec-num">10</span>Go into mounted volums</a><ul><li class="toctree-l3"><a class="reference internal" href="#mounting-local-drives"><span class="sec-num">10.1</span>Mounting local drives</a></li><li class="toctree-l3"><a class="reference internal" href="#mounting-network-locations"><span class="sec-num">10.2</span>Mounting network locations</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#preferences"><span class="sec-num">11</span>Preferences</a></li><li class="toctree-l2"><a class="reference internal" href="#version-of-ubuntu"><span class="sec-num">12</span>Version of ubuntu</a></li><li class="toctree-l2"><a class="reference internal" href="#where-to-install-applications"><span class="sec-num">13</span>Where to install applications</a></li><li class="toctree-l2"><a class="reference internal" href="#management-of-packages"><span class="sec-num">14</span>Management of packages</a><ul><li class="toctree-l3"><a class="reference internal" href="#in-summary"><span class="sec-num">14.1</span>In summary</a><ul><li class="toctree-l4"><a class="reference internal" href="#primary-operating-system-installation"><span class="sec-num">14.1.1</span>Primary Operating System installation</a></li><li class="toctree-l4"><a class="reference internal" href="#installation-of-all-the-available-packages-not-already-installed"><span class="sec-num">14.1.2</span>Installation of all the available packages not already installed</a></li><li class="toctree-l4"><a class="reference internal" href="#installation-of-a-specific-package"><span class="sec-num">14.1.3</span>Installation of a specific package</a></li><li class="toctree-l4"><a class="reference internal" href="#installation-of-a-metapackage"><span class="sec-num">14.1.4</span>Installation of a metapackage</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#apt"><span class="sec-num">14.2</span>APT</a></li><li class="toctree-l3"><a class="reference internal" href="#apt-command"><span class="sec-num">14.3</span>apt command</a></li><li class="toctree-l3"><a class="reference internal" href="#apt-get-command"><span class="sec-num">14.4</span>apt-get command</a></li><li class="toctree-l3"><a class="reference internal" href="#installation-of-packages"><span class="sec-num">14.5</span>Installation of packages</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#permissions"><span class="sec-num">15</span>Permissions</a><ul><li class="toctree-l3"><a class="reference internal" href="#sudo"><span class="sec-num">15.1</span>sudo</a><ul><li class="toctree-l4"><a class="reference internal" href="#sudo-ask-for-password-but-password-does-not-work"><span class="sec-num">15.1.1</span>sudo ask for password but password does not work</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#program-files"><span class="sec-num">15.2</span>Program files</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#ssh-key"><span class="sec-num">16</span>SSH key</a></li><li class="toctree-l2"><a class="reference internal" href="#prevent-the-sudo-password-prompt"><span class="sec-num">17</span>Prevent the sudo password prompt</a><ul><li class="toctree-l3"><a class="reference internal" href="#first-method"><span class="sec-num">17.1</span>First method</a></li><li class="toctree-l3"><a class="reference internal" href="#second-method"><span class="sec-num">17.2</span>Second method</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#c-drive-not-available-question-marks-in-ls--la"><span class="sec-num">18</span>C drive not available (question marks in ls -la)</a></li><li class="toctree-l2"><a class="reference internal" href="#access-to-linux-files-from-windows"><span class="sec-num">19</span>Access to Linux files from Windows</a><ul><li class="toctree-l3"><a class="reference internal" href="#via-the-windows-explorer"><span class="sec-num">19.1</span>Via the windows explorer</a></li><li class="toctree-l3"><a class="reference internal" href="#via-map-a-network-drive"><span class="sec-num">19.2</span>Via Map a network drive</a></li><li class="toctree-l3"><a class="reference internal" href="#via-command-lines-powershell"><span class="sec-num">19.3</span>Via command lines (Powershell)</a></li><li class="toctree-l3"><a class="reference internal" href="#via-r"><span class="sec-num">19.4</span>Via R</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#x11"><span class="sec-num">20</span>X11</a></li><li class="toctree-l2"><a class="reference internal" href="#llama-files"><span class="sec-num">21</span>Llama files</a></li><li class="toctree-l2"><a class="reference internal" href="#troubleshooting"><span class="sec-num">22</span>Troubleshooting</a><ul><li class="toctree-l3"><a class="reference internal" href="#network-lost"><span class="sec-num">22.1</span>Network lost</a></li><li class="toctree-l3"><a class="reference internal" href="#the-prompt"><span class="sec-num">22.2</span>the &gt; prompt</a></li></ul></li></ul></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="084-python.html"><span class="nav-num">84</span>Python</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="165-java.html"><span class="nav-num">165</span>Java</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="134-docker.html"><span class="nav-num">134</span>Docker</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">Linux, shells and editors</li>
+            <li class="breadcrumb-item active">Protocol 140</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/140-wsl2-linux-on-windows.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Windows Subsystem for Linux (WSL)</h1>
+<p class="protocol-meta"><span>Protocol 140</span><span>revision 0</span><span>last update 2026-11-09</span></p>
+<h2 id="documentations"><span class="header-section-number">1</span>
+Documentations<a class="headerlink" href="#documentations" title="Link to this heading"></a></h2>
+<h2 id="description"><span class="header-section-number">2</span>
+Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>It is different from PowerShell which is the successor of CMD:</p>
+<p><a href="https://en.wikipedia.org/wiki/PowerShell"
+class="uri">https://en.wikipedia.org/wiki/PowerShell</a></p>
+<p><a
+href="https://www.nextinpact.com/article/30305/107973-windows-10-mai-2020-nouveau-sous-systeme-linux-wsl-2-est-la-comment-installer-et-utiliser"
+class="uri">https://www.nextinpact.com/article/30305/107973-windows-10-mai-2020-nouveau-sous-systeme-linux-wsl-2-est-la-comment-installer-et-utiliser</a></p>
+<figure>
+<img src="../md/img/140-wsl2-linux-on-windows/image1.jpeg"
+style="width:73.0%" loading="lazy"
+alt="windows wsl linux ubuntu bash" />
+<figcaption aria-hidden="true">windows wsl linux ubuntu
+bash</figcaption>
+</figure>
+<h2 id="installation-of-wsl2"><span
+class="header-section-number">3</span> Installation of
+WSL2<a class="headerlink" href="#installation-of-wsl2" title="Link to this heading"></a></h2>
+<h3 id="new-way-windows-11"><span
+class="header-section-number">3.1</span> New way (windows
+11)<a class="headerlink" href="#new-way-windows-11" title="Link to this heading"></a></h3>
+<p>Open the terminal as administrator.</p>
+<p>To get the version of the powershell, write and press enter:</p>
+<pre><code>$PSVersionTable</code></pre>
+<p>Optional:</p>
+<p>If the version is 5, then install version 7:</p>
+<p><a
+href="https://learn.microsoft.com/en-us/powershell/scripting/whats-new/migrating-from-windows-powershell-51-to-powershell-7?view=powershell-7.3"
+class="uri">https://learn.microsoft.com/en-us/powershell/scripting/whats-new/migrating-from-windows-powershell-51-to-powershell-7?view=powershell-7.3</a></p>
+<p>In windows 11, WSL2 is pre-installed as it is in the terminal.</p>
+<p>Open the terminal as administrator and see the main commands of
+WSL:</p>
+<p><a
+href="https://learn.microsoft.com/fr-fr/windows/wsl/basic-commands"
+class="uri">https://learn.microsoft.com/fr-fr/windows/wsl/basic-commands</a></p>
+<p>See also :<a
+href="https://learn.microsoft.com/fr-fr/windows/wsl/install"
+class="uri">https://learn.microsoft.com/fr-fr/windows/wsl/install</a></p>
+<p>Open the terminal as administrator.</p>
+<p>Then write :</p>
+<pre><code>wsl --list --online</code></pre>
+<p>This display the different distribution of linux that can be
+installed. Any other command of WSL at that time returns the help of
+wsl, because no distribution of linux is installed.</p>
+<p>Install wsl functions without linux distributions:</p>
+<pre><code>wsl --install --no-distribution</code></pre>
+<p>Then, check the version:</p>
+<pre><code>wsl --status
+wsl --version # sometimes does not work</code></pre>
+<p>The second one does not correspond to the version 1 or 2 of wsl</p>
+<p>Check also the distribution already installed with which version of
+wsl:</p>
+<pre><code>wsl -l -v</code></pre>
+<p>At that time:</p>
+<pre><code>wsl ~</code></pre>
+<p><code>d</code>oes not work, because no distribution of linux is
+installed</p>
+<p>Restart the computer.</p>
+<p>Check that windows subsystem for linux is activated:</p>
+<p>Menu start/settings/System/optional features/More windows
+features:</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image2.png"
+style="width:86.0%" loading="lazy" /></p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image3.png"
+style="width:47.0%" loading="lazy" /></p>
+<p>Restart the PC.</p>
+<p>Install:</p>
+<pre><code>wsl --install --distribution Ubuntu-20.04</code></pre>
+<p>If the linux session open, write :</p>
+<pre><code>exit</code></pre>
+<p>To go back to the powershell.</p>
+<p>Check the version of linux installed:</p>
+<pre><code>wsl --list --verbose</code></pre>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image4.png"
+loading="lazy" /></p>
+<p>If not the case, set the default distrib to open using the
+terminal:</p>
+<pre><code>wsl --set-version Ubuntu-20.04 2</code></pre>
+<p>Normally, the ubuntu distrib does not appear on the terminal distrib
+:</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image5.png"
+style="width:93.0%" loading="lazy" /></p>
+<p>However, opening ubuntu put, as the corresponding opened window, a
+terminal icon in the taskbar.</p>
+<p>Do not use this process for the moment :</p>
+<blockquote>
+<p>In firefox, go to the microsoft store webpage:</p>
+<p><a href="https://apps.microsoft.com/store"
+class="uri">https://apps.microsoft.com/store</a></p>
+<p>Choose ubuntu 20.04 LST</p>
+<p><a
+href="https://apps.microsoft.com/store/detail/ubuntu-20046-lts/9MTTCL66CPXJ"
+class="uri">https://apps.microsoft.com/store/detail/ubuntu-20046-lts/9MTTCL66CPXJ</a></p>
+<p>Click on "obtain"</p>
+<p>Normally, installation of WSL2 is done.</p>
+<p>Give login name and password, otherwise, the home will not be in
+<code>\\wsl$\Ubuntu-20.04\home\gmillot</code> (see section <a
+href="#home-of-wsl">Home of WSL</a>):</p>
+<p><a
+href="https://learn.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password"
+class="uri">https://learn.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password</a></p>
+</blockquote>
+<h3 id="old-way-windows-10"><span
+class="header-section-number">3.2</span> old way (windows
+10)<a class="headerlink" href="#old-way-windows-10" title="Link to this heading"></a></h3>
+<p>Use the manual installation described in <a
+href="https://docs.microsoft.com/en-us/windows/wsl/install-win10"
+class="uri">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a></p>
+<p>Check the version of windows 10 (see protocol 117). For For x64
+systems, it must be Version 1903 or higher, with Build 18362 or
+higher.</p>
+<p>Open PowerShell as Administrator and run:</p>
+<pre><code>dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart</code></pre>
+<p>Download the latest package of WSL2 Linux kernel update package for
+x64 machines</p>
+<p><a
+href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
+class="uri">https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi</a></p>
+<p>Click on the file to install it.</p>
+<p>Open the terminal as administrator.</p>
+<p>Then write :</p>
+<pre><code>wsl --list --online</code></pre>
+<p>This display the different distribution of linux that can be
+installed. Any other command of WSL at that time returns the help of
+wsl, because no distribution of linux is installed.</p>
+<p>Install wsl functions without linux distributions:</p>
+<pre><code>wsl --install --no-distribution</code></pre>
+<p>Then, check the version:</p>
+<pre><code>wsl --status
+wsl --version # sometimes does not work</code></pre>
+<p>The second one does not correspond to the version 1 or 2 of wsl</p>
+<p>Check also the distribution already installed with which version of
+wsl:</p>
+<pre><code>wsl -l -v</code></pre>
+<p>At that time:</p>
+<pre><code>wsl ~</code></pre>
+<p><code>d</code>oes not work, because no distribution of linux is
+installed</p>
+<p>Check that windows subsystem for linux is activated:</p>
+<p>Go in menu System/Fonctionalités facultatives, click on the top rigth
+"Plus de fonctionalités windows".</p>
+<p>check this for WSL:</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image3.png"
+style="width:47.0%" loading="lazy" /></p>
+<p>Restart the PC.</p>
+<p>Open the terminal as administrator.</p>
+<p>Then write :</p>
+<pre><code>wsl --install --distribution Ubuntu-20.04</code></pre>
+<p>If the linux session open, write :</p>
+<pre><code>exit</code></pre>
+<p>To go back to the powershell.</p>
+<p>Check the version of linux installed:</p>
+<pre><code>wsl --list --verbose</code></pre>
+<p>Old way :</p>
+<p>In the terminal:</p>
+<pre><code>wsl --set-default-version 2</code></pre>
+<p>Open the <a href="https://aka.ms/wslstore">Microsoft Store</a> and
+select your favorite Linux distribution.</p>
+<p>Take Ubuntu 20.04 LTS</p>
+<p><a
+href="https://apps.microsoft.com/store/detail/ubuntu-20046-lts/9MTTCL66CPXJ"
+class="uri">https://apps.microsoft.com/store/detail/ubuntu-20046-lts/9MTTCL66CPXJ</a></p>
+<p>Click on "obtain"</p>
+<p>Give login name and password, otherwise, the home will not be in
+<code>\\wsl$\Ubuntu-20.04\home\gmillot</code> (see section <a
+href="#home-of-wsl">Home of WSL</a>):</p>
+<p><a
+href="https://learn.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password"
+class="uri">https://learn.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password</a></p>
+<p>Such install does not work from Pasteur.</p>
+<p>It is now installed:</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image6.png"
+style="width:44.0%" loading="lazy" /></p>
+<h3 id="install-several-ubuntu-versions"><span
+class="header-section-number">3.3</span> install several ubuntu
+versions<a class="headerlink" href="#install-several-ubuntu-versions" title="Link to this heading"></a></h3>
+<p>See <a
+href="https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-11-with-gui-support#3-download-ubuntu"
+class="uri">https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-11-with-gui-support#3-download-ubuntu</a>
+for more description about how to 1) deal with the different version of
+ubuntu installed, 2) install several versions, etc.</p>
+<h2 id="uninstall-wsl"><span class="header-section-number">4</span>
+uninstall
+WSL<a class="headerlink" href="#uninstall-wsl" title="Link to this heading"></a></h2>
+<p><a
+href="https://www.groovypost.com/howto/uninstall-linux-from-windows-11/"
+class="uri">https://www.groovypost.com/howto/uninstall-linux-from-windows-11/</a></p>
+<h2 id="wslconfig"><span class="header-section-number">5</span>
+.wslconfig<a class="headerlink" href="#wslconfig" title="Link to this heading"></a></h2>
+<p>This file is optional. It sets some settings for WSL.</p>
+<p>It must be present in the Windows home:</p>
+<p>C:\Users\gmillot</p>
+<p>Settings can be memory, CPU, etc.</p>
+<p>To test the memory allocated to WSL, open WSL and:</p>
+<pre><code>top</code></pre>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image7.png"
+loading="lazy" /></p>
+<p>Or:</p>
+<pre><code>free -h</code></pre>
+<p>To have the CPU allocated:</p>
+<pre><code>nproc</code></pre>
+<p>To change and set other values, write in .wslconfig:</p>
+<pre><code>[wsl2]
+memory=110GB   # How much memory to assign to WSL2 (e.g., 4GB, 8GB)
+processors=31 # How many processors to assign to WSL2
+swap=30GB     # How much swap space to use (e.g., 8GB)
+localhostForwarding=true # Enable or disable localhost forwarding</code></pre>
+<p>Of note:</p>
+<p>localhostForwarding:</p>
+<p>by default, WSL2 uses a virtual network adapter to provide network
+connectivity, which means that services running inside WSL2 are usually
+accessed via a separate IP address from the Windows host. However, with
+localhostForwarding set to true, WSL2 will forward network requests from
+localhost on the Windows host to the WSL2 environment, allowing you to
+use localhost to access services running inside WSL2 as if they were
+running directly on Windows.</p>
+<p>swape:</p>
+<p>swap space that WSL2 is allowed to use. Swap space is a form of
+virtual memory that allows the operating system to use hard disk space
+to store data that does not fit into physical RAM. If the system runs
+out of physical memory, less frequently used data can be moved to the
+swap space to free up RAM for more immediate tasks.</p>
+<p>Then save and close this file.</p>
+<p>Open a windows powershell windows in admin mode.</p>
+<p>Type:</p>
+<pre><code>wsl --shutdown</code></pre>
+<p>Just closing all the WSL windows does not seem sufficient.</p>
+<h2 id="home-of-wsl"><span class="header-section-number">6</span> Home
+of
+WSL<a class="headerlink" href="#home-of-wsl" title="Link to this heading"></a></h2>
+<p><a
+href="https://superuser.com/questions/1185033/what-is-the-home-directory-on-windows-subsystem-for-linux"
+class="uri">https://superuser.com/questions/1185033/what-is-the-home-directory-on-windows-subsystem-for-linux</a></p>
+<p>The home absolute path is (windows):</p>
+<p><code>\\wsl$\Ubuntu-20.04\home\gmillot</code></p>
+<p>And Linux (WSL2):</p>
+<p>/home/gmillot/</p>
+<p>This is where .profile and .bashrc must be present.</p>
+<p>In fact, the environment is considered as a network:</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image8.png"
+style="width:82.0%" loading="lazy" /></p>
+<p>Such windows can be opened typing in the linux console:</p>
+<pre><code>explorer.exe .</code></pre>
+<p>To navigate into the windows folders, start from /mnt/. Example:</p>
+<pre><code>cd /mnt/c/Users/gmillot/</code></pre>
+<p>Warning:</p>
+<pre><code>/mnt/wsl</code></pre>
+<p>is a dead end (empty file).</p>
+<h2 id="bashrc-and-.profile"><span
+class="header-section-number">7</span> .bashrc and
+.profile<a class="headerlink" href="#bashrc-and-.profile" title="Link to this heading"></a></h2>
+<p>This is an example of what can be written in the two .bashrc and
+.profile files, that must be present in the wsl home user (i.e.,
+<code>\\wsl$\Ubuntu-20.04\home\gmillot</code>):</p>
+<h3 id="bashrc"><span class="header-section-number">7.1</span>
+.bashrc<a class="headerlink" href="#bashrc" title="Link to this heading"></a></h3>
+<pre><code># ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don&#39;t do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don&#39;t put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don&#39;t overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern &quot;**&quot; used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] &amp;&amp; eval &quot;$(SHELL=/bin/sh lesspipe)&quot;
+
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don&#39;t need to enable
+# this, if it&#39;s already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi</code></pre>
+<h3 id="profile"><span class="header-section-number">7.2</span>
+.profile<a class="headerlink" href="#profile" title="Link to this heading"></a></h3>
+<pre><code># ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+
+######################
+# PATH               #
+######################
+
+
+# set PATH so it includes user&#39;s private bin if it exists
+if [ -d &quot;$HOME/bin&quot; ] ; then
+    PATH=&quot;$HOME/bin:$PATH&quot;
+fi
+
+# set PATH so it includes user&#39;s private bin if it exists
+if [ -d &quot;$HOME/.local/bin&quot; ] ; then
+    PATH=&quot;$HOME/.local/bin:$PATH&quot;
+fi
+
+
+export PATH=&quot;/usr/local/go/bin:${PATH}:${GOPATH}/bin&quot; # for singularity
+export PATH=&quot;/usr/local/bin:$PATH&quot; # for nextflow
+export PATH=&quot;/home/gmillot/bin/scripts:$PATH&quot; # for IMGT tools
+export PATH=&quot;/home/gmillot/bin/igphyml/src:$PATH&quot; # for igphyml tools
+# export PATH=&quot;/home/gmillot/share/igblast/fasta:$PATH&quot; # for IMGT tool databases
+# export PATH=&quot;/home/gmillot/share/igblast:$PATH&quot; # for IMGT tool databases
+# export PATH=&quot;/home/gmillot/share/germlines/imgt:$PATH&quot; # for IMGT tool databases
+# export PATH=&quot;/home/gmillot/share/germlines/imgt/human/vdj:$PATH&quot; # for IMGT tool databases
+
+
+######################
+# END PATH           #
+######################
+
+
+
+
+######################
+# VARIABLES          #
+######################
+
+
+export CHOME=&quot;/mnt/c/Users/gmillot/Documents/&quot;
+export PROJECT=&quot;/mnt/c/Users/gmillot/Documents/Git_projects/project_a/&quot;
+export GIT=&quot;/mnt/c/Users/gmillot/Documents/Git_projects/&quot;
+export GOPATH=${HOME}/go # for singularity
+export DISPLAY=$(ip route list default | awk &#39;{print $3}&#39;):0 # for X11 via vcxsrv
+export LIBGL_ALWAYS_INDIRECT=1 # for X11 via vcxsrv
+
+
+######################
+# END VARIABLES      #
+######################
+
+
+
+
+######################
+# BASHRC             #
+######################
+
+# incorporation of the .bashrc file
+# if running bash
+if [ -n &quot;$BASH_VERSION&quot; ]; then
+    # include .bashrc if it exists
+    if [ -f &quot;$HOME/.bashrc&quot; ]; then
+    . &quot;$HOME/.bashrc&quot;
+    fi
+fi
+
+
+######################
+# END BASHRC         #
+######################
+
+
+
+
+
+
+######################
+# STANDARDS COMMANDS #
+######################
+
+alias tree=&quot;find . -print | sed -e &#39;s;[^/]*/;|--;g;s;____|; |;g&#39;&quot;
+
+##########################
+# END STANDARDS COMMANDS #
+##########################
+
+
+
+
+######################
+# DOCKER COMMANDS    #
+######################
+
+function docker_rm_all {
+    docker rm $(docker ps --all -q -f status=exited)
+}
+
+##########################
+# END DOCKER COMMANDS    #
+##########################
+
+
+#############################
+# SHORT CUT INACTIVATION    #
+#############################
+
+trap &#39;&#39; SIGINT # https://stackoverflow.com/questions/37148672/how-to-prevent-a-user-from-using-ctrl-c-to-stop-a-script
+
+#################################
+# END SHORT CUT INACTIVATION    #
+#################################
+
+
+
+#######################
+# PROMPT REDEFINITION #
+#######################
+
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z &quot;${debian_chroot:-}&quot; ] &amp;&amp; [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we &quot;want&quot; color)
+case &quot;$TERM&quot; in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n &quot;$force_color_prompt&quot; ]; then
+    if [ -x /usr/bin/tput ] &amp;&amp; tput setaf 1 &gt;&amp;/dev/null; then
+    # We have color support; assume it&#39;s compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
+
+if [ &quot;$color_prompt&quot; = yes ]; then
+    PS1=&#39;${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ &#39;
+else
+    PS1=&#39;${debian_chroot:+($debian_chroot)}\u@\h:\w\$ &#39;
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case &quot;$TERM&quot; in
+xterm*|rxvt*)
+    PS1=&quot;\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1&quot;
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors &amp;&amp; eval &quot;$(dircolors -b ~/.dircolors)&quot; || eval &quot;$(dircolors -b)&quot;
+    alias ls=&#39;ls --color=auto&#39;
+    #alias dir=&#39;dir --color=auto&#39;
+    #alias vdir=&#39;vdir --color=auto&#39;
+
+    alias grep=&#39;grep --color=auto&#39;
+    alias fgrep=&#39;fgrep --color=auto&#39;
+    alias egrep=&#39;egrep --color=auto&#39;
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS=&#39;error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01&#39;
+
+# some more ls aliases
+alias ll=&#39;ls -alF&#39;
+alias la=&#39;ls -A&#39;
+alias l=&#39;ls -CF&#39;
+
+# Add an &quot;alert&quot; alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert=&#39;notify-send --urgency=low -i &quot;$([ $? = 0 ] &amp;&amp; echo terminal || echo error)&quot; &quot;$(history|tail -n1|sed -e &#39;\&#39;&#39;s/^\s*[0-9]\+\s*//;s/[;&amp;|]\s*alert$//&#39;\&#39;&#39;)&quot;&#39;
+
+
+###########################
+# END PROMPT REDEFINITION #
+###########################
+
+
+
+###############################
+# GIT PROMPT REDEFINITION     #
+###############################
+
+# install first git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
+
+if [ -f &quot;$HOME/.bash-git-prompt/gitprompt.sh&quot; ]; then
+    GIT_PROMPT_ONLY_IN_REPO=1
+
+    # GIT_PROMPT_FETCH_REMOTE_STATUS=0   # uncomment to avoid fetching remote status
+    # GIT_PROMPT_IGNORE_SUBMODULES=1 # uncomment to avoid searching for changed files in submodules
+    # GIT_PROMPT_WITH_VIRTUAL_ENV=0 # uncomment to avoid setting virtual environment infos for node/python/conda environments
+    # GIT_PROMPT_VIRTUAL_ENV_AFTER_PROMPT=1 # uncomment to place virtual environment infos between prompt and git status (instead of left to the prompt)
+
+    # GIT_PROMPT_SHOW_UPSTREAM=1 # uncomment to show upstream tracking branch
+    # GIT_PROMPT_SHOW_UNTRACKED_FILES=normal # can be no, normal or all; determines counting of untracked files
+
+    # GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=0 # uncomment to avoid printing the number of changed files
+
+    # GIT_PROMPT_STATUS_COMMAND=gitstatus_pre-1.7.10.sh # uncomment to support Git older than 1.7.10
+
+    # GIT_PROMPT_START=...    # uncomment for custom prompt start sequence
+    # GIT_PROMPT_END=...      # uncomment for custom prompt end sequence
+
+    # as last entry source the gitprompt script
+    # GIT_PROMPT_THEME=Custom # use custom theme specified in file GIT_PROMPT_THEME_FILE (default ~/.git-prompt-colors.sh)
+    # GIT_PROMPT_THEME_FILE=~/.git-prompt-colors.sh
+    # GIT_PROMPT_THEME=Solarized # use theme optimized for solarized color scheme
+    source &quot;$HOME/.bash-git-prompt/gitprompt.sh&quot;
+fi
+
+###############################
+# END GIT PROMPT REDEFINITION #
+###############################</code></pre>
+<h3 id="inactivate-ctrlc"><span class="header-section-number">7.3</span>
+Inactivate
+ctrl+C<a class="headerlink" href="#inactivate-ctrlc" title="Link to this heading"></a></h3>
+<p><a
+href="https://stackoverflow.com/questions/37148672/how-to-prevent-a-user-from-using-ctrl-c-to-stop-a-script"
+class="uri">https://stackoverflow.com/questions/37148672/how-to-prevent-a-user-from-using-ctrl-c-to-stop-a-script</a></p>
+<p>Write :</p>
+<pre><code>trap &#39;&#39; SIGINT # or trap &#39;&#39; 2</code></pre>
+<p>To see the list of the kill numbers and detect the number of
+SIGINT</p>
+<pre><code>kill -l</code></pre>
+<h2 id="open-a-session"><span class="header-section-number">8</span>
+Open a
+session<a class="headerlink" href="#open-a-session" title="Link to this heading"></a></h2>
+<p>Clic on the icon in the start menu</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image9.png"
+loading="lazy" /></p>
+<h2 id="drvfs"><span class="header-section-number">9</span>
+DrvFs<a class="headerlink" href="#drvfs" title="Link to this heading"></a></h2>
+<p>DrvFs is a filesystem plugin to WSL that was designed to support
+interop between WSL and the Windows filesystem. DrvFs enables WSL to
+mount drives with supported file systems under /mnt, such as /mnt/c,
+/mnt/d, etc.</p>
+<p>You can learn more about DrvFs and the WSL filesystem in a previous
+blog post from June 2016, <a
+href="https://blogs.msdn.microsoft.com/wsl/2016/06/15/wsl-file-system-support/">WSL
+File System Support</a>, which covers the Linux filesystem as it
+pertains to WSL and compares it to the Windows filesystem.</p>
+<h2 id="go-into-mounted-volums"><span
+class="header-section-number">10</span> Go into mounted
+volums<a class="headerlink" href="#go-into-mounted-volums" title="Link to this heading"></a></h2>
+<h3 id="mounting-local-drives"><span
+class="header-section-number">10.1</span> Mounting local
+drives<a class="headerlink" href="#mounting-local-drives" title="Link to this heading"></a></h3>
+<p>In order to mount a Windows drive using DrvFs, you can use the
+regular Linux mount command. For example, to mount a removable drive D:
+as /mnt/d directory, run the following commands:</p>
+<pre><code>volum=&quot;d&quot;
+# Warning: never use rm -r
+sudo mkdir /mnt/$volum
+sudo mount -r -t drvfs ${volum^^}: /mnt/$volum
+# -o ro: read only mode
+# -r: read only mode
+chmod u=rx,g=rx,o=rx /mnt/$volum #provide an error message that says that the folder is Read-only file system</code></pre>
+<p>Warning: if D: does not exist in windows, it will return an error (we
+can only mount what exists).</p>
+<p>Now, you will be able to access the files of your D: drive under
+/mnt/d. When you wish to unmount the drive, for example so you can
+safely remove it, run the following command:</p>
+<pre><code>sudo umount /mnt/$volum
+# Warning: never use rm -r
+# if &quot;target is busy&quot; message, get out of /mnt/$volum (go back to home for instance)</code></pre>
+<p><mark><mark>Warning: never use rm -r after</mark></mark>
+<code>mkdir /mnt/$volum</code>, because it remove all the distant files
+!</p>
+<p>With:</p>
+<pre><code>sudo mount -r</code></pre>
+<p>It is not possible to remove files.</p>
+<h3 id="mounting-network-locations"><span
+class="header-section-number">10.2</span> Mounting network
+locations<a class="headerlink" href="#mounting-network-locations" title="Link to this heading"></a></h3>
+<p>When you wish to mount a network location, you can of course create a
+mapped network drive in Windows and mount that as indicated above.
+However, it's also possible to mount them directly using a UNC path:</p>
+<pre><code># Warning: never use rm -r
+sudo mkdir /mnt/share
+sudo mount -t drvfs &#39;\\zeus.pasteur.fr\BioIT\gmillot&#39; /mnt/share</code></pre>
+<p>This mount <code>\\zeus.pasteur.fr\BioIT\gmillot</code> into
+<code>/mnt/share</code></p>
+<p>With a variable, use this:</p>
+<pre><code>FOLDER=&quot;\\\zeus.pasteur.fr\BioIT\gmillot&quot;
+sudo mount -t drvfs &quot;$FOLDER&quot; /mnt/share</code></pre>
+<h2 id="preferences"><span class="header-section-number">11</span>
+Preferences<a class="headerlink" href="#preferences" title="Link to this heading"></a></h2>
+<p><span class="red">Right-click an empty part of the title bar and
+select "Properties"</span></p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image10.png"
+style="width:45.0%" loading="lazy" /></p>
+<h2 id="version-of-ubuntu"><span class="header-section-number">12</span>
+Version of
+ubuntu<a class="headerlink" href="#version-of-ubuntu" title="Link to this heading"></a></h2>
+<p>Check for the version of Ubuntu</p>
+<pre><code>echo $(lsb_release -cs)</code></pre>
+<p>focal means "Ubuntu 20.04.6 LTS"</p>
+<p>jammy means "Ubuntu 22.04.6 LTS"</p>
+<h2 id="where-to-install-applications"><span
+class="header-section-number">13</span> Where to install
+applications<a class="headerlink" href="#where-to-install-applications" title="Link to this heading"></a></h2>
+<p><a
+href="https://unix.stackexchange.com/questions/11544/what-is-the-difference-between-opt-and-usr-local/11552#11552"
+class="uri">https://unix.stackexchange.com/questions/11544/what-is-the-difference-between-opt-and-usr-local/11552#11552</a></p>
+<pre><code>/usr/local</code></pre>
+<h2 id="management-of-packages"><span
+class="header-section-number">14</span> Management of
+packages<a class="headerlink" href="#management-of-packages" title="Link to this heading"></a></h2>
+<h3 id="in-summary"><span class="header-section-number">14.1</span> In
+summary<a class="headerlink" href="#in-summary" title="Link to this heading"></a></h3>
+<h4 id="primary-operating-system-installation"><span
+class="header-section-number">14.1.1</span> Primary Operating System
+installation<a class="headerlink" href="#primary-operating-system-installation" title="Link to this heading"></a></h4>
+<p>1) OS Ubuntu Installation</p>
+<p>2) List of the packages in the <u>distant repository</u> of the
+OS:</p>
+<p><code>dpkg</code> (Debian package) low level tool managing the
+packages for Debian. Do not manage dependencies, contrary to apt. <a
+href="https://doc.ubuntu-fr.org/dpkg"
+class="uri">https://doc.ubuntu-fr.org/dpkg</a></p>
+<pre><code>dpkg -l # --list</code></pre>
+<pre><code>Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name                           Version                            Architecture Description
++++-==============================-==================================-============-===================
+ii  accountsservice                0.6.55-0ubuntu12~20.04.4           amd64        query and manipulate user account information
+ii  adduser                        3.118ubuntu2                       all          add and remove users and groups
+ii  adwaita-icon-theme             3.36.1-2ubuntu0.20.04.2            all          default icon theme of GNOME (small subset)</code></pre>
+<p>But another solution is to use the apt library (see section <a
+href="#apt">APT</a>):</p>
+<pre><code>apt list</code></pre>
+<p>This one says if the package is already installed or not.</p>
+<p>3) Update the OS for main packages:</p>
+<p>It is better to use the apt library since the install deals with
+dependencies:</p>
+<pre><code>sudo apt-get update --fix-missing
+sudo apt-get upgrade</code></pre>
+<p>Warning: this does not update the already installed packages. For
+that, use :</p>
+<pre><code>sudo apt-get install gawk</code></pre>
+<h4
+id="installation-of-all-the-available-packages-not-already-installed"><span
+class="header-section-number">14.1.2</span> Installation of all the
+available packages not already
+installed<a class="headerlink" href="#installation-of-all-the-available-packages-not-already-installed" title="Link to this heading"></a></h4>
+<pre><code>sudo apt-get update --fix-missing
+sudo apt-get upgrade</code></pre>
+<h4 id="installation-of-a-specific-package"><span
+class="header-section-number">14.1.3</span> Installation of a specific
+package<a class="headerlink" href="#installation-of-a-specific-package" title="Link to this heading"></a></h4>
+<pre><code>sudo apt-get install gawk</code></pre>
+<p>With a specific version, use :</p>
+<pre><code>dpkg -l gawk # --list</code></pre>
+<p>To get the list. Then:</p>
+<pre><code>sudo apt-get install gawk=1:5.0.1+dfsg-1</code></pre>
+<h4 id="installation-of-a-metapackage"><span
+class="header-section-number">14.1.4</span> Installation of a
+metapackage<a class="headerlink" href="#installation-of-a-metapackage" title="Link to this heading"></a></h4>
+<p>build-essential is a metapackage taht install lots of essential
+packages. See <a
+href="https://packages.debian.org/fr/sid/build-essential"
+class="uri">https://packages.debian.org/fr/sid/build-essential</a></p>
+<h3 id="apt"><span class="header-section-number">14.2</span>
+APT<a class="headerlink" href="#apt" title="Link to this heading"></a></h3>
+<p>Advanced Package Tool (APT), is a free-software user interface that
+works with core libraries to handle the installation and removal of
+software on Debian-based Linux Distributions.</p>
+<p><a
+href="https://en.wikipedia.org/wiki/APT_%28software%29">https://en.wikipedia.org/wiki/APT_(software)</a>.</p>
+<p>This library of package is managed by the <code>apt</code> and
+<code>apt-get</code> commands.</p>
+<h3 id="apt-command"><span class="header-section-number">14.3</span> apt
+command<a class="headerlink" href="#apt-command" title="Link to this heading"></a></h3>
+<p><a href="https://manpages.debian.org/stretch/apt/apt.8.en.html"
+class="uri">https://manpages.debian.org/stretch/apt/apt.8.en.html</a></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>list</code></td>
+<td>list packages based on package names. <code>-a</code> for all.
+Example: <code>sudo apt list -a git</code></td>
+</tr>
+<tr>
+<td><code>search</code></td>
+<td>search in package descriptions</td>
+</tr>
+<tr>
+<td><code>show</code></td>
+<td>show package details</td>
+</tr>
+<tr>
+<td><code>install</code></td>
+<td>install packages</td>
+</tr>
+<tr>
+<td><code>reinstall</code></td>
+<td>reinstall packages</td>
+</tr>
+<tr>
+<td><code>remove</code></td>
+<td>remove packages</td>
+</tr>
+<tr>
+<td><code>autoremove</code></td>
+<td>Remove automatically all unused packages</td>
+</tr>
+<tr>
+<td><code>update</code></td>
+<td>update list of available packages</td>
+</tr>
+<tr>
+<td><code>upgrade</code></td>
+<td>upgrade the system by installing/upgrading packages</td>
+</tr>
+<tr>
+<td><code>full-upgrade</code></td>
+<td>upgrade the system by removing/installing/upgrading packages</td>
+</tr>
+<tr>
+<td><code>edit-sources</code></td>
+<td>edit the source information file</td>
+</tr>
+<tr>
+<td><code>satisfy</code></td>
+<td>satisfy dependency strings</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="apt-get-command"><span class="header-section-number">14.4</span>
+apt-get
+command<a class="headerlink" href="#apt-get-command" title="Link to this heading"></a></h3>
+<p>See <a href="https://linux.die.net/man/8/apt-get"
+class="uri">https://linux.die.net/man/8/apt-get</a></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>apt-get update</code></td>
+<td>downloads the package lists from the repositories and "updates" them
+to get information on the newest versions of packages and their
+dependencies. It will do this for all repositories and PPAs. In other
+words, used to re-synchronize the package index files from their
+sources. The indexes of available packages are fetched from the
+location(s) specified in /etc/apt/sources.list(5). An update should
+always be performed before an upgrade. <code>--fix-missing</code> Ignore
+missing packages. If packages cannot be retrieved or fail the integrity
+check after retrieval (corrupted package files), hold back those
+packages and handle the result</td>
+</tr>
+<tr>
+<td><code>apt-get upgrade</code></td>
+<td>Used to install the newest versions of all packages currently
+installed on the system from the sources enumerated in
+/etc/apt/sources.list(5). Packages currently installed with new versions
+available are retrieved and upgraded; under no circumstances are
+currently installed packages removed, nor are packages that are not
+already installed retrieved and installed. New versions of currently
+installed packages that cannot be upgraded without changing the install
+status of another package will be left at their current version. An
+update must be performed first so that apt-get knows that new versions
+of packages are available</td>
+</tr>
+<tr>
+<td><code>apt-get install</code></td>
+<td>install packages. <code>-y</code> to say yes each time. Example:
+<code>apt-get install -y coreutils</code>. With version:
+<code>apt-get install -y coreutils=-3ubuntu2</code></td>
+</tr>
+<tr>
+<td><code>apt-get autoremove</code></td>
+<td>remove those dependencies that were installed with applications and
+are no longer used by anything else on the system. <code>-y</code> to
+say yes each time</td>
+</tr>
+<tr>
+<td><code>apt-get clean</code></td>
+<td>clears out the local repository of retrieved package files.It
+removes everything but the lock file from /var/cache/apt/archives/ and
+/var/cache/apt/archives/partial/</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="installation-of-packages"><span
+class="header-section-number">14.5</span> Installation of
+packages<a class="headerlink" href="#installation-of-packages" title="Link to this heading"></a></h3>
+<p>To get the correct version of the packages, depending on the OS, use
+docker:</p>
+<pre><code>sudo docker run -ti --entrypoint bash ubuntu:16.04
+dpkg -l core* # to get the kind of version to ask for coreutils</code></pre>
+<p>Classical installation:</p>
+<pre><code># update apt-get
+sudo apt-get update --fix-missing
+sudo apt-get upgrade
+
+# install the packages
+sudo apt-get install -y coreutils=8.30-3ubuntu2 gawk=1:5.0.1+dfsg-1ubuntu0.1 bc=1.07.1-2build1 git=1:2.25.1-1ubuntu3.11 zip</code></pre>
+<h2 id="permissions"><span class="header-section-number">15</span>
+Permissions<a class="headerlink" href="#permissions" title="Link to this heading"></a></h2>
+<h3 id="sudo"><span class="header-section-number">15.1</span>
+sudo<a class="headerlink" href="#sudo" title="Link to this heading"></a></h3>
+<h4 id="sudo-ask-for-password-but-password-does-not-work"><span
+class="header-section-number">15.1.1</span> sudo ask for password but
+password does not
+work<a class="headerlink" href="#sudo-ask-for-password-but-password-does-not-work" title="Link to this heading"></a></h4>
+<p>Open cmd.exe</p>
+<p>Type wsl -u root</p>
+<p>Type passwd username and change the password</p>
+<p>Type exit</p>
+<p>Type wsl</p>
+<p>Type sudo echo hi to confirm the new password works.</p>
+<h3 id="program-files"><span class="header-section-number">15.2</span>
+Program
+files<a class="headerlink" href="#program-files" title="Link to this heading"></a></h3>
+<p>No possibility to modify the program files folder directly.</p>
+<p>This neither works:</p>
+<pre><code>sudo chmod u=rwx /mnt/c/Program\ Files/tor</code></pre>
+<p>For each program folder, tor for instance:</p>
+<p>Right clic on the folder</p>
+<p>Select the Security tab and click on Advanced settings.</p>
+<p>Then edit this:</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image11.png"
+style="width:41.0%" loading="lazy" /></p>
+<p>And select "Full control"</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image12.png"
+style="width:44.0%" loading="lazy" /></p>
+<p>Click twice on Ok.</p>
+<p>If the access to "Full control" is not allowed, try this
+procedure:</p>
+<p>Right-click your D: drive and click Properties.</p>
+<p>Go to the Security tab and click [Advanced].</p>
+<p>At the top, next to Owner, click Change.</p>
+<p>Type your Windows username and click [OK].</p>
+<p>Tick Replace owner on sub-containers and objects.</p>
+<p>In the list of permission entries below, remove all the entries using
+the [Remove] button.</p>
+<p>Click [Add] and click Select a principal.</p>
+<p>Type Everyone and click [OK].</p>
+<p>Tick Full Control and click [OK]. You should now see one permission
+entry granting Full Control to Everyone in the list of permissions.</p>
+<p>Tick Replace all child object permission entries with inheritable
+permission entries from this object and click [OK]. This will propagate
+the new permissions to all the files and folders on your D: drive, which
+should take a couple seconds. Any inaccessible files should be
+accessible when it is done.</p>
+<p>In WSL, we can then see the change of authorisation.</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image13.png"
+loading="lazy" /></p>
+<h2 id="ssh-key"><span class="header-section-number">16</span> SSH
+key<a class="headerlink" href="#ssh-key" title="Link to this heading"></a></h2>
+<p>See <a href="044-bash.html">protocol 44</a> or 88 for gitlab.</p>
+<h2 id="prevent-the-sudo-password-prompt"><span
+class="header-section-number">17</span> Prevent the sudo password
+prompt<a class="headerlink" href="#prevent-the-sudo-password-prompt" title="Link to this heading"></a></h2>
+<h3 id="first-method"><span class="header-section-number">17.1</span>
+First
+method<a class="headerlink" href="#first-method" title="Link to this heading"></a></h3>
+<p>Start a new WSL session as you usually would.</p>
+<p>Type</p>
+<pre><code>sudo EDITOR=nano visudo</code></pre>
+<p>Use your arrow keys to scroll to the end of the file</p>
+<p>Append the following:</p>
+<pre><code>&lt;username&gt; ALL=(ALL) NOPASSWD:ALL</code></pre>
+<p>to the end of the file. Of course, replacing “username” with your
+user name (gmillot).</p>
+<p>Hit CTRL + X and if asked to save, hit Y to confirm. When asked for
+the file name, leave the default and just hit enter.</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image14.png"
+loading="lazy" /></p>
+<h3 id="second-method"><span class="header-section-number">17.2</span>
+Second
+method<a class="headerlink" href="#second-method" title="Link to this heading"></a></h3>
+<p>In wsl add your username to a sudo config file.</p>
+<p>Replace MY_USERNAME below to your username name.</p>
+<p>sudo nano /etc/sudoers.d/MY_USERNAME</p>
+<p>add the following line:</p>
+<p>MY_USERNAME ALL=(ALL) NOPASSWD:ALL</p>
+<p>If you don't replace MY_USERNAME with the target username you will
+receive an error no valid sudoers sources found.</p>
+<h2 id="c-drive-not-available-question-marks-in-ls--la"><span
+class="header-section-number">18</span> C drive not available (question
+marks in ls
+-la)<a class="headerlink" href="#c-drive-not-available-question-marks-in-ls--la" title="Link to this heading"></a></h2>
+<p>Close the WSL2 sessions</p>
+<p>Open the windows command prompt (search tool and "command")</p>
+<p>Execute: <code>wsl --shutdown</code></p>
+<p>This should solve the problem when opening a new WSL2 session.</p>
+<h2 id="access-to-linux-files-from-windows"><span
+class="header-section-number">19</span> Access to Linux files from
+Windows<a class="headerlink" href="#access-to-linux-files-from-windows" title="Link to this heading"></a></h2>
+<h3 id="via-the-windows-explorer"><span
+class="header-section-number">19.1</span> Via the windows
+explorer<a class="headerlink" href="#via-the-windows-explorer" title="Link to this heading"></a></h3>
+<p>In the adress bar of a window, type:</p>
+<p><code>\\wsl$\Ubuntu-20.04\home\gmillot</code></p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image15.png"
+loading="lazy" /></p>
+<h3 id="via-map-a-network-drive"><span
+class="header-section-number">19.2</span> Via Map a network
+drive<a class="headerlink" href="#via-map-a-network-drive" title="Link to this heading"></a></h3>
+<p>Only this command is possible:</p>
+<p>\\wsl$\Ubuntu-20.04</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image16.png"
+style="width:55.0%" loading="lazy" /></p>
+<h3 id="via-command-lines-powershell"><span
+class="header-section-number">19.3</span> Via command lines
+(Powershell)<a class="headerlink" href="#via-command-lines-powershell" title="Link to this heading"></a></h3>
+<pre><code>pushd \\wsl$\\Ubuntu-20.04\\home\\gmillot
+# popd to exit</code></pre>
+<pre><code>cd \\wsl$\\Ubuntu-20.04\\home\\gmillot
+# popd to exit</code></pre>
+<h3 id="via-r"><span class="header-section-number">19.4</span> Via
+R<a class="headerlink" href="#via-r" title="Link to this heading"></a></h3>
+<pre><code>read.table(&quot;\\\\wsl$\\Ubuntu-20.04\\home\\gmillot\\20211126_project_e\\dataset\\20210628_sample1_plate3_IgH_sanger_seq\\merge_parse-select_clone-pass_germ-pass.tsv&quot;, sep = &quot;\t&quot;, header = TRUE)</code></pre>
+<h2 id="x11"><span class="header-section-number">20</span>
+X11<a class="headerlink" href="#x11" title="Link to this heading"></a></h2>
+<p>Install mobaXterm (see protocol 124).</p>
+<p>Install xterm (not sure that it is mandatory when we already have
+mobaXterm):</p>
+<pre><code>sudo apt install xterm</code></pre>
+<p>Optional but important (If a x11 window pops up, authorize):</p>
+<pre><code>pip install cairosvg # to convert .svg based icons
+sudo apt install imagemagick # to have an additional opportunity to convert appropriate icon files if other methods fail</code></pre>
+<p>Then add the following code in the .profile or .bashrc file:</p>
+<pre><code>export DISPLAY=$(ip route list default | awk &#39;{print $3}&#39;):0
+export LIBGL_ALWAYS_INDIRECT=1</code></pre>
+<p>When running a x11-dependent application, it seems that it goes via
+mobaXterm. Meaning that to disable authorization messages, open
+mobaXterm and menu Settings/configuration and select "full" for x11
+remote access:</p>
+<p><img src="../md/img/140-wsl2-linux-on-windows/image17.png"
+style="width:67.0%" loading="lazy" /></p>
+<p>If problems, try this:</p>
+<p><a
+href="https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2"
+class="uri">https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2</a></p>
+<h2 id="llama-files"><span class="header-section-number">21</span> Llama
+files<a class="headerlink" href="#llama-files" title="Link to this heading"></a></h2>
+<p>See <a href="https://github.com/Mozilla-Ocho/llamafile"
+class="uri">https://github.com/Mozilla-Ocho/llamafile</a>.</p>
+<p>Import any llama file from the page:</p>
+<p><a
+href="https://github.com/Mozilla-Ocho/llamafile#other-example-llamafiles"
+class="uri">https://github.com/Mozilla-Ocho/llamafile#other-example-llamafiles</a></p>
+<p>Then execute simply like this:</p>
+<pre><code> ./llava-v1.5-7b-q4.llamafile</code></pre>
+<p>A web browser page open in which we can make requests:</p>
+<p>For some llama files (not llava), this must be executed (<a
+href="https://github.com/Mozilla-Ocho/llamafile#gotchas"
+class="uri">https://github.com/Mozilla-Ocho/llamafile#gotchas</a>):</p>
+<pre><code>sudo wget -O /usr/bin/ape https://cosmo.zip/pub/cosmos/bin/ape-$(uname -m).elf
+sudo chmod +x /usr/bin/ape
+sudo sh -c &quot;echo &#39;:APE:M::MZqFpD::/usr/bin/ape:&#39; &gt;/proc/sys/fs/binfmt_misc/register&quot;
+sudo sh -c &quot;echo &#39;:APE-jart:M::jartsr::/usr/bin/ape:&#39; &gt;/proc/sys/fs/binfmt_misc/register&quot;
+sudo sh -c &quot;echo -1 &gt; /proc/sys/fs/binfmt_misc/WSLInterop&quot;</code></pre>
+<p>Otherwise, error messages like "invalid argument" are returned.</p>
+<p><span class="red">Still a problem to activate GPU.</span></p>
+<h2 id="troubleshooting"><span class="header-section-number">22</span>
+Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<h3 id="network-lost"><span class="header-section-number">22.1</span>
+Network
+lost<a class="headerlink" href="#network-lost" title="Link to this heading"></a></h3>
+<p>Example of message :</p>
+<p>Error: ipv4: FIB tables does not exist</p>
+<p>Or ping does not work:</p>
+<p>ping www.google.com</p>
+<p><u>Solution</u></p>
+<p>Open powershell.</p>
+<p>type:</p>
+<p>wsl --shutdown</p>
+<p>Reopen ubuntu</p>
+<h3 id="the-prompt"><span class="header-section-number">22.2</span> the
+&gt;
+prompt<a class="headerlink" href="#the-prompt" title="Link to this heading"></a></h3>
+<p>When this prompt appears :"&gt;", it means that that we are inside a
+command prompt or shell, and the system is waiting for us to enter a
+command.</p>
+<p><u>Solution</u></p>
+<p>If Ctrl-C does not work, Ctrl-D should (it depends on the shell and
+settings used).</p>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="044-bash.html" class="btn btn-neutral float-left" title="Bash" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+            <a href="084-python.html" class="btn btn-neutral float-right" title="Python" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>

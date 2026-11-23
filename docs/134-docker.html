@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Docker · protocol 134 · Bioinformatics protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="044-bash.html"><span class="nav-num">44</span>Bash</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux (WSL)</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="084-python.html"><span class="nav-num">84</span>Python</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="165-java.html"><span class="nav-num">165</span>Java</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul class="current">
+          <li class="toctree-l1 current"><a class="reference internal current" href="134-docker.html"><span class="nav-num">134</span>Docker</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#documentations"><span class="sec-num">1</span>Documentations</a></li><li class="toctree-l2"><a class="reference internal" href="#video"><span class="sec-num">2</span>Video</a></li><li class="toctree-l2"><a class="reference internal" href="#acronyms-and-definition"><span class="sec-num">3</span>Acronyms and definition</a></li><li class="toctree-l2"><a class="reference internal" href="#basic-description"><span class="sec-num">4</span>Basic description</a></li><li class="toctree-l2"><a class="reference internal" href="#main-commands"><span class="sec-num">5</span>Main commands</a></li><li class="toctree-l2"><a class="reference internal" href="#installation"><span class="sec-num">6</span>Installation</a><ul><li class="toctree-l3"><a class="reference internal" href="#warning"><span class="sec-num">6.1</span>Warning</a></li><li class="toctree-l3"><a class="reference internal" href="#on-linux"><span class="sec-num">6.2</span>On Linux</a></li><li class="toctree-l3"><a class="reference internal" href="#on-windows"><span class="sec-num">6.3</span>On windows</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#local-container-handling"><span class="sec-num">7</span>Local container handling</a><ul><li class="toctree-l3"><a class="reference internal" href="#dockerfile"><span class="sec-num">7.1</span>Dockerfile</a></li><li class="toctree-l3"><a class="reference internal" href="#structure-of-a-dockerfile"><span class="sec-num">7.2</span>Structure of a dockerfile</a></li><li class="toctree-l3"><a class="reference internal" href="#dockerfile-versioning"><span class="sec-num">7.3</span>Dockerfile versioning</a></li><li class="toctree-l3"><a class="reference internal" href="#image-building"><span class="sec-num">7.4</span>Image building</a><ul><li class="toctree-l4"><a class="reference internal" href="#classical-errors-and-solutions"><span class="sec-num">7.4.1</span>Classical errors and solutions</a></li><li class="toctree-l4"><a class="reference internal" href="#from-a-remote-repository"><span class="sec-num">7.4.2</span><span class="red">From a remote repository</span></a></li><li class="toctree-l4"><a class="reference internal" href="#local-building"><span class="sec-num">7.4.3</span>Local building</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#image-managing"><span class="sec-num">7.5</span>Image managing</a><ul><li class="toctree-l4"><a class="reference internal" href="#overview"><span class="sec-num">7.5.1</span>Overview</a></li><li class="toctree-l4"><a class="reference internal" href="#image-pulling"><span class="sec-num">7.5.2</span>Image pulling</a></li><li class="toctree-l4"><a class="reference internal" href="#image-pushing"><span class="sec-num">7.5.3</span>Image pushing</a></li><li class="toctree-l4"><a class="reference internal" href="#image-running"><span class="sec-num">7.5.4</span>Image running</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#container-managing"><span class="sec-num">7.6</span>container managing</a><ul><li class="toctree-l4"><a class="reference internal" href="#commands"><span class="sec-num">7.6.1</span>Commands</a></li><li class="toctree-l4"><a class="reference internal" href="#erase-all-containers"><span class="sec-num">7.6.2</span>Erase all containers</a></li><li class="toctree-l4"><a class="reference internal" href="#modification-in-a-container-then-saved-in-a-new-image"><span class="sec-num">7.6.3</span>Modification in a container, then saved in a new image</a></li><li class="toctree-l4"><a class="reference internal" href="#go-inside-a-running-container"><span class="sec-num">7.6.4</span>Go inside a running container</a></li><li class="toctree-l4"><a class="reference internal" href="#go-inside-an-exited-container"><span class="sec-num">7.6.5</span>Go inside an exited container</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#image-running-1"><span class="sec-num">8</span>Image running</a><ul><li class="toctree-l3"><a class="reference internal" href="#options"><span class="sec-num">8.1</span>Options</a></li><li class="toctree-l3"><a class="reference internal" href="#example"><span class="sec-num">8.2</span>Example</a></li><li class="toctree-l3"><a class="reference internal" href="#example-when-running-a-script"><span class="sec-num">8.3</span>Example when running a script</a></li><li class="toctree-l3"><a class="reference internal" href="#example-when-working-interactively-inside-a-container"><span class="sec-num">8.4</span>Example when working interactively inside a container</a></li><li class="toctree-l3"><a class="reference internal" href="#mounting-a-drive-in-a-container-using--v"><span class="sec-num">8.5</span>Mounting a drive in a container using -v</a></li><li class="toctree-l3"><a class="reference internal" href="#the--w-option"><span class="sec-num">8.6</span>The -w option</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#docker-files-repositories"><span class="sec-num">9</span>Docker files repositories</a><ul><li class="toctree-l3"><a class="reference internal" href="#trustable-repo"><span class="sec-num">9.1</span>Trustable repo</a></li><li class="toctree-l3"><a class="reference internal" href="#create-a-repo"><span class="sec-num">9.2</span>Create a repo</a></li><li class="toctree-l3"><a class="reference internal" href="#cluster"><span class="sec-num">9.3</span>Cluster</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#docker-image-repositories"><span class="sec-num">10</span>Docker image repositories</a><ul><li class="toctree-l3"><a class="reference internal" href="#docker-hub"><span class="sec-num">10.1</span>Docker Hub</a></li><li class="toctree-l3"><a class="reference internal" href="#bioconda-repo-for-python-packages"><span class="sec-num">10.2</span>Bioconda repo for Python packages</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#image-handling-in-the-remote-repository"><span class="sec-num">11</span>Image handling in the remote repository</a><ul><li class="toctree-l3"><a class="reference internal" href="#add-the-gitlab-commit"><span class="sec-num">11.1</span>Add the gitlab commit</a></li><li class="toctree-l3"><a class="reference internal" href="#deletion-of-an-image"><span class="sec-num">11.2</span>Deletion of an image</a></li><li class="toctree-l3"><a class="reference internal" href="#deletion-of-a-tag"><span class="sec-num">11.3</span>Deletion of a tag</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#docker-on-the-cluster"><span class="sec-num">12</span>Docker on the cluster</a></li><li class="toctree-l2"><a class="reference internal" href="#docker-configuration"><span class="sec-num">13</span>Docker configuration</a><ul><li class="toctree-l3"><a class="reference internal" href="#settings"><span class="sec-num">13.1</span>Settings</a></li><li class="toctree-l3"><a class="reference internal" href="#image-storage"><span class="sec-num">13.2</span>Image storage</a></li><li class="toctree-l3"><a class="reference internal" href="#no-more-space-on-disk-huge-.docker-file"><span class="sec-num">13.3</span>No more space on disk (huge .docker file)</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#examples"><span class="sec-num">14</span>Examples</a><ul><li class="toctree-l3"><a class="reference internal" href="#coreutils"><span class="sec-num">14.1</span>Coreutils</a></li><li class="toctree-l3"><a class="reference internal" href="#r"><span class="sec-num">14.2</span>R</a></li><li class="toctree-l3"><a class="reference internal" href="#r-extended"><span class="sec-num">14.3</span>R extended</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#migrate-your-existing-images-away-from-docker-hub"><span class="sec-num">15</span>Migrate your existing images away from docker hub</a></li></ul></li>
+          <li class="toctree-l1"><a class="reference internal" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">Clusters, containers and
+workflows</li>
+            <li class="breadcrumb-item active">Protocol 134</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/134-docker.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Docker</h1>
+<p class="protocol-meta"><span>Protocol 134</span><span>revision 0</span><span>last update 2026-10-27</span></p>
+<h2 id="documentations"><span class="header-section-number">1</span>
+Documentations<a class="headerlink" href="#documentations" title="Link to this heading"></a></h2>
+<p><code>C:\Users\gael\Documents\Formation\20210621 reproductibility</code></p>
+<p><a href="https://docs.docker.com/get-started/"
+class="uri">https://docs.docker.com/get-started/</a></p>
+<h2 id="video"><span class="header-section-number">2</span>
+Video<a class="headerlink" href="#video" title="Link to this heading"></a></h2>
+<p>C:\Users\gael\Documents\Formation\20210621 reproductibility\</p>
+<p>Formation Reproductibilité - Docker - Singu - Groupe TP 3.mp4</p>
+<h2 id="acronyms-and-definition"><span
+class="header-section-number">3</span> Acronyms and
+definition<a class="headerlink" href="#acronyms-and-definition" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>Dockerfile</td>
+<td>file of script that will be used to build a docker image</td>
+</tr>
+<tr>
+<td>Image</td>
+<td>Docker images are the basis of containers. An image typically
+contains a union of layered filesystems stacked on top of each other. An
+image does not have state and it never changes</td>
+</tr>
+<tr>
+<td>Container</td>
+<td>A container is a runtime instance of a docker image. lt
+contains:</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>A Docker image</p>
+<p>An execution environment</p>
+<p>A standard set of instructions</p>
+<p><img src="../md/img/134-docker/image1.png" style="width:55.0%"
+loading="lazy" /></p>
+</blockquote>
+<h2 id="basic-description"><span class="header-section-number">4</span>
+Basic
+description<a class="headerlink" href="#basic-description" title="Link to this heading"></a></h2>
+<p>Written in Go language:</p>
+<p><a
+href="https://en.wikipedia.org/wiki/Docker_%28software%29">https://en.wikipedia.org/wiki/Docker_(software)</a></p>
+<p><a
+href="https://en.wikipedia.org/wiki/Go_%28programming_language%29">https://en.wikipedia.org/wiki/Go_(programming_language)</a></p>
+<h2 id="main-commands"><span class="header-section-number">5</span> Main
+commands<a class="headerlink" href="#main-commands" title="Link to this heading"></a></h2>
+<p><a href="https://docs.docker.com/engine/reference/builder/"
+class="uri">https://docs.docker.com/engine/reference/builder/</a></p>
+<p>All the commands starts by <code>docker</code>.</p>
+<p>All commands requires <code>sudo</code>.</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>build</code></td>
+<td>create an image from a dockerfile</td>
+</tr>
+<tr>
+<td><code>pull</code></td>
+<td>retrieve images from public repositories (such as <a
+href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">DockerHub</a>).
+Example
+<code>sudo docker pull gmillot/bash-extended_v1.0:gitlab_v1.0</code></td>
+</tr>
+<tr>
+<td><code>images</code></td>
+<td>list the images in the folder were the images have been built. They
+are also listed in the docker desktop here:</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="../md/img/134-docker/image2.png" style="width:65.0%"
+loading="lazy" /></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>run</code></td>
+<td>use the specified image to create a container and execute the code
+in the container. All the path are those of the container</td>
+</tr>
+<tr>
+<td><code>exec</code></td>
+<td>idem as <code>run</code></td>
+</tr>
+<tr>
+<td><code>login</code></td>
+<td>login to DockerHub</td>
+</tr>
+<tr>
+<td><code>push</code></td>
+<td>push the local image into DockerHub. Example
+<code>sudo docker push &lt;YOUR_DOCKERHUB_USERNAME&gt;/fastp:0.21.0</code></td>
+</tr>
+<tr>
+<td><code>rmi &lt;ID&gt;</code></td>
+<td>remove image by ID</td>
+</tr>
+<tr>
+<td><code>rmi fastp:0.21.0</code></td>
+<td>remove image by their name and repository:tag</td>
+</tr>
+<tr>
+<td><code>container ls -a</code></td>
+<td>list all the containers (not only the ones running)</td>
+</tr>
+<tr>
+<td><code>rm -vf &lt;ID&gt;</code></td>
+<td>remove a container by ID</td>
+</tr>
+<tr>
+<td><code>run fastp:0.21.0 -v</code></td>
+<td>check the version</td>
+</tr>
+<tr>
+<td><code>ps -a</code></td>
+<td>display all the containers, even those finished. usefull to clean a
+bit because each time the same image is run, a new container is
+created</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="installation"><span class="header-section-number">6</span>
+Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<h3 id="warning"><span class="header-section-number">6.1</span>
+Warning<a class="headerlink" href="#warning" title="Link to this heading"></a></h3>
+<ol type="1">
+<li>Docker compromises a lot the security of machines. Indeed:</li>
+</ol>
+<p>1) any execution requires admin rights.</p>
+<p>2) An executed docker image can do anything, and because of the admin
+rights, lots of damages can happen.</p>
+<p>It is thus better to use singularity (<a
+href="135-apptainer.html">protocol 135</a>), that doe not have this
+problem. On the Pasteur cluster, only singularity is available.</p>
+<p><a href="https://docs.docker.com/get-docker/"
+class="uri">https://docs.docker.com/get-docker/</a></p>
+<h3 id="on-linux"><span class="header-section-number">6.2</span> On
+Linux<a class="headerlink" href="#on-linux" title="Link to this heading"></a></h3>
+<p>No need to do this for WSL2. See installation for windows in section
+<a href="#on-windows">On windows</a>. This will then work for WSL2.</p>
+<p>For Ubuntu:</p>
+<p><a href="https://docs.docker.com/engine/install/ubuntu/"
+class="uri">https://docs.docker.com/engine/install/ubuntu/</a></p>
+<p>Uninstall old versions</p>
+<pre><code>sudo apt-get remove docker docker-engine docker.io containerd runc</code></pre>
+<p>Update the apt package index and install packages to allow apt to use
+a repository over HTTPS:</p>
+<pre><code>sudo apt-get update
+
+# reminder: \ means that the line has a EL but is not finished. WARNING: no space allowed after \
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release</code></pre>
+<p>Add Docker’s official GPG key:</p>
+<pre><code>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</code></pre>
+<p>Use the following command to set up the stable repository.</p>
+<pre><code>echo &quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</code></pre>
+<p>Do not use Nighty or test repositories.</p>
+<p>Install Docker Engine</p>
+<pre><code>sudo apt install docker.io</code></pre>
+<p>Check that Docker is correctly intalled</p>
+<pre><code>docker --version</code></pre>
+<p>Check that the daemon process is running</p>
+<pre><code>ps aux | grep docker
+sudo service docker status</code></pre>
+<h3 id="on-windows"><span class="header-section-number">6.3</span> On
+windows<a class="headerlink" href="#on-windows" title="Link to this heading"></a></h3>
+<p>General infos regarding install are here:</p>
+<p><a href="https://docs.docker.com/docker-for-windows/wsl/"
+class="uri">https://docs.docker.com/docker-for-windows/wsl/</a></p>
+<p>Procedure:</p>
+<p>Download Docker Desktop Stable 2.3.0.2 or a later release.</p>
+<p><a
+href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/"
+class="uri">https://hub.docker.com/editions/community/docker-ce-desktop-windows/</a></p>
+<p>Install the downloaded file.</p>
+<p><img src="../md/img/134-docker/image3.png" style="width:70.0%"
+loading="lazy" /></p>
+<p>For information, all the versions of docker for windows:</p>
+<p><a href="https://docs.docker.com/docker-for-windows/release-notes/"
+class="uri">https://docs.docker.com/docker-for-windows/release-notes/</a></p>
+<p>Start Docker Desktop from the Windows Start menu (run as admin)</p>
+<p>From the Docker menu, select Settings / General.</p>
+<p>Select the Use WSL 2 based engine check box.</p>
+<p>Then Open WSL (<a href="140-wsl2-linux-on-windows.html">protocol
+140</a>)</p>
+<p>Check that the WSL mode is V2:</p>
+<pre><code>wsl.exe -l -v</code></pre>
+<p>In case, to set v2 as the default version for future installations,
+run:</p>
+<pre><code>wsl.exe --set-default-version 2</code></pre>
+<p>Then close and reopen Docker Desktop from the Windows Start menu (run
+as admin).</p>
+<p>Then check:</p>
+<p><img src="../md/img/134-docker/image4.png" loading="lazy" /></p>
+<p><img src="../md/img/134-docker/image5.png" loading="lazy" /></p>
+<p>To check that the install was ok, open WSL and:</p>
+<pre><code>sudo docker run hello-world</code></pre>
+<p><img src="../md/img/134-docker/image6.png" loading="lazy" /></p>
+<p>Warning:</p>
+<p>WSL (<a href="140-wsl2-linux-on-windows.html">protocol 140</a>)
+requires the simultaneous running of Docker Desktop in order to have
+access to docker commands in WSL. Otherwise this kind of error message
+appears:</p>
+<p><img src="../md/img/134-docker/image7.png" loading="lazy" /></p>
+<p>More exactly, when running Docker Desktop in admin mode, different
+files are running, including this background process (daemon):</p>
+<p><img src="../md/img/134-docker/image8.png" loading="lazy" /></p>
+<p>That stays open, even if the Docker Desktop interface app is
+closed.</p>
+<p><img src="../md/img/134-docker/image9.png" style="width:65.0%"
+loading="lazy" /></p>
+<p>Of note, when Docker desktop is not started in admin mode, the
+interface does not open but the background files including the daemon
+runs.</p>
+<h2 id="local-container-handling"><span
+class="header-section-number">7</span> Local container
+handling<a class="headerlink" href="#local-container-handling" title="Link to this heading"></a></h2>
+<h3 id="dockerfile"><span class="header-section-number">7.1</span>
+Dockerfile<a class="headerlink" href="#dockerfile" title="Link to this heading"></a></h3>
+<p>A Dockerfile is the recipe file for docker.</p>
+<p>Must have this format (<code>FROM</code>, <code>RUN</code>, etc., see
+section <a href="#main-commands">Main commands</a>):</p>
+<pre><code># base image: Ubuntu
+FROM ubuntu:16.04
+RUN apt-get update --fix-missing \
+# update apt-get
+&amp;&amp; apt-get install -y git make g++ zlib1g-dev \
+# install the dependencies git make g++ zlib1g-dev
+&amp;&amp; cd /usr/local/ \
+&amp;&amp; git clone https://github.com/OpenGene/fastp.git \
+# clone fastp
+&amp;&amp; cd fastp \
+&amp;&amp; make \
+&amp;&amp; make install \
+&amp;&amp; cd /usr/local \
+&amp;&amp; rm -rf fastp \
+&amp;&amp; apt-get remove -y git make g++ zlib1g-dev \
+# important to remove the dependencies after installation to save space in the image that will be built
+&amp;&amp; apt-get autoremove -y \
+&amp;&amp; apt-get clean \
+&amp;&amp; rm -rf /var/lib/apt/lists/*
+ENTRYPOINT [&quot;/usr/local/bin/fastp&quot;] # run fastp when this image is run (exec mode writing)</code></pre>
+<p>To create a dockerfile, goes into:</p>
+<p><code>C:\Users\gael\Documents\Git_projects\dockerfiles</code></p>
+<p>And create a new fastp file.</p>
+<p>Then copy-paste the code above into that file.</p>
+<p>And, from WSL2, copy the file into the linux environment</p>
+<pre><code>cp /mnt/c/Users/Gael/Documents/Git_projects/dockerfiles/fastp /home/gael/dockerfiles/</code></pre>
+<h3 id="structure-of-a-dockerfile"><span
+class="header-section-number">7.2</span> Structure of a
+dockerfile<a class="headerlink" href="#structure-of-a-dockerfile" title="Link to this heading"></a></h3>
+<p><a href="https://docs.docker.com/engine/reference/builder/"
+class="uri">https://docs.docker.com/engine/reference/builder/</a> (use
+the outine on the right of the page)</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>#</code></td>
+<td>comment character. Forbidden after \. See the example section <a
+href="#dockerfile">Dockerfile</a></td>
+</tr>
+<tr>
+<td><code>FROM</code></td>
+<td>call another image. In general it is an OS. Warning: the name must
+be exactly what is written in the docker images interface, or
+<code>sudo docker image ls</code>. In addition, not possible to call
+several images, may be to avoid conflicts</td>
+</tr>
+<tr>
+<td><code>LABEL</code></td>
+<td>See <a
+href="https://docs.docker.com/engine/reference/builder/#label"
+class="uri">https://docs.docker.com/engine/reference/builder/#label</a>.
+Very important field as it can be inspected for certain fields using
+<code>docker image inspect &lt;myimage&gt;</code>. Several labels fields
+can be used. Use "\" to cut a string by a carriage return. Use quotes
+for spaces:</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre><code>LABEL version=&quot;1.0&quot;
+LABEL image.description=&quot;This image \
+    is good&quot;</code></pre>
+<blockquote>
+<p>Or in a single field:</p>
+</blockquote>
+<pre><code>LABEL version=&quot;1.0&quot; \
+      image.description=&quot;This image \
+    is good&quot;</code></pre>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>MAINTAINER</code></td>
+<td>deprecated. Use <code>LABEL</code></td>
+</tr>
+<tr>
+<td><code>COPY</code></td>
+<td>adds files from your Docker client’s current directory</td>
+</tr>
+<tr>
+<td><code>RUN</code></td>
+<td>execute the following POSIX shell commands, i.e., builds your
+application with <code>make</code>. Use <code>&amp;&amp;</code> and \
+when using ends of line: \ to specify that the command is not finished
+and <code>&amp;&amp;</code> to say that is is a continuation of a
+command. Warning: the language is not bash, it is POSIX shell, that, for
+instance, 1) does not support array but only single values, 2) does not
+like but , 3) does not like long string ()</td>
+</tr>
+<tr>
+<td><code>CMD</code></td>
+<td>specifies what command to run within the container</td>
+</tr>
+<tr>
+<td><code>ENTRYPOINT</code></td>
+<td>before the entrypoint, all the code is only for the image creation.
+With entrypoint, it is possible to thenafter directly create the
+container and run some commands inside the container. Two forms: (1) the
+exec form <code>ENTRYPOINT ["executable", "param1", "param2"]</code> and
+the shell form <code>ENTRYPOINT command param1 param2</code>. The exec
+form is parsed as a JSON array, which means that you must use
+double-quotes (") around words not single-quotes ('). See <a
+href="https://docs.docker.com/engine/reference/builder/#entrypoint"
+class="uri">https://docs.docker.com/engine/reference/builder/#entrypoint</a>.
+Beware of the difference between the login shell and the classical
+login, since the login shell sources the files of the init system while
+the classical shell sources the files of the init user when the
+container is activated. Examples:
+<code>ENTRYPOINT ["/usr/bin/bash" , "-l"]</code> for the former and
+<code>ENTRYPOINT ["/bin/bash"]</code> for the latter.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="dockerfile-versioning"><span
+class="header-section-number">7.3</span> Dockerfile
+versioning<a class="headerlink" href="#dockerfile-versioning" title="Link to this heading"></a></h3>
+<p>Use a git repo to version all Dockerfiles (see protocol 88).</p>
+<h3 id="image-building"><span class="header-section-number">7.4</span>
+Image
+building<a class="headerlink" href="#image-building" title="Link to this heading"></a></h3>
+<p>Images are built using a recipe called Dockerfile (section <a
+href="#structure-of-a-dockerfile">Structure of a dockerfile</a>).</p>
+<h4 id="classical-errors-and-solutions"><span
+class="header-section-number">7.4.1</span> Classical errors and
+solutions<a class="headerlink" href="#classical-errors-and-solutions" title="Link to this heading"></a></h4>
+<p>1) Always add the dockerhub account name in the tag (<code>-t</code>
+option of <code>build</code>) if the image has to be pushed.</p>
+<p>2) Use <code>--no-cache</code> to completely rebuild the image.
+Otherwise, the cache is used to save time.</p>
+<p>3) The language of the dockerfile is not bash, but POSIX shell, that,
+for instance, 1) does not support array but only single values, 2) does
+not like <code>((COUNT++))</code> but <code>COUNT=$((COUNT+1))</code>,
+3) does not like long string (written after <code>Rscript -e</code> for
+instance).</p>
+<p>4) Write all the prints in a log is possible but limited to 1M,
+triggering the error message:</p>
+<pre><code>[output clipped, log limit 1MiB reached]</code></pre>
+<p>To overcome this, use:</p>
+<pre><code>docker buildx create --use --name larger_log --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=1000000000
+docker buildx build &lt;normal build instructions&gt;</code></pre>
+<p>Even if the message still appears, it should be ok.</p>
+<p>Of note, the larger_log file is created here:</p>
+<p>\\wsl$\Ubuntu-20.04\home\gael\.docker\buildx\instances</p>
+<p>Another way to get a building log is to use:</p>
+<pre><code>sudo docker build &lt;...&gt; 2&gt;&amp;1 | tee -a building.log</code></pre>
+<h4 id="from-a-remote-repository"><span
+class="header-section-number">7.4.2</span> <span class="red">From a
+remote
+repository</span><a class="headerlink" href="#from-a-remote-repository" title="Link to this heading"></a></h4>
+<p><u>From docker</u></p>
+<p><a
+href="https://docs.docker.com/engine/reference/commandline/build/#git-repositories"><span
+class="red">https://docs.docker.com/engine/reference/commandline/build/#git-repositories</span></a></p>
+<p><span class="red">Git URLs accept context configuration in their
+fragment section, separated by a colon (:). The first part represents
+the reference that Git will check out, and can be either a branch, a
+tag, or a remote reference. The second part represents a subdirectory
+inside the repository that will be used as a build context.
+Example:</span></p>
+<pre><code>sudo docker build https://gitlab.pasteur.fr/gmillot/dockerfiles.git#v5.1.0:ubuntu/v16.04/coreutils/v8.30</code></pre>
+<p><u>From gitlab</u></p>
+<p><a
+href="https://docs.gitlab.com/ee/ci/docker/using_docker_build.html"
+class="uri">https://docs.gitlab.com/ee/ci/docker/using_docker_build.html</a></p>
+<h4 id="local-building"><span class="header-section-number">7.4.3</span>
+Local
+building<a class="headerlink" href="#local-building" title="Link to this heading"></a></h4>
+<p>First, clone or pull the remote repository:</p>
+<p>Pull:</p>
+<pre><code>cd /home/gael/dockerfiles
+git pull</code></pre>
+<p>Clone:</p>
+<pre><code>cd /home/gael/dockerfiles
+git clone git@gitlab.pasteur.fr:gmillot/dockerfiles.git /home/gael/dockerfiles/</code></pre>
+<p>Then, build from the cloned or pulled dockerfile. The usage is:</p>
+<pre><code>sudo docker build &lt;PATH&gt; --no-cache -f &lt;FILE_NAME&gt; -t &lt;IMAGE_NAME&gt;:&lt;VERSION_NAME&gt;
+
+# --no-cache    completely rebuild the image. Otherwise, the cache is used to save time
+# -f, --file    Name of the Dockerfile input (Default is &lt;PATH&gt;/Dockerfile)
+# -t    Name and optionally a tag in the &#39;name:tag&#39; format of the image that will be built. Name is the repo name with at least 2 letters, tag is a tag of the repo (version usually)</code></pre>
+<p>Example using full writing:</p>
+<pre><code>sudo docker build /home/gael/dockerfiles/ubuntu/v16.04/bash-extended/v1.0/ --no-cache -f /home/gael/dockerfiles/ubuntu/v16.04/bash-extended/v1.0/Dockerfile -t bash-extended_v1.0:gitlab_v1.0</code></pre>
+<p>Here the name of the image is "bash-extended_v1.0".</p>
+<p>Example with no -f required because the name of the file is
+"Dockerfile" in &lt;PATH&gt;</p>
+<pre><code>sudo docker build --no-cache -t gmillot/bash-extended_v88.0:gitlab_v1.0 --progress=plain .</code></pre>
+<p>Here the name of the image is "gmillot/bash-extended_v88.0". This is
+just to distinguish between my own images and the images pulled from
+docker hub (other than from my account), which do not have
+"gmillot/".</p>
+<p>The dot at the end can be used when the prompt is where the
+dockerfile is, for instance:</p>
+<pre><code>/home/gael/dockerfiles/ubuntu/v16.04/bash-extended/v1.0/</code></pre>
+<p>Such window indicates that everything was fine:</p>
+<p><img src="../md/img/134-docker/image10.png" loading="lazy" /></p>
+<p>To confirm that the images are well created:</p>
+<p><img src="../md/img/134-docker/image11.png" loading="lazy" /></p>
+<ol type="1">
+<li>Warning : it seems that it is not possible to get the file of the
+built image. The reason is that a docker image is not a single file but
+a combination of layers.</li>
+</ol>
+<h3 id="image-managing"><span class="header-section-number">7.5</span>
+Image
+managing<a class="headerlink" href="#image-managing" title="Link to this heading"></a></h3>
+<h4 id="overview"><span class="header-section-number">7.5.1</span>
+Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h4>
+<p>First:</p>
+<p><code>id</code> display all the groups I am in (from the g field of
+<code>chmod</code>, see <a href="044-bash.html">protocol 44</a>).</p>
+<p>Check that I am in the docker group. Allows to execute docker
+commands without being root. <span class="red">Otherwise use usermod to
+change that?</span></p>
+<p><img src="../md/img/134-docker/image12.png" loading="lazy" /></p>
+<p>All the commands starts by <code>docker</code>.</p>
+<p>All the commands requires <code>sudo</code> (the first time only the
+<code>docker</code>command is used per session).</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>pull</code></td>
+<td>retrieve images from public repositories (such as <a
+href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">DockerHub</a>).
+Example
+<code>sudo docker pull gmillot/bash-extended_v1.0:gitlab_v1.0</code></td>
+</tr>
+<tr>
+<td><code>images</code></td>
+<td>list the images in the folder were the images have been built. They
+are also listed in the docker desktop here:</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="../md/img/134-docker/image13.png" style="width:70.0%"
+loading="lazy" /></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>run</code></td>
+<td>use the specified image to create a container and execute the code
+in the container. All the path are those of the container</td>
+</tr>
+<tr>
+<td><code>exec</code></td>
+<td>idem as <code>run</code></td>
+</tr>
+<tr>
+<td><code>push</code></td>
+<td>push the local image into DockerHub. Example
+<code>sudo docker push gmillot/fastp:0.21.0.</code> Use first
+<code>docker login</code>. An alternative is the docker interface (see
+section <a href="#image-pushing">Image pushing</a>)</td>
+</tr>
+<tr>
+<td><code>rmi &lt;ID&gt;</code></td>
+<td>remove image by ID. Use <code>-f</code> to force deletion. Use
+<code>sudo docker rmi $(sudo docker image ls -q)</code> to remove all
+local images</td>
+</tr>
+<tr>
+<td><code>rmi fastp:0.21.0</code></td>
+<td>remove image by their repository name:tag, sometimes uses:
+<code>rmi gmillot/fastp:0.21.0</code></td>
+</tr>
+<tr>
+<td><code>tag OldName:tag NewName:tag</code></td>
+<td>rename a local image</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="image-pulling"><span class="header-section-number">7.5.2</span>
+Image
+pulling<a class="headerlink" href="#image-pulling" title="Link to this heading"></a></h4>
+<p>Images are pulled from Dockerhub.</p>
+<p>Usage:</p>
+<pre><code>sudo docker pull &lt;IMAGE_NAME&gt;:&lt;VERSION_NAME&gt;</code></pre>
+<p>Example:</p>
+<pre><code>sudo docker pull gmillot/bash-extended_v1.0:gitlab_v1.0</code></pre>
+<h4 id="image-pushing"><span class="header-section-number">7.5.3</span>
+Image
+pushing<a class="headerlink" href="#image-pushing" title="Link to this heading"></a></h4>
+<p>The best is to use command lines.</p>
+<p>First, check that you are logged. Then push the image:</p>
+<pre><code>sudo docker login -u gmillot
+sudo docker push gmillot/r_v4.1.2_ig_clustering_v1.2:gitlab_v9.8</code></pre>
+<p>An alternative is to use the interface:</p>
+<p><img src="../md/img/134-docker/image14.png" style="width:61.0%"
+loading="lazy" /></p>
+<p>But sometimes, it awkwardly does not work, with the following
+message:</p>
+<p>denied: requested access to the resource is denied</p>
+<p>In that case, use command lines as above.</p>
+<p>See then section <a
+href="#image-handling-in-the-remote-repository">Image handling in the
+remote repository</a> to complete information on the distant repo.</p>
+<h4 id="image-running"><span class="header-section-number">7.5.4</span>
+Image
+running<a class="headerlink" href="#image-running" title="Link to this heading"></a></h4>
+<p>See section <a href="#image-running-1">Image running</a>.</p>
+<h3 id="container-managing"><span
+class="header-section-number">7.6</span> container
+managing<a class="headerlink" href="#container-managing" title="Link to this heading"></a></h3>
+<h4 id="commands"><span class="header-section-number">7.6.1</span>
+Commands<a class="headerlink" href="#commands" title="Link to this heading"></a></h4>
+<p>All the commands starts by <code>docker</code>.</p>
+<p>All the commands requires <code>sudo</code> (the first time only the
+<code>docker</code>command is used per session).</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>container ls -a</code></td>
+<td>list all the containers (not only the ones running)</td>
+</tr>
+<tr>
+<td><code>container stop &lt;ID&gt;</code></td>
+<td>stop a container (image not used anymore)</td>
+</tr>
+<tr>
+<td><code>rm -vf &lt;ID&gt;</code></td>
+<td>remove a container by ID</td>
+</tr>
+<tr>
+<td><code>run fastp:0.21.0 -v</code></td>
+<td>check the version</td>
+</tr>
+<tr>
+<td><code>ps -a</code></td>
+<td>display all the containers, even those finished. usefull to clean a
+bit because each time an image is run, a new</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Other commands:</p>
+<p><a
+href="https://docs.docker.com/engine/reference/commandline/container/"
+class="uri">https://docs.docker.com/engine/reference/commandline/container/</a></p>
+<h4 id="erase-all-containers"><span
+class="header-section-number">7.6.2</span> Erase all
+containers<a class="headerlink" href="#erase-all-containers" title="Link to this heading"></a></h4>
+<p>function to add in the .bashrc to remove all the containers, even
+those that have finished to run:</p>
+<pre><code>function docker_rm_all {
+    docker rm $(docker ps --all -q -f status=exited)
+}</code></pre>
+<p>Then</p>
+<pre><code>sudo docker container ls -a # to see all the containers
+docker_rm_all # to remove all of them</code></pre>
+<h4 id="modification-in-a-container-then-saved-in-a-new-image"><span
+class="header-section-number">7.6.3</span> Modification in a container,
+then saved in a new
+image<a class="headerlink" href="#modification-in-a-container-then-saved-in-a-new-image" title="Link to this heading"></a></h4>
+<p>Open a container (section <a href="#overview">Overview</a>) and
+perform any install.</p>
+<p>Then exit the container and:</p>
+<pre><code>sudo docker container ls -a # to see all the containers
+sudo docker commit &lt;CONTAINER_ID&gt; &lt;NEW_IMAGE_NAME&gt;</code></pre>
+<h4 id="go-inside-a-running-container"><span
+class="header-section-number">7.6.4</span> Go inside a running
+container<a class="headerlink" href="#go-inside-a-running-container" title="Link to this heading"></a></h4>
+<p>I never had a container with the running status when using
+<code>sudo docker ps -a</code>.</p>
+<p>But if it is the case, then:</p>
+<pre><code>docker start -a -i `docker ps -q -l`
+
+# docker start start a container (requires name or ID)
+# -a attach to container
+# -i interactive mode
+# docker ps List containers
+# -q list only container IDs
+# -l list only last created container</code></pre>
+<p>Or see <a
+href="%20https:/stackoverflow.com/questions/21928691/how-to-continue-a-docker-container-which-has-exited">https://stackoverflow.com/questions/21928691/how-to-continue-a-docker-container-which-has-exited</a></p>
+<h4 id="go-inside-an-exited-container"><span
+class="header-section-number">7.6.5</span> Go inside an exited
+container<a class="headerlink" href="#go-inside-an-exited-container" title="Link to this heading"></a></h4>
+<p>The only way is to commit the exited container into a new image and
+then run the new image:</p>
+<pre><code>sudo docker ps -a
+sudo docker commit 0dfd54557799 debug/ubuntu
+# open a new container from the &quot;broken&quot; image
+docker run -it --entrypoint bash debug/ubuntu</code></pre>
+<h2 id="image-running-1"><span class="header-section-number">8</span>
+Image
+running<a class="headerlink" href="#image-running-1" title="Link to this heading"></a></h2>
+<p>Running an image create a container and potentially run commands
+inside it. In such case the container remains closed. Depending on the
+options, it is also possible to open the container and be in the
+container environment with the system and soft inside of the
+corresponding image. Once opened, we can work inside it.</p>
+<p>Warning: opening an image to use a python session, for instance, can
+create problems of path, i.e., packages will not be found even if they
+are in the image because the container look into the locales packages,
+not into the container. To overcome this, open the image with
+<code>--entrypoint bash</code> and than open a python session.</p>
+<h3 id="options"><span class="header-section-number">8.1</span>
+Options<a class="headerlink" href="#options" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>-v</code></td>
+<td>Link your current directory to a directory with the same absolute
+path in the container. First path is from the host (local machine),
+second is the path inside the docker. If the second one does not exist,
+it is created directly. Example: -v /mnt/c/Users/:/tmp means that the
+tree starting at Users in the local system is mounted into /tmp in the
+container. Then, to call this folder C:\\Users\\gael\\Documents in the
+container, we have to write /tmp/gael/Documents</td>
+</tr>
+<tr>
+<td><code>--mount</code></td>
+<td>similar to <code>-v</code> ? Example:
+<code>--mount "type=bind,src=/mnt/c/Users/Gael/,dst=/caca/"</code></td>
+</tr>
+<tr>
+<td><code>--entrypoint</code></td>
+<td>overwrite the entrypoint inside the image. Useful when the default
+entrypoint is R but we want to be in the ubuntu environment (hence
+--entrypoint bash)</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>interactif TTY. Means that all the code is executed but after that,
+we stay in the container environment through a TTY (teletype writter,
+see <a
+href="https://stackoverflow.com/questions/43099116/error-the-input-device-is-not-a-tty"
+class="uri">https://stackoverflow.com/questions/43099116/error-the-input-device-is-not-a-tty</a>)
+system. Warning we can do nothing without -t</td>
+</tr>
+<tr>
+<td><code>-t</code></td>
+<td>to have the TTY, i.e., to be able to write inside the container env.
+Madatory when using -i</td>
+</tr>
+<tr>
+<td><code>-w</code></td>
+<td><code>--workdir</code>. Equivalent to a cd made once the container
+is opened. If the path does not exist in the container, it is
+created</td>
+</tr>
+<tr>
+<td><code>--rm</code></td>
+<td>close the container after running. Ohterwise, still in use (whatever
+the use of -ti or not)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>see also <a href="https://pandorafms.com/blog/docker-run/"
+class="uri">https://pandorafms.com/blog/docker-run/</a></p>
+<h3 id="example"><span class="header-section-number">8.2</span>
+Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<pre><code>docker run -v &lt;PATH&gt;:&lt;PATH&gt; --entrypoint bash -i -t &lt;IMAGE_NAME&gt;:&lt;VERSION_NAME&gt;</code></pre>
+<p>Here <code>--entrypoint bash -it</code> just open the container.</p>
+<h3 id="example-when-running-a-script"><span
+class="header-section-number">8.3</span> Example when running a
+script<a class="headerlink" href="#example-when-running-a-script" title="Link to this heading"></a></h3>
+<p>No container in use:</p>
+<p><img src="../md/img/134-docker/image15.png" style="width:63.0%"
+loading="lazy" /></p>
+<pre><code>echo &#39;echo &quot;HELLO&quot;&#39; | sudo docker run -i gmillot/bash-extended_v1.0:gitlab_v1.0
+# never forget -i with the pipe</code></pre>
+<p>Warning: container still in use after that:</p>
+<p><img src="../md/img/134-docker/image16.png" style="width:61.0%"
+loading="lazy" /></p>
+<p>Use <code>--rm</code> to prevent that.</p>
+<h3 id="example-when-working-interactively-inside-a-container"><span
+class="header-section-number">8.4</span> Example when working
+interactively inside a
+container<a class="headerlink" href="#example-when-working-interactively-inside-a-container" title="Link to this heading"></a></h3>
+<p>No container in use:</p>
+<p><img src="../md/img/134-docker/image15.png" style="width:63.0%"
+loading="lazy" /></p>
+<pre><code>sudo docker run -it gmillot/bash-extended_v1.0:gitlab_v1.0</code></pre>
+<p>Warning: -t is mandatory when using -i, otherwise bug.</p>
+<p>The prompt has changed:</p>
+<p><img src="../md/img/134-docker/image17.png" style="width:81.0%"
+loading="lazy" /></p>
+<p>Use <code>exit</code> to quit the container</p>
+<p>Warning: container still in use after that:</p>
+<p><img src="../md/img/134-docker/image16.png" style="width:61.0%"
+loading="lazy" /></p>
+<p>Use <code>--rm</code> to prevent that.</p>
+<h3 id="mounting-a-drive-in-a-container-using--v"><span
+class="header-section-number">8.5</span> Mounting a drive in a container
+using
+-v<a class="headerlink" href="#mounting-a-drive-in-a-container-using--v" title="Link to this heading"></a></h3>
+<p>Example:</p>
+<pre><code>sudo docker run -v $PWD:$PWD -ti gmillot/bash-extended_v1.0:gitlab_v1.0</code></pre>
+<p>$PWD is the pwd displayed in the console before running the image.
+Here it means: 1) before the colon, mount that path inside the container
+and 2) after the colon, create inside the image a path (by creating all
+the intermediate directories) from the root that is $PWD. Thus, if PWD =
+<code>/mnt/c/Users/Gael/Documents/Git_projects/project_a/</code>, it
+means that this path is mounted into the container at this destination
+inside the container:
+<code>/mnt/c/Users/Gael/Documents/Git_projects/project_a</code>. This
+facilitate the use of script inside the container because it looks like
+the local folder</p>
+<p>Example:</p>
+<pre><code>sudo docker run -v /mnt/c/Users/Gael/Documents/Git_projects/project_a/:/caca -ti --entrypoint bash 1e828c256ff0</code></pre>
+<p>Here <code>/mnt/c/Users/Gael/Documents/Git_projects/project_a</code>
+from the local machine is mounted into the <code>/caca</code> path
+inside the container.</p>
+<p>Warning: mounting a drive using -v does not work when this drive is a
+distant drive using WSL. Example:</p>
+<pre><code>FOLDER=&quot;\\\helix.pasteur.fr\projects\BioIT\gmillot&quot;
+sudo mkdir /mnt/share
+sudo mount -t drvfs &quot;$FOLDER&quot; /mnt/share
+sudo docker run -v /mnt/share/:/caca -ti --entrypoint bash gmillot/r_v4.1.2_extended_v2.1:gitlab_v8.8</code></pre>
+<p>Nothing is present in /caca.</p>
+<p>See <a href="https://github.com/docker/for-win/issues/2151"
+class="uri">https://github.com/docker/for-win/issues/2151</a></p>
+<h3 id="the--w-option"><span class="header-section-number">8.6</span>
+The -w
+option<a class="headerlink" href="#the--w-option" title="Link to this heading"></a></h3>
+<p>Set directly the working directory in the container.</p>
+<pre><code>sudo docker run -w $caca -ti --entrypoint bash 1e828c256ff0</code></pre>
+<p><img src="../md/img/134-docker/image18.png" loading="lazy" /></p>
+<h2 id="docker-files-repositories"><span
+class="header-section-number">9</span> Docker files
+repositories<a class="headerlink" href="#docker-files-repositories" title="Link to this heading"></a></h2>
+<h3 id="trustable-repo"><span class="header-section-number">9.1</span>
+Trustable
+repo<a class="headerlink" href="#trustable-repo" title="Link to this heading"></a></h3>
+<p><a href="https://github.com/evolbioinfo/dockerfiles"
+class="uri">https://github.com/evolbioinfo/dockerfiles</a></p>
+<h3 id="create-a-repo"><span class="header-section-number">9.2</span>
+Create a
+repo<a class="headerlink" href="#create-a-repo" title="Link to this heading"></a></h3>
+<p>This is optional, since the remote repo can be created when pushing
+from a local repo.</p>
+<p><a href="https://hub.docker.com/repositories"
+class="uri">https://hub.docker.com/repositories</a></p>
+<p>Click on "create"</p>
+<p><img src="../md/img/134-docker/image19.png" style="width:87.0%"
+loading="lazy" /></p>
+<p>Then fill the name (warning: at least 2 letters) and click
+"create"</p>
+<p><img src="../md/img/134-docker/image20.png" style="width:79.0%"
+loading="lazy" /></p>
+<h3 id="cluster"><span class="header-section-number">9.3</span>
+Cluster<a class="headerlink" href="#cluster" title="Link to this heading"></a></h3>
+<p>Not possible to do:</p>
+<pre><code>sudo docker pull &lt;NAME&gt;</code></pre>
+<p>On the cluster. Only singularity pull is allowed.</p>
+<h2 id="docker-image-repositories"><span
+class="header-section-number">10</span> Docker image
+repositories<a class="headerlink" href="#docker-image-repositories" title="Link to this heading"></a></h2>
+<h3 id="docker-hub"><span class="header-section-number">10.1</span>
+Docker
+Hub<a class="headerlink" href="#docker-hub" title="Link to this heading"></a></h3>
+<p><a href="https://hub.docker.com"
+class="uri">https://hub.docker.com</a></p>
+<p>Trustable repo:</p>
+<p><a href="https://hub.docker.com/u/genomicpariscentre"
+class="uri">https://hub.docker.com/u/genomicpariscentre</a></p>
+<p><a href="https://hub.docker.com/u/evolbioinfo"
+class="uri">https://hub.docker.com/u/evolbioinfo</a></p>
+<h3 id="bioconda-repo-for-python-packages"><span
+class="header-section-number">10.2</span> Bioconda repo for Python
+packages<a class="headerlink" href="#bioconda-repo-for-python-packages" title="Link to this heading"></a></h3>
+<p>Each Python package in bioconda (see <a
+href="136-nextflow-dsl1.html">protocol 136</a>) and managed by the
+package provider Pypi (<a href="https://pypi.org/"
+class="uri">https://pypi.org/</a>) is automatically associated/embedded
+to a Python container that contains all the dependencies in order to
+correctly run this package. Each new upgrade of the package in Pypi is
+automately upgraded in the container.</p>
+<p>The repo of all these automatic container is:</p>
+<p><a href="https://biocontainers.pro"
+class="uri">https://biocontainers.pro</a></p>
+<h2 id="image-handling-in-the-remote-repository"><span
+class="header-section-number">11</span> Image handling in the remote
+repository<a class="headerlink" href="#image-handling-in-the-remote-repository" title="Link to this heading"></a></h2>
+<h3 id="add-the-gitlab-commit"><span
+class="header-section-number">11.1</span> Add the gitlab
+commit<a class="headerlink" href="#add-the-gitlab-commit" title="Link to this heading"></a></h3>
+<p>From my dockerhub website</p>
+<p><a href="https://hub.docker.com"
+class="uri">https://hub.docker.com</a></p>
+<p>Login (if not automatic)</p>
+<p>Click on the repo that need the gitlab connection</p>
+<p>Click on "Manage repository"</p>
+<p><img src="../md/img/134-docker/image21.png" loading="lazy" /></p>
+<p>Click on "Description" (100 characters max) and update</p>
+<p><img src="../md/img/134-docker/image22.png" style="width:77.0%"
+loading="lazy" /></p>
+<p>Or click on "Readme" and update</p>
+<p><img src="../md/img/134-docker/image23.png" style="width:58.0%"
+loading="lazy" /></p>
+<h3 id="deletion-of-an-image"><span
+class="header-section-number">11.2</span> Deletion of an
+image<a class="headerlink" href="#deletion-of-an-image" title="Link to this heading"></a></h3>
+<p>Using dockerhub website:</p>
+<p><img src="../md/img/134-docker/image24.png" style="width:81.0%"
+loading="lazy" /></p>
+<p>To obtain the setting tab, click on an image or use this url kind
+(name/settings):</p>
+<p><a
+href="https://hub.docker.com/repository/docker/gmillot/r_base/settings"
+class="uri">https://hub.docker.com/repository/docker/gmillot/r_base/settings</a></p>
+<h3 id="deletion-of-a-tag"><span
+class="header-section-number">11.3</span> Deletion of a
+tag<a class="headerlink" href="#deletion-of-a-tag" title="Link to this heading"></a></h3>
+<p>Using dockerhub website:</p>
+<p><img src="../md/img/134-docker/image25.png" style="width:76.0%"
+loading="lazy" /></p>
+<h2 id="docker-on-the-cluster"><span
+class="header-section-number">12</span> Docker on the
+cluster<a class="headerlink" href="#docker-on-the-cluster" title="Link to this heading"></a></h2>
+<p>Because of what is said in section <a
+href="#acronyms-and-definition">Acronyms and definition</a>, the easiest
+is to go through dockerhub.</p>
+<p>Push local images on dockerhub</p>
+<p>Then pull images from dockerhub when on the cluster, using
+singularity.</p>
+<p>Warning:</p>
+<p>1) sudo docker pull cannot be performed from any location on the
+cluster (security issue).</p>
+<p>2) singularity pull can only be done from the head of the cluster,
+not from the nodes. But then, we can use the pulled images on nodes.</p>
+<h2 id="docker-configuration"><span
+class="header-section-number">13</span> Docker
+configuration<a class="headerlink" href="#docker-configuration" title="Link to this heading"></a></h2>
+<h3 id="settings"><span class="header-section-number">13.1</span>
+Settings<a class="headerlink" href="#settings" title="Link to this heading"></a></h3>
+<p>The configuration daemon.json file is here:</p>
+<p><code>C:\Users\Gael\.docker</code></p>
+<p>Use these advices to modify the settings:</p>
+<p><a
+href="https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-docker/configure-docker-daemon#configure-docker-with-a-configuration-file"
+class="uri">https://docs.microsoft.com/en-us/virtualization/windowscontainers/manage-docker/configure-docker-daemon#configure-docker-with-a-configuration-file</a></p>
+<h3 id="image-storage"><span class="header-section-number">13.2</span>
+Image
+storage<a class="headerlink" href="#image-storage" title="Link to this heading"></a></h3>
+<p><a
+href="https://stackoverflow.com/questions/62441307/how-can-i-change-the-location-of-docker-images-when-using-docker-desktop-on-wsl2"
+class="uri">https://stackoverflow.com/questions/62441307/how-can-i-change-the-location-of-docker-images-when-using-docker-desktop-on-wsl2</a></p>
+<h3 id="no-more-space-on-disk-huge-.docker-file"><span
+class="header-section-number">13.3</span> No more space on disk (huge
+.docker
+file)<a class="headerlink" href="#no-more-space-on-disk-huge-.docker-file" title="Link to this heading"></a></h3>
+<p>Open the Docker Desktop client, click the settings icon in the top
+bar, click Clean/Purge, select all the possibilities (WSL, container,
+etc.) and purge.</p>
+<p><img src="../md/img/134-docker/image26.png" style="width:84.0%"
+loading="lazy" /></p>
+<h2 id="examples"><span class="header-section-number">14</span>
+Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<h3 id="coreutils"><span class="header-section-number">14.1</span>
+Coreutils<a class="headerlink" href="#coreutils" title="Link to this heading"></a></h3>
+<p>Dockerfile in</p>
+<p><code>C:\Users\Gael\Documents\Git_projects\dockerfiles\ubuntu\v16.04\coreutils\v8.30</code></p>
+<pre><code># coreutils - GNU core utilities
+# https://www.gnu.org/software/coreutils/
+# v8.30
+
+# base image: ubuntu:16.04
+FROM ubuntu:16.04
+# Warning: the name must be exactly what is written in the docker images interface, or sudo docker image ls. But here, since the image is not present locally, docker will search it on docker hub. Thus, gmillot/ubuntu:16.04 iw not correct
+
+# File Author / Maintainer
+MAINTAINER Gael Millot &lt;gael.millot@pasteur.fr&gt;
+
+RUN apt-get update --fix-missing \
+# update apt-get
+&amp;&amp; apt-get upgrade \
+# end update apt-get
+# install the required dependencies
+&amp;&amp; apt-get install -y wget tar xz-utils make gcc dpkg libblkid1 libreadline6 \
+# end install the required dependencies
+# coreutils install
+&amp;&amp; cd /usr/local/ \
+&amp;&amp; wget http://ftp.gnu.org/gnu/coreutils/coreutils-8.30.tar.xz \
+&amp;&amp; tar -xf coreutils-8.30.tar.xz \
+&amp;&amp; cd coreutils-8.30 \
+&amp;&amp; chmod u=rwx configure \
+&amp;&amp; export FORCE_UNSAFE_CONFIGURE=1 \
+&amp;&amp; ./configure \
+&amp;&amp; make \
+&amp;&amp; make install \
+&amp;&amp; cd /usr/local/ \
+&amp;&amp; rm -rf coreutils-8.30 \
+# end coreutils install
+# &amp;&amp; apt-get remove -y wget tar xz-utils make gcc \ # inactivated because generate errors of pkg dependency
+# important to remove the dependencies after installation to save space in the image that will be built
+&amp;&amp; apt-get autoremove -y \
+&amp;&amp; apt-get clean \
+&amp;&amp; rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT [&quot;/bin/bash&quot;]</code></pre>
+<p>Git push on the remote gitlab account, with the correct commit text
+to clearly identify the versions of each Dockerfile</p>
+<p>Run the docker daemon</p>
+<p>Open WSL2</p>
+<p>Clone the gitlab repository (or pull if already cloned):</p>
+<pre><code>git clone git@gitlab.pasteur.fr:gmillot/dockerfiles.git /home/gael/dockerfiles/</code></pre>
+<p>Build the image</p>
+<pre><code>sudo docker build --no-cache /home/gael/dockerfiles/ubuntu/v16.04/coreutils/v8.30 -t gmillot/coreutils:8.30
+# -f, --file    Name of the Dockerfile input (Default is &#39;PATH/Dockerfile&#39;). Do not use -f if only Dockerfile file in the path indicated for sudo docker build, which is the case here
+# -t    Name and optionally a tag in the &#39;name:tag&#39; format of the image that will be built. Name is the repo name with at least 2 letters, tag is a tag of the repo (version usually)</code></pre>
+<p>Warning: at least 2 letters required for the repo name in -t, i.e.,
+-t gmillot/r:4.0.5 does not work</p>
+<p>Verif</p>
+<pre><code>sudo docker images</code></pre>
+<p><img src="../md/img/134-docker/image27.png" loading="lazy" /></p>
+<p>Check that the image is not already present in the dockerhub
+repo:</p>
+<p><img src="../md/img/134-docker/image28.png" style="width:88.0%"
+loading="lazy" /></p>
+<p>Push on dockerhub</p>
+<pre><code>sudo docker login
+sudo docker push gmillot/coreutils:8.30</code></pre>
+<p>Check that the image is now present in the distant dockerhub
+repo:</p>
+<p><img src="../md/img/134-docker/image29.png" style="width:85.0%"
+loading="lazy" /></p>
+<p>Then see section <a href="#add-the-gitlab-commit">Add the gitlab
+commit</a> to add the gitlab commit in the description or the readme
+window.</p>
+<p>To use the remote image:</p>
+<pre><code>echo &quot;echo &#39;Hello world&#39;&quot; | sudo docker run -i gmillot/coreutils:8.30
+# never forget -i with the pipe</code></pre>
+<p>Warning: do not use -t when piping into docker run.</p>
+<p>To work inside the remote image env:</p>
+<pre><code>sudo docker run --entrypoint bash -i -t gmillot/coreutils:8.30
+# Here -t must be used to have the TTY, i.e., to be able to write inside the container env
+
+echo &#39;Hello world&#39;
+exit</code></pre>
+<p>To remove the containers</p>
+<pre><code>docker_rm_all</code></pre>
+<h3 id="r"><span class="header-section-number">14.2</span>
+R<a class="headerlink" href="#r" title="Link to this heading"></a></h3>
+<p>Dockerfile in</p>
+<p><code>C:\Users\Gael\Documents\Git_projects\dockerfiles\R\v4.0.5\base</code></p>
+<pre><code># R
+# https://cran.r-project.org/
+# v4.0.5
+
+# base image: r-base:4.0.5, see https://hub.docker.com/_/r-base for details
+FROM r-base:4.0.5 # Warning: the name must be exactly what is written in the docker images interface, or sudo docker image ls. But here, since the image is not present locally, docker will search it on docker hub. Thus, gmillot/r-base:4.0.5 iw not correct
+
+# File Author / Maintainer
+LABEL maintainer=gael.millot@pasteur.fr
+
+RUN apt-get update \
+&amp;&amp; apt-get install -y procps
+# nextflow needs procps for usage stats, cpu and process memory. Normally, this package is present by default in ubuntu. But in the R base image, it seems that there is a problem
+
+ENTRYPOINT [&quot;/usr/bin/R&quot;]</code></pre>
+<p>Then as in section <a href="#coreutils">Coreutils</a> but using:</p>
+<p>Clone the dockerfile:</p>
+<pre><code>git clone git@gitlab.pasteur.fr:gmillot/dockerfiles.git /home/gael/dockerfiles/</code></pre>
+<p>Build the image</p>
+<pre><code>sudo docker build --no-cache /home/gael/dockerfiles/R/v4.0.5/base/ -f /home/gael/dockerfiles/R/v4.0.5/base/Dockerfile -t gmillot/r_base:4.0.5</code></pre>
+<p>Warning: at least 2 letters required for the repo name in -t, i.e.,
+-t gmillot/r:4.0.5 does not work</p>
+<p>By default, R and Rscript executions files are in:</p>
+<pre><code>/usr/bin/</code></pre>
+<h3 id="r-extended"><span class="header-section-number">14.3</span> R
+extended<a class="headerlink" href="#r-extended" title="Link to this heading"></a></h3>
+<p>Dockerfile in</p>
+<p><code>C:\Users\gael\Documents\Git_projects\dockerfiles\R\v4.0.5\extended</code></p>
+<pre><code># to get all the packages:
+## open a R session
+## use
+# ip = as.data.frame(installed.packages()[,c(1,3:4)])
+# ip = ip[is.na(ip$Priority),1:2,drop=FALSE]
+# ip
+
+
+# R v4.0.5 with packages:
+#   Package Version
+#   SARTools    1.7.3
+...
+#   zlibbioc    1.36.0
+
+
+# base image: r-base:4.0.5
+FROM gmillot/r-base:4.0.5 # Warning: the name must be exactly what is written in the docker images interface, or sudo docker image ls. Here, the image is present locally, or distantly on the gmillot repo. Thus, gmillot/r-base:4.0.5 is correct
+
+# File Author / Maintainer
+LABEL maintainer=gael.millot@pasteur.fr
+
+ENV CRANREPO=&quot;&#39;https://cran.irsn.fr/&#39;&quot;
+# use the code above to get the list of the installed packages
+ENV RLIB=&quot;&#39;SARTools&#39; &#39;abind&#39; &#39;annotate&#39; &#39;AnnotationDbi&#39; &#39;askpass&#39; &#39;assertthat&#39; &#39;backports&#39; &#39;base64enc&#39; &#39;BH&#39; &#39;Biobase&#39; &#39;BiocGenerics&#39; &#39;BiocManager&#39; &#39;BiocParallel&#39; &#39;BiocVersion&#39; &#39;Biostrings&#39; &#39;bit&#39; &#39;bit64&#39; &#39;bitops&#39; &#39;blob&#39; &#39;brew&#39; &#39;brio&#39; &#39;broom&#39; &#39;cachem&#39; &#39;Cairo&#39; &#39;callr&#39; &#39;car&#39; &#39;carData&#39; &#39;caTools&#39; &#39;cellranger&#39; &#39;CGHbase&#39; &#39;CGHcall&#39; &#39;cli&#39; &#39;clipr&#39; &#39;colorspace&#39; &#39;commonmark&#39; &#39;conquer&#39; &#39;corrplot&#39; &#39;covr&#39; &#39;cpp11&#39; &#39;crayon&#39; &#39;credentials&#39; &#39;crosstalk&#39; &#39;curl&#39; &#39;data.table&#39; &#39;DBI&#39; &#39;dbplyr&#39; &#39;DelayedArray&#39; &#39;desc&#39; &#39;DESeq2&#39; &#39;devtools&#39; &#39;diffobj&#39; &#39;digest&#39; &#39;DNAcopy&#39; &#39;dplyr&#39; &#39;DT&#39; &#39;dtplyr&#39; &#39;edgeR&#39; &#39;ellipsis&#39; &#39;emmeans&#39; &#39;estimability&#39; &#39;evaluate&#39; &#39;ExPosition&#39; &#39;fansi&#39; &#39;farver&#39; &#39;fastmap&#39; &#39;forcats&#39; &#39;formatR&#39; &#39;fs&#39; &#39;futile.logger&#39; &#39;futile.options&#39; &#39;future&#39; &#39;future.apply&#39; &#39;gargle&#39; &#39;genefilter&#39; &#39;geneplotter&#39; &#39;generics&#39; &#39;GenomeInfoDb&#39; &#39;GenomeInfoDbData&#39; &#39;GenomicRanges&#39; &#39;gert&#39; &#39;GGally&#39; &#39;ggdendro&#39; &#39;ggplot2&#39; &#39;ggrepel&#39; &#39;gh&#39; &#39;gitcreds&#39; &#39;githubinstall&#39; &#39;globals&#39; &#39;glue&#39; &#39;googledrive&#39; &#39;googlesheets4&#39; &#39;gplots&#39; &#39;gridExtra&#39; &#39;gtable&#39; &#39;gtools&#39; &#39;haven&#39; &#39;HiCcompare&#39; &#39;highr&#39; &#39;hms&#39; &#39;htmltools&#39; &#39;htmlwidgets&#39; &#39;httr&#39; &#39;ids&#39; &#39;impute&#39; &#39;ini&#39; &#39;InteractionSet&#39; &#39;IRanges&#39; &#39;isoband&#39; &#39;jpeg&#39; &#39;jsonlite&#39; &#39;kableExtra&#39; &#39;knitr&#39; &#39;labeling&#39; &#39;lambda.r&#39; &#39;later&#39; &#39;lazyeval&#39; &#39;lemon&#39; &#39;lifecycle&#39; &#39;limma&#39; &#39;listenv&#39; &#39;lme4&#39; &#39;lmerTest&#39; &#39;locfit&#39; &#39;lubridate&#39; &#39;magrittr&#39; &#39;maptools&#39; &#39;markdown&#39; &#39;marray&#39; &#39;MatrixGenerics&#39; &#39;MatrixModels&#39; &#39;matrixStats&#39; &#39;memoise&#39; &#39;mime&#39; &#39;minqa&#39; &#39;mockery&#39; &#39;modelr&#39; &#39;munsell&#39; &#39;mvtnorm&#39; &#39;nloptr&#39; &#39;numDeriv&#39; &#39;openssl&#39; &#39;openxlsx&#39; &#39;parallelly&#39; &#39;pbkrtest&#39; &#39;pheatmap&#39; &#39;pillar&#39; &#39;pkgbuild&#39; &#39;pkgconfig&#39; &#39;pkgload&#39; &#39;plogr&#39; &#39;plyr&#39; &#39;png&#39; &#39;praise&#39; &#39;prettyGraphs&#39; &#39;prettyunits&#39; &#39;processx&#39; &#39;progress&#39; &#39;promises&#39; &#39;ps&#39; &#39;pspearman&#39; &#39;purrr&#39; &#39;QDNAseq&#39; &#39;quantreg&#39; &#39;R.methodsS3&#39; &#39;R.oo&#39; &#39;R.utils&#39; &#39;R6&#39; &#39;rappdirs&#39; &#39;rcmdcheck&#39; &#39;RColorBrewer&#39; &#39;Rcpp&#39; &#39;RcppArmadillo&#39; &#39;RcppEigen&#39; &#39;RCurl&#39; &#39;readr&#39; &#39;readxl&#39; &#39;rematch&#39; &#39;rematch2&#39; &#39;remotes&#39; &#39;reprex&#39; &#39;reshape&#39; &#39;reshape2&#39; &#39;reticulate&#39; &#39;rex&#39; &#39;rhdf5&#39; &#39;rhdf5filters&#39; &#39;Rhdf5lib&#39; &#39;Rhtslib&#39; &#39;rio&#39; &#39;rlang&#39; &#39;rmarkdown&#39; &#39;roxygen2&#39; &#39;rprojroot&#39; &#39;Rsamtools&#39; &#39;RSQLite&#39; &#39;rstudioapi&#39; &#39;rversions&#39; &#39;rvest&#39; &#39;S4Vectors&#39; &#39;SARTools&#39; &#39;scales&#39; &#39;selectr&#39; &#39;sessioninfo&#39; &#39;snow&#39; &#39;snowfall&#39; &#39;sp&#39; &#39;SparseM&#39; &#39;statmod&#39; &#39;stringi&#39; &#39;stringr&#39; &#39;SummarizedExperiment&#39; &#39;SuppDists&#39; &#39;svglite&#39; &#39;sys&#39; &#39;systemfonts&#39; &#39;testthat&#39; &#39;tibble&#39; &#39;tidyr&#39; &#39;tidyselect&#39; &#39;tidyverse&#39; &#39;tinytex&#39; &#39;translations&#39; &#39;usethis&#39; &#39;utf8&#39; &#39;uuid&#39; &#39;vctrs&#39; &#39;viridisLite&#39; &#39;waldo&#39; &#39;webshot&#39; &#39;whisker&#39; &#39;withr&#39; &#39;xfun&#39; &#39;XML&#39; &#39;xml2&#39; &#39;xopen&#39; &#39;xtable&#39; &#39;XVector&#39; &#39;yaml&#39; &#39;zip&#39; &#39;zlibbioc&#39;&quot;
+
+# nextflow needs procps for usage stats, cpu and process memory. Normally, this package is present by default in ubuntu. But in the R base image, it seems that there is a problem
+RUN apt-get update &amp;&amp; apt-get install -y procps                       \
+  &amp;&amp; for i in $RLIB ; do R -e &quot;install.packages(pkgs = $i, lib = &#39;/usr/local/lib/R/site-library&#39;, dependencies=TRUE, repo=$CRANREPO)&quot; ; done \
+  &amp;&amp; apt-get autoremove -y                                            \
+  &amp;&amp; apt-get clean                                                    \
+  &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+
+ENTRYPOINT [&quot;/usr/bin/R&quot;]</code></pre>
+<p>Then as in section <a href="#coreutils">Coreutils</a> but using:</p>
+<p>Clone the dockerfile:</p>
+<pre><code>git clone git@gitlab.pasteur.fr:gmillot/dockerfiles.git /home/gael/dockerfiles/</code></pre>
+<p>Build the image</p>
+<pre><code>sudo docker build --no-cache /home/gael/dockerfiles/R/v4.0.5/extended/ -f /home/gael/dockerfiles/R/v4.0.5/extended/Dockerfile -t gmillot/r_extended:4.0.5</code></pre>
+<p>Warning: at least 2 letters required for the repo name in -t, i.e.,
+-t gmillot/r:4.0.5 does not work</p>
+<p>By default, R and Rscript executions files are in:</p>
+<pre><code>/usr/bin/</code></pre>
+<h2 id="migrate-your-existing-images-away-from-docker-hub"><span
+class="header-section-number">15</span> Migrate your existing images
+away from docker
+hub<a class="headerlink" href="#migrate-your-existing-images-away-from-docker-hub" title="Link to this heading"></a></h2>
+<p>The crane tool by Google's open source office is able to mirror
+images in a much more efficient way than running docker pull, tag and
+push. The pull, tag and push approach also doesn't work with multi-arch
+images.</p>
+<p>Here's an example command to list tags for an image:</p>
+<pre><code>crane ls ghcr.io/openfaas/gateway | tail -n 5</code></pre>
+<p>The crane cp command doesn't require a local docker daemon and copies
+directly from one registry to another:</p>
+<pre><code>crane cp docker.io/openfaas/gateway:0.26.3 ghcr.io/openfaas/gateway:0.26.3</code></pre>
+<p>On Twitter, a full-time employee on the CNCF's Harbor project also
+explained that it has a "mirroring" capability.</p>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="165-java.html" class="btn btn-neutral float-left" title="Java" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+            <a href="135-apptainer.html" class="btn btn-neutral float-right" title="Apptainer" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>

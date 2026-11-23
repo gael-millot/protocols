@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>$if(pagetitle)$$pagetitle$$else$$title$$endif$</title>
+<link rel="icon" href="${root}docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="${root}docs/assets/theme.css">
+<link rel="stylesheet" href="${root}docs/assets/protocols.css">
+$if(highlighting-css)$
+<style>
+$highlighting-css$
+</style>
+$endif$
+$if(math)$
+$math$
+$endif$
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="${root}index.html" class="icon icon-home site-title"> $sitetitle$</a>
+        <div class="version"><a href="${repo_url}">$sitesubtitle$</a></div>
+        <div role="search">
+          <form class="wy-form" action="${root}docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols"$if(query_box)$ id="search-box"$endif$>
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+$for(nav)$
+        <p class="caption" role="heading"><span class="caption-text">$nav.name$</span></p>
+        <ul$if(nav.current)$ class="current"$endif$>
+$for(nav.items)$
+          <li class="toctree-l1$if(nav.items.current)$ current$endif$"><a class="reference internal$if(nav.items.current)$ current$endif$" href="${nav.items.href}"><span class="nav-num">$nav.items.num$</span>$nav.items.label$</a>$if(nav.items.current)$$sidetoc$$endif$</li>
+$endfor$
+        </ul>
+$endfor$
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="${root}index.html">$sitetitle$</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="${root}index.html" class="icon icon-home" aria-label="Home"></a></li>
+$if(category)$
+            <li class="breadcrumb-item">$category$</li>
+$endif$
+$if(protocol)$
+            <li class="breadcrumb-item active">Protocol $protocol$</li>
+$endif$
+$if(source_url)$
+            <li class="wy-breadcrumbs-aside"><a href="${source_url}" class="fa fa-${repo_icon}"> Markdown source</a></li>
+$endif$
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+$if(protocol)$
+<h1 class="page-title">$title$</h1>
+<p class="protocol-meta"><span>Protocol $protocol$</span><span>revision $revision$</span>$if(date)$<span>last update $date$</span>$endif$$if(draft)$<span class="draft-flag">draft</span>$endif$$if(publicflag)$<span class="public-flag">public</span>$endif$</p>
+$elseif(title)$
+<h1 class="page-title">$title$</h1>
+$endif$
+$body$
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+$if(prev)$
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="${prev.href}" class="btn btn-neutral float-left" title="$prev.label$" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+$if(next)$
+            <a href="${next.href}" class="btn btn-neutral float-right" title="$next.label$" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+$endif$
+          </div>
+$elseif(next)$
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="${next.href}" class="btn btn-neutral float-right" title="$next.label$" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          </div>
+$endif$
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="${file_url}/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="${root}docs/assets/protocols.js"></script>
+$for(script)$
+<script src="${root}docs/assets/$script$"></script>
+$endfor$
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Java · protocol 165 · Bioinformatics protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="044-bash.html"><span class="nav-num">44</span>Bash</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux (WSL)</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul class="current">
+          <li class="toctree-l1"><a class="reference internal" href="084-python.html"><span class="nav-num">84</span>Python</a></li>
+          <li class="toctree-l1 current"><a class="reference internal current" href="165-java.html"><span class="nav-num">165</span>Java</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#java-development-kit-jdk-distributions"><span class="sec-num">1</span>Java Development Kit (JDK) Distributions</a></li><li class="toctree-l2"><a class="reference internal" href="#installation"><span class="sec-num">2</span>Installation</a><ul><li class="toctree-l3"><a class="reference internal" href="#linux-and-wsl2"><span class="sec-num">2.1</span>Linux and WSL2</a></li><li class="toctree-l3"><a class="reference internal" href="#macos"><span class="sec-num">2.2</span>MacOS</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#java-install-of-an-old-version"><span class="sec-num">3</span>Java install of an old version</a><ul><li class="toctree-l3"><a class="reference internal" href="#apt-get"><span class="sec-num">3.1</span>apt-get</a></li><li class="toctree-l3"><a class="reference internal" href="#sdk"><span class="sec-num">3.2</span>sdk</a></li><li class="toctree-l3"><a class="reference internal" href="#sdk-versus-apt-get-management"><span class="sec-num">3.3</span>SDK versus apt-get management</a></li></ul></li></ul></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="134-docker.html"><span class="nav-num">134</span>Docker</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">R, Python and Java</li>
+            <li class="breadcrumb-item active">Protocol 165</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/165-java.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Java</h1>
+<p class="protocol-meta"><span>Protocol 165</span><span>revision 0</span><span>last update 2026-11-21</span></p>
+<h2 id="java-development-kit-jdk-distributions"><span
+class="header-section-number">1</span> Java Development Kit (JDK)
+Distributions<a class="headerlink" href="#java-development-kit-jdk-distributions" title="Link to this heading"></a></h2>
+<p>Amazon Corretto.</p>
+<p>Azul Platform Core (Zulu)</p>
+<p>Oracle Java Downloads.</p>
+<p>Microsoft Build of OpenJDK.</p>
+<p>SAPMachine.</p>
+<p>Azul Platform Prime (Zing)</p>
+<p>Oracle uses sdk management.</p>
+<h2 id="installation"><span class="header-section-number">2</span>
+Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<h3 id="linux-and-wsl2"><span class="header-section-number">2.1</span>
+Linux and
+WSL2<a class="headerlink" href="#linux-and-wsl2" title="Link to this heading"></a></h3>
+<p>Tested on Ubuntu 26.04 (WSL2) on 2026-11-21: SDKMAN 5.24.0, Temurin
+25.0.5.1 (default java) and Temurin 21.0.13 (used by nextflow
+24.10.4).</p>
+<p>Java checking:</p>
+<pre><code>java -version # check that the version is in the range required by the tool (for instance Java 11 to 23 for nextflow 24.10.x, see protocol 152)
+sudo update-alternatives --config java # if several versions of java are installed with apt-get, select the right one</code></pre>
+<p>Java install (sdk management):</p>
+<pre><code>sudo apt install unzip zip
+curl -s &quot;https://get.sdkman.io&quot; | bash # install sdk and the last version of java
+# source &quot;$HOME/.sdkman/bin/sdkman-init.sh&quot; # optional</code></pre>
+<p>Close the Linux session and open a new one.</p>
+<pre><code>sdk install java # default version (25.0.5.1+2-tem, i.e., Temurin 25, in November 2026)</code></pre>
+<p>Install another version next to the default one (example: Java 21 for
+nextflow 24.10.4, see <a href="152-dsl2.html#linux-and-wsl2">protocol
+152</a>):</p>
+<pre><code>sdk list java # available versions: identifier in the last column, installed ones marked by *, the default one by &gt;
+sdk install java 21.0.13.0+9-tem # answer n to &quot;Do you want java 21.0.13.0+9-tem to be set as default? (Y/n)&quot;
+ls -la ~/.sdkman/candidates/java # installed versions (current is the default one)</code></pre>
+<p>Then, either use it in the current terminal only:</p>
+<pre><code>sdk use java 21.0.13.0+9-tem</code></pre>
+<p>or give its folder to the tool that needs it, for instance to
+nextflow (the default java is unchanged for the rest):</p>
+<pre><code>export NXF_JAVA_HOME=&quot;$HOME/.sdkman/candidates/java/21.0.13.0+9-tem&quot; # add this line at the end of the ~/.bashrc file to keep it</code></pre>
+<p>Java install (classic management):</p>
+<pre><code>sudo apt-get install openjdk-&lt;version&gt;-jdk</code></pre>
+<h3 id="macos"><span class="header-section-number">2.2</span>
+MacOS<a class="headerlink" href="#macos" title="Link to this heading"></a></h3>
+<p>Check Java version:</p>
+<pre><code>java -version # Check that java 8 to 18 is installed</code></pre>
+<p>Java install:</p>
+<p><a
+href="https://download.oracle.com/java/17/latest/jdk-17_macos-x64_bin.tar.gz"
+class="uri">https://download.oracle.com/java/17/latest/jdk-17_macos-x64_bin.tar.gz</a></p>
+<p>Then open the terminal and check the Java version again.</p>
+<p>If several versions are installed, it is possible to select the
+appropriate version like this:</p>
+<pre><code>VERSION=17 # version to use
+/usr/libexec/java_home -V
+echo $JAVA_HOME
+export JAVA_HOME=$(/usr/libexec/java_home -v $VERSION)
+java -version</code></pre>
+<h2 id="java-install-of-an-old-version"><span
+class="header-section-number">3</span> Java install of an old
+version<a class="headerlink" href="#java-install-of-an-old-version" title="Link to this heading"></a></h2>
+<h3 id="apt-get"><span class="header-section-number">3.1</span>
+apt-get<a class="headerlink" href="#apt-get" title="Link to this heading"></a></h3>
+<p>1) Select the Java Version installed:</p>
+<pre><code>sudo update-alternatives --config java # if several versions of java are installed, select v17 # display only le active java version all java version are installed with sdk</code></pre>
+<p>2) Check Available Versions to install</p>
+<pre><code>apt list -a &quot;openjdk*&quot;</code></pre>
+<p>3) Once you identify the version you want, you can install it using
+the apt-get command. Replace &lt;version&gt; with the desired version
+number.</p>
+<pre><code>sudo apt-get install openjdk-&lt;version&gt;-jdk</code></pre>
+<p>For example, if you want to install Java 8: sudo apt-get install
+openjdk-8-jdk</p>
+<p>4) Select the Java Version:</p>
+<pre><code>sudo update-alternatives --config java # if several versions of java are installed, select v17 # display only le active java version all java versions are installed with sdk</code></pre>
+<h3 id="sdk"><span class="header-section-number">3.2</span>
+sdk<a class="headerlink" href="#sdk" title="Link to this heading"></a></h3>
+<p>If you haven't installed SDKMAN yet, you can install it using the
+following command:</p>
+<pre><code>curl -s &quot;https://get.sdkman.io&quot; | bash
+source &quot;$HOME/.sdkman/bin/sdkman-init.sh&quot;</code></pre>
+<p>Once SDKMAN is installed, you can list available Java versions, and
+those installed:</p>
+<pre><code>sdk list java</code></pre>
+<p><img src="../md/img/165-java/image1.png" loading="lazy" /></p>
+<p>The use column indicates the default version.</p>
+<p>The status column indicates the installed (local only + installed)
+versions.</p>
+<p>Install OpenJDK 11:</p>
+<pre><code>sdk install java 11.0.22-amzn</code></pre>
+<p>Replace 11.0.12-amzn with the specific version you want to
+install.</p>
+<p>List the path and the version of java installed, and the default
+one:</p>
+<pre><code>ls -la /home/gmillot/.sdkman/candidates/java</code></pre>
+<p>Set OpenJDK 11 as the default version:</p>
+<pre><code>sdk default java 11.0.22-amzn</code></pre>
+<p>Verify the Java version:</p>
+<pre><code>java -version</code></pre>
+<p>This will install OpenJDK 11 using SDKMAN. The version number may
+vary depending on the specific version available at the time of
+installation. Ensure you replace the version numbers in the commands
+with the desired version you want to install.</p>
+<h3 id="sdk-versus-apt-get-management"><span
+class="header-section-number">3.3</span> SDK versus apt-get
+management<a class="headerlink" href="#sdk-versus-apt-get-management" title="Link to this heading"></a></h3>
+<p>This explains why</p>
+<pre><code>sudo update-alternatives --config java</code></pre>
+<p>does not return all the installed versions of java, but only those
+using apt-get and the active java version, even installed by sdk.</p>
+<p>If sudo update-alternatives --config java is showing only Java 11 and
+not Java 17, it means that the Java 17 installation may not have been
+registered with the alternatives system. To resolve this, you can
+manually add the Java 17 installation to the alternatives. Assuming
+OpenJDK 17 is installed in the /usr/lib/jvm/openjdk-17 directory, you
+can follow these steps:</p>
+<p>To handle OpenJDK 17 installed with SDKMAN, you can use the sdk
+command to set the default Java version. List all available versions
+managed by SDKMAN:</p>
+<pre><code>sdk list java</code></pre>
+<p>Set OpenJDK 17 as the default version:</p>
+<pre><code>sdk default java 17.0.6-amzn</code></pre>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="084-python.html" class="btn btn-neutral float-left" title="Python" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+            <a href="134-docker.html" class="btn btn-neutral float-right" title="Docker" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>

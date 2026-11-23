@@ -1,0 +1,2963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Nextflow DSL1 · protocol 136 · Bioinformatics protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="044-bash.html"><span class="nav-num">44</span>Bash</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux (WSL)</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="084-python.html"><span class="nav-num">84</span>Python</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="165-java.html"><span class="nav-num">165</span>Java</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul class="current">
+          <li class="toctree-l1"><a class="reference internal" href="134-docker.html"><span class="nav-num">134</span>Docker</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a></li>
+          <li class="toctree-l1 current"><a class="reference internal current" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#documentations"><span class="sec-num">1</span>Documentations</a></li><li class="toctree-l2"><a class="reference internal" href="#acronyms"><span class="sec-num">2</span>Acronyms</a></li><li class="toctree-l2"><a class="reference internal" href="#very-important-to-understand-how-nextflow-works"><span class="sec-num">3</span>Very important to understand how nextflow works</a><ul><li class="toctree-l3"><a class="reference internal" href="#names-of-the-files"><span class="sec-num">3.1</span>Names of the files</a></li><li class="toctree-l3"><a class="reference internal" href="#work-folders"><span class="sec-num">3.2</span>work folders</a></li><li class="toctree-l3"><a class="reference internal" href="#symbolic-links"><span class="sec-num">3.3</span>symbolic links</a></li><li class="toctree-l3"><a class="reference internal" href="#the-resume-option"><span class="sec-num">3.4</span>The resume option</a></li><li class="toctree-l3"><a class="reference internal" href="#variable-declaration-in-processes"><span class="sec-num">3.5</span>Variable declaration in processes</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#nexflow-usage"><span class="sec-num">4</span>nexflow usage</a><ul><li class="toctree-l3"><a class="reference internal" href="#dsl1-and-dsl2"><span class="sec-num">4.1</span>DSL1 and DSL2</a></li><li class="toctree-l3"><a class="reference internal" href="#commands"><span class="sec-num">4.2</span>Commands</a></li><li class="toctree-l3"><a class="reference internal" href="#main-options"><span class="sec-num">4.3</span>Main options</a></li><li class="toctree-l3"><a class="reference internal" href="#main-run-options"><span class="sec-num">4.4</span>Main run options</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#installation"><span class="sec-num">5</span>Installation</a><ul><li class="toctree-l3"><a class="reference internal" href="#local-linux-kernel"><span class="sec-num">5.1</span>Local Linux kernel</a><ul><li class="toctree-l4"><a class="reference internal" href="#linux-and-wsl2"><span class="sec-num">5.1.1</span>Linux and WSL2</a></li><li class="toctree-l4"><a class="reference internal" href="#macos"><span class="sec-num">5.1.2</span>MacOS</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#cluster"><span class="sec-num">5.2</span>Cluster</a></li><li class="toctree-l3"><a class="reference internal" href="#old-version-previous-release"><span class="sec-num">5.3</span>Old version / previous release</a><ul><li class="toctree-l4"><a class="reference internal" href="#classic-way"><span class="sec-num">5.3.1</span>classic way</a></li><li class="toctree-l4"><a class="reference internal" href="#sdk-management"><span class="sec-num">5.3.2</span>sdk management</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#update"><span class="sec-num">6</span>update</a></li><li class="toctree-l2"><a class="reference internal" href="#basic-description"><span class="sec-num">7</span>Basic description</a></li><li class="toctree-l2"><a class="reference internal" href="#console"><span class="sec-num">8</span>Console</a></li><li class="toctree-l2"><a class="reference internal" href="#main-groovy-commands"><span class="sec-num">9</span>Main groovy commands</a></li><li class="toctree-l2"><a class="reference internal" href="#script-start"><span class="sec-num">10</span>Script start</a><ul><li class="toctree-l3"><a class="reference internal" href="#channel"><span class="sec-num">10.1</span>Channel</a><ul><li class="toctree-l4"><a class="reference internal" href="#basic"><span class="sec-num">10.1.1</span>Basic</a></li><li class="toctree-l4"><a class="reference internal" href="#queue-and-value-channels"><span class="sec-num">10.1.2</span>Queue and value channels</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#data-objects"><span class="sec-num">10.2</span>Data objects</a><ul><li class="toctree-l4"><a class="reference internal" href="#vectors-variable"><span class="sec-num">10.2.1</span>Vectors (Variable)</a></li><li class="toctree-l4"><a class="reference internal" href="#range"><span class="sec-num">10.2.2</span>Range</a></li><li class="toctree-l4"><a class="reference internal" href="#list"><span class="sec-num">10.2.3</span>List</a></li><li class="toctree-l4"><a class="reference internal" href="#map"><span class="sec-num">10.2.4</span>Map</a></li><li class="toctree-l4"><a class="reference internal" href="#tuple"><span class="sec-num">10.2.5</span>Tuple</a></li><li class="toctree-l4"><a class="reference internal" href="#file-reading"><span class="sec-num">10.2.6</span>File reading</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#implicit-reserved-variables"><span class="sec-num">10.3</span>Implicit (reserved) variables</a></li><li class="toctree-l3"><a class="reference internal" href="#options-of-nextflow-run-params"><span class="sec-num">10.4</span>Options of nextflow run (params)</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#process"><span class="sec-num">11</span>Process</a><ul><li class="toctree-l3"><a class="reference internal" href="#description"><span class="sec-num">11.1</span>Description</a></li><li class="toctree-l3"><a class="reference internal" href="#variable-scope"><span class="sec-num">11.2</span>Variable scope</a></li><li class="toctree-l3"><a class="reference internal" href="#very-important-to-understand"><span class="sec-num">11.3</span>Very important to understand</a></li><li class="toctree-l3"><a class="reference internal" href="#directives"><span class="sec-num">11.4</span>Directives</a><ul><li class="toctree-l4"><a class="reference internal" href="#publishdir"><span class="sec-num">11.4.1</span>publishDir</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#input"><span class="sec-num">11.5</span>Input</a></li><li class="toctree-l3"><a class="reference internal" href="#output"><span class="sec-num">11.6</span>Output</a></li><li class="toctree-l3"><a class="reference internal" href="#when"><span class="sec-num">11.7</span>When</a></li><li class="toctree-l3"><a class="reference internal" href="#execution-block"><span class="sec-num">11.8</span>Execution block</a><ul><li class="toctree-l4"><a class="reference internal" href="#warnings"><span class="sec-num">11.8.1</span>Warnings</a></li><li class="toctree-l4"><a class="reference internal" href="#script"><span class="sec-num">11.8.2</span>Script</a></li><li class="toctree-l4"><a class="reference internal" href="#shell"><span class="sec-num">11.8.3</span>Shell</a></li><li class="toctree-l4"><a class="reference internal" href="#exec"><span class="sec-num">11.8.4</span>Exec</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#operators"><span class="sec-num">12</span>Operators</a><ul><li class="toctree-l3"><a class="reference internal" href="#nextflow"><span class="sec-num">12.1</span>Nextflow</a></li><li class="toctree-l3"><a class="reference internal" href="#groovy"><span class="sec-num">12.2</span>Groovy</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#closure-functions"><span class="sec-num">13</span>Closure functions</a></li><li class="toctree-l2"><a class="reference internal" href="#running"><span class="sec-num">14</span>running</a><ul><li class="toctree-l3"><a class="reference internal" href="#defaults-names"><span class="sec-num">14.1</span>Defaults names</a></li><li class="toctree-l3"><a class="reference internal" href="#basic-instruction-for-execution"><span class="sec-num">14.2</span>Basic instruction for execution</a><ul><li class="toctree-l4"><a class="reference internal" href="#local-running"><span class="sec-num">14.2.1</span>Local running</a></li><li class="toctree-l4"><a class="reference internal" href="#using-a-distant-repository"><span class="sec-num">14.2.2</span>Using a distant repository</a></li><li class="toctree-l4"><a class="reference internal" href="#on-clusters"><span class="sec-num">14.2.3</span>On clusters</a></li><li class="toctree-l4"><a class="reference internal" href="#check-that-a-distant-server-is-mounted"><span class="sec-num">14.2.4</span>Check that a distant server is mounted</a></li><li class="toctree-l4"><a class="reference internal" href="#error-messages-and-solutions"><span class="sec-num">14.2.5</span>Error messages and solutions</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#resume-a-run"><span class="sec-num">14.3</span>Resume a run</a></li><li class="toctree-l3"><a class="reference internal" href="#precision-when-running-a-distant-nextflow-file"><span class="sec-num">14.4</span>Precision when running a distant nextflow file</a><ul><li class="toctree-l4"><a class="reference internal" href="#preregistered-repository"><span class="sec-num">14.4.1</span>Preregistered repository</a></li><li class="toctree-l4"><a class="reference internal" href="#private-repository-example-with-pasteur-gitlab"><span class="sec-num">14.4.2</span>Private repository: example with pasteur gitlab</a></li><li class="toctree-l4"><a class="reference internal" href="#the--r-option"><span class="sec-num">14.4.3</span>The -r option</a></li><li class="toctree-l4"><a class="reference internal" href="#the--c-option"><span class="sec-num">14.4.4</span>The -c option</a></li><li class="toctree-l4"><a class="reference internal" href="#several-nextflow-execution"><span class="sec-num">14.4.5</span>Several nextflow execution</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#example-of-scripts-and-running-commands"><span class="sec-num">14.5</span>Example of scripts and running commands</a><ul><li class="toctree-l4"><a class="reference internal" href="#example-1"><span class="sec-num">14.5.1</span>Example 1</a></li><li class="toctree-l4"><a class="reference internal" href="#example-2"><span class="sec-num">14.5.2</span>Example 2</a></li><li class="toctree-l4"><a class="reference internal" href="#example-3"><span class="sec-num">14.5.3</span>Example 3</a></li><li class="toctree-l4"><a class="reference internal" href="#example-4"><span class="sec-num">14.5.4</span>Example 4</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#execution-printing"><span class="sec-num">15</span>Execution printing</a><ul><li class="toctree-l3"><a class="reference internal" href="#display"><span class="sec-num">15.1</span>Display</a></li><li class="toctree-l3"><a class="reference internal" href="#recovering-these-infos"><span class="sec-num">15.2</span>Recovering these infos</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#config-file"><span class="sec-num">16</span>Config file</a><ul><li class="toctree-l3"><a class="reference internal" href="#name-and-location-of-the-config-file"><span class="sec-num">16.1</span>Name and location of the config file</a></li><li class="toctree-l3"><a class="reference internal" href="#priorities-of-variables"><span class="sec-num">16.2</span>Priorities of variables</a></li><li class="toctree-l3"><a class="reference internal" href="#variables"><span class="sec-num">16.3</span>Variables</a></li><li class="toctree-l3"><a class="reference internal" href="#scopes"><span class="sec-num">16.4</span>Scopes</a><ul><li class="toctree-l4"><a class="reference internal" href="#env"><span class="sec-num">16.4.1</span>env</a></li><li class="toctree-l4"><a class="reference internal" href="#executor"><span class="sec-num">16.4.2</span>executor</a></li><li class="toctree-l4"><a class="reference internal" href="#singularity"><span class="sec-num">16.4.3</span>singularity</a></li><li class="toctree-l4"><a class="reference internal" href="#docker"><span class="sec-num">16.4.4</span>Docker</a></li><li class="toctree-l4"><a class="reference internal" href="#process-1"><span class="sec-num">16.4.5</span>process</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#info-about-the-run"><span class="sec-num">17</span>Info about the run</a><ul><li class="toctree-l3"><a class="reference internal" href="#run-metadata"><span class="sec-num">17.1</span>Run metadata</a></li><li class="toctree-l3"><a class="reference internal" href="#parameter-and-execution-report"><span class="sec-num">17.2</span>Parameter and execution report</a></li><li class="toctree-l3"><a class="reference internal" href="#the-work-directory"><span class="sec-num">17.3</span>The work directory</a></li><li class="toctree-l3"><a class="reference internal" href="#manifest"><span class="sec-num">17.4</span>Manifest</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#problem-of-path"><span class="sec-num">18</span>Problem of path</a></li><li class="toctree-l2"><a class="reference internal" href="#example-of-variable-assessment"><span class="sec-num">19</span>Example of variable assessment</a><ul><li class="toctree-l3"><a class="reference internal" href="#warning-with"><span class="sec-num">19.1</span>Warning with "!"</a></li><li class="toctree-l3"><a class="reference internal" href="#warning-with-1"><span class="sec-num">19.2</span>Warning with "|"</a></li><li class="toctree-l3"><a class="reference internal" href="#string-made-of-integer-over-2"><span class="sec-num">19.3</span>String made of integer over 2</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#example-of-processes"><span class="sec-num">20</span>Example of processes</a><ul><li class="toctree-l3"><a class="reference internal" href="#versions-used-variables"><span class="sec-num">20.1</span>Versions &amp; used variables</a></li><li class="toctree-l3"><a class="reference internal" href="#backup-the-nextflow.config-file-into-the-result-folder"><span class="sec-num">20.2</span>Backup the nextflow.config file into the result folder</a></li><li class="toctree-l3"><a class="reference internal" href="#library-of-processes"><span class="sec-num">20.3</span>Library of processes</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#nextflow-nf-core"><span class="sec-num">21</span>Nextflow nf-core</a></li><li class="toctree-l2"><a class="reference internal" href="#errors-handling"><span class="sec-num">22</span>Errors handling</a></li><li class="toctree-l2"><a class="reference internal" href="#troubleshootings"><span class="sec-num">23</span>Troubleshootings</a><ul><li class="toctree-l3"><a class="reference internal" href="#slow-parallelization-in-wsl2"><span class="sec-num">23.1</span>Slow parallelization in WSL2</a></li><li class="toctree-l3"><a class="reference internal" href="#how-to-deal-with-replacement-in-awk"><span class="sec-num">23.2</span>How to deal with replacement in awk</a></li><li class="toctree-l3"><a class="reference internal" href="#weird-message-with-process-run-but-no-output"><span class="sec-num">23.3</span>Weird message (with process run but no output)</a></li><li class="toctree-l3"><a class="reference internal" href="#r-command-not-found"><span class="sec-num">23.4</span>'\r': command not found</a></li><li class="toctree-l3"><a class="reference internal" href="#weird-behavior-of-collectfile"><span class="sec-num">23.5</span>weird behavior of collectFile()</a></li></ul></li></ul></li>
+          <li class="toctree-l1"><a class="reference internal" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">Clusters, containers and
+workflows</li>
+            <li class="breadcrumb-item active">Protocol 136</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/136-nextflow-dsl1.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Nextflow DSL1</h1>
+<p class="protocol-meta"><span>Protocol 136</span><span>revision 0</span><span>last update 2025-09-22</span></p>
+<h2 id="documentations"><span class="header-section-number">1</span>
+Documentations<a class="headerlink" href="#documentations" title="Link to this heading"></a></h2>
+<p><a href="https://www.nextflow.io/docs/latest/index.html"
+class="uri">https://www.nextflow.io/docs/latest/index.html</a></p>
+<p><a href="https://nextflow-io.github.io/nf-hack18/training.html"
+class="uri">https://nextflow-io.github.io/nf-hack18/training.html</a></p>
+<p><a
+href="https://nextflow-io.github.io/patterns/index.html#_basic_patterns"
+class="uri">https://nextflow-io.github.io/patterns/index.html#_basic_patterns</a></p>
+<h2 id="acronyms"><span class="header-section-number">2</span>
+Acronyms<a class="headerlink" href="#acronyms" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>DAG</td>
+<td>Directed Acyclic Graph</td>
+</tr>
+<tr>
+<td>DSL</td>
+<td>Domain Specific Language. See <a
+href="https://en.wikipedia.org/wiki/Domain-specific_language"
+class="uri">https://en.wikipedia.org/wiki/Domain-specific_language</a></td>
+</tr>
+<tr>
+<td>DSL2</td>
+<td>Version 2 of Nextflow. See <a
+href="https://www.nextflow.io/blog/2020/dsl2-is-here.html"
+class="uri">https://www.nextflow.io/blog/2020/dsl2-is-here.html</a></td>
+</tr>
+<tr>
+<td>nf</td>
+<td>nextflow</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="very-important-to-understand-how-nextflow-works"><span
+class="header-section-number">3</span> Very important to understand how
+nextflow
+works<a class="headerlink" href="#very-important-to-understand-how-nextflow-works" title="Link to this heading"></a></h2>
+<h3 id="names-of-the-files"><span
+class="header-section-number">3.1</span> Names of the
+files<a class="headerlink" href="#names-of-the-files" title="Link to this heading"></a></h3>
+<p>The nextflow pipeline file are named by default main.nf.</p>
+<p>The nextflow config file must are named by default
+nextflow.config.</p>
+<p>It is possible to modify these two names. But it will not work if the
+idea is to work from a distant repository (see section <a
+href="#precision-when-running-a-distant-nextflow-file">Precision when
+running a distant nextflow file</a>).</p>
+<h3 id="work-folders"><span class="header-section-number">3.2</span>
+work
+folders<a class="headerlink" href="#work-folders" title="Link to this heading"></a></h3>
+<p>Nextflow create a folder for each process of the .nf file (or each
+parallelization of each process) in the work directory. For instance
+<em>00/5bf63033e13094f180fe69c583ce3c</em>. Then, everything of the
+process is perform in this folder, which becomes the working environment
+(a kind of home). If INPUT is present, then files or values are
+imported. For the files, a <u>symbolic link</u> is created pointing to
+the initial file (in another folder of the work directory, or in a
+dataset folder). All the new files are created here. If publishDir is
+used, then the files referenced in OUTPUT are <u>copy/paste</u> into the
+designed publishDir folder.</p>
+<p>Execution files are also hosted here. Example in the work folder
+work/1c/8b95199cc174e6590288faf07f3658:</p>
+<p>.command.err : Content of STDERR</p>
+<p>.command.log : Log File (STDOUT+STDERR)</p>
+<p>.command.out : Content of STDOUT</p>
+<p>.command.run : Nextflow generated commands to run the script (cloud,
+etc.)</p>
+<p>.command.sh : Script of the task (“script:“ in process
+definition)</p>
+<p>.command.trace : Memory/CPU/Disk footprint of the task</p>
+<p>.exitcode : Exit status of the task</p>
+<h3 id="symbolic-links"><span class="header-section-number">3.3</span>
+symbolic
+links<a class="headerlink" href="#symbolic-links" title="Link to this heading"></a></h3>
+<p>Warning, because of the symbolic links, every imported file that is
+modified by the process is not only modified in the work folder but also
+were the link point, meaning that initial input data can be modifed
+!</p>
+<p>To prevent that :</p>
+<p>1) always use input files that are "write" protected (read and
+execute only).</p>
+<p>2) Copy the input file in the process before working:</p>
+<pre><code>input:
+file fs
+
+script:
+&quot;&quot;&quot;
+cp ${fs} tempo.txt
+chmod 777 tempo.txt
+...</code></pre>
+<p>See also section <a href="#very-important-to-understand">Very
+important to understand</a> for a better example of copy.</p>
+<h3 id="the-resume-option"><span
+class="header-section-number">3.4</span> The resume
+option<a class="headerlink" href="#the-resume-option" title="Link to this heading"></a></h3>
+<p>A strong advantage of nextflow is to rerun the pipeline using the
+<code>-resume</code> option of the <code>run</code> command. In such
+case, all the processes that are <code>cache 'true'</code> are not run
+but linked to the previous same process execution, which save lots of
+time !</p>
+<p>However, all the variables of the .config used in the process must be
+declared in the input section of the process. Otherwise, nextflow will
+not rerun a <code>cache 'true'</code> process using a variable modified
+in the .config file.</p>
+<h3 id="variable-declaration-in-processes"><span
+class="header-section-number">3.5</span> Variable declaration in
+processes<a class="headerlink" href="#variable-declaration-in-processes" title="Link to this heading"></a></h3>
+<p>The scope of a process is such that if a variable is not in the input
+section, it looks for variables in the working environment of nextflow,
+which has notably sourced the <code>env{}</code> environment of the
+config file. Thus, it is not mandatory to use the input section to
+declare variables. <u>However</u>, in that case, nextflow will not rerun
+a <code>cache 'true'</code> process using a variable modified in the
+.config file.</p>
+<h2 id="nexflow-usage"><span class="header-section-number">4</span>
+nexflow
+usage<a class="headerlink" href="#nexflow-usage" title="Link to this heading"></a></h2>
+<h3 id="dsl1-and-dsl2"><span class="header-section-number">4.1</span>
+DSL1 and
+DSL2<a class="headerlink" href="#dsl1-and-dsl2" title="Link to this heading"></a></h3>
+<p>Always start a .nf script by:</p>
+<pre><code>nextflow.enable.dsl=2</code></pre>
+<p>With value 1 or 2 depending on the desired DSL.</p>
+<h3 id="commands"><span class="header-section-number">4.2</span>
+Commands<a class="headerlink" href="#commands" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>clean</td>
+<td>Clean up project cache and work directories</td>
+</tr>
+<tr>
+<td>clone</td>
+<td>Clone a project into a folder</td>
+</tr>
+<tr>
+<td>config</td>
+<td>Print a project configuration</td>
+</tr>
+<tr>
+<td>console</td>
+<td>Launch Nextflow interactive console</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>Delete the local copy of a project</td>
+</tr>
+<tr>
+<td>help</td>
+<td>Print the usage help for a command</td>
+</tr>
+<tr>
+<td>info</td>
+<td>Print project and system runtime information</td>
+</tr>
+<tr>
+<td>kuberun</td>
+<td>Execute a workflow in a Kubernetes cluster (experimental)</td>
+</tr>
+<tr>
+<td>list</td>
+<td>List all downloaded projects</td>
+</tr>
+<tr>
+<td>log</td>
+<td>Print executions log and runtime info</td>
+</tr>
+<tr>
+<td>pull</td>
+<td>Download or update a project</td>
+</tr>
+<tr>
+<td>run</td>
+<td>Execute a pipeline project</td>
+</tr>
+<tr>
+<td>self-update</td>
+<td>Update nextflow runtime to the latest available version</td>
+</tr>
+<tr>
+<td>view</td>
+<td>View project script file(s)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>nextflow run main.nf</code></pre>
+<h3 id="main-options"><span class="header-section-number">4.3</span>
+Main
+options<a class="headerlink" href="#main-options" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>-C</td>
+<td>Use the specified configuration file(s) overriding any defaults</td>
+</tr>
+<tr>
+<td>-D</td>
+<td>Set JVM properties</td>
+</tr>
+<tr>
+<td>-bg</td>
+<td>Execute nextflow in background</td>
+</tr>
+<tr>
+<td>-c, -config</td>
+<td>Add the specified file to configuration set</td>
+</tr>
+<tr>
+<td>-d, -dockerize</td>
+<td>Launch nextflow via Docker (experimental)</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>Print this help</td>
+</tr>
+<tr>
+<td>-log</td>
+<td>Set nextflow log file path</td>
+</tr>
+<tr>
+<td>-q, -quiet</td>
+<td>Do not print information messages</td>
+</tr>
+<tr>
+<td>-syslog</td>
+<td>Send logs to syslog server (eg. localhost:514)</td>
+</tr>
+<tr>
+<td>-v, -version</td>
+<td>Print the program version</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>nextflow -v</code></pre>
+<h3 id="main-run-options"><span class="header-section-number">4.4</span>
+Main run
+options<a class="headerlink" href="#main-run-options" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>-cache</td>
+<td>Enable/disable processes caching</td>
+<td></td>
+</tr>
+<tr>
+<td>-h, -help</td>
+<td>Print the command usage</td>
+<td>Default: false</td>
+</tr>
+<tr>
+<td>-main-script</td>
+<td>The script file to be executed when launching a project directory or
+repository</td>
+<td></td>
+</tr>
+<tr>
+<td>-name</td>
+<td>Assign a mnemonic name to the a pipeline run</td>
+<td></td>
+</tr>
+<tr>
+<td>-resume</td>
+<td>Execute the script using the cached results, useful to continue
+executions that was stopped by an error. Warning: s soon as a cache =
+false in a process, all the process that uses a channel from this
+process will be re-executed. Thus, if the first process is cache = false
+and that it channels toward the second process, then every process would
+be re-executed</td>
+<td></td>
+</tr>
+<tr>
+<td>-r, -revision</td>
+<td>Revision of the project to run (either a git branch, tag or commit
+SHA</td>
+<td>number)</td>
+</tr>
+<tr>
+<td>-test</td>
+<td>Test a script function with the name specified</td>
+<td></td>
+</tr>
+<tr>
+<td>-N, -with-notification</td>
+<td>Send a notification email on workflow completion to the
+specified</td>
+<td>recipients</td>
+</tr>
+<tr>
+<td>-with-weblog</td>
+<td>Send workflow status messages via HTTP to target URL</td>
+<td></td>
+</tr>
+<tr>
+<td>-w, -work-dir</td>
+<td>Directory where intermediate result files are stored</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>nextflow run main.nf -resume</code></pre>
+<h2 id="installation"><span class="header-section-number">5</span>
+Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p><a
+href="https://www.nextflow.io/docs/latest/getstarted.html#requirements"
+class="uri">https://www.nextflow.io/docs/latest/getstarted.html#requirements</a></p>
+<p>The best is to install in our home/bin/ the nextflow software and
+dependencies (java and singularity).</p>
+<h3 id="local-linux-kernel"><span
+class="header-section-number">5.1</span> Local Linux
+kernel<a class="headerlink" href="#local-linux-kernel" title="Link to this heading"></a></h3>
+<h4 id="linux-and-wsl2"><span class="header-section-number">5.1.1</span>
+Linux and
+WSL2<a class="headerlink" href="#linux-and-wsl2" title="Link to this heading"></a></h4>
+<p>Java install: see <a href="165-java.html">protocol 165</a>.</p>
+<p>Nextflow install:</p>
+<pre><code>sudo chmod 777 /usr/local/bin
+cd /usr/local/bin
+sudo curl -s https://get.nextflow.io | bash</code></pre>
+<p>Of note, this is specified but Fred Lemoine confirmed that does not
+work:</p>
+<pre><code>wget -qO- https://github.com/nextflow-io/nextflow/releases/download/v21.04.1/nextflow-21.04.1-all</code></pre>
+<p>However, this works:</p>
+<pre><code>wget -qO nextflow https://github.com/nextflow-io/nextflow/releases/download/v21.04.1/nextflow</code></pre>
+<p>Or:</p>
+<pre><code>curl -s https://get.nextflow.io | bash -s -- -v 20.10.0 # replace 20.10.0 by the desired version</code></pre>
+<p>Then, update the .bashrc if this path is not already present</p>
+<pre><code>export PATH=&quot;/usr/local/bin:$PATH&quot; # for nextflow</code></pre>
+<h4 id="macos"><span class="header-section-number">5.1.2</span>
+MacOS<a class="headerlink" href="#macos" title="Link to this heading"></a></h4>
+<p>Java install: see <a href="165-java.html">protocol 165</a>.</p>
+<p>Then check if wget is present, otherwise:</p>
+<pre><code>sudo port install wget</code></pre>
+<p>Then:</p>
+<pre><code>wget -qO- https://get.nextflow.io | bash
+# Weirdly, nextflow command is installed in the Users directory. Thus, check that install is correct:
+cd /Users/username/
+nextflow # should display options. If not:
+echo $PATH
+export PATH=&quot;/Users/username:$PATH&quot;
+echo $PATH
+nextflow # should display options</code></pre>
+<p>If it does not work, notably because of Java, then test:</p>
+<pre><code>brew install nextflow</code></pre>
+<p>Apptainer has to be installed. See <a
+href="135-apptainer.html">protocol 135</a>.</p>
+<h3 id="cluster"><span class="header-section-number">5.2</span>
+Cluster<a class="headerlink" href="#cluster" title="Link to this heading"></a></h3>
+<p>Connect to sonic.</p>
+<p>Then</p>
+<pre><code>cd $ZEUSHOME
+cd bin
+module load java
+curl -s https://get.nextflow.io | bash</code></pre>
+<p>Of note, this is specified but Fred Lemoine confirmed that does not
+work:</p>
+<pre><code>wget -qO- https://github.com/nextflow-io/nextflow/releases/download/v21.04.1/nextflow-21.04.1-all</code></pre>
+<p>Then, update the for_sonic.profile and for_sonic.bashrc</p>
+<pre><code>export PATH=&quot;/pasteur/zeus/projets/p01/BioIT/gmillot/bin:$PATH&quot; # for nextflow
+
+alias nextflow=&quot;module load java/13.0.2 ; nextflow&quot;</code></pre>
+<h3 id="old-version-previous-release"><span
+class="header-section-number">5.3</span> Old version / previous
+release<a class="headerlink" href="#old-version-previous-release" title="Link to this heading"></a></h3>
+<h4 id="classic-way"><span class="header-section-number">5.3.1</span>
+classic
+way<a class="headerlink" href="#classic-way" title="Link to this heading"></a></h4>
+<p>Java install: see <a href="165-java.html">protocol 165</a>.</p>
+<p>Then:</p>
+<pre><code>wget -qO nextflow https://github.com/nextflow-io/nextflow/releases/download/v20.10.0/nextflow
+sudo mv nextflow /usr/local/bin/nextflow</code></pre>
+<h4 id="sdk-management"><span class="header-section-number">5.3.2</span>
+sdk
+management<a class="headerlink" href="#sdk-management" title="Link to this heading"></a></h4>
+<p>Java install: see <a href="165-java.html">protocol 165</a>.</p>
+<p>Install SDKMAN if you haven't installed it yet.</p>
+<pre><code>curl -s &quot;https://get.sdkman.io&quot; | bash
+source &quot;$HOME/.sdkman/bin/sdkman-init.sh&quot;</code></pre>
+<p>Install the versions of Nextflow you want. For instance, if you want
+to install Nextflow 20.10.0 and 21.04.0, you would run the following
+commands:</p>
+<pre><code>sdk install nextflow 20.10.0</code></pre>
+<h2 id="update"><span class="header-section-number">6</span>
+update<a class="headerlink" href="#update" title="Link to this heading"></a></h2>
+<pre><code>nextflow -self-update</code></pre>
+<p>Update the version where it is already installed</p>
+<h2 id="basic-description"><span class="header-section-number">7</span>
+Basic
+description<a class="headerlink" href="#basic-description" title="Link to this heading"></a></h2>
+<p>See <a
+href="https://www.nextflow.io/docs/latest/process.html?highlight=tuple"
+class="uri">https://www.nextflow.io/docs/latest/process.html?highlight=tuple</a></p>
+<p><img src="../md/img/136-nextflow-dsl1/image1.png" style="width:61.0%"
+loading="lazy" /></p>
+<p>Nextflow is a DSL (see section <a href="#acronyms">Acronyms</a>).</p>
+<p>Comarison with other workflow managers:</p>
+<p><img src="../md/img/136-nextflow-dsl1/image2.png"
+loading="lazy" /></p>
+<p><a href="https://www.nature.com/articles/s41592-021-01254-9"
+class="uri">https://www.nature.com/articles/s41592-021-01254-9</a></p>
+<p>Nextflow uses the Groovy language</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/script.html#language-basics"
+class="uri">https://www.nextflow.io/docs/latest/script.html#language-basics</a></p>
+<p><a href="https://groovy-lang.org/"
+class="uri">https://groovy-lang.org/</a></p>
+<p><a href="https://groovy-lang.org/syntax.html"
+class="uri">https://groovy-lang.org/syntax.html</a></p>
+<p><a href="https://www.tutorialspoint.com/groovy/index.htm"
+class="uri">https://www.tutorialspoint.com/groovy/index.htm</a></p>
+<p>Regex:</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/script.html#regular-expressions"
+class="uri">https://www.nextflow.io/docs/latest/script.html#regular-expressions</a></p>
+<p><a
+href="https://web.archive.org/web/20170621185113/http:/naleid.com/blog/2008/05/19/dont-fear-the-regexp/">https://web.archive.org/web/20170621185113/http://naleid.com/blog/2008/05/19/dont-fear-the-regexp/</a></p>
+<p><a
+href="https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob"
+class="uri">https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob</a></p>
+<p><a
+href="https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html"
+class="uri">https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</a></p>
+<h2 id="console"><span class="header-section-number">8</span>
+Console<a class="headerlink" href="#console" title="Link to this heading"></a></h2>
+<p>Very useful to test groovy code.</p>
+<p>On the cluster:</p>
+<pre><code>module load java
+nextflow console</code></pre>
+<p>Web console:</p>
+<p><a href="http://groovyconsole.appspot.com/edit/34004"
+class="uri">http://groovyconsole.appspot.com/edit/34004</a></p>
+<h2 id="main-groovy-commands"><span
+class="header-section-number">9</span> Main groovy
+commands<a class="headerlink" href="#main-groovy-commands" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>x.first()</code></td>
+<td>If parallelization due to another channel in the same input section,
+specify that the x channel has to be used each time</td>
+</tr>
+<tr>
+<td><code>x.name</code></td>
+<td>take the name of the variable x. To assign the name, use
+<code>val(x.name) into y</code></td>
+</tr>
+<tr>
+<td><code>${x}</code></td>
+<td>value of the variable x, defined at the beginning of the file</td>
+</tr>
+<tr>
+<td><code>//</code></td>
+<td>comment</td>
+</tr>
+<tr>
+<td><code>channel.</code></td>
+<td>function that defines a channel. Must be followed by another
+function (see below)</td>
+</tr>
+<tr>
+<td><code>channel.from(1,2)</code></td>
+<td>channel for the value 1 and 2</td>
+</tr>
+<tr>
+<td><code>Channel.fromPath("x")</code></td>
+<td>define a channel from the path x. Warning: a channel can be called
+only once, contrary to variables</td>
+</tr>
+<tr>
+<td><code>Channel.fromFilePairs("x")</code></td>
+<td>take as argument a pathway of two files. If several couples of
+files, regular expressions are used. The result is a tuple</td>
+</tr>
+<tr>
+<td><code>file()</code></td>
+<td>define a path variable. For instance <code>file("x")</code> defines
+the path x as a variable, that can be used several times in a nextflow
+script if defined at the beginning of a nf script</td>
+</tr>
+<tr>
+<td><code>x.first()</code></td>
+<td>take the first element of channel x</td>
+</tr>
+<tr>
+<td><code>x.collectFile()</code></td>
+<td>collect all the files of channel x, means that it waits for the end
+of the parallelization of the process using the output channel x.
+Warning: see section <a href="#weird-behavior-of-collectfile">weird
+behavior of collectFile()</a>. Optional:
+<code>x.collectFile(name:"all_consensus.fasta", skip: 1, keepHeader: true)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre><code>x.collect()
+x.mix(y, z)</code></pre>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>x.flatten()</code></td>
+<td>split a list of file inside a single channel x into several channels
+with one file per channel</td>
+</tr>
+<tr>
+<td><code>publishDir "x/", mode: 'copy'</code></td>
+<td>copy the output files defined in the output section into the x
+folder. The <code>, mode: 'copy'</code> precises that we do not want a
+symbolic file into the x folder pointing to the work folder (default)
+but that we want a real copy. This avoid to break symbolic links if the
+wok folder is removed for instance</td>
+</tr>
+<tr>
+<td><code>tuple</code></td>
+<td>create a channel containing several info (like a list). Example:
+<code>tuple val(name), file(f1), file(f2) from data</code></td>
+</tr>
+<tr>
+<td><code>val(y) from x</code></td>
+<td>recover a value from x and assign to y. Can be an integer,
+character, etc.</td>
+</tr>
+<tr>
+<td><code>file(y) from x</code></td>
+<td>recover a file from x and assign to y. In <code>input:</code>
+section</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="script-start"><span class="header-section-number">10</span>
+Script
+start<a class="headerlink" href="#script-start" title="Link to this heading"></a></h2>
+<p>Every nexflow script start by at least one channel or one variable
+that must be defined.</p>
+<h3 id="channel"><span class="header-section-number">10.1</span>
+Channel<a class="headerlink" href="#channel" title="Link to this heading"></a></h3>
+<p>Channels are not mandatory. The advantage to use a channel is 1) to
+have several files in it and 2) to perform parallelization.</p>
+<h4 id="basic"><span class="header-section-number">10.1.1</span>
+Basic<a class="headerlink" href="#basic" title="Link to this heading"></a></h4>
+<p>Example:</p>
+<pre><code>num = Channel.from( 1, 2, 3 )</code></pre>
+<p>num takes the values 1, 2, 3.</p>
+<p>Example:</p>
+<pre><code>file1 = Channel.fromPath(&quot;fasta/nCov_ampliseq_up.fasta&quot;)</code></pre>
+<p>Here file1 is a channel variable. It can be used only in a single
+process</p>
+<p>Example:</p>
+<pre><code>data = Channel.fromFilePairs(&#39;fastq_files/*_{1,2}.fq.gz&#39;, flat:true)</code></pre>
+<p>Take all the files corresponding to <code>*</code>, then take 1 and 2
+to form a couple of files. Thus if <code>*</code> corresponds to 8
+names, 8 couples are formed. The <code>data</code> channel is an object
+a bit like a list, made of 8 compartments, one for each file name, each
+compartment having 3 values: a name (corresponding to <code>*</code>),
+and two file names (corresponding to <code>*_1.fq.gz</code> and
+<code>*_2.fq.gz</code>). The calling of this channel in a process could
+be something like:</p>
+<pre><code>input:
+tuple val(x), file(x1), file(x2) from data</code></pre>
+<p>To create several initial channel from the same parameter:</p>
+<pre><code>Channel.fromPath(&quot;fasta/nCov_ampliseq_up.fasta&quot;, checkIfExists: false).into{fs_ch1; fs_ch2}</code></pre>
+<p>Warning: the <code>into</code> operator should be used to connect two
+or more target channels and checkIfExists is to check if the file exists
+(option not valid for value for instance).</p>
+<p>To print the content of a channel:</p>
+<pre><code>tempo_ch.view { &quot;tempo_ch: $it&quot; } // tempo_ch is the name of the channel. The implicit variable &quot;it&quot; means iteration as it takes all the values from 1 to ... it will successively take the values 1, 2, and 3 as iterations go. To complete the answer a bit: any closure {} has the the implicit variable &quot;it&quot;. {x-&gt;} has no implicit &quot;it&quot; variable, but an explicit &quot;x&quot;. {-&gt;} has not implicit &quot;it&quot; variable and no explicit variable</code></pre>
+<h4 id="queue-and-value-channels"><span
+class="header-section-number">10.1.2</span> Queue and value
+channels<a class="headerlink" href="#queue-and-value-channels" title="Link to this heading"></a></h4>
+<p>See <a
+href="https://www.nextflow.io/docs/latest/channel.html#channel-types"
+class="uri">https://www.nextflow.io/docs/latest/channel.html#channel-types</a></p>
+<p><u>Queue channel : single use</u></p>
+<p>A queue channel is a non-blocking unidirectional FIFO queue which
+connects two processes or operators.</p>
+<p>A queue channel is usually created using a factory method such as a
+from, fromPath, etc. or chaining it with a channel operator such as map,
+flatMap, etc.</p>
+<p>Queue channels are also created by process output declarations using
+the into clause.</p>
+<p>The definition implies that the same queue channel cannot be used
+more than one time as process output and more than one time as process
+input.</p>
+<p>If you need to connect a process output channel to more than one
+process or operator use the into operator to create two (or more) copies
+of the same channel and use each of them to connect a separate
+process.</p>
+<p><u>Value channel : multiple use</u></p>
+<p>A value channel a.k.a. singleton channel by definition is bound to a
+single value and it can be read unlimited times without consuming its
+content.</p>
+<p>For this reason a value channel can be used as input by more than one
+process.</p>
+<p>A value channel is created <u>using the value factory</u> method or
+by operators returning a single value, such as first, last, collect,
+count, min, max, reduce, sum. Thus, a channel recovering a value via
+stdout will not be considered as value channel.</p>
+<p>A value channel is implicitly created by a process when an input
+specifies a simple value in the from clause. Moreover, a value channel
+is also implicitly created as output for a process whose inputs are only
+value channels.</p>
+<h3 id="data-objects"><span class="header-section-number">10.2</span>
+Data
+objects<a class="headerlink" href="#data-objects" title="Link to this heading"></a></h3>
+<p>See <a
+href="http://groovy-lang.org/groovy-dev-kit.html#_data_and_objects"
+class="uri">http://groovy-lang.org/groovy-dev-kit.html#_data_and_objects</a></p>
+<p>See section <a href="#variable-scope">Variable scope</a> for the
+scope of the variables in nextflow.</p>
+<h4 id="vectors-variable"><span
+class="header-section-number">10.2.1</span> Vectors
+(Variable)<a class="headerlink" href="#vectors-variable" title="Link to this heading"></a></h4>
+<p>Variables are mostly vectors of one element. Example:</p>
+<pre><code>x = 1
+println x
+
+x = new java.util.Date()
+println x
+
+x = -3.1499392
+println x
+
+x = false
+println x
+
+x = &quot;Hi&quot;
+println x</code></pre>
+<p>Variable can also be defined in processes or in the nextflow
+script:</p>
+<pre><code>y = 2
+
+process foo {
+
+  script:
+  x = 1
+  &quot;&quot;&quot;
+  echo $x $y
+  &quot;&quot;&quot;
+}</code></pre>
+<p>See section <a href="#variable-scope">Variable scope</a> for the
+scope of the variables.</p>
+<h4 id="range"><span class="header-section-number">10.2.2</span>
+Range<a class="headerlink" href="#range" title="Link to this heading"></a></h4>
+<p>See <a
+href="http://groovy-lang.org/groovy-dev-kit.html#Collections-Ranges"
+class="uri">http://groovy-lang.org/groovy-dev-kit.html#Collections-Ranges</a></p>
+<p>A range is like a Python xrange type, i.e., a range of integers. See
+<a href="https://fr.wikiversity.org/wiki/Python/Les_types_de_base"
+class="uri">https://fr.wikiversity.org/wiki/Python/Les_types_de_base</a></p>
+<p>Example:</p>
+<pre><code>def range = 5..8 // range is a name not a function. Def is not mandatory
+assert range.size() == 4
+assert range.get(2) == 7
+assert range[2] == 7</code></pre>
+<h4 id="list"><span class="header-section-number">10.2.3</span>
+List<a class="headerlink" href="#list" title="Link to this heading"></a></h4>
+<p>See <a
+href="http://groovy-lang.org/groovy-dev-kit.html#Collections-Lists"
+class="uri">http://groovy-lang.org/groovy-dev-kit.html#Collections-Lists</a></p>
+<p>A list is like a Python list type, i.e., an ordered collection of
+elements, but it seems that in groovy, they are of same mode. See <a
+href="https://fr.wikiversity.org/wiki/Python/Les_types_de_base"
+class="uri">https://fr.wikiversity.org/wiki/Python/Les_types_de_base</a></p>
+<p>Example:</p>
+<pre><code>def list = [5, 6, 7, 8] // list is a name not a function. Def is not mandatory
+assert list.get(2) == 7
+assert list[2] == 7
+assert list instanceof java.util.List
+
+def emptyList = []
+assert emptyList.size() == 0
+emptyList.add(5)
+assert emptyList.size() == 1</code></pre>
+<h4 id="map"><span class="header-section-number">10.2.4</span>
+Map<a class="headerlink" href="#map" title="Link to this heading"></a></h4>
+<p>See <a
+href="http://groovy-lang.org/groovy-dev-kit.html#Collections-Maps"
+class="uri">http://groovy-lang.org/groovy-dev-kit.html#Collections-Maps</a></p>
+<p>A map is like Python dictionnary type, i.e., an unordered collection
+of objects. See <a
+href="https://fr.wikiversity.org/wiki/Python/Les_types_de_base"
+class="uri">https://fr.wikiversity.org/wiki/Python/Les_types_de_base</a></p>
+<p>Example:</p>
+<pre><code>def map = [name: &#39;Gromit&#39;, likes: &#39;cheese&#39;, id: 1234]
+assert map.get(&#39;name&#39;) == &#39;Gromit&#39;
+assert map.get(&#39;id&#39;) == 1234
+assert map[&#39;name&#39;] == &#39;Gromit&#39;
+assert map[&#39;id&#39;] == 1234
+assert map instanceof java.util.Map
+
+def emptyMap = [:]
+assert emptyMap.size() == 0
+emptyMap.put(&quot;foo&quot;, 5)
+assert emptyMap.size() == 1
+assert emptyMap.get(&quot;foo&quot;) == 5</code></pre>
+<h4 id="tuple"><span class="header-section-number">10.2.5</span>
+Tuple<a class="headerlink" href="#tuple" title="Link to this heading"></a></h4>
+<p>See <a
+href="https://www.nextflow.io/docs/latest/process.html#output-tuple-of-values"
+class="uri">https://www.nextflow.io/docs/latest/process.html#output-tuple-of-values</a></p>
+<p>A tuple is like Python tuple type, i.e., an unordered collection of
+objects. See <a
+href="https://fr.wikiversity.org/wiki/Python/Les_types_de_base"
+class="uri">https://fr.wikiversity.org/wiki/Python/Les_types_de_base</a></p>
+<p>The tuple qualifier allows you to send multiple values into a single
+channel. This feature is useful when you need to group together the
+results of multiple executions of the same process, as shown in the
+following example:</p>
+<pre><code>query_ch = Channel.fromPath &#39;*.fa&#39;
+species_ch = Channel.from &#39;human&#39;, &#39;cow&#39;, &#39;horse&#39;
+
+process blast {
+
+input:
+  val query from query_ch
+  file species  from species_ch
+
+output:
+  tuple val(species), file(&#39;result&#39;) into blastOuts
+
+script:
+  &quot;&quot;&quot;
+  blast -db nr -query $query &gt; result
+  &quot;&quot;&quot;
+}</code></pre>
+<p>In the above example a BLAST task is executed for each pair of
+species and query that are received. When the task completes a new tuple
+containing the value for species and the file result is sent to the
+blastOuts channel.</p>
+<h4 id="file-reading"><span class="header-section-number">10.2.6</span>
+File
+reading<a class="headerlink" href="#file-reading" title="Link to this heading"></a></h4>
+<p>See <a
+href="http://groovy-lang.org/groovy-dev-kit.html#_reading_files"
+class="uri">http://groovy-lang.org/groovy-dev-kit.html#_reading_files</a></p>
+<p><a
+href="https://www.nextflow.io/docs/latest/script.html#basic-read-write"
+class="uri">https://www.nextflow.io/docs/latest/script.html#basic-read-write</a></p>
+<p><a
+href="https://www.nextflow.io/docs/latest/script.html#read-a-file-line-by-line"
+class="uri">https://www.nextflow.io/docs/latest/script.html#read-a-file-line-by-line</a></p>
+<p>Warning:</p>
+<pre><code>file1 = file(&quot;fasta/nCov_ampliseq_up.fasta&quot;)</code></pre>
+<p><span id="_Ref88241790"></span>Does not create a file if does not
+exists, nor read a file, file() create a path object than can then be
+used to manipulate the path.</p>
+<h3 id="implicit-reserved-variables"><span
+class="header-section-number">10.3</span> Implicit (reserved)
+variables<a class="headerlink" href="#implicit-reserved-variables" title="Link to this heading"></a></h3>
+<p><a
+href="https://www.nextflow.io/docs/latest/script.html#implicit-variables"
+class="uri">https://www.nextflow.io/docs/latest/script.html#implicit-variables</a></p>
+<p>Very important variables:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>launchDir</code></td>
+<td>The directory where the workflow is run (requires version 20.04.0 or
+later).</td>
+</tr>
+<tr>
+<td><code>projectDir</code></td>
+<td>The directory where the main .nf script is located (requires version
+20.04.0 or later). Warning: <code>baseDir</code> is deprecated</td>
+</tr>
+<tr>
+<td><code>workDir</code></td>
+<td>The directory where tasks temporary files are created. See</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Dictionary like implicit variables (cannot be easily printed):</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>params</code></td>
+<td>Dictionary like object holding workflow parameters specifing in the
+config file or as command line options.</td>
+</tr>
+<tr>
+<td><code>workflow</code></td>
+<td>Dictionary like object representing workflow information (see See
+also <a
+href="https://www.nextflow.io/docs/latest/metadata.html#workflow-introspection"
+class="uri">https://www.nextflow.io/docs/latest/metadata.html#workflow-introspection</a>).</td>
+</tr>
+<tr>
+<td><code>nextflow</code></td>
+<td>Dictionary like object representing nextflow runtime information
+(see Nextflow metadata).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Other variables:</p>
+<p><code>moduleDir</code> The directory where a module script is located
+for DSL2 modules or the same as projectDir for a non-module script
+(requires version 20.04.0 or later).</p>
+<p>To use one of this variable:</p>
+<pre><code>config_file = workflow.configFiles[0] // to get the config file (as a file, not a path string)
+
+out_path_ini = &quot;$baseDir/results&quot;</code></pre>
+<p>To print one of this variable:</p>
+<pre><code>print(&quot;\n\nINITIATION TIME: ${workflow.start}&quot;)</code></pre>
+<p>See also section <a href="#run-metadata">Run metadata</a>.</p>
+<h3 id="options-of-nextflow-run-params"><span
+class="header-section-number">10.4</span> Options of nextflow run
+(params)<a class="headerlink" href="#options-of-nextflow-run-params" title="Link to this heading"></a></h3>
+<p>Pipeline parameters are simply declared by prepending to a variable
+name the prefix params, separated by dot character. Their value can be
+specified on the command line by prefixing the parameter name with a
+double dash character, i.e. --paramName. As an example, here is what
+should be written in the main.nf file:</p>
+<pre><code>params.str = &#39;Hello world!&#39;</code></pre>
+<p>Which is used like this:</p>
+<pre><code>nextflow run tutorial.nf --str &#39;Bonjour le monde&#39;</code></pre>
+<p>The string specified on the command line will override the default
+value of the parameter.</p>
+<p>As of version 20.11.0-edge any . (dot) character in a parameter name
+is interpreted as the delimiter or nested scope e.g. --foo.bar Hello
+will be accessible from the script as params.foo.bar. If you want to
+have a parameter name including a . (dot) character escape it using the
+back-slash character e.g. --foo\.bar Hello</p>
+<p>the variable can be used as it is in the nextflow script:</p>
+<pre><code>${params.str}</code></pre>
+<p>Or reassigned in a more easy readable variable:</p>
+<pre><code>str=params.str</code></pre>
+<h2 id="process"><span class="header-section-number">11</span>
+Process<a class="headerlink" href="#process" title="Link to this heading"></a></h2>
+<h3 id="description"><span class="header-section-number">11.1</span>
+Description<a class="headerlink" href="#description" title="Link to this heading"></a></h3>
+<p>A process is a section of a nf script that processes channels or
+variables. The definition is:</p>
+<pre><code>process &lt;name&gt; {
+}</code></pre>
+<p>Between the brackets is what is called the body of the process.</p>
+<p>The minimal structure is:</p>
+<pre><code>process &lt;NAME&gt; {
+    &lt;user script of the required task&gt;
+}</code></pre>
+<p>But it is better to name the execution block using <em>script</em>,
+<em>shell</em> or <em>exec</em>:</p>
+<pre><code>process &lt;NAME&gt; {
+[script | shell | exec]:
+    &lt;user script of the required task&gt;
+}</code></pre>
+<p>Can start with directives as <code>publishDir.</code></p>
+<p>And then is made of blocks, like:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>input:</code></td>
+<td>input</td>
+</tr>
+<tr>
+<td><code>output:</code></td>
+<td>output</td>
+</tr>
+<tr>
+<td><code>when:</code></td>
+<td>when execute the task</td>
+</tr>
+<tr>
+<td><code>script | shell | exec:</code></td>
+<td>task to execute</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the channel has several values, the process is parallelized.</p>
+<p>Full structure :</p>
+<p>process &lt; name &gt; { [ directives ]</p>
+<p>input:</p>
+<p>&lt; process inputs &gt;</p>
+<p>output:</p>
+<p>&lt; process outputs &gt;</p>
+<p>when :</p>
+<p>&lt; condition &gt;</p>
+<p>[ script| shell| exec ]:</p>
+<p>&lt; user script to be executed &gt;</p>
+<p>}</p>
+<h3 id="variable-scope"><span class="header-section-number">11.2</span>
+Variable
+scope<a class="headerlink" href="#variable-scope" title="Link to this heading"></a></h3>
+<p>Nextflow first check if the variable is present 1) in the script of
+the execution block of a process, 2) in the execution block of a
+process, but before the script, 3) in the channel, then in the nextflow
+script, and then in the system ($PATH for instance).</p>
+<p><img src="../md/img/136-nextflow-dsl1/image3.png" style="width:40.0%"
+loading="lazy" /></p>
+<p>Single quotes in the execution block scoops the scope and goes
+directly into the system environment if the variable is not defined
+between the quotes. See <a
+href="https://www.nextflow.io/docs/latest/process.html#script"
+class="uri">https://www.nextflow.io/docs/latest/process.html#script</a>.</p>
+<p>Example: copy-paste the following code into the file
+/mnt/c/Users/Gael/Desktop/caca.nf</p>
+<pre><code>x=4
+
+process A {
+x=3 # variable cannot be defined inside process but outside of the execution block
+
+output:
+&quot;res.txt&quot;
+
+script:
+x=2
+&quot;&quot;&quot;
+x=1
+echo &quot;Result is:&quot; \$x &gt; res.txt # if $x is used, it is replaced during the writting into the work/.../.command.sh file before execution of this file
+&quot;&quot;&quot;
+}</code></pre>
+<p>And execute:</p>
+<pre><code>nextflow run caca.nf</code></pre>
+<p>Check the result in work/.../res.txt</p>
+<p>Then, play with inactivation and \$x to see the scope:</p>
+<pre><code># x=1
+echo &quot;Result is:&quot; \$x &gt; res.txt</code></pre>
+<p>-&gt; Error: because the <code>.command.sh</code> has no variable x
+defined.</p>
+<pre><code>echo &quot;Result is:&quot; $x &gt; res.txt</code></pre>
+<p>With no inactivation, the replacement of $x is performed before the
+writing of <code>.command.sh</code>, and the result is 2.</p>
+<pre><code>//x=2
+echo &quot;Result is:&quot; $x &gt; res.txt</code></pre>
+<p>With <code>//x=2</code>, the replacement of $x is performed before
+the writing of <code>.command.sh</code>, and the result is 4, because a
+ariable cannot be defined inside process but outside of the execution
+block.</p>
+<pre><code>//x=4
+//x=2
+echo &quot;Result is:&quot; $x &gt; res.txt</code></pre>
+<p>-&gt; Error: because during the <code>.command.sh</code> writing, no
+variable x is defined, and the fact to use:</p>
+<pre><code>x=5
+nextflow run caca.nf</code></pre>
+<p>Does not work either.</p>
+<p>Now using single quotes:</p>
+<pre><code>&#39;&#39;&#39;
+x=1
+echo &quot;Result is:&quot; $x &gt; res.txt
+&#39;&#39;&#39;</code></pre>
+<p>The result is 1.</p>
+<pre><code>&#39;&#39;&#39;
+# x=1
+echo &quot;Result is:&quot; $x &gt; res.txt
+&#39;&#39;&#39;</code></pre>
+<p>-&gt; Error: because during the <code>.command.sh</code> writing, the
+scope is impaired by the single quotes.</p>
+<pre><code>&#39;&#39;&#39;
+# x=1
+echo &quot;Result is:&quot; $PATH &gt; res.txt
+&#39;&#39;&#39;</code></pre>
+<p>The $PATH system variable is returned.</p>
+<h3 id="very-important-to-understand"><span
+class="header-section-number">11.3</span> Very important to
+understand<a class="headerlink" href="#very-important-to-understand" title="Link to this heading"></a></h3>
+<p>When a process is run, a working directory is created (inside the
+general working directory known thanks to the <code>workDir</code>
+implicit variable) and all the files declared in the <code>input</code>
+block are added into this directory thanks to symbolic links. For
+instance, when the process configBackup in
+<code>C:\Users\gael\Documents\Git_projects\project_a\main.nf</code> is
+run (see section <a
+href="#backup-the-nextflow.config-file-into-the-result-folder">Backup
+the nextflow.config file into the result folder</a>):</p>
+<pre><code>config_file = workflow.configFiles[0] // better to use this than config_file = file(&quot;${projectDir}/ig_clustering.config&quot;) because the latter is not good if -c option of nextflow run is used
+result_folder_name=&quot;20210903_res_project_a&quot;
+out_path=&quot;/mnt/c/Users/Gael/Desktop&quot;
+out_path=&quot;${out_path}/${result_folder_name}&quot;
+
+process configBackup {
+    publishDir &quot;${out_path}&quot;, mode: &#39;copy&#39;, overwrite: false
+
+    input:
+    file config_file
+
+    output:
+    file &quot;${config_file}&quot; // warning message if we use file config_file
+
+    script: // mandatory block
+    &quot;&quot;&quot;
+    &quot;&quot;&quot;
+}</code></pre>
+<p>The directory work\b0\2f59852ea304ebe335edfdf3fd9d68 is created and
+the file config_file (which is by default
+<code>"${projectDir}/nextflow.config"</code> except if -c option of
+nextflow run is used) is, added, using a symbolic link (warning: not
+seen through Windows OS windows):</p>
+<p><img src="../md/img/136-nextflow-dsl1/image4.png"
+loading="lazy" /></p>
+<p>Now if:</p>
+<p>1) <code>publishDir "${out_path}"</code> is used at the beginning of
+the process</p>
+<p>2) a file is present in the input block</p>
+<p>3) and also present in the output block</p>
+<p>Then, the file is copied into the <code>publishDir</code> folder
+using a symbolic link (warning: not seen through Windows OS
+windows):</p>
+<p><img src="../md/img/136-nextflow-dsl1/image5.png"
+loading="lazy" /></p>
+<p>Now if in (1) <code>publishDir "${out_path}", mode: 'copy</code>' is
+used at the beginning of the process, then the file is copied hard into
+the <code>publishDir</code> folder:</p>
+<p><img src="../md/img/136-nextflow-dsl1/image6.png"
+loading="lazy" /></p>
+<p>Now if in (1)
+<code>publishDir "${out_path}", mode: 'copy' overwrite: false</code> is
+used at the beginning of the process, then the file is copied into the
+<code>publishDir</code> folder according to the mode, but only if the
+file is not already in the <code>publishDir</code> folder, whatever the
+form.</p>
+<p>If an input file is modified in a process, we could imagine than only
+the file present in the work directory is modified. But due to the
+symbolic link, the initial file will be also modified. To prevent
+this:</p>
+<p>- NEVER modify a file using the same name. always change the mane of
+the modified file.</p>
+<p>- ALWAYS copy these files in the process that modifies the file, not
+in another process (to optimize the -resume option of nextflow run).</p>
+<h3 id="directives"><span class="header-section-number">11.4</span>
+Directives<a class="headerlink" href="#directives" title="Link to this heading"></a></h3>
+<p><a href="https://www.nextflow.io/docs/latest/process.html#directives"
+class="uri">https://www.nextflow.io/docs/latest/process.html#directives</a></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>publishDir</code></td>
+<td>where to publish the output files. Example:
+<code>publishDir "${results}/", mode: 'copy'</code></td>
+</tr>
+<tr>
+<td><code>cache</code></td>
+<td>store the process results to a local cache. When the cache is
+enabled and the pipeline is launched with the -resume option, any
+following attempt to execute the process, along with the same inputs,
+will cause the process execution to be skipped, producing the stored
+data as the actual results. Example: <code>cache 'false'</code>. The
+<code>'deep'</code> or <code>'lenient'</code> value can be used instead
+of <code>'true'</code> or <code>'false'</code>. See <a
+href="https://www.nextflow.io/docs/latest/process.html?highlight=deep#cache"
+class="uri">https://www.nextflow.io/docs/latest/process.html?highlight=deep#cache</a></td>
+</tr>
+<tr>
+<td><code>executor</code></td>
+<td>where processes are executed. By default a process uses the executor
+defined globally in the nextflow.config file. Example:
+<code>executor 'local'</code></td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td>associate each process execution with a custom label, so that it
+will be easier to identify them in the log file or in the trace
+execution report. Example: <code>tag "${name}"</code></td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>connect the current process with the withLabel: . Example:
+<code>label 'bwa'</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="publishdir"><span class="header-section-number">11.4.1</span>
+publishDir<a class="headerlink" href="#publishdir" title="Link to this heading"></a></h4>
+<p>See <a
+href="https://www.nextflow.io/docs/latest/process.html#publishdir"
+class="uri">https://www.nextflow.io/docs/latest/process.html#publishdir</a>.</p>
+<p>The <code>publishDir</code> directive copies output files of the
+output block into a folder. Example:</p>
+<pre><code>    publishDir path: &quot;/mnt/c/Users/Gael/Desktop/&quot;, mode: &#39;copy&#39;, overwrite: false
+
+    output:
+    file &quot;aligned.gz&quot; into tempo_ch</code></pre>
+<p>The aligned.gz file is sent into the tempo_ch channel but is also
+copied into the <code>/mnt/c/Users/Gael/Desktop/</code> folder thanks to
+the <code>publishDir</code> directive.</p>
+<p>To get several output in folders (not into channels), use
+publishDir:</p>
+<pre><code>    publishDir path: &quot;${results}/08_POS_QC&quot;, mode: &#39;link&#39;, pattern: &#39;out_*/*&#39; // for the output result of pos_qc into 08_POS_QC
+    publishDir path: &quot;${results}/&quot;, mode: &#39;link&#39;, pattern: &#39;Full_Results.tsv&#39; // for the copy of Full_Results.tsv from 08_POS_QC into ${results}/
+
+    output:
+    file &quot;out_${vocqcfilename}*/*&quot;// for the output result of voc_qc into 08_POS_QC
+    file &quot;Full_Results.tsv&quot; // for the copy of Full_Results.tsv from 08_POS_QC into ${results}/</code></pre>
+<p><u>Parameters</u></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td>The file publishing method. See the following table for possible
+values.</td>
+</tr>
+<tr>
+<td><code>overwrite</code></td>
+<td>When true any existing file in the specified folder will be
+overridden (default: true during normal pipeline execution and false
+when pipeline execution is resumed).</td>
+</tr>
+<tr>
+<td><code>pattern</code></td>
+<td>Specifies a glob file pattern that selects which files to publish
+from the overall set of output files. See <a
+href="https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob"
+class="uri">https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob</a></td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>Specifies the directory where files need to be published. Note: the
+syntax publishDir '/some/dir' is a shortcut for publishDir path:
+'/some/dir'.</td>
+</tr>
+<tr>
+<td><code>saveAs</code></td>
+<td>A closure which, given the name of the file being published, returns
+the actual file name or a full path where the file is required to be
+stored. This can be used to rename or change the destination directory
+of the published files dynamically by using a custom strategy. Return
+the value null from the closure to not publish a file. This is useful
+when the process has multiple output files, but you want to publish only
+some of them.</td>
+</tr>
+<tr>
+<td><code>enabled</code></td>
+<td>Enable or disable the publish rule depending on the boolean value
+specified (default: true).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="input"><span class="header-section-number">11.5</span>
+Input<a class="headerlink" href="#input" title="Link to this heading"></a></h3>
+<p><a href="https://www.nextflow.io/docs/latest/process.html#inputs"
+class="uri">https://www.nextflow.io/docs/latest/process.html#inputs</a></p>
+<p>Warning: only channels can be specified in this block, even is it is
+not specified by "from" (which means in that case that the input name is
+the same as the channel name).</p>
+<p>Warning: it is possible to use variables in the script block that
+does not come from a channel (see section <a
+href="#variable-scope">Variable scope</a>). But not recommanded, notably
+to benefit from the -resume option if cache 'true'. Indeed, if a
+variable is modified, the -resume option + cache 'true' will not detect
+it and will rerun the process.</p>
+<p>Warning: a list in the input block, example</p>
+<pre><code>methods = [&#39;prot&#39;,&#39;dna&#39;, &#39;rna&#39;, 23, y]
+process foo {
+  input:
+  val x from methods</code></pre>
+<p>results in a script run for each element of the list, independently.
+The parallelized processes are isolated from the others.</p>
+<p>Warning: a list of files in the input block for which we would except
+a parallelization, is not parallelized if another input has a unique
+file: only one of the files is processed.</p>
+<pre><code>input:
+    val file_name // a single variable
+    file bam from dup_ch.mix(bowtie2_ch, q20_ch) // mix of three channels, i.e., three files in that case
+    file &quot;report.rmd&quot; from log_ch14.first() // a single file in log_ch14</code></pre>
+<p>In this example, the three channels <code>dup_ch</code>,
+<code>bowtie2_ch</code> and <code>q20_ch</code> are assembled into a
+single one. The file_name variable is single but has no influence on the
+parallized process. However, <code>report.rmd</code> is a single file.
+If written as <code>file "report.rmd" from log_ch14</code>, the process
+takes only one of the three files from
+<code>dup_ch.mix(bowtie2_ch, q20_ch)</code> for the process. The
+<code>first()</code> operator is a trick to let nextflow believe that
+there are three files in <code>log_ch14</code>, which allow the
+parallelization. Warning, at that stage, the single
+<code>report.rmd</code> file are in three channels. In addition, the
+printing of the process shows that only one process is performed, while
+in fact 3. (See the .nextflow.log for the path of the three parallelized
+process). Thus, the <code>first()</code> strategy is not recommanded. It
+is better to have a correct definition of the parallelization.</p>
+<p>Nextflow processes are isolated from each other but can communicate
+between themselves sending values through channels. The input block
+defines from which channels the process expects to receive data. You can
+only define one input block at a time and it must contain one or more
+input declarations. The input block follows the syntax shown below:</p>
+<pre><code>input:
+  &lt;input qualifier&gt; &lt;input name&gt; from &lt;source channel&gt; [attributes]</code></pre>
+<p>Example:</p>
+<pre><code>    Input:
+    file tempo1 from file1</code></pre>
+<p><u>Input qualifier</u></p>
+<p>Declares the type of data to be received</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>val</code></td>
+<td>take the channel as values</td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>take the channel to set an environment variable named as the
+specified input name</td>
+</tr>
+<tr>
+<td><code>file</code></td>
+<td>take the channel as a file, staging it properly in the execution
+context</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>take the channel as a path, staging the file properly in the
+execution context</td>
+</tr>
+<tr>
+<td><code>stdin</code></td>
+<td>forward the channel to the process stdin special file</td>
+</tr>
+<tr>
+<td><code>tuple</code></td>
+<td>take the channel as a group of input values having one of the above
+qualifiers</td>
+</tr>
+<tr>
+<td><code>each</code></td>
+<td>lets you execute the process for each entry in the input
+collection</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><u>Input name</u></p>
+<p>variable that will contain the data from the channel</p>
+<p><u>source channel</u></p>
+<p>Name of the channel to use. Must be preceeded by the keyword
+"from".</p>
+<p><span class="red"><u>attribute</u></span></p>
+<p><span class="red">input optional attributes. Example ?</span></p>
+<p><u>Example</u></p>
+<pre><code>num = Channel.from(1, 2, 3)
+process basicExample {
+  input:
+  val x from num
+  script:
+  &quot;echo process job $x&quot;
+}</code></pre>
+<p>The val function takes each value of the num channel and put it into
+the x variable.</p>
+<p>Note that the results are in the .command.out of different folders,
+because the process is parallelized:</p>
+<p><code>\\wsl$\Ubuntu-20.04\home\gael\work\cf\8b0dc7603a6b28d7cd4da6e07befb9</code></p>
+<p>When the input name is the same as the channel name, the from part of
+the declaration can be omitted:</p>
+<pre><code>num = Channel.from(1, 2, 3)
+process basicExample {
+  input:
+  val num
+  script:
+  &quot;echo process job $num&quot;
+}</code></pre>
+<p>Of note, possible to use several channels as input:</p>
+<pre><code>num = Channel.from(1, 2, 3)
+time = Channel.from(5)
+process basicExample {
+  input:
+  val num
+  val tempo from time.first()
+ shell:
+  &quot;&quot;&quot;
+  echo &#39;$num * $tempo&#39;
+  &quot;&quot;&quot;</code></pre>
+<p>Warning: if num is made of several values, while ref is made of only
+one, but that both have to be used in the process, <code>.first()</code>
+has to be used.</p>
+<p>Warning with the scope of nextflow (see section <a
+href="#variable-scope">Variable scope</a>). Examples:</p>
+<pre><code>num=Channel.from(5)
+x=4
+
+process A {
+input:
+val x from num
+output:
+&quot;res.txt&quot;
+script:
+x=2
+&quot;&quot;&quot;
+x=1
+echo &quot;Result is:&quot; $x &gt; res.txt # if $x is used, it is replaced during the writting into the work/.../.command.sh file before execution of this file
+&quot;&quot;&quot;
+}
+num=Channel.from(5)
+x=4
+
+process A {
+input:
+val x from num
+output:
+&quot;res.txt&quot;
+script:
+//x=2
+&quot;&quot;&quot;
+x=1
+echo &quot;Result is:&quot; $x &gt; res.txt # if $x is used, it is replaced during the writting into the work/.../.command.sh file before execution of this file
+&quot;&quot;&quot;
+}</code></pre>
+<p>The result is 5, because the channel comes before the x=4 in the
+scope.</p>
+<p>With tuples:</p>
+<pre><code>dsrc=Channel.fromFilePairs(params.fastq+&#39;/*_R{1,2}.fastq.dsrc&#39;, flat: true)
+process dsrc2gz {
+    label &#39;dsrc&#39;
+
+    input:
+    tuple val(name), file(r1), file(r2) from dsrc</code></pre>
+<p>The dsrc channel is an object a bit like a list, made of 8
+compartments, one for each file name, each compartment having 3 values:
+a name (corresponding to *), and two file names (corresponding to
+*_1.fq.gz and *_2.fq.gz)</p>
+<p>With repeated inputs:</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/process.html#input-repeaters"
+class="uri">https://www.nextflow.io/docs/latest/process.html#input-repeaters</a></p>
+<p>With fasta files:</p>
+<pre><code>    input:
+    set  id, seqString from fasta_ch.splitFasta(record:[header: true, seqString: true]) // warning: several data -&gt; parall expected</code></pre>
+<p>splitFasta(record:[header: true, seqString: true]) split a fasta
+files in records (one per sequence), each record with two items: the
+first is the header and the second the seq string. See <a
+href="https://www.nextflow.io/docs/latest/operator.html#splitfasta"
+class="uri">https://www.nextflow.io/docs/latest/operator.html#splitfasta</a></p>
+<p>set takes the first and second items of the record</p>
+<h3 id="output"><span class="header-section-number">11.6</span>
+Output<a class="headerlink" href="#output" title="Link to this heading"></a></h3>
+<p><a href="https://www.nextflow.io/docs/latest/process.html#outputs"
+class="uri">https://www.nextflow.io/docs/latest/process.html#outputs</a></p>
+<p>Warning: it is not possible to send a variable, a value, string,
+etc., from a complex script into channels. Only files works. The only
+way to get a variable is if the script return a single thing, which can
+be capted by the stdout qualifier.</p>
+<p>Warning: to get an output file of a script into a result directory,
+we must 1) declare the output file into the output block (whatever sent
+into a channel or not), and 2) use the publishDir directive (see section
+<a href="#directives">Directives</a>).</p>
+<p>Warning: if an an output file of a script is not declared in the
+output block, it will never be present in the result directory. If it is
+present in the output block, it will depend of what is written in the
+publishDir directive.</p>
+<p>The output declaration block allows you to define the channels used
+by the process to send out the results produced. You can only define one
+output block at a time and it must contain one or more output
+declarations.</p>
+<p>The output block follows the syntax shown below:</p>
+<pre><code>output:
+  &lt;output qualifier&gt; &lt;output name&gt; into &lt;target channel&gt;[,channel,..] [attribute [,..]]</code></pre>
+<p>If not <code>into</code> used, a channel with the same name is
+created (as for the input block) and is useable.</p>
+<p>Example:</p>
+<pre><code>    Output:
+    file &quot;example1.txt&quot; into tempo2,tempo3</code></pre>
+<p>Several channels can be created here</p>
+<p>Global pattern can be used to specify several file names (see <a
+href="044-bash.html">protocol 44</a>):</p>
+<pre><code>    Output:
+    file &quot;{head,table}*.txt&quot; into tempo2</code></pre>
+<p><u>Output qualifier</u></p>
+<p>Declares the type of data to be received</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>val</code></td>
+<td>send variables with the name specified over the output channel</td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>send a file defined in the process environment with the name
+specified over the output channel</td>
+</tr>
+<tr>
+<td><code>file</code></td>
+<td>send a file produced by the process with the name specified over the
+output channel</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td><span class="red">idem</span> <code>file</code></td>
+</tr>
+<tr>
+<td><code>stdout</code></td>
+<td>send the executed process <code>stdout</code> over the output
+channel</td>
+</tr>
+<tr>
+<td><code>tuple</code></td>
+<td>send multiple values over the same output channel</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><u>Output name</u></p>
+<p>variable that will be sent into the channel</p>
+<p><u>target channel</u></p>
+<p>Name of the channel to use. Must be preceeded by the keyword
+"into".</p>
+<p><span class="red"><u>attribute</u></span></p>
+<p><span class="red">output optional attributes. Example ?</span></p>
+<p><u>Example</u></p>
+<pre><code>num = Channel.from(1, 2, 3)
+process basicExample {
+  input:
+  val x from num
+  output:
+  val x into tempo
+  script:
+  &quot;&quot;&quot;
+  echo $x &gt; file
+  &quot;&quot;&quot;
+}</code></pre>
+<p>See section <a href="#input">Input</a>.</p>
+<p>Of note, when the output name is the same as the channel name, the
+into part of the declaration can be omitted.</p>
+<p>Several channels can be defined:</p>
+<pre><code>output:
+  val x into var_channel
+  val &#39;BB11&#39; into str_channel
+  val &quot;${fasta.baseName}.out&quot; into exp_channel</code></pre>
+<p>Another way to declare several outputs:</p>
+<pre><code>    output:
+    file &quot;${fq.baseName}_fastqc.*&quot; // fq.baseName means the base name of the input file named fq // .* means that all the fastqc.* files will be printed if publishDir is declared</code></pre>
+<p>Example with tuple:</p>
+<pre><code>file1 = Channel.fromPath(&quot;covid.fa&quot;)
+process indexRef {
+    input:
+    file x from file1
+    output:
+    tuple val(x.Name), file(&quot;${x.baseName}.*&quot;) into tempo2
+    script:
+    &quot;&quot;&quot;
+    bwa index ${x}
+    &quot;&quot;&quot;
+}</code></pre>
+<p><code>val(x.Name)</code> take the name of the variable x that is a
+file, and take it as character using val()</p>
+<p>See also <a
+href="https://www.nextflow.io/docs/latest/script.html#check-file-attributes"
+class="uri">https://www.nextflow.io/docs/latest/script.html#check-file-attributes</a>
+where:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>x.getName() or x.Name</code></td>
+<td>Gets the file name e.g. /some/path/file.txt -&gt; file.txt</td>
+</tr>
+<tr>
+<td><code>x.getBaseName() or x.BaseName</code></td>
+<td>Gets the file name without its extension e.g. /some/path/file.tar.gz
+-&gt; file.tar</td>
+</tr>
+<tr>
+<td><code>x.getSimpleName() or x.SimpleName</code></td>
+<td>Gets the file name without any extension e.g. /some/path/file.tar.gz
+-&gt; file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To get several output in folders (not into channels), use
+publishDir:</p>
+<pre><code>    publishDir &quot;${results}/08_POS_QC&quot;, mode: &#39;link&#39;, pattern: &#39;out_*/*&#39; // for the output result of pos_qc into 08_POS_QC
+    publishDir &quot;${results}/&quot;, mode: &#39;link&#39;, pattern: &#39;Full_Results.tsv&#39; // for the copy of Full_Results.tsv from 08_POS_QC into ${results}/
+    output:
+    file &quot;out_${vocqcfilename}*/*&quot;// for the output result of voc_qc into 08_POS_QC
+    file &quot;Full_Results.tsv&quot; // for the copy of Full_Results.tsv from 08_POS_QC into ${results}/</code></pre>
+<h3 id="when"><span class="header-section-number">11.7</span>
+When<a class="headerlink" href="#when" title="Link to this heading"></a></h3>
+<p><a href="https://www.nextflow.io/docs/latest/process.html#when"
+class="uri">https://www.nextflow.io/docs/latest/process.html#when</a></p>
+<h3 id="execution-block"><span class="header-section-number">11.8</span>
+Execution
+block<a class="headerlink" href="#execution-block" title="Link to this heading"></a></h3>
+<p><a href="https://www.nextflow.io/docs/latest/process.html"
+class="uri">https://www.nextflow.io/docs/latest/process.html</a></p>
+<p>A process contains one and only one script or shell or exec block,
+and it must be the last statement when the process contains input and
+output declarations. The entered string is executed as a Bash script in
+the host system. It can be any command, script or combination of them,
+that you would normally use in terminal shell or in a common Bash
+script.</p>
+<h4 id="warnings"><span class="header-section-number">11.8.1</span>
+Warnings<a class="headerlink" href="#warnings" title="Link to this heading"></a></h4>
+<p>1) If a script file is used in this block, it must be inside the
+./bin/ folder if main.nf is in ./</p>
+<p>2) Whatever the entrypoint declared in a docker or singularity image
+used in a process, the code written in the <code>script</code> section
+is considered by default as bash. Thus, always specify the shebang at
+the beginning of the process. Example:</p>
+<pre><code>    script:
+    &quot;&quot;&quot;
+    #!/bin/bash -ue
+    echo &quot;Hello&quot;
+    &quot;&quot;&quot;</code></pre>
+<p>3) When using files to run in the <code>script</code> section,
+located in the ./bin folder, always precise the executing file to use
+with the shebang. Example with a .R file. The <code>script</code>
+section is:</p>
+<pre><code>    script:
+    &quot;&quot;&quot;
+    #!/bin/bash -ue
+    tree_vizu.R \
+&quot;${tree_kind}&quot; \
+&quot;tree_vizu.log&quot;
+    &quot;&quot;&quot;</code></pre>
+<p>and the beginning of the <code>tree_vizu.R</code> file is:</p>
+<pre><code>#!/usr/bin/Rscript</code></pre>
+<p>We can also use the absolute path of the executing file:</p>
+<pre><code>    script:
+    &quot;&quot;&quot;
+    #!/bin/bash -ue
+    /usr/bin/Rscript -e &#39;
+        cat(&quot;Hello&quot;)
+    &#39;
+    &quot;&quot;&quot;</code></pre>
+<p>4) When using <code>Rscript</code> in the <code>script</code>
+section, do not forget to use <code>-e</code>:</p>
+<pre><code>    script:
+    &quot;&quot;&quot;
+    #!/bin/bash -ue
+    /usr/bin/Rscript -e &#39;
+        cat(&quot;Hello&quot;)
+    &#39;
+    &quot;&quot;&quot;</code></pre>
+<p>5) It is possible to use variables that are not declared in the input
+block. But not recommanded, notably to help the -resume option if cache
+'true' <span class="red">(it might be possible that the -resume option
+check the modifications of variables in channel but not other variables
+?)</span>.</p>
+<p>6) The number of character must not be too long in that section.
+Otherwise, weird messages can appear (see section <a
+href="#weird-message-with-process-run-but-no-output">Weird message (with
+process run but no output)</a>).</p>
+<p>7) Every messages and warnings coming from this section are not
+displayed in the executing window. Only error are returned by nextflow.
+The other messages are in the .command.log and .command.out files, in
+the work folder of the process:</p>
+<p><img src="../md/img/136-nextflow-dsl1/image7.png" style="width:48.0%"
+loading="lazy" /></p>
+<p>If messages are required, either assign to a log folder and use
+publishDir (section <a href="#publishdir">publishDir</a>) or use
+instruction in groovy inside workflow{}:</p>
+<pre><code>parseDb_filtering.out.unproductive_ch.count().subscribe{
+    n -&gt; if ( n == 0 ){
+        print &quot;\n\nWARNING: EMPTY unproductive_seq.tsv FILE RETURNED FOLLOWING THE parseDb_filtering PROCESS\n\n&quot;
+    }else{
+        it -&gt; it.copyTo(&quot;${out_path}/unproductive_seq.tsv&quot;)
+    }
+}</code></pre>
+<p>8) The use of <code>|&amp; tee -a file.log</code> prevents the arrest
+of the nextflow execution and error message display. Example :</p>
+<pre><code>    script:
+    &quot;&quot;&quot;
+    if [[ &quot;${meta_file}&quot; != &quot;NULL&quot; &amp;&amp; &quot;${meta_legend}&quot; != &quot;NULL&quot; ]] ; then
+        Rscript -e &#39;
+            df &lt;- read.table(&quot;${file_assembly_ch}&quot;, header = TRUE, sep = &quot;\\t&quot;)
+            meta &lt;- read.table(&quot;${meta_file}&quot;, header = TRUE, sep = &quot;\\t&quot;)
+            if(names(meta)[1] != &quot;Label&quot;){
+                stop(paste0(&quot;\\n\\n============\\n\\nERROR IN THE metadata_check PROCESS OF NEXTFLOW\\nIF THE meta_path PARAMETER IS NOT \\&quot;NULL\\&quot;, THEN THE FIRST COLUMN OF THE METADATA FILE MUST BE NAMED \\&quot;Label\\&quot; AND BE MADE OF THE NAMES OF THE FASTA SEQUENCES\\n\\n============\\n\\n&quot;), call. = FALSE)
+            }
+        &#39; |&amp; tee -a file_assembly.log
+    fi
+    &quot;&quot;&quot;</code></pre>
+<p>With such script section, the error message is printed into the
+file_assembly.log file, but not in the console. And the process is not
+interrupted.</p>
+<p>Removing <code>|&amp; tee -a file_assembly.log</code> solves the
+problem.</p>
+<h4 id="script"><span class="header-section-number">11.8.2</span>
+Script<a class="headerlink" href="#script" title="Link to this heading"></a></h4>
+<p><u>Kind of language</u></p>
+<p>Bash by default. Example of language modification</p>
+<pre><code>num = Channel.from(1, 2, 3)
+time = Channel.from(5)
+process basicExample {
+  input:
+  val num
+  val tempo from time.first()
+  script:
+  &quot;&quot;&quot;
+  #!/usr/bin/python3
+  print(\&quot;the result is \&quot; + str($num + $tempo))
+  &quot;&quot;&quot;
+}</code></pre>
+<p><u>Variable evaluation</u></p>
+<p>No nextflow variable evaluation and single line -&gt; single quote or
+triple single quote. Example:</p>
+<pre><code>&#39;echo The path is: $PATH&#39;
+  &#39;&#39;&#39;
+  echo The path is: $PATH
+  &#39;&#39;&#39;</code></pre>
+<p>In this example PATH is not subtituted before sending the script to
+bash (default).</p>
+<p>No nextflow variable evaluation and multiple lines -&gt; triple
+single quote. Example:</p>
+<pre><code>  &#39;&#39;&#39;
+  echo The path is: $PATH
+  echo &quot;Hello world&quot;
+  &#39;&#39;&#39;</code></pre>
+<p>Nextflow variable evaluation and single line -&gt; double quote or
+triple double quote. Example:</p>
+<pre><code>&quot;echo The path is: $PATH&quot;
+  &quot;&quot;&quot;
+  echo The path is: $PATH
+  &quot;&quot;&quot;</code></pre>
+<p>In this example, if PATH is a nextflow variable (defined in the input
+section of the process, or before the process) it is substituted before
+sending the script to bash (default).</p>
+<p>Nextflow variable evaluation and multiple lines -&gt; triple double
+quote. Example:</p>
+<pre><code>  &quot;&quot;&quot;
+  echo The path is: $PATH
+  echo \&quot;Hello world\&quot;
+  &quot;&quot;&quot;</code></pre>
+<p>Here, the quotes inside the script are inactivated using
+<code>\.</code></p>
+<p>Another example</p>
+<pre><code>  &quot;&quot;&quot;
+  echo -e The path is:\\n$PATH
+  &quot;&quot;&quot;</code></pre>
+<p>Here, the \n inside the script is inactivated using
+<code>\.</code></p>
+<p>Full example</p>
+<pre><code>num = Channel.from(1, 2, 3)
+process basicExample {
+  input:
+  val num
+  script:
+  &quot;&quot;&quot;
+  #!/usr/bin/bash
+  echo \&quot;The result is \$(( $num * 5 ))\&quot;
+  &quot;&quot;&quot;
+}</code></pre>
+<p>The shebang is used to force the execution using bash (another
+language can be used like this).</p>
+<p>The <code>$</code> of <code>num</code> is not inactivated because we
+need the variable substitution before sending the code to bash. However,
+the <code>$((</code> has to be inactivated using <code>\</code>, because
+it has to be interpreted only during bash execution.</p>
+<p>Warning, some implicit variables of nextflow, like (see section <a
+href="#_Ref88241790">0</a>) cannot be printed easily since it contains $
+that should be inactivated.</p>
+<h4 id="shell"><span class="header-section-number">11.8.3</span>
+Shell<a class="headerlink" href="#shell" title="Link to this heading"></a></h4>
+<p>Uses the exclamation mark ! character as the variable placeholder for
+Nextflow variables in place of the usual dollar character. Example:</p>
+<pre><code>process myTask {
+    input:
+    val str from &#39;Hello&#39;, &#39;Hola&#39;, &#39;Bonjour&#39;
+    shell:
+    &#39;&#39;&#39;
+    echo User $USER says !{str}
+    &#39;&#39;&#39;
+}</code></pre>
+<p><code>!{str}</code> replaced during evaluation, then sent to bash,
+then <code>$USER</code> replaced.</p>
+<p>Example:</p>
+<pre><code>process myTask {
+    input:
+    val str from &#39;Hello&#39;, &#39;Hola&#39;, &#39;Bonjour&#39;
+    shell:
+    &#39;&#39;&#39;
+    echo User $tempo says !{str}
+    &#39;&#39;&#39;
+}</code></pre>
+<p>Bash error message because no tempo variable in the env.</p>
+<p>Using double quotes:</p>
+<pre><code>process myTask {
+    input:
+    val str from &#39;Hello&#39;, &#39;Hola&#39;, &#39;Bonjour&#39;
+    shell:
+    &quot;&quot;&quot;
+    echo User $tempo says !{str}
+    &quot;&quot;&quot;
+}</code></pre>
+<p>Nextflow error message because no tempo variable in nextflow.</p>
+<h4 id="exec"><span class="header-section-number">11.8.4</span>
+Exec<a class="headerlink" href="#exec" title="Link to this heading"></a></h4>
+<p>To execute native codes.</p>
+<p>See</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/process.html#native-execution"
+class="uri">https://www.nextflow.io/docs/latest/process.html#native-execution</a></p>
+<p><a
+href="https://www.nextflow.io/docs/latest/script.html#language-basics"
+class="uri">https://www.nextflow.io/docs/latest/script.html#language-basics</a></p>
+<h2 id="operators"><span class="header-section-number">12</span>
+Operators<a class="headerlink" href="#operators" title="Link to this heading"></a></h2>
+<h3 id="nextflow"><span class="header-section-number">12.1</span>
+Nextflow<a class="headerlink" href="#nextflow" title="Link to this heading"></a></h3>
+<p><a href="https://www.nextflow.io/docs/latest/operator.html"
+class="uri">https://www.nextflow.io/docs/latest/operator.html</a></p>
+<h3 id="groovy"><span class="header-section-number">12.2</span>
+Groovy<a class="headerlink" href="#groovy" title="Link to this heading"></a></h3>
+<p><a href="https://groovy-lang.org/operators.html"
+class="uri">https://groovy-lang.org/operators.html</a></p>
+<h2 id="closure-functions"><span class="header-section-number">13</span>
+Closure
+functions<a class="headerlink" href="#closure-functions" title="Link to this heading"></a></h2>
+<p>See <a
+href="https://www.nextflow.io/docs/latest/script.html#closures"
+class="uri">https://www.nextflow.io/docs/latest/script.html#closures</a></p>
+<pre><code>executor {
+    name = &#39;slurm&#39;
+    queueSize = 2000
+}</code></pre>
+<h2 id="running"><span class="header-section-number">14</span>
+running<a class="headerlink" href="#running" title="Link to this heading"></a></h2>
+<h3 id="defaults-names"><span class="header-section-number">14.1</span>
+Defaults
+names<a class="headerlink" href="#defaults-names" title="Link to this heading"></a></h3>
+<p>Nextflow recognize main.nf and nextflow.config as the two nf and
+config files by default.</p>
+<p>When using <code>nextflow run</code>, this means that:</p>
+<p>1) it is not mandatory to specify the config file name if it is in
+the same path as the main.nf file and if it is named nextflow.config.
+Example:</p>
+<pre><code>nextflow run /home/gael/tmp/main.nf</code></pre>
+<p>2) Running from a distant repository, the two files are
+recognized</p>
+<pre><code>nextflow run https://gitlab.pasteur.fr/gmillot/project_a -r master</code></pre>
+<h3 id="basic-instruction-for-execution"><span
+class="header-section-number">14.2</span> Basic instruction for
+execution<a class="headerlink" href="#basic-instruction-for-execution" title="Link to this heading"></a></h3>
+<h4 id="local-running"><span class="header-section-number">14.2.1</span>
+Local
+running<a class="headerlink" href="#local-running" title="Link to this heading"></a></h4>
+<p>Where the instruction is executed is important. Indeed, several files
+and folders are created at this place: result, work, .nexflow, etc. Once
+the location chosen using cd, do:</p>
+<pre><code>nextflow run /home/gael/tmp/main.nf</code></pre>
+<p>The main.nf file is executed. Parameters are in the nextflow.config
+file in the same folder as main.nf.</p>
+<p>To specifiy the file name and path of the config file:</p>
+<pre><code>nextflow run /home/gael/tmp/main.nf -c /home/gael/tmp/nextflow.config</code></pre>
+<p>See section <a href="#check-that-a-distant-server-is-mounted">Check
+that a distant server is mounted</a> if nothing happens, like:</p>
+<p><img src="../md/img/136-nextflow-dsl1/image8.png"
+loading="lazy" /></p>
+<h4 id="using-a-distant-repository"><span
+class="header-section-number">14.2.2</span> Using a distant
+repository<a class="headerlink" href="#using-a-distant-repository" title="Link to this heading"></a></h4>
+<p>See section <a
+href="#precision-when-running-a-distant-nextflow-file">Precision when
+running a distant nextflow file</a>.</p>
+<p><u>If the linkage.nf file in a public gitlab repository</u></p>
+<p>Run the following command from where you want the results:</p>
+<pre><code>nextflow run -hub pasteur gmillot/genetic_linkage -r v1.0.0</code></pre>
+<p>-r for the tagged version of the file.</p>
+<p>Warning : the .config file used by default is the one present in the
+distant repository. The config file can be on the local computer but -c
+option has to be used.</p>
+<p><u>If the linkage.nf file in a private gitlab repository</u></p>
+<p>Create the scm file:</p>
+<pre><code>providers {
+    pasteur {
+        server = &#39;https://gitlab.pasteur.fr&#39;
+        platform = &#39;gitlab&#39;
+    }
+}</code></pre>
+<p>And save it as 'scm' in the .nextflow folder. For instance in:</p>
+<p>\\wsl$\Ubuntu-20.04\home\gael\.nextflow</p>
+<p>Warning: ssh key must be set for gitlab, to be able to use this
+procedure.</p>
+<p>Then run the following command (example: from here
+\\wsl$\Ubuntu-20.04\home\gael):</p>
+<pre><code>nextflow run -hub pasteur gmillot/genetic_linkage -r v1.0.0</code></pre>
+<h4 id="on-clusters"><span class="header-section-number">14.2.3</span>
+On
+clusters<a class="headerlink" href="#on-clusters" title="Link to this heading"></a></h4>
+<p>Warning: whatever the location where the run is executed, the $HOME
+(<code>/pasteur/sonic/homes/gmillot</code>) is the reference for
+nextflow when running a file from a distant repo. This means that:</p>
+<p>1) The scm file must be in</p>
+<pre><code>$HOME/.nextflow</code></pre>
+<p>2) The .ssh key for the connection to the pasteur gitlab repo must be
+in</p>
+<pre><code>$HOME/.ssh</code></pre>
+<p>3) When pulling the distant repo, nextflow stores it in</p>
+<pre><code>$HOME/.nextflow/assets</code></pre>
+<p>However, as for local running, the rest is located where the run
+command is executed:</p>
+<blockquote>
+<p>1) .nextflow.log file</p>
+<p>2) work folder</p>
+<p>3) .nextflow folder, containing the cache folder and the history</p>
+<p>4) singularity folder</p>
+</blockquote>
+<p>The <code>.nextflow/assets</code> folder is not used.</p>
+<p>Start with:</p>
+<pre><code>```{bash, eval = FALSE}
+EXEC_PATH=&quot;/pasteur/zeus/projets/p01/BioIT/gmillot/project_a&quot; # where the bin folder of the main.nf script is located
+export CONF_BEFORE=/opt/gensoft/exe # on maestro
+export JAVA_CONF=java/13.0.2
+export JAVA_CONF_AFTER=bin/java # on maestro
+export SINGU_CONF=apptainer/1.1.5
+export SINGU_CONF_AFTER=bin/singularity # on maestro
+export GIT_CONF=git/2.39.1
+export GIT_CONF_AFTER=bin/git # on maestro
+export GRAPHVIZ_CONF=graphviz/2.42.3
+export GRAPHVIZ_CONF_AFTER=bin/graphviz # on maestro
+
+MODULES=&quot;${CONF_BEFORE}/${JAVA_CONF}/${JAVA_CONF_AFTER},${CONF_BEFORE}/${SINGU_CONF}/${SINGU_CONF_AFTER},${CONF_BEFORE}/${GIT_CONF}/${GIT_CONF_AFTER},${CONF_BEFORE}/${GRAPHVIZ_CONF}/${GRAPHVIZ_CONF_AFTER}&quot;
+# cd ${EXEC_PATH} # not required when using the gitlab repo to run the script
+# chmod 755 ${EXEC_PATH}/bin/*.* # not required when using the gitlab repo to run the script. Neither required if no bin folder
+module load ${JAVA_CONF} ${SINGU_CONF} ${GIT_CONF} ${GRAPHVIZ_CONF}
+```</code></pre>
+<p>Then run like this:</p>
+<pre><code>nextflow run ${EXEC_PATH}/main.nf --modules ${MODULES}</code></pre>
+<p>Or using a distant repo (section <a
+href="#precision-when-running-a-distant-nextflow-file">Precision when
+running a distant nextflow file</a>):</p>
+<pre><code>nextflow run -hub pasteur gmillot/project_a --modules ${MODULES}</code></pre>
+<p>Adapted code:</p>
+<pre><code>HOME_INI=$HOME
+HOME=&quot;${ZEUSHOME}/genetic_linkage/&quot; # $HOME changed to allow the creation of .nextflow into /$ZEUSHOME/genetic_linkage/, for instance. See NFX_HOME in the nextflow software script
+trap &#39;&#39; SIGINT
+nextflow run --modules ${MODULES} linkage.nf -c linkage.config
+HOME=$HOME_INI
+trap SIGINT</code></pre>
+<p>If an error message appears, like:</p>
+<pre><code>Unknown error accessing project `gmillot/project_a` -- Repository may be corrupted: /pasteur/sonic/homes/gmillot/.nextflow/assets/gmillot/project_a</code></pre>
+<p>Use to purge the</p>
+<pre><code>rm -rf /pasteur/sonic/homes/gmillot/.nextflow/assets/gmillot*</code></pre>
+<h4 id="check-that-a-distant-server-is-mounted"><span
+class="header-section-number">14.2.4</span> Check that a distant server
+is
+mounted<a class="headerlink" href="#check-that-a-distant-server-is-mounted" title="Link to this heading"></a></h4>
+<p>See <a href="140-wsl2-linux-on-windows.html">protocol 140</a>.</p>
+<p>Example:</p>
+<pre><code>DRIVE=&quot;C&quot;
+sudo mkdir /mnt/share
+sudo mount -t drvfs $DRIVE: /mnt/share</code></pre>
+<p>Warning: if no mounting, it is possible that nextflow does nothing,
+or displays a message like:</p>
+<pre><code>Launching `linkage.nf` [loving_morse] - revision: d5aabe528b
+/mnt/share/Users</code></pre>
+<h4 id="error-messages-and-solutions"><span
+class="header-section-number">14.2.5</span> Error messages and
+solutions<a class="headerlink" href="#error-messages-and-solutions" title="Link to this heading"></a></h4>
+<p>1)</p>
+<pre><code>Unknown error accessing project `gmillot/genetic_linkage` -- Repository may be corrupted: /pasteur/sonic/homes/gmillot/.nextflow/assets/gmillot/genetic_linkage</code></pre>
+<p>Purge using:</p>
+<pre><code>rm -rf /pasteur/sonic/homes/gmillot/.nextflow/assets/gmillot*</code></pre>
+<p>2)</p>
+<pre><code>WARN: Cannot read project manifest -- Cause: Remote resource not found: https://gitlab.pasteur.fr/api/v4/projects/gmillot%2Flinkage</code></pre>
+<p>Make the distant repo public.</p>
+<p>In settings/General/Visibility, project features, permissions, check
+that every item is "on" with "Everyone With Access" and then save the
+changes.</p>
+<p>3)</p>
+<pre><code>permission denied</code></pre>
+<p>Use chmod to change the user rights.</p>
+<p>4)</p>
+<p>Warning: if no mounting, it is possible that nextflow does nothing,
+or displays a message like:</p>
+<pre><code>Launching `linkage.nf` [loving_morse] - revision: d5aabe528b
+/mnt/share/Users</code></pre>
+<h3 id="resume-a-run"><span class="header-section-number">14.3</span>
+Resume a
+run<a class="headerlink" href="#resume-a-run" title="Link to this heading"></a></h3>
+<p>First, get the name of the run that we want to resume, either by
+opening the history file in the .nextflow folder. Example:
+<code>\\wsl$\Ubuntu-20.04\home\gael\.nextflow</code></p>
+<p>Or by using the following command:</p>
+<pre><code>nextflow log</code></pre>
+<p>Note: it only works when executed where a .nextflow folder is
+present.</p>
+<p>Then, use the -resume option and potentially the name of the run that
+we want to resume. Not adding name means the last one:</p>
+<pre><code>nextflow run /home/gael/tmp/main.nf -resume elegant_williams
+nextflow run /home/gael/tmp/main.nf -resume # the last one</code></pre>
+<h3 id="precision-when-running-a-distant-nextflow-file"><span
+class="header-section-number">14.4</span> Precision when running a
+distant nextflow
+file<a class="headerlink" href="#precision-when-running-a-distant-nextflow-file" title="Link to this heading"></a></h3>
+<p>See <a
+href="https://www.nextflow.io/docs/latest/sharing.html#running-a-pipeline"
+class="uri">https://www.nextflow.io/docs/latest/sharing.html#running-a-pipeline</a></p>
+<p>Warning:</p>
+<p>1) Does not work if main.nf and nextflow.config are not named like
+this.</p>
+<p>2) It seems that the -r option (section <a href="#the--r-option">The
+-r option</a>) does not work if no main.nf and nextflow.config are
+present in the master branch. See <a
+href="https://github.com/nextflow-io/nextflow/issues/1591"
+class="uri">https://github.com/nextflow-io/nextflow/issues/1591</a></p>
+<p>3) When executing a distant .nf file, nextflow first pulls the repo
+to the .nextflow\assets\ folder, where the nextflow run command is
+executed. If the folder already exists, nextflow does not compare the
+distant repo with the local pulled one. It goes directly to the local
+one. Thus, if the folder is corrupted or empty, an error message will
+appear, even if the distant repo is ok.</p>
+<p>See section <a href="#check-that-a-distant-server-is-mounted">Check
+that a distant server is mounted</a> if nothing happens, like:</p>
+<p><img src="../md/img/136-nextflow-dsl1/image8.png"
+loading="lazy" /></p>
+<h4 id="preregistered-repository"><span
+class="header-section-number">14.4.1</span> Preregistered
+repository<a class="headerlink" href="#preregistered-repository" title="Link to this heading"></a></h4>
+<p>Warning: see section <a
+href="#precision-when-running-a-distant-nextflow-file">Precision when
+running a distant nextflow file</a>.</p>
+<p><u>Default command</u></p>
+<p>This means that the distant repo is a public project on
+github/gitlab, etc., and that the two files are named main.nf and
+nextflow.config and are both in the pointed repo:</p>
+<pre><code>nextflow run gael-millot/project_a</code></pre>
+<p>Note that <code>gael-millot/project_a</code> is called the "qualified
+name". The qualified name is formed by two parts: the owner name and the
+repository name separated by a / character</p>
+<p><u>Pre-registered repo</u></p>
+<p>First, precise the repo thanks to the -hub option, then the user
+account thanks to the -user option, then the name of the project:</p>
+<pre><code>nextflow run -hub github -user gael-millot project_a</code></pre>
+<p>Note: does not work for pasteur.gitlab, as it is not referenced in
+nextflow. See section <a
+href="#private-repository-example-with-pasteur-gitlab">Private
+repository: example with pasteur gitlab</a>.</p>
+<p>Note that what is run here is the project name
+<code>project_a</code>.</p>
+<p><u>Url</u></p>
+<p>Using the master branch of the public project repo:</p>
+<pre><code>nextflow run https://github.com/gael-millot/project_a</code></pre>
+<p>Using another branch/tag/commit of the project repo:</p>
+<pre><code>nextflow run https://github.com/gael-millot/project_a -r v1.0.0</code></pre>
+<p>Option -r signals either a git branch, tag or commit SHA number.</p>
+<h4 id="private-repository-example-with-pasteur-gitlab"><span
+class="header-section-number">14.4.2</span> Private repository: example
+with pasteur
+gitlab<a class="headerlink" href="#private-repository-example-with-pasteur-gitlab" title="Link to this heading"></a></h4>
+<p>Warning: see section <a
+href="#precision-when-running-a-distant-nextflow-file">Precision when
+running a distant nextflow file</a>.</p>
+<p>About the SCM file:</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file"
+class="uri">https://www.nextflow.io/docs/latest/sharing.html#scm-configuration-file</a></p>
+<p>See the site of Remi Planel:</p>
+<p><a
+href="https://gitlab.pasteur.fr/genolist/legiolist-pre-processing/-/tree/master"
+class="uri">https://gitlab.pasteur.fr/genolist/legiolist-pre-processing/-/tree/master</a></p>
+<p>Create the scm file:</p>
+<pre><code>providers {
+    pasteur {
+        server = &#39;https://gitlab.pasteur.fr&#39;
+        platform = &#39;gitlab&#39;
+    }
+}</code></pre>
+<p>And save it as 'scm' in the .nextflow folder. For instance in:</p>
+<p><code>\\wsl$\Ubuntu-20.04\home\gael\.nextflow</code></p>
+<p>Warning: ssh key must be set for gitlab, to be able to use this
+procedure (see <a href="044-bash.html">protocol 44</a>).</p>
+<p>Then run the following command from here
+<code>\\wsl$\Ubuntu-20.04\home\gael</code>:</p>
+<pre><code>nextflow run -hub pasteur gmillot/project_a -r v1.0.0</code></pre>
+<p>Warning: does not work:</p>
+<pre><code>nextflow run -hub pasteur -user gmillot project_a</code></pre>
+<p>See also:</p>
+<p><a
+href="https://www.nextflow.io/blog/2021/configure-git-repositories-with-nextflow.html"
+class="uri">https://www.nextflow.io/blog/2021/configure-git-repositories-with-nextflow.html</a></p>
+<h4 id="the--r-option"><span class="header-section-number">14.4.3</span>
+The -r
+option<a class="headerlink" href="#the--r-option" title="Link to this heading"></a></h4>
+<p><u>Branch</u></p>
+<pre><code>nextflow run -hub pasteur gmillot/project_a -r master</code></pre>
+<p><u>Tag</u></p>
+<pre><code>nextflow run -hub pasteur gmillot/project_a -r v1.0.0</code></pre>
+<p><u>Commit number (found in the url address bar of the commit
+page)</u></p>
+<pre><code>nextflow run -hub pasteur gmillot/project_a -r 1b05c85463558e8911a5ac0c2ee730b2133588c4</code></pre>
+<p>Warning: does not work using the short ID number.</p>
+<h4 id="the--c-option"><span class="header-section-number">14.4.4</span>
+The -c
+option<a class="headerlink" href="#the--c-option" title="Link to this heading"></a></h4>
+<p>It is very important to use absolute path with the -c option, since
+by default, nextflow uses as the starting point where the script is run.
+For instance, with:</p>
+<pre><code>nextflow run -hub pasteur gmillot/project_a -r v1.0.0 -c dev/test.config</code></pre>
+<p>Nextflow does not look starting from where main.nf is
+(/pasteur/appa/homes/gmillot/.nextflow/assets/gmillot/project_a/) but
+where the script is run
+(/pasteur/zeus/projets/p01/BioIT/gmillot/project_a/). Thus the best is
+to write:</p>
+<pre><code>nextflow run -hub pasteur gmillot/project_a -r v1.0.0 -c /pasteur/appa/homes/gmillot/.nextflow/assets/gmillot/project_a/dev/test.config</code></pre>
+<h4 id="several-nextflow-execution"><span
+class="header-section-number">14.4.5</span> Several nextflow
+execution<a class="headerlink" href="#several-nextflow-execution" title="Link to this heading"></a></h4>
+<p><span class="red">Does not work</span></p>
+<p>The determinant factor is the .nextflow file: only one can be used
+per ongoing run. The idea is thus to create a new .nextflow folder in
+different tmp folders:</p>
+<pre><code>mkdir $ZEUSHOME/project_a/temp1
+HOME=&quot;$ZEUSHOME/project_a/temp1&quot; ;
+mkdir $HOME/.nextflow ;
+cp /pasteur/zeus/projets/p01/BioIT/gmillot/project_a/.nextflow/scm $HOME/.nextflow/ ;
+nextflow run --modules ${MODULES} -hub pasteur gmillot/project_a -r v7.1.0 -c $HOME/.nextflow/assets/gmillot/project_a/nextflow.config ;
+HOME=&quot;/pasteur/appa/homes/gmillot/&quot;</code></pre>
+<p>Another important thing is to execute the command where the
+singularity folder is present to prevent pulling docker images each
+time. Example of procedure for slurm:</p>
+<pre><code>cd $ZEUSHOME/project_a
+tmux</code></pre>
+<pre><code>mkdir $ZEUSHOME/project_a/temp2
+HOME=&quot;$ZEUSHOME/project_a/temp2&quot; ;
+mkdir $HOME/.nextflow ;
+cp /pasteur/zeus/projets/p01/BioIT/gmillot/project_a/.nextflow/scm $HOME/.nextflow/ ;
+# cd $HOME/
+
+EXEC_PATH=$HOME # where the bin folder of the main.nf script is located
+export CONF_BEFORE=/opt/gensoft/exe # on maestro
+export JAVA_CONF=java/13.0.2
+export JAVA_CONF_AFTER=bin/java # on maestro
+export SINGU_CONF=singularity/3.8.3
+export SINGU_CONF_AFTER=bin/singularity # on maestro
+export GIT_CONF=git/2.25.0
+export GIT_CONF_AFTER=bin/git # on maestro
+export GRAPHVIZ_CONF=graphviz/2.42.3
+export GRAPHVIZ_CONF_AFTER=bin/graphviz # on maestro
+
+MODULES=&quot;${CONF_BEFORE}/${JAVA_CONF}/${JAVA_CONF_AFTER},${CONF_BEFORE}/${SINGU_CONF}/${SINGU_CONF_AFTER},${CONF_BEFORE}/${GIT_CONF}/${GIT_CONF_AFTER},${CONF_BEFORE}/${GRAPHVIZ_CONF}/${GRAPHVIZ_CONF_AFTER}&quot;
+# cd ${EXEC_PATH} # not required when using the gitlab repo to run the script
+# chmod 755 ${EXEC_PATH}/bin/*.* # not required when using the gitlab repo to run the script
+module load ${JAVA_CONF} ${SINGU_CONF} ${GIT_CONF} ${GRAPHVIZ_CONF}
+
+nextflow run --modules ${MODULES} -hub pasteur gmillot/project_a -r eefe412af536d368e1e6960a7acce376d769011f -c $HOME/.nextflow/assets/gmillot/project_a/nextflow.config ;
+
+HOME=&quot;/pasteur/appa/homes/gmillot/&quot;</code></pre>
+<h3 id="example-of-scripts-and-running-commands"><span
+class="header-section-number">14.5</span> Example of scripts and running
+commands<a class="headerlink" href="#example-of-scripts-and-running-commands" title="Link to this heading"></a></h3>
+<h4 id="example-1"><span class="header-section-number">14.5.1</span>
+Example
+1<a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<p>File prep:</p>
+<pre><code>cd
+mkdir tmp
+echo -e &quot;Hello world\nI love you all&quot; &gt; ./tmp/ex1.txt</code></pre>
+<p>Nextflow script:</p>
+<pre><code>file1 = Channel.fromPath(&quot;/home/gael/tmp/ex1.txt&quot;)
+process exercice1 {
+    input:
+    file tempo1 from file1
+    script:
+    &quot;&quot;&quot;
+    sed &#39;s/ /./g&#39; ${tempo1} &gt; tempo2 # replace spaces by dots
+    &quot;&quot;&quot;
+    }</code></pre>
+<p>Note that no need of output section</p>
+<p>Copy paste this script into:</p>
+<p><code>\\wsl$\Ubuntu-20.04\home\gael\tmp\main.nf</code></p>
+<p>Execution:</p>
+<pre><code>nextflow run /home/gael/tmp/main.nf</code></pre>
+<p>Everything is fine:</p>
+<p><img src="../md/img/136-nextflow-dsl1/image9.png" style="width:83.0%"
+loading="lazy" /></p>
+<p>The result is in 7f as indicated in the message:</p>
+<p><code>\\wsl$\Ubuntu-20.04\home\gael\work\7f\2823f4940b5ad82cd87ec4302240ea</code></p>
+<p><img src="../md/img/136-nextflow-dsl1/image10.png"
+style="width:75.0%" loading="lazy" /></p>
+<p>See section <a href="#the-work-directory">The work directory</a> for
+the details of these files.</p>
+<h4 id="example-2"><span class="header-section-number">14.5.2</span>
+Example
+2<a class="headerlink" href="#example-2" title="Link to this heading"></a></h4>
+<p>File prep:</p>
+<pre><code>cd
+mkdir tmp
+echo -e &quot;Hello world\nI love you all&quot; &gt; ./tmp/ex1.txt</code></pre>
+<p>Nextflow script:</p>
+<pre><code>file1 = Channel.fromPath(&quot;/home/gael/tmp/ex1.txt&quot;)
+process exercice1 {
+    input:
+    file tempo1 from file1
+    output:
+
+    script:
+    &quot;&quot;&quot;
+    sed &#39;s/ /./g&#39; ${tempo1} &gt; tempo2 # replace spaces by dots
+    &quot;&quot;&quot;
+    }</code></pre>
+<p>Copy paste this script into:</p>
+<p>\\wsl$\Ubuntu-20.04\home\gael\tmp\main2.nf</p>
+<p>Execution:</p>
+<pre><code>nextflow run /home/gael/tmp/main.nf</code></pre>
+<h4 id="example-3"><span class="header-section-number">14.5.3</span>
+Example
+3<a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<p>See</p>
+<p><code>C:\Users\gael\Documents\Git_projects\project_a</code></p>
+<pre><code>nextflow run -resume -hub pasteur gmillot/project_a -r v1.0.0</code></pre>
+<h4 id="example-4"><span class="header-section-number">14.5.4</span>
+Example
+4<a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
+<p>See</p>
+<p><code>C:\Users\gael\Documents\Git_projects\project_a</code></p>
+<pre><code>nextflow run https://gitlab.pasteur.fr/gmillot/project_a/-/blob/v1.0.0/main.nf -resume</code></pre>
+<h2 id="execution-printing"><span
+class="header-section-number">15</span> Execution
+printing<a class="headerlink" href="#execution-printing" title="Link to this heading"></a></h2>
+<h3 id="display"><span class="header-section-number">15.1</span>
+Display<a class="headerlink" href="#display" title="Link to this heading"></a></h3>
+<pre><code>N E X T F L O W  ~  version 19.04.0
+executor &gt;  local (3)</code></pre>
+<p><code>[69/c8ea4a] process &gt; splitLetters   [100%] 1 of 1</code>
+✔</p>
+<p><code>[84/c8b7f1] process &gt; convertToUpper [100%] 2 of 2</code>
+✔</p>
+<p>You can see that the first process is executed once, and the second
+twice. Finally the result string is printed.</p>
+<p>The hexadecimal numbers, like 22/7548fa, identify the unique process
+execution. These numbers are also the prefix of the directories where
+each process is executed. You can inspect the files produced by them
+changing to the directory $PWD/work and using these numbers to find the
+process-specific execution path.</p>
+<h3 id="recovering-these-infos"><span
+class="header-section-number">15.2</span> Recovering these
+infos<a class="headerlink" href="#recovering-these-infos" title="Link to this heading"></a></h3>
+<p>See trace in section <a
+href="#parameter-and-execution-report">Parameter and execution
+report</a> and section <a href="#the-work-directory">The work
+directory</a>.</p>
+<h2 id="config-file"><span class="header-section-number">16</span>
+Config
+file<a class="headerlink" href="#config-file" title="Link to this heading"></a></h2>
+<p><a
+href="https://www.nextflow.io/docs/latest/config.html#configuration-file"
+class="uri">https://www.nextflow.io/docs/latest/config.html#configuration-file</a></p>
+<p><a
+href="https://carpentries-incubator.github.io/workflows-nextflow/08-configuration/index.html"
+class="uri">https://carpentries-incubator.github.io/workflows-nextflow/08-configuration/index.html</a></p>
+<h3 id="name-and-location-of-the-config-file"><span
+class="header-section-number">16.1</span> Name and location of the
+config
+file<a class="headerlink" href="#name-and-location-of-the-config-file" title="Link to this heading"></a></h3>
+<p>By default:</p>
+<p>nextflow.config</p>
+<p>in the same folder as the main.nf file.</p>
+<h3 id="priorities-of-variables"><span
+class="header-section-number">16.2</span> Priorities of
+variables<a class="headerlink" href="#priorities-of-variables" title="Link to this heading"></a></h3>
+<p><a
+href="https://www.nextflow.io/docs/latest/config.html?highlight=params#configuration-file"
+class="uri">https://www.nextflow.io/docs/latest/config.html?highlight=params#configuration-file</a></p>
+<p>When a pipeline script is launched, Nextflow looks for configuration
+files in multiple locations. Since each configuration file can contain
+conflicting settings, the sources are ranked to decide which settings to
+are applied. All possible configuration sources are reported below,
+listed in order of priority:</p>
+<p>Parameters specified on the command line (--something value)</p>
+<p>Parameters provided using the -params-file option</p>
+<p>Config file specified using the -C my_config option</p>
+<p>The config file named nextflow.config in the current directory</p>
+<p>The config file named nextflow.config in the workflow project
+directory</p>
+<p>The config file $HOME/.nextflow/config</p>
+<p>Values defined within the pipeline script itself (e.g. main.nf)</p>
+<p>When more than one of these ways of specifying configurations are
+used, they are merged, so that the settings in the first override the
+same ones that may appear in the second one, and so on.</p>
+<p>If you want to ignore any default configuration files and use only
+the custom one use the command line option -C &lt;config file&gt;.</p>
+<p>Three main sections inside a config file: variables, scopes and
+directives</p>
+<h3 id="variables"><span class="header-section-number">16.3</span>
+Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h3>
+<p>Variables can be defined at the begining of the config file</p>
+<p>1) variables that will be used in the main.nf file.</p>
+<p>2) variables that will be used only in the config file.</p>
+<h3 id="scopes"><span class="header-section-number">16.4</span>
+Scopes<a class="headerlink" href="#scopes" title="Link to this heading"></a></h3>
+<p>The following sections cannot be used in nextflow scripts, only in
+config files.</p>
+<h4 id="env"><span class="header-section-number">16.4.1</span>
+env<a class="headerlink" href="#env" title="Link to this heading"></a></h4>
+<p>This scope allows to declare variables that will be used in the main
+executed nf file.</p>
+<p>See an example of how to write variables in env:</p>
+<p><a href="https://gitlab.pasteur.fr/gmillot/project_a/-/tree/v1.0.0"
+class="uri">https://gitlab.pasteur.fr/gmillot/project_a/-/tree/v1.0.0</a></p>
+<h4 id="executor"><span class="header-section-number">16.4.2</span>
+executor<a class="headerlink" href="#executor" title="Link to this heading"></a></h4>
+<p><a
+href="https://www.nextflow.io/docs/latest/config.html#scope-executor"
+class="uri">https://www.nextflow.io/docs/latest/config.html#scope-executor</a></p>
+<h4 id="singularity"><span class="header-section-number">16.4.3</span>
+singularity<a class="headerlink" href="#singularity" title="Link to this heading"></a></h4>
+<p><a
+href="https://www.nextflow.io/docs/latest/config.html#scope-singularity"
+class="uri">https://www.nextflow.io/docs/latest/config.html#scope-singularity</a></p>
+<p>To understand how singularity is used by nextflow instead of docker
+:</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/singularity.html#singularity-page"
+class="uri">https://www.nextflow.io/docs/latest/singularity.html#singularity-page</a></p>
+<p>See notably <a
+href="https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub"
+class="uri">https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub</a></p>
+<p>Warning: python can have problems with singularity. The error message
+is:</p>
+<p>FileNotFoundError: [Errno 2] No such file or directory:
+'/dev/shm'</p>
+<p>In that case, use:</p>
+<pre><code>singularity {
+    runOptions = &#39;-B /run/shm:/run/shm&#39;
+}</code></pre>
+<p>Example:</p>
+<pre><code>singularity {
+    enabled = true
+    autoMounts = true // automatically mounts host paths in the executed container
+    runOptions = &#39;--no-home --bind /pasteur -B /run/shm:/run/shm&#39;
+    cacheDir = &#39;/pasteur/zeus/projets/p01/BioIT/gmillot/project_a/singularity&#39;
+}</code></pre>
+<p>Single or double quotes depending on whether we need variable
+interpretation or not.</p>
+<p>Warning: with apptainer, this trick does not work.</p>
+<p>Options of singularity:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>enabled</td>
+<td>Turn this flag to true to enable Singularity execution (default:
+false).</td>
+</tr>
+<tr>
+<td>autoMounts</td>
+<td>When true Nextflow automatically mounts host paths in the executed
+container. It requires the user bind control feature enabled in your
+Singularity installation (default: false).</td>
+</tr>
+<tr>
+<td>runOptions</td>
+<td>This attribute can be used to provide any extra command line options
+supported by the singularity exec.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>--bind</td>
+<td>mount a folder point into the container. Mandatory such that
+singularity is able to understand the tree of the machine used. Example:
+--bind /pasteur, in order for singularity to access to
+/pasteur/usr/local for instance. By default, singularity uses --bind
+$HOME</td>
+</tr>
+<tr>
+<td>--no-home</td>
+<td>does not use $HOME (which is what is used by default). Probably
+create a tmp folder or an empty $HOME. This prevent singularity to use
+$HOME to look for applications and forces it to use only what is inside
+the container</td>
+</tr>
+<tr>
+<td>--home $HOME:/home/$USER</td>
+<td>to change the $HOME for singularity</td>
+</tr>
+</tbody>
+</table>
+</div>
+</blockquote>
+<p>cacheDir The directory where remote Singularity images are stored.
+When using a computing cluster it must be a shared folder accessible to
+all computing nodes.</p>
+<p>In singularity, there is no entrypoint to manage.</p>
+<p>Remember that Nextflow use singularity exec and not singularity run
+(see protocol ).</p>
+<h4 id="docker"><span class="header-section-number">16.4.4</span>
+Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h4>
+<p>If singularity/apptainer is not available locally (on MacOS for
+instance), use:</p>
+<pre><code>docker{
+    enabled = true
+    runOptions = &quot;--entrypoint &#39;&#39;&quot;
+}</code></pre>
+<p>runOptions This attribute can be used to provide any extra command
+line options supported by the docker exec.</p>
+<blockquote>
+<p>--entrypoint "" Overwrite the default entrypoint set by the image of
+the container, so that it uses the system (bash for instance).</p>
+</blockquote>
+<p><a
+href="https://www.nextflow.io/docs/latest/config.html#scope-docker"
+class="uri">https://www.nextflow.io/docs/latest/config.html#scope-docker</a></p>
+<h4 id="process-1"><span class="header-section-number">16.4.5</span>
+process<a class="headerlink" href="#process-1" title="Link to this heading"></a></h4>
+<p><a
+href="https://www.nextflow.io/docs/latest/config.html#scope-process"
+class="uri">https://www.nextflow.io/docs/latest/config.html#scope-process</a></p>
+<h2 id="info-about-the-run"><span
+class="header-section-number">17</span> Info about the
+run<a class="headerlink" href="#info-about-the-run" title="Link to this heading"></a></h2>
+<h3 id="run-metadata"><span class="header-section-number">17.1</span>
+Run
+metadata<a class="headerlink" href="#run-metadata" title="Link to this heading"></a></h3>
+<p><a
+href="https://www.nextflow.io/docs/latest/metadata.html#workflow-introspection"
+class="uri">https://www.nextflow.io/docs/latest/metadata.html#workflow-introspection</a></p>
+<p>The <code>workflow</code> object contains many info about the run
+that are listed in the link above. To get them, use for instance:</p>
+<pre><code>println &quot;Project : $workflow.projectDir&quot;
+println &quot;Git info: $workflow.repository - $workflow.revision [$workflow.commitId]&quot;
+println &quot;Cmd line: $workflow.commandLine&quot;
+println &quot;configFiles: $workflow.configFiles&quot;
+println &quot;configFiles: $workflow.configFiles[0]&quot;
+
+config_file = workflow.configFiles[0] // to get the config file (as a file, not a path string)</code></pre>
+<h3 id="parameter-and-execution-report"><span
+class="header-section-number">17.2</span> Parameter and execution
+report<a class="headerlink" href="#parameter-and-execution-report" title="Link to this heading"></a></h3>
+<p><a
+href="https://www.nextflow.io/docs/latest/config.html#config-scopes"
+class="uri">https://www.nextflow.io/docs/latest/config.html#config-scopes</a></p>
+<p>Several scopes are interesting:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>report</td>
+<td><a
+href="https://www.nextflow.io/docs/latest/config.html#scope-report"
+class="uri">https://www.nextflow.io/docs/latest/config.html#scope-report</a></td>
+</tr>
+<tr>
+<td>trace</td>
+<td>provide information about each process execution, including the path
+in the work directory where to find all the execution report files.
+Somehow, similar to the printing during nextflow execution. See section
+<a href="#the-work-directory">The work directory</a>.</td>
+</tr>
+<tr>
+<td>timeline</td>
+<td>time line of each process</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="../md/img/136-nextflow-dsl1/image11.png"
+style="width:75.0%" loading="lazy" /></p>
+<p>dag graph in the dot format of the workflow. Graphviz software <a
+href="https:/graphviz.org/download/">(https://graphviz.org/download/</a>)
+is required to see the graph. For formats other than dot, see <a
+href="https://www.nextflow.io/docs/latest/tracing.html#dag-visualisation"
+class="uri">https://www.nextflow.io/docs/latest/tracing.html#dag-visualisation</a>.
+To install graphviz: <a href="http://www.graphviz.org/download/"
+class="uri">http://www.graphviz.org/download/</a></p>
+<pre><code>sudo apt install graphviz</code></pre>
+<p>Parameters of the report scope:</p>
+<p><a
+href="https://www.nextflow.io/docs/latest/config.html#config-report"
+class="uri">https://www.nextflow.io/docs/latest/config.html#config-report</a></p>
+<h3 id="the-work-directory"><span
+class="header-section-number">17.3</span> The work
+directory<a class="headerlink" href="#the-work-directory" title="Link to this heading"></a></h3>
+<p>During each worflow execution, a working directory is created in the
+work directory for each process. The full path is indicated in the trace
+file (section <a href="#parameter-and-execution-report">Parameter and
+execution report</a>). Example of trace content:</p>
+<p><img src="../md/img/136-nextflow-dsl1/image12.png"
+loading="lazy" /></p>
+<p>Example of the content of the corresponding task 2:</p>
+<p><img src="../md/img/136-nextflow-dsl1/image13.png"
+loading="lazy" /></p>
+<p>The tmp file contains all the files indicated in the input and output
+blocks of the process (see that the Pool-B2699_S1_L001_R1_001.fastq.gz
+file is a symbolic link), and also the following files:</p>
+<p><span class="red">.command.begin</span></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>.command.err</td>
+<td>content of STDERR</td>
+</tr>
+<tr>
+<td>.command.log</td>
+<td>STDOUT + STDERR</td>
+</tr>
+<tr>
+<td>.command.out</td>
+<td>content of STDOUT</td>
+</tr>
+<tr>
+<td>.command.run</td>
+<td>Nextflow generated commands torun the script (cloud, etc.)</td>
+</tr>
+<tr>
+<td>.command.sh</td>
+<td>Script of the task ("script:" in process definition). Warning : the
+files indicated are not with absolute path because it is the file from
+the work tmp directory that is called (see section <a
+href="#the-work-directory">The work directory</a>)</td>
+</tr>
+<tr>
+<td>.command.trace</td>
+<td>Memory/CPU/Disk footprint of the task</td>
+</tr>
+<tr>
+<td>.exitcode</td>
+<td>Exit status of the task (0, ok; other, error)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="manifest"><span class="header-section-number">17.4</span>
+Manifest<a class="headerlink" href="#manifest" title="Link to this heading"></a></h3>
+<p><a
+href="https://www.nextflow.io/docs/latest/metadata.html?highlight=workflow%20manifest%20version"
+class="uri">https://www.nextflow.io/docs/latest/metadata.html?highlight=workflow%20manifest%20version</a></p>
+<h2 id="problem-of-path"><span class="header-section-number">18</span>
+Problem of
+path<a class="headerlink" href="#problem-of-path" title="Link to this heading"></a></h2>
+<p>It is difficult to work with absolute paths with nextflow, because
+the idea of nextflow is precisely to do not depend on that (see section
+<a href="#very-important-to-understand">Very important to
+understand</a>) by creating the work tmp directory (see section <a
+href="#the-work-directory">The work directory</a>).</p>
+<p>Example of how path can be used :</p>
+<pre><code>process check {
+    label &#39;bash&#39; // see the withLabel: bash in the nextflow config file
+    publishDir &quot;${out_path}&quot;, mode: &#39;copy&#39;, overwrite: false
+    cache &#39;false&#39;
+    input:
+    val projectDir
+    val out_path
+    output:
+    file &quot;check_log.txt&quot;
+    script:
+    &quot;&quot;&quot;
+    check.sh &quot;check_log.txt&quot; ${projectDir} ${out_path}
+    &quot;&quot;&quot;
+}</code></pre>
+<p>With the following check.sh script file</p>
+<pre><code>output_file=$1
+in_path=&quot;$2&quot;
+out_path=&quot;$3&quot;
+echo -e &quot;\nRESULT DIRECTORY CREATED:\n${out_path}\n&quot; &gt; ${output_file}
+echo -e &quot;\nnextflow.config FILE USED FOR THIS RUN IS IN:\n${in_path}\nAND IS SAVED IN:\n${out_path}\n&quot; &gt;&gt; ${output_file}</code></pre>
+<p>Here we can see that the text is printed in the
+<code>${output_file}</code>, which corresponds to
+<code>"check_log.txt"</code> , that is created in the tmp work directory
+when the process is executed. With
+<code>publishDir "${out_path}", mode: 'copy'</code>, the
+<code>"check_log.txt"</code> file is also copied in the result folder.
+The other arguments are just indicative. They are not used as path.</p>
+<h2 id="example-of-variable-assessment"><span
+class="header-section-number">19</span> Example of variable
+assessment<a class="headerlink" href="#example-of-variable-assessment" title="Link to this heading"></a></h2>
+<h3 id="warning-with"><span class="header-section-number">19.1</span>
+Warning with
+"!"<a class="headerlink" href="#warning-with" title="Link to this heading"></a></h3>
+<p>This works:</p>
+<pre><code>nb = &quot;a&quot;
+if(nb != &quot;a&quot;){
+    error &quot;\nERROR\n&quot;
+}</code></pre>
+<p>This assessment of nb being a character string made of digits does
+not work properly :</p>
+<pre><code>nb = &quot;a&quot;
+if( ! nb =~ /^\d+$/){
+    error &quot;\nERROR\n&quot;
+}</code></pre>
+<p>Neither this:</p>
+<pre><code>nb = &quot;a&quot;
+if(nb !=~ /^\d+$/){
+    error &quot;\nERROR\n&quot;
+}</code></pre>
+<p>But this yes:</p>
+<pre><code>nb = &quot;a&quot;
+if( ! (nb =~ /^\d+$/) ){
+    error &quot;\nERROR\n&quot;
+}</code></pre>
+<p>Idem with expression like this one that does not work properly:</p>
+<pre><code>nb = 1
+if( ! nb in String){
+    error &quot;\nERROR\n&quot;
+}</code></pre>
+<p>But this yes:</p>
+<pre><code>nb = 1
+if( ! (nb in String) ){
+    error &quot;\nERROR\n&quot;
+}</code></pre>
+<p>Thus, always use brackets with "!"</p>
+<h3 id="warning-with-1"><span class="header-section-number">19.2</span>
+Warning with
+"|"<a class="headerlink" href="#warning-with-1" title="Link to this heading"></a></h3>
+<p>This assessment of nb being a proportion character string (0 or 1 or
+0.<em>&lt;digits&gt;</em>) does not work properly :</p>
+<pre><code>nb = &quot;1.1&quot;
+if(nb =~ /^(1)|(0)|(0\.[0-9]*)$/){
+    println(&quot;\nOK\n&quot;)
+}else{
+    error &quot;\nERROR\n&quot;
+}</code></pre>
+<p>But this works:</p>
+<pre><code>nb = &quot;1.1&quot;
+if(nb =~ /^((1)|(0)|(0\.[0-9]*))$/){
+    println(&quot;\nOK\n&quot;)
+}else{
+    error &quot;\nERROR\n&quot;
+}</code></pre>
+<p>Thus, always use brackets with "|"</p>
+<h3 id="string-made-of-integer-over-2"><span
+class="header-section-number">19.3</span> String made of integer over
+2<a class="headerlink" href="#string-made-of-integer-over-2" title="Link to this heading"></a></h3>
+<pre><code>nb=&quot;1&quot;
+try {
+    if(nb.toInteger()&lt;3){
+        throw new Exception(&quot;Integer not &gt;=3&quot;)
+    }else{
+        println(&quot;Entier &gt; 3&quot;)
+    }
+} catch(Exception e) {
+    println &quot;Problem with nb parameter: &quot;+e.message
+}</code></pre>
+<p>or</p>
+<pre><code>nb=&quot;1&quot;
+if(( ! (nb =~ /^\d+$/)) || nb.toInteger() &lt; 3){
+    error &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION\n\nINVALID nb PARAMETER IN ig_clustering.config FILE:\n${nb}\nMUST BE A POSITIVE INTEGER VALUE EQUAL OR GREATER TO 3\n\n========\n\n&quot;
+}</code></pre>
+<h2 id="example-of-processes"><span
+class="header-section-number">20</span> Example of
+processes<a class="headerlink" href="#example-of-processes" title="Link to this heading"></a></h2>
+<h3 id="versions-used-variables"><span
+class="header-section-number">20.1</span> Versions &amp; used
+variables<a class="headerlink" href="#versions-used-variables" title="Link to this heading"></a></h3>
+<pre><code>git_path=&quot;https://gitlab.pasteur.fr/gmillot/project_a/-/raw/master&quot;
+in_path=&quot;/mnt/y/project_a/B2699/00_Rawdata&quot;
+config_file = workflow.configFiles[0] // better to use this than config_file = file(&quot;${projectDir}/ig_clustering.config&quot;) because the latter is not good if -c option of nextflow run is used
+result_folder_name=&quot;20210903_res_project_a&quot;
+out_path=&quot;/mnt/c/Users/Gael/Desktop&quot;
+out_path=&quot;${out_path}/${result_folder_name}&quot;
+
+process WorkflowVersion {
+    publishDir &quot;${out_path}&quot;, mode: &#39;copy&#39;
+    cache &#39;false&#39;
+    executor &#39;local&#39; // this is the default config
+
+    output:
+    file &quot;Run_info.txt&quot;
+
+    script:
+    &quot;&quot;&quot;
+echo &quot;Project: &quot; \$(git -C ${projectDir} remote -v | head -n 1) &gt; Run_info.txt # works only if the main script run is located in a directory that has a .git folder, i.e., that is connected to a distant repo
+echo &quot;Git info: &quot; \$(git -C ${projectDir} describe --abbrev=10 --dirty --always --tags) &gt;&gt; Run_info.txt # idem. Provide the small commit number of the script and nextflow.config used in the execution
+echo &quot;Cmd line: ${workflow.commandLine}&quot; &gt;&gt; Run_info.txt // provide the command line used
+echo &quot;Manifest&#39;s pipeline version: ${workflow.manifest.version}&quot; &gt;&gt; Run_info.txt
+echo &quot;result path: ${out_path}&quot; &gt;&gt; Run_info.txt
+echo &quot;nextflow version: ${nextflow.version}&quot; &gt;&gt; Run_info.txt
+echo -e &quot;\\n\\nIMPLICIT VARIABLES:\\n\\nlaunchDir (directory where the workflow is run): ${launchDir}\\nprojectDir (directory where the main script is located): ${projectDir}\\nworkDir (directory where tasks temporary files are created): ${workDir}&quot; &gt;&gt; Run_info.txt
+echo -e &quot;\\n\\nSCRIPT VARIABLES:\\n\\ngit_path: ${git_path}\\nin_path: ${in_path}\\nout_path: ${out_path}&quot; &gt;&gt; Run_info.txt
+    &quot;&quot;&quot;
+}</code></pre>
+<p>The two first lines are very important in reproductibility, as they
+connect the executed script with the commited version to a distant repo.
+But it works only if the the main script run is located in a directory
+that has a .git folder, i.e., that is connected to a distant repo.</p>
+<p>To recover the url of the commit number indicated in "Git info:"</p>
+<pre><code>git</code></pre>
+<h3 id="backup-the-nextflow.config-file-into-the-result-folder"><span
+class="header-section-number">20.2</span> Backup the nextflow.config
+file into the result
+folder<a class="headerlink" href="#backup-the-nextflow.config-file-into-the-result-folder" title="Link to this heading"></a></h3>
+<p>A nextflow.config file must exist where the main.nf file is
+executed.</p>
+<pre><code>config_file = workflow.configFiles[0] // better to use this than config_file = file(&quot;${projectDir}/ig_clustering.config&quot;) because the latter is not good if -c option of nextflow run is used
+result_folder_name=&quot;20210903_res_project_a&quot;
+out_path=&quot;/mnt/c/Users/Gael/Desktop&quot;
+out_path=&quot;${out_path}/${result_folder_name}&quot;
+
+process configBackup {
+    label &#39;bash&#39; // see the withLabel: bash in the nextflow config file
+    publishDir &quot;${out_path}&quot;, mode: &#39;copy&#39;, overwrite: false // since I am in mode copy, all the output files will be copied into the publishDir. See \\wsl$\Ubuntu-20.04\home\gael\work\aa\a0e9a739acae026fb205bc3fc21f9b
+    cache &#39;false&#39;
+
+    input:
+    file config_file
+
+    output:
+    file &quot;${config_file}&quot; // warning message if we use file config_file
+
+    script:
+    &quot;&quot;&quot;
+    &quot;&quot;&quot;
+}</code></pre>
+<h3 id="library-of-processes"><span
+class="header-section-number">20.3</span> Library of
+processes<a class="headerlink" href="#library-of-processes" title="Link to this heading"></a></h3>
+<p><a href="https://github.com/nextflow-io/patterns/"
+class="uri">https://github.com/nextflow-io/patterns/</a></p>
+<h2 id="nextflow-nf-core"><span class="header-section-number">21</span>
+Nextflow
+nf-core<a class="headerlink" href="#nextflow-nf-core" title="Link to this heading"></a></h2>
+<p>Community effort to collect a curated set of analysis pipelines built
+using Nextflow. It is like to make packages for nextflow in order to
+avoid to each one to develop the same stuff (like bowtie alignment). The
+problem is that the code beomes very hard to understand because many sub
+files, etc. Fred Lemoine does not use it.</p>
+<p><a href="https://github.com/nf-core/configs"
+class="uri">https://github.com/nf-core/configs</a></p>
+<p><a href="https://github.com/nf-core/hic"
+class="uri">https://github.com/nf-core/hic</a></p>
+<p><a href="https://github.com/nf-core/sarek"
+class="uri">https://github.com/nf-core/sarek</a></p>
+<p>Command:</p>
+<pre><code>singularity pull --docker-login docker://nfcore/hic
+nextflow run nf-core/hic -r 1.2.2 -profile singularity --input &#39;SRR11893084_{1,2}.fastq&#39; --fasta ../fa/scer_288_2mu.fa --bwt2_idx ../fa/scer_288_2mu --dnase --bin-size &#39;
+200,1000&#39; -c ~/pasteur.config -with-singularity ../hic_latest.sif</code></pre>
+<h2 id="errors-handling"><span class="header-section-number">22</span>
+Errors
+handling<a class="headerlink" href="#errors-handling" title="Link to this heading"></a></h2>
+<p>For the list of error exit status, sse the corresponding
+environnement (slurm for instance).</p>
+<h2 id="troubleshootings"><span class="header-section-number">23</span>
+Troubleshootings<a class="headerlink" href="#troubleshootings" title="Link to this heading"></a></h2>
+<p>1) How to run nextflow on maestro and be able to quit the session
+without killing the process ?</p>
+<p>Use Tmux (see protocol )</p>
+<p>2) How to run the same nextflow on two independent sessions. It seems
+that there is a problem inside the .nexflow folder.</p>
+<p>scope singularity avec cachedir ou NXF_SINGULARITY_CACHEDIR defined
+in the .profile</p>
+<p>This force with an absolute path where nextflow has to seek for
+singularity images. scope singularity with cachedir overrides the
+NXF_SINGULARITY_CACHEDIR variable</p>
+<p>3) The variable problem that I still have to deal with Fred in
+nf_column_reorder</p>
+<p>4) The problem with subscribe that I still have to deal with Fred in
+nf_column_reorder</p>
+<p>5) Dockerfile : I suceeded to recover the log of the building process
+(see r extended dockerfile v1.0). But how to recover all the prints?
+Some are missing, notably during compilation of R packages</p>
+<p>6) In docker, is it important to force the versions to install, in
+order to have a better chance to recreate the same image from the
+dockerfile, if ever the image is lost ?</p>
+<p>7) How to use docker instead of singularity</p>
+<p>J'ai un truc bizarre. Quand je remplace mon engin singularity:</p>
+<p>singularity {</p>
+<p>enabled = true</p>
+<p>autoMounts = true</p>
+<p>cacheDir = 'singularity'</p>
+<p>}</p>
+<p>par</p>
+<p>docker {</p>
+<p>enabled = true</p>
+<p>}</p>
+<p>J'ai le message d'erreur suivant:</p>
+<p>Cannot enable more than one container engine -- Choose either one of:
+docker, singularity</p>
+<p>Alors que je n'ai aboslument plus de mot 'singularity' dans le config
+ou le main file.</p>
+<p>Salut Gael, peut être sur la ligne de commande?</p>
+<p>8) Why cache = TRUE is sometimes not respected? Why -resume is not
+respected ?</p>
+<p><a href="https://github.com/nextflow-io/nextflow/issues/1629"
+class="uri">https://github.com/nextflow-io/nextflow/issues/1629</a></p>
+<p>As soon as a cache = false in a process, all the process that uses a
+channel from this process will be re-executed. This is the case for</p>
+<p>Warning: Rscript $workflow.projectDir/bin/plot_fivep_filtering_stat.R
+is the only way to have the execution rights of a .R file in the bin
+directory when the gitlab repo is pulled into
+/pasteur/sonic/homes/gmillot/.nextflow/assets/. See <a
+href="https://github.com/nextflow-io/nextflow/issues/698"
+class="uri">https://github.com/nextflow-io/nextflow/issues/698</a>.
+Otherwise, the following message can appear: Fatal error: cannot open
+file
+'/pasteur/sonic/homes/gmillot/.nextflow/assets/gmillot/project_a/bin/plot_fivep_filtering.R':
+No such file or directory</p>
+<p>But we have added a Rscript shebang at the beginning of each .R file.
+This could overcome the problem.</p>
+<p>9) I would like the dag file in png and html at the same time.</p>
+<p>No idea.</p>
+<p>10) How to increment a channel name. Example: log_ch{NB+1}</p>
+<p>Nope. No way</p>
+<p>11) How to have two channels made of several files in the same order.
+Example. I want to be sure that these two series are associated in the
+same order:</p>
+<pre><code>  file bam from bowtie2_ch2.concat(q20_ch3, dup_ch1) // warning: several files
+  file read_nb from bow_read_nb_ch.concat(q20_read_nb_ch, dup_read_nb_ch)
+
+tuple file(bam), file(readnb) from bowtie2_ch2.combine(bow_read.nb_ch).concat(q20-ch3.combine(q20_read_nb_ch)).concat(dup_ch1.combine(dup_read_nb_ch))</code></pre>
+<p>combine() creates a list and concat() creates a channel</p>
+<p>12) A way to parallelize alientrimmer ?</p>
+<p>trimgalore</p>
+<p>13) Quand je définie ces deux listes:</p>
+<p>categ = ["leading0", "leading16", "lagging0", "lagging16"]</p>
+<p>grep_pattern = ["LEADING_0", "LEADING_16", "LAGGING_0",
+"LAGGING_16"]</p>
+<p>Comment assembler les éléments deux à deux dans l'input de sorte que
+4 parallélization du process ?</p>
+<p>tuple val("categ"), val("grep_pattern") from
+categ.phase(grep_pattern) ne fonctionne pas par exemple.</p>
+<p>tuple val(grep_pattern), val(cat) from grep_pattern.merge(categ)</p>
+<p>Ou</p>
+<p>categ = Channel.from(["leading0", "LEADING_0"], ["leading16",
+"LEADING_16"], …)</p>
+<p>Et tu l’utilises directement:</p>
+<p>Input:</p>
+<p>tuple val(categ), val(grep) from categ</p>
+<p>14) Warning: everything written outside of processes and that is not
+channel, will not be detected if modified when -resume is used. Thus, it
+is very dangerous to use such way of writting in nextflow scripts. In
+other words, only variable that will never change can be written outside
+of channels. Example of mistake with the incrementation of figure
+numbers:</p>
+<pre><code>figure_count = 0 # new variable defined at the beginning of a script
+
+process plot_fivep_filtering_stat {
+    label &#39;r_ext&#39; // see the withLabel: bash in the nextflow config file
+
+    input:
+    val cute_path
+
+    output:
+
+    script:
+    &quot;&quot;&quot;
+    echo -e &quot;
+![Figure \$((figure_count + 1)): Frequency of each base at the 5\&#39; of the reads.](./figures/plot_fivep_filtering_stat.png){width=600}
+\\n\\n&lt;/center&gt;\\n\\n
+    &quot; &gt; report.rmd
+    plot_fivep_filtering_stat.R &quot;${stat}&quot; &quot;${attc_seq}&quot; &quot;${cute_path}&quot; &quot;plot_fivep_filtering_stat_report.txt&quot;
+    &quot;&quot;&quot;
+}
+figure_count = figure_count + 1</code></pre>
+<p>This works as long as -resume is not used. Otherwise, if this process
+is not used, the incrementation below the process is executed but the
+variable is not detected as modified by the processes downstream, even
+is "val figure_count" is added in the input block of downstream
+processes.</p>
+<p>15) Can I hard delete a file that went into a channel once I do not
+need it anymore to save space in the work dir (to avoid crash due to
+lack of space) ?</p>
+<p>Not yet possible, and hard to implement due to the structure of
+nextflow. Can be done with snakemake.</p>
+<p><a href="https://github.com/nextflow-io/nextflow/issues/452"
+class="uri">https://github.com/nextflow-io/nextflow/issues/452</a></p>
+<p>16) If a cache does not work as expected when using the -resume
+option of nextflow run</p>
+<p>In the process that is not using the cache, check if an output file
+name has the same name than an input file name. If yes, that will
+explain the problem.</p>
+<p>17) Warning this the file names</p>
+<p>In each process, never use an output file name identical to an input
+file name. Otherwise :</p>
+<p>1- see above the problem of cache</p>
+<p>2- an input fiel can be directly sent into a output channel.
+Example:</p>
+<p>input:</p>
+<p>file pos from orient_ch1 // with the name test.pos</p>
+<p>output:</p>
+<p>file "${pos.baseName}_.pos" into pos_ch1 // the test.pos is sent into
+the pos_ch1 channel</p>
+<p>This example is not a good practice because it either mean that an
+input file has been modified in a process without name change or because
+a file has been directly sent into a channel without processing (it is
+better to stay in a channel in taht case)</p>
+<h3 id="slow-parallelization-in-wsl2"><span
+class="header-section-number">23.1</span> Slow parallelization in
+WSL2<a class="headerlink" href="#slow-parallelization-in-wsl2" title="Link to this heading"></a></h3>
+<p>See <a href="140-wsl2-linux-on-windows.html">protocol 140</a> to set
+the .wslconfig file.</p>
+<h3 id="how-to-deal-with-replacement-in-awk"><span
+class="header-section-number">23.2</span> How to deal with replacement
+in
+awk<a class="headerlink" href="#how-to-deal-with-replacement-in-awk" title="Link to this heading"></a></h3>
+<p>In the line highlighted in yellow is an example of how to replace
+square brackets or single quote, written in a process.</p>
+<pre><code>    script:
+    &quot;&quot;&quot;
+    #!/bin/bash -ue
+    PREHEADER=&#39;##fileformat=VCFv4.1;build by fisher_for_vcf.nf&#39;
+    HEADER=&#39;#CHROM\\tPOS\\tID\\tREF\\tALT\\tQUAL\\tFILTER\\tINFO&#39;
+    echo -e \$PREHEADER &gt; res.vcf
+    awk -v var1=\$HEADER &#39;BEGIN{FS=&quot;\\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot;}
+        NR==1{
+            print &quot;##WARNING: 4 first names of the header of the initial file:&quot;\$1&quot; &quot;\$2&quot; &quot;\$3&quot; &quot;\$4&quot;\\n&quot; ;
+            print &quot;##WARNING: if the four first columns of the .tsv file are not CHROM POS REF ALT, then the .vcf file produced by this process is not good\\n&quot; ;
+            print &quot;##FORMAT=&lt;FISHER=&quot; ;
+            for(i=5;i&lt;=NF;i++){print \$i ; if(i &lt; NF){print &quot;|&quot;}} ;
+            print &quot;&gt;\\n&quot; ;
+            print var1&quot;\\n&quot;
+        }
+        NR &gt; 1{
+            gsub(&quot;[\\\\[\\\\]\\&#39;&quot;&#39;&quot;&#39;]&quot;, &quot;&quot;, \$4)
+            print \$1&quot;\\t&quot;\$2&quot;\\t.\\t&quot;\$3&quot;\\t&quot;\$4&quot;\\t.\\t.\\tFISHER=&quot; ;
+            for(i=5;i&lt;=NF;i++){print \$i ; if(i &lt; NF){print &quot;|&quot;}} ;
+            print &quot;\\n&quot;
+        }
+    &#39; ${fisher} &gt;&gt; res.vcf
+    &quot;&quot;&quot;</code></pre>
+<h3 id="weird-message-with-process-run-but-no-output"><span
+class="header-section-number">23.3</span> Weird message (with process
+run but no
+output)<a class="headerlink" href="#weird-message-with-process-run-but-no-output" title="Link to this heading"></a></h3>
+<p>Example:</p>
+<pre><code>WARNING: &#39;-e ~n~~+~~+~~+~~+~tempo.list~+~&lt;-~+~list.files(path~+~=~+~&quot;.&quot;,~+~pattern~+~</code></pre>
+<p>Solution:</p>
+<p>The script section is too long. Use a separate script file in the bin
+directory and call this file from the script section.</p>
+<h3 id="r-command-not-found"><span
+class="header-section-number">23.4</span> '\r': command not
+found<a class="headerlink" href="#r-command-not-found" title="Link to this heading"></a></h3>
+<p>Example:</p>
+<pre><code>Command error:
+  /mnt/c/Users/Gael/Documents/Git_projects/ig_clustering/bin/tree_vizu.R: line 1: $&#39;\r&#39;: command not found</code></pre>
+<p>Solution:</p>
+<p>Open the script file using notepad+ and remove all the CR (\r).</p>
+<h3 id="weird-behavior-of-collectfile"><span
+class="header-section-number">23.5</span> weird behavior of
+collectFile()<a class="headerlink" href="#weird-behavior-of-collectfile" title="Link to this heading"></a></h3>
+<p>The case happens when using an output channel of a process that
+gathers several files without parallelization. In such situation, the
+channel is a list. Example with ig_clustering in <a
+href="https://gitlab.pasteur.fr/gmillot/ig_clustering"
+class="uri">https://gitlab.pasteur.fr/gmillot/ig_clustering</a>:</p>
+<pre><code>tree_vizu.out.tree_seq_not_displayed_ch.view()
+[/pasteur/zeus/projets/p01/BioIT/gmillot/Alice/sort1_VH/ig_clustering-v6.11/work/d5/d2f7b2ed8656ca0f671685bbd44079/16_tree_seq_not_displayed.tsv, /pasteur/zeus/projets/p01/BioIT/gmillot/Alice/sort1_VH/ig_clustering-v6.11/work/d5/d2f7b2ed8656ca0f671685bbd44079/17_tree_seq_not_displayed.tsv, /pasteur/zeus/projets/p01/BioIT/gmillot/Alice/sort1_VH/ig_clustering-v6.11/work/d5/d2f7b2ed8656ca0f671685bbd44079/18_tree_seq_not_displayed.tsv]</code></pre>
+<p>If <code>collectFile()</code> is used that way:</p>
+<pre><code>tree_seq_not_displayed_ch2 = tree_vizu.out.tree_seq_not_displayed_ch.collectFile(name: &quot;tree_seq_not_displayed.tsv&quot;, skip: 1, keepHeader: true)
+    tree_seq_not_displayed_ch2.subscribe{it -&gt; it.copyTo(&quot;${out_path}&quot;)}</code></pre>
+<p>Then, it seems that nextflow takes the first file of the list,
+<code>16_tree_seq_not_displayed.tsv</code>, in the work directory of the
+tree_vizu process and combine the 2 other
+<code>17_tree_seq_not_displayed.tsv</code> and
+<code>18_tree_seq_not_displayed.tsv</code> files into that file, but
+with missing the content of <code>16_tree_seq_not_displayed.tsv</code>.
+And even if the name of the output file
+<code>collectFile(name: "tree_seq_not_displayed.tsv")</code> is imposed,
+it is <code>16_tree_seq_not_displayed.tsv</code> that is returned by
+<code>tree_seq_not_displayed_ch2.subscribe{it -&gt; it.copyTo("${out_path}")}</code>.</p>
+<p>The flatten command, by splitting the list into several objects:</p>
+<pre><code>tree_vizu.out.tree_seq_not_displayed_ch.flatten().view()
+/pasteur/zeus/projets/p01/BioIT/gmillot/Alice/sort1_VH/ig_clustering-v6.11/work/8c/f4c93891cd4729cd8a85bf09351512/16_tree_seq_not_displayed.tsv
+/pasteur/zeus/projets/p01/BioIT/gmillot/Alice/sort1_VH/ig_clustering-v6.11/work/8c/f4c93891cd4729cd8a85bf09351512/17_tree_seq_not_displayed.tsv
+/pasteur/zeus/projets/p01/BioIT/gmillot/Alice/sort1_VH/ig_clustering-v6.11/work/8c/f4c93891cd4729cd8a85bf09351512/18_tree_seq_not_displayed.tsv
+/pasteur/zeus/projets/p01/BioIT/gmillot/Alice/sort1_VH/ig_clustering-v6.11/work/tmp/67/3102181f3bb7419150a18c379fc3e9/tree_seq_not_displayed.tsv</code></pre>
+<p>Solve this:</p>
+<pre><code>tree_seq_not_displayed_ch2 = tree_vizu.out.tree_seq_not_displayed_ch.flatten().collectFile(name: &quot;tree_seq_not_displayed.tsv&quot;, skip: 1, keepHeader: true)
+    tree_seq_not_displayed_ch2.subscribe{it -&gt; it.copyTo(&quot;${out_path}&quot;)}</code></pre>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="135-apptainer.html" class="btn btn-neutral float-left" title="Apptainer" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+            <a href="152-dsl2.html" class="btn btn-neutral float-right" title="Nextflow
+DSL2" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>

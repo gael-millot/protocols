@@ -1,0 +1,3103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Bash · protocol 44 · Bioinformatics protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul class="current">
+          <li class="toctree-l1 current"><a class="reference internal current" href="044-bash.html"><span class="nav-num">44</span>Bash</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#definition"><span class="sec-num">1</span>Definition</a></li><li class="toctree-l2"><a class="reference internal" href="#to-know-the-main-bash-shell-commands"><span class="sec-num">2</span>To know the main bash shell commands</a><ul><li class="toctree-l3"><a class="reference internal" href="#cheat-sheet"><span class="sec-num">2.1</span>Cheat sheet</a></li><li class="toctree-l3"><a class="reference internal" href="#others"><span class="sec-num">2.2</span>Others</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#ssh-key"><span class="sec-num">3</span>ssh key</a><ul><li class="toctree-l3"><a class="reference internal" href="#ssh-verification"><span class="sec-num">3.1</span>.ssh verification</a></li><li class="toctree-l3"><a class="reference internal" href="#key-already-exists"><span class="sec-num">3.2</span>Key already exists</a></li><li class="toctree-l3"><a class="reference internal" href="#new-key"><span class="sec-num">3.3</span>New key</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#basic-notions-in-bash"><span class="sec-num">4</span>Basic notions in bash</a></li><li class="toctree-l2"><a class="reference internal" href="#to-know-permissions-in-bash-shell"><span class="sec-num">5</span>To know permissions in bash shell</a></li><li class="toctree-l2"><a class="reference internal" href="#to-change-permission"><span class="sec-num">6</span>To change permission</a></li><li class="toctree-l2"><a class="reference internal" href="#symbolic-link"><span class="sec-num">7</span>Symbolic link</a></li><li class="toctree-l2"><a class="reference internal" href="#internal-variables-in-bash"><span class="sec-num">8</span>Internal variables in bash</a></li><li class="toctree-l2"><a class="reference internal" href="#about-the-in-bash-shell"><span class="sec-num">9</span>About the $ in bash shell</a></li><li class="toctree-l2"><a class="reference internal" href="#standard-input-and-standard-output"><span class="sec-num">10</span>Standard input and standard output</a></li><li class="toctree-l2"><a class="reference internal" href="#about-pattern-matching-and-regular-expression"><span class="sec-num">11</span>About pattern matching and regular expression</a><ul><li class="toctree-l3"><a class="reference internal" href="#global-pattern"><span class="sec-num">11.1</span>Global pattern</a></li><li class="toctree-l3"><a class="reference internal" href="#glob-pattern-in-file-names-or-path"><span class="sec-num">11.2</span>Glob pattern in file names or path</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#extended-globbing-wildcard"><span class="sec-num">12</span>extended globbing (wildcard)</a></li><li class="toctree-l2"><a class="reference internal" href="#lookahead-and-lookbehind-including"><span class="sec-num">13</span>lookahead and lookbehind (including ?!)</a></li><li class="toctree-l2"><a class="reference internal" href="#simple-and-double-brackets-and-brace-parentheses-etc"><span class="sec-num">14</span>Simple and double brackets [] and [[]], brace, parentheses, etc</a></li><li class="toctree-l2"><a class="reference internal" href="#comparison"><span class="sec-num">15</span>Comparison</a></li><li class="toctree-l2"><a class="reference internal" href="#internal-field-separator-ifs"><span class="sec-num">16</span>Internal field separator (IFS)</a></li><li class="toctree-l2"><a class="reference internal" href="#date"><span class="sec-num">17</span>Date</a></li><li class="toctree-l2"><a class="reference internal" href="#cron"><span class="sec-num">18</span>CRON</a></li><li class="toctree-l2"><a class="reference internal" href="#white-space-in-path"><span class="sec-num">19</span>White space in path</a></li><li class="toctree-l2"><a class="reference internal" href="#quotes-inside-quotes"><span class="sec-num">20</span>Quotes inside quotes</a></li><li class="toctree-l2"><a class="reference internal" href="#division-in-bash"><span class="sec-num">21</span>Division in bash</a></li><li class="toctree-l2"><a class="reference internal" href="#the-for-loop"><span class="sec-num">22</span>The for loop</a></li><li class="toctree-l2"><a class="reference internal" href="#the-case-analysis-alternative-to-if-else-comparison"><span class="sec-num">23</span>The case analysis (alternative to if else comparison)</a></li><li class="toctree-l2"><a class="reference internal" href="#the-getopts-command"><span class="sec-num">24</span>the getopts command</a></li><li class="toctree-l2"><a class="reference internal" href="#variable-incrementation"><span class="sec-num">25</span>Variable incrementation</a></li><li class="toctree-l2"><a class="reference internal" href="#conversion-lower-case---upper-case"><span class="sec-num">26</span>conversion lower case &lt;-&gt; upper case</a></li><li class="toctree-l2"><a class="reference internal" href="#write-bash-function"><span class="sec-num">27</span>Write bash function</a><ul><li class="toctree-l3"><a class="reference internal" href="#variable"><span class="sec-num">27.1</span>variable</a></li><li class="toctree-l3"><a class="reference internal" href="#how-to-return-a-value"><span class="sec-num">27.2</span>How to return a value</a><ul><li class="toctree-l4"><a class="reference internal" href="#warning-with-the-return-command"><span class="sec-num">27.2.1</span>Warning with the return command</a></li><li class="toctree-l4"><a class="reference internal" href="#simplest-way"><span class="sec-num">27.2.2</span>Simplest way</a></li><li class="toctree-l4"><a class="reference internal" href="#the-stdout-way"><span class="sec-num">27.2.3</span>the stdout way</a></li><li class="toctree-l4"><a class="reference internal" href="#warning-with-the-echo-command"><span class="sec-num">27.2.4</span>Warning with the echo command</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#manage-the-signal-of-interruption"><span class="sec-num">28</span>Manage the Signal of interruption</a></li><li class="toctree-l2"><a class="reference internal" href="#basic-bash-commands"><span class="sec-num">29</span>Basic bash commands</a></li><li class="toctree-l2"><a class="reference internal" href="#bash-tricks"><span class="sec-num">30</span>Bash tricks</a><ul><li class="toctree-l3"><a class="reference internal" href="#global"><span class="sec-num">30.1</span>Global</a></li><li class="toctree-l3"><a class="reference internal" href="#sequence-specific-one-sequence-per-line"><span class="sec-num">30.2</span>Sequence specific (one sequence per line)</a><ul><li class="toctree-l4"><a class="reference internal" href="#base-frequency-or-counting-the-number-of-bases-per-position"><span class="sec-num">30.2.1</span>Base frequency (or counting the number of bases) per position:</a></li><li class="toctree-l4"><a class="reference internal" href="#reverse-complement-of-a-sequence"><span class="sec-num">30.2.2</span>Reverse complement of a sequence</a></li><li class="toctree-l4"><a class="reference internal" href="#test-if-a-fasta-file-is-made-of-nucleotids-or-aa"><span class="sec-num">30.2.3</span>Test if a fasta file is made of nucleotids or aa:</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#fasta-specific"><span class="sec-num">30.3</span>Fasta specific</a></li><li class="toctree-l3"><a class="reference internal" href="#fastq-specific"><span class="sec-num">30.4</span>Fastq specific</a></li><li class="toctree-l3"><a class="reference internal" href="#bamsam-specific"><span class="sec-num">30.5</span>Bam/Sam specific</a></li><li class="toctree-l3"><a class="reference internal" href="#vcf-specific"><span class="sec-num">30.6</span>VCF specific</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#installation-of-bash-utilities"><span class="sec-num">31</span>Installation of bash utilities</a><ul><li class="toctree-l3"><a class="reference internal" href="#updated-sort-command"><span class="sec-num">31.1</span>Updated sort command</a></li><li class="toctree-l3"><a class="reference internal" href="#updated-awk-gawk-command"><span class="sec-num">31.2</span>Updated awk gawk command</a></li><li class="toctree-l3"><a class="reference internal" href="#tldr"><span class="sec-num">31.3</span>tldr</a></li><li class="toctree-l3"><a class="reference internal" href="#other"><span class="sec-num">31.4</span>Other</a></li></ul></li></ul></li>
+          <li class="toctree-l1"><a class="reference internal" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux (WSL)</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="084-python.html"><span class="nav-num">84</span>Python</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="165-java.html"><span class="nav-num">165</span>Java</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="134-docker.html"><span class="nav-num">134</span>Docker</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">Linux, shells and editors</li>
+            <li class="breadcrumb-item active">Protocol 44</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/044-bash.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Bash</h1>
+<p class="protocol-meta"><span>Protocol 44</span><span>revision 0</span><span>last update 2026-10-07</span></p>
+<p><strong>h</strong></p>
+<h2 id="definition"><span class="header-section-number">1</span>
+Definition<a class="headerlink" href="#definition" title="Link to this heading"></a></h2>
+<p>Bash (Bourne Again SHell) is the free and enhanced version of the
+Bourne shell distributed with Linux and GNU operating systems. Bash is
+similar to the original, but has added features such as command-line
+editing. Created to improve on the earlier Bourne shell (named sh)</p>
+<p>extended file match globbing operator from Bash 4</p>
+<h2 id="to-know-the-main-bash-shell-commands"><span
+class="header-section-number">2</span> To know the main bash shell
+commands<a class="headerlink" href="#to-know-the-main-bash-shell-commands" title="Link to this heading"></a></h2>
+<h3 id="cheat-sheet"><span class="header-section-number">2.1</span>
+Cheat
+sheet<a class="headerlink" href="#cheat-sheet" title="Link to this heading"></a></h3>
+<p><a href="https://devhints.io/bash"
+class="uri">https://devhints.io/bash</a></p>
+<p>C:\Users\gael\Documents\Manip\Protocoles bioinfo\Supp info\protocol
+044 bash\2022-11-21_Dreo__UNIX-Shell_Cheatsheet__poster.pdf</p>
+<h3 id="others"><span class="header-section-number">2.2</span>
+Others<a class="headerlink" href="#others" title="Link to this heading"></a></h3>
+<p><a href="http://ss64.com/bash/"
+class="uri">http://ss64.com/bash/</a></p>
+<p><a href="http://www.linfo.org/index.html"
+class="uri">http://www.linfo.org/index.html</a></p>
+<p><a href="http://www.linfo.org/command_index.html"
+class="uri">http://www.linfo.org/command_index.html</a></p>
+<p><a href="http://tldp.org/LDP/abs/html/basic.html"
+class="uri">http://tldp.org/LDP/abs/html/basic.html</a></p>
+<h2 id="ssh-key"><span class="header-section-number">3</span> ssh
+key<a class="headerlink" href="#ssh-key" title="Link to this heading"></a></h2>
+<h3 id="ssh-verification"><span class="header-section-number">3.1</span>
+.ssh
+verification<a class="headerlink" href="#ssh-verification" title="Link to this heading"></a></h3>
+<p>If the .ssh folder does not exist, create .ssh:</p>
+<pre><code>mkdir ~/.ssh # tild means home directory</code></pre>
+<p>Then, check that the .ssh folder is not root but controled by the
+owner (i.e., gael).</p>
+<pre><code>cd # to be in the home
+ls -la</code></pre>
+<p>Here the .ssh is root (written root instead of gael):</p>
+<p><img src="../md/img/044-bash/image1.png" style="width:94.0%"
+loading="lazy" /></p>
+<p>To change this:</p>
+<pre><code>cd
+sudo chown -R gael:gael .ssh # change the owner of the folder, -R to change also the owner inside the folder
+ls -la</code></pre>
+<p><img src="../md/img/044-bash/image2.png" loading="lazy" /></p>
+<p>If the owner is root, the ssh key will not be generated into
+/<code>home/Gael/</code> but into <code>/root/</code>. Which cannot be
+used then after.</p>
+<h3 id="key-already-exists"><span
+class="header-section-number">3.2</span> Key already
+exists<a class="headerlink" href="#key-already-exists" title="Link to this heading"></a></h3>
+<p>Check if a id_rsa key already exists in .ssh in the home:</p>
+<pre><code>cd .ssh
+ls -la</code></pre>
+<p>If the id_rsa.pub key exists, copy the key into the remote server</p>
+<pre><code>scp -r /home/Gael/.ssh/id_rsa.pub gmillot@maestro.pasteur.fr:~/id_rsa.pub</code></pre>
+<p>From maestro, type:</p>
+<pre><code>cat ~/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys # move the public key into a required path &quot;~/.ssh/authorized_keys&quot;</code></pre>
+<p>Remove <code>id_rsa.pub</code> from the maestro home</p>
+<p>Then, when using <code>scp</code> or <code>ssh</code> from a local
+interface, no more password is required.</p>
+<h3 id="new-key"><span class="header-section-number">3.3</span> New
+key<a class="headerlink" href="#new-key" title="Link to this heading"></a></h3>
+<p>If the key does not exists:</p>
+<pre><code>ssh-keygen -t rsa # or sudo ...</code></pre>
+<p>Leave every question blank (just clic ENTER).</p>
+<p>A public key has been generated and is available here:</p>
+<pre><code>/home/Gael/.ssh/id_rsa.pub # C:\cygwin64\home\Gael\.ssh in windows</code></pre>
+<p>Then do the procedure in section <a href="#key-already-exists">Key
+already exists</a>. Or see protocol 88 for Gitlab</p>
+<h2 id="basic-notions-in-bash"><span
+class="header-section-number">4</span> Basic notions in
+bash<a class="headerlink" href="#basic-notions-in-bash" title="Link to this heading"></a></h2>
+<p>To know which version of bash is used:</p>
+<pre><code>echo &quot;$BASH_VERSION&quot;</code></pre>
+<p><a href="http://explainshell.com/"
+class="uri">http://explainshell.com/</a></p>
+<p><a
+href="https://openclassrooms.com/courses/reprenez-le-controle-a-l-aide-de-linux/afficher-et-manipuler-des-variables"
+class="uri">https://openclassrooms.com/courses/reprenez-le-controle-a-l-aide-de-linux/afficher-et-manipuler-des-variables</a></p>
+<p>unix_tutorial.pdf from tutorialspoints.com</p>
+<p><a
+href="http://www.commentcamarche.net/faq/3585-bash-la-variable-d-environnement-path"
+class="uri">http://www.commentcamarche.net/faq/3585-bash-la-variable-d-environnement-path</a></p>
+<p><a href="http://abs.traduc.org/abs-fr/index.html"
+class="uri">http://abs.traduc.org/abs-fr/index.html</a></p>
+<h2 id="to-know-permissions-in-bash-shell"><span
+class="header-section-number">5</span> To know permissions in bash
+shell<a class="headerlink" href="#to-know-permissions-in-bash-shell" title="Link to this heading"></a></h2>
+<p><a href="https://en.wikipedia.org/wiki/File_system_permissions"
+class="uri">https://en.wikipedia.org/wiki/File_system_permissions</a></p>
+<p><a
+href="http://stackoverflow.com/questions/2933843/why-0-is-true-but-false-is-1-in-the-shell"
+class="uri">http://stackoverflow.com/questions/2933843/why-0-is-true-but-false-is-1-in-the-shell</a></p>
+<h2 id="to-change-permission"><span
+class="header-section-number">6</span> To change
+permission<a class="headerlink" href="#to-change-permission" title="Link to this heading"></a></h2>
+<p>Warning: on Windows, the behavior of <code>chmod</code> depends on
+the console used. For instance, using MINGW64, changing the mode of a
+file will depend on the shebang: no shebang -&gt; <code>chmod</code>
+does not work; <code>#!</code> -&gt; <code>chmod</code> works. With
+WSL2, no problem detected for <code>chmod</code>.</p>
+<p><code>chmod</code> change the rights for a file or a directory</p>
+<p>Examples:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>chmod +x file1</code></td>
+<td>autorize execution only for me</td>
+</tr>
+<tr>
+<td><code>chmod +x dir1/</code></td>
+<td>autorize execution only for me for all the files inside the
+directory dir1</td>
+</tr>
+<tr>
+<td><code>chmod -R +x dir1/</code></td>
+<td>autorize execution only for me for all the files and subdirectories
+inside the directory dir1</td>
+</tr>
+<tr>
+<td><code>chmod u=rwx,g=rx,o=r file1</code></td>
+<td>The letters u, g, and o stand for "user", "group", and "other". The
+equals sign ("=") means "set the permissions exactly like this," and the
+letters "r", "w", and "x" stand for "read", "write", and "execute",
+respectively. The commas separate the different classes of permissions,
+and there are no spaces in between them.</td>
+</tr>
+<tr>
+<td><code>chmod -R 700 dir1/</code></td>
+<td>recover read write exe of dir1 and subdir only for me.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In case of right loss, try:</p>
+<p><code>chmod u+rwX dir1/</code> autorize execution only for me for all
+the files and subdirectories inside the directory dir1</p>
+<p>Numbers can be used for "user", "group", and "other", like this:</p>
+<p>0 = no permissions whatsoever; this person cannot read, write, or
+execute the file</p>
+<p>1 = execute only</p>
+<p>2 = write only</p>
+<p>3 = write and execute (1+2)</p>
+<p>4 = read only</p>
+<p>5 = read and execute (4+1)</p>
+<p>6 = read and write (4+2)</p>
+<p>7 = read and write and execute (4+2+1)</p>
+<p>Example: 777 means read and write and execute for "user", "group",
+and "other".</p>
+<p>Of note: to move a file using <code>mv</code> requires write
+permission.</p>
+<p>See <a href="https://en.wikipedia.org/wiki/Chmod"
+class="uri">https://en.wikipedia.org/wiki/Chmod</a></p>
+<h2 id="symbolic-link"><span class="header-section-number">7</span>
+Symbolic
+link<a class="headerlink" href="#symbolic-link" title="Link to this heading"></a></h2>
+<p><a
+href="https://www.cyberciti.biz/faq/creating-soft-link-or-symbolic-link/"
+class="uri">https://www.cyberciti.biz/faq/creating-soft-link-or-symbolic-link/</a></p>
+<p>A symbolic link is a file that point toward another "real" file.</p>
+<p>This avoids the duplication of files on a computer.</p>
+<p>Two kinds: soft and hard.</p>
+<blockquote>
+<p>Soft: files that point to the "real" file are abstractions. If the
+"real" file is removed, the connection is lost.</p>
+<p>Hard: the "real" file has two entries in the inode table. Hard links
+are problematic. If one want to remove a big file that has several
+entries in the inode table, it will not be erased and it is not easy to
+find the different entries of a file. Thus avoid hard links.</p>
+</blockquote>
+<p>To create a soft symbolic link:</p>
+<pre><code>ln -s file1 link1 # -s for soft (beware ln by default is hard), file1 is the source file to point</code></pre>
+<p>The color of the pointing path depends on the rights of the pointed
+file. Example:</p>
+<p><img src="../md/img/044-bash/image3.png" loading="lazy" /></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>Red:</td>
+<td>the pointed file does not exists (check the path) or has no
+execution rigths</td>
+</tr>
+<tr>
+<td>Green:</td>
+<td>pointed file with execution right</td>
+</tr>
+<tr>
+<td>Grey:</td>
+<td>pointed file with no execution right</td>
+</tr>
+<tr>
+<td>Cyan:</td>
+<td>point toward a directory</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>T</p>
+<p>To remove a symbolic link:</p>
+<pre><code>unlink file1 # it seems that unlink link1 also works</code></pre>
+<p>Warning:</p>
+<p>1) Always use symbolic links for files, not for directories. With
+files, there is no possible way to accidentally delete the target of a
+symbolic link using rm.</p>
+<p>2) Never use rm -r on large directories if it is or if it contains
+directory symbolic link because can delete the content of the pointed
+directory (target). Use <code>ls -lR &lt;PATH&gt; | grep ^l</code> to
+know if there are symbolic links in a folder</p>
+<p>Example from <a
+href="https://stackoverflow.com/questions/62637046/how-to-make-rm-not-delete-symbolic-links"
+class="uri">https://stackoverflow.com/questions/62637046/how-to-make-rm-not-delete-symbolic-links</a></p>
+<pre><code>$ mkdir test1
+$ touch test1/foo.txt
+$ ln -s test1 test2
+$ ls -lR
+.:
+total 4
+drwxrwxr-x 2 soren soren 4096 Jun 29 17:02 test1
+lrwxrwxrwx 1 soren soren    5 Jun 29 17:02 test2 -&gt; test1
+
+./test1:
+total 0
+-rw-rw-r-- 1 soren soren 0 Jun 29 17:02 foo.txt</code></pre>
+<p>These are all safe:</p>
+<ul>
+<li><p><code>rm test2</code> (deletes the symlink only)</p></li>
+<li><p><code>rm -r test2</code> (deletes the symlink only)</p></li>
+<li><p><code>rm -rf test2</code> (deletes the symlink only)</p></li>
+<li><p><code>rm test2/</code>
+(<code>rm: cannot remove 'test2/': Is a directory</code> -- no action
+taken)</p></li>
+<li><p><code>rm -rf *2</code> (or any other glob matching the symlink --
+deletes the symlink only)</p></li>
+</ul>
+<p>These are <em>not</em> safe:</p>
+<ul>
+<li><p><code>rm -r test2/</code>
+(<code>rm: cannot remove 'test2/': Not a directory</code> -- but deletes
+the contents of the <code>test1</code> directory)</p></li>
+<li><p><code>rm -rf test2/</code> (deletes the contents of the
+directory, leaves the symlink, no error)</p></li>
+<li><p><code>rm -rf test2/*</code> (deletes the contents of the
+directory, leaves the symlink, no error)</p></li>
+</ul>
+<p>To copy the target of a symbolic link, and not the link file:</p>
+<pre><code>cp -L link1</code></pre>
+<p><a
+href="https://stackoverflow.com/questions/27870965/linux-cp-how-to-have-it-follow-links-but-not-stop-if-a-link-target-doesnt-exis"
+class="uri">https://stackoverflow.com/questions/27870965/linux-cp-how-to-have-it-follow-links-but-not-stop-if-a-link-target-doesnt-exis</a></p>
+<p>To replace a symlink file by the hard file:</p>
+<pre><code>shopt -s globstar
+sed -i &#39;&#39; **/* # **/* is a bash globstar pattern meaning &quot;all files and all folders, at all depth, from here&quot;</code></pre>
+<p>To detect all the symlinks in a folder:</p>
+<pre><code>find . -xtype l | while read -r symlink ; do
+     echo $symlink
+done</code></pre>
+<p>To change all the broken paths of sym files in a folder (gpt5):</p>
+<pre><code>#!/usr/bin/env bash
+
+# Set the paths
+old=&quot;/pasteur/appa/scratch/gmillot&quot;
+new=&quot;/pasteur/helix/projects/project_b/results&quot;
+
+
+# Find broken symlinks
+find . -xtype l | while read -r link ; do
+    target=$(readlink &quot;$link&quot;)
+
+    # Only adjust if target starts with the old path
+    if [[ $target == $old* ]]; then
+        newtarget=&quot;${target/$old/$new}&quot;
+
+        echo &quot;Updating: $link&quot;
+        echo &quot;   from: $target&quot;
+        echo &quot;     to: $newtarget&quot;
+
+        # Remove the old symlink and create the updated one
+        rm &quot;$link&quot;
+        ln -s &quot;$newtarget&quot; &quot;$link&quot;
+    fi
+done</code></pre>
+<p>Of, note:</p>
+<p>readlink reports what a symlink points to.</p>
+<p>ln -sfn safely forces the link to point to the new target.</p>
+<p>find ... -type l lists only symlinks; -maxdepth 1 keeps it to the
+given folder (remove if you want recursion).</p>
+<p>The if [[ "$target" == $old_prefix* ]] ensures only links with the
+old path are updated.</p>
+<p>• <code>find . -xtype l</code> finds broken symlinks in current dir
+and subdirs.</p>
+<p>• <code>readlink "$link"</code> gets the symlink’s target.</p>
+<h2 id="internal-variables-in-bash"><span
+class="header-section-number">8</span> Internal variables in
+bash<a class="headerlink" href="#internal-variables-in-bash" title="Link to this heading"></a></h2>
+<p><a href="http://tldp.org/LDP/abs/html/internalvariables.html"
+class="uri">http://tldp.org/LDP/abs/html/internalvariables.html</a></p>
+<h2 id="about-the-in-bash-shell"><span
+class="header-section-number">9</span> About the $ in bash
+shell<a class="headerlink" href="#about-the-in-bash-shell" title="Link to this heading"></a></h2>
+<p>Call the content of a variable, or call an argument of a .sh script
+inside the code of this script ($1 for the first argument, etc., $0 for
+the name of the .sh script executable, $@ for all the arguments after
+$0)</p>
+<p><a
+href="http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables"
+class="uri">http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables</a></p>
+<p><a
+href="https://www.gnu.org/software/bash/manual/html_node/Variable-Index.html"
+class="uri">https://www.gnu.org/software/bash/manual/html_node/Variable-Index.html</a></p>
+<h2 id="standard-input-and-standard-output"><span
+class="header-section-number">10</span> Standard input and standard
+output<a class="headerlink" href="#standard-input-and-standard-output" title="Link to this heading"></a></h2>
+<p><u>Standard input (stdin)</u></p>
+<p>According to Yohan Dufresne, when you write in a shell CLI:</p>
+<pre><code>python3 main.py &lt; data.txt</code></pre>
+<p>It means that we want to run the <code>main.py</code> python script.
+Using <code>&lt; data.txt</code> indicates that the data.txt file is put
+in the standard entry of the main.py program. This means that it is not
+necessary to use an import command in the main.py script. It is directly
+imported. But we have to use "import sys" to import the standard input
+of the shell:</p>
+<pre><code>```{python3}
+import sys
+for line in sys.stdin:
+print(line) #print all the lines of data.txt
+```</code></pre>
+<p>Beware: some commands, like <code>echo</code> do not read the stdin.
+Example:</p>
+<pre><code>echo &quot;prout&quot; &gt; caca.txt
+echo &lt; caca.txt</code></pre>
+<p>It is equivalent to <code>echo "test" | echo</code> and it does not
+work. Others can:</p>
+<pre><code>echo &quot;prout&quot; &gt; caca.txt
+cat &lt; caca.txt</code></pre>
+<p><u>Standard output (stdout)</u></p>
+<p>See the Bash tricks section</p>
+<p><u>Symbols of assignations</u></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>|</code></td>
+<td>take the standard output of a command and put it in the standard
+input of another command.</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>assign the standard output on the left to something on the right.
+Example: <code>echo "caca" &gt; file.txt</code></td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>assing something on the right to the standard input on the left.
+Example <code>print &lt; file.txt</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="about-pattern-matching-and-regular-expression"><span
+class="header-section-number">11</span> About pattern matching and
+regular
+expression<a class="headerlink" href="#about-pattern-matching-and-regular-expression" title="Link to this heading"></a></h2>
+<h3 id="global-pattern"><span class="header-section-number">11.1</span>
+Global
+pattern<a class="headerlink" href="#global-pattern" title="Link to this heading"></a></h3>
+<p><a href="http://wiki.bash-hackers.org/syntax/pattern"
+class="uri">http://wiki.bash-hackers.org/syntax/pattern</a></p>
+<p><a href="http://mywiki.wooledge.org/BashGuide/Patterns"
+class="uri">http://mywiki.wooledge.org/BashGuide/Patterns</a></p>
+<p>regular expression:</p>
+<p><a href="https://www.regular-expressions.info/refcharclass.html"
+class="uri">https://www.regular-expressions.info/refcharclass.html</a></p>
+<p><a
+href="https://www.gnu.org/software/sed/manual/html_node/Regular-Expressions.html"
+class="uri">https://www.gnu.org/software/sed/manual/html_node/Regular-Expressions.html</a></p>
+<p><a
+href="https://www.tutorialspoint.com/unix/unix-regular-expressions.htm"
+class="uri">https://www.tutorialspoint.com/unix/unix-regular-expressions.htm</a></p>
+<p><span class="red"><a href="http://mywiki.wooledge.org/glob"
+class="uri">http://mywiki.wooledge.org/glob</a></span></p>
+<p><span class="red">Beware: grep, awk is using not Pearl POSIX extended
+regular expressions (ERE)</span></p>
+<p><span class="red"><a
+href="https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/basedefs/V1_chap09.html#tag_09_04"
+class="uri">https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/basedefs/V1_chap09.html#tag_09_04</a></span></p>
+<p>See grep and awk below (seek "!")</p>
+<p>See lookahead and lookbehind section also.</p>
+<h3 id="glob-pattern-in-file-names-or-path"><span
+class="header-section-number">11.2</span> Glob pattern in file names or
+path<a class="headerlink" href="#glob-pattern-in-file-names-or-path" title="Link to this heading"></a></h3>
+<p>Glob pattern in file names or path is not regex, it is called
+"extended globbing" or "wildcard".</p>
+<h2 id="extended-globbing-wildcard"><span
+class="header-section-number">12</span> extended globbing
+(wildcard)<a class="headerlink" href="#extended-globbing-wildcard" title="Link to this heading"></a></h2>
+<p><a href="https://www.linuxjournal.com/content/bash-extended-globbing"
+class="uri">https://www.linuxjournal.com/content/bash-extended-globbing</a></p>
+<p><a
+href="https://www.gnu.org/software/make/manual/html_node/Wildcard-Function.html"
+class="uri">https://www.gnu.org/software/make/manual/html_node/Wildcard-Function.html</a></p>
+<p><a
+href="https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob"
+class="uri">https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob</a></p>
+<p>An asterisk, *, matches any number of characters (including
+none).</p>
+<p>Two asterisks, **, works like * but crosses directory boundaries.
+This syntax is generally used for matching complete paths.</p>
+<p>A question mark, ?, matches exactly one character.</p>
+<p>Braces specify a collection of subpatterns. For example:</p>
+<p>{sun,moon,smaestro} matches "sun", "moon", or "smaestro".</p>
+<p>{temp*,tmp*} matches all strings beginning with "temp" or "tmp".</p>
+<p>Square brackets convey a set of single characters or, when the hyphen
+character (-) is used, a range of characters. For example:</p>
+<p>[aeiou] matches any lowercase vowel.</p>
+<p>[0-9] matches any digit.</p>
+<p>[A-Z] matches any uppercase letter.</p>
+<p>[a-z,A-Z] matches any uppercase or lowercase letter.</p>
+<p>Within the square brackets, *, ?, and \ match themselves.</p>
+<p>All other characters match themselves.</p>
+<p>To match *, ?, or the other special characters, you can escape them
+by using the backslash character, \. For example: \\ matches a single
+backslash, and \? matches the question mark.</p>
+<p>Here are some examples of glob syntax:</p>
+<p>*.html – Matches all strings that end in .html</p>
+<p>??? – Matches all strings with exactly three letters or digits</p>
+<p>*[0-9]* – Matches all strings containing a numeric value</p>
+<p>*.{htm,html,pdf} – Matches any string ending with .htm, .html or
+.pdf</p>
+<p>a?*.java – Matches any string beginning with a, followed by at least
+one letter or digit, and ending with .java</p>
+<p>{foo*,*[0-9]*} – Matches any string beginning with foo or any string
+containing a numeric value</p>
+<p>Note: If you are typing the glob pattern at the keyboard and it
+contains one of the special characters, you must put the pattern in
+quotes ("*"), use the backslash (\*), or use whatever escape mechanism
+is supported at the command line.</p>
+<h2 id="lookahead-and-lookbehind-including"><span
+class="header-section-number">13</span> lookahead and lookbehind
+(including
+?!)<a class="headerlink" href="#lookahead-and-lookbehind-including" title="Link to this heading"></a></h2>
+<p><a href="https://www.regular-expressions.info/lookaround.html"
+class="uri">https://www.regular-expressions.info/lookaround.html</a></p>
+<h2 id="simple-and-double-brackets-and-brace-parentheses-etc"><span
+class="header-section-number">14</span> Simple and double brackets []
+and [[]], brace, parentheses,
+etc<a class="headerlink" href="#simple-and-double-brackets-and-brace-parentheses-etc" title="Link to this heading"></a></h2>
+<p>The differences between [] and [[]] :</p>
+<p><a
+href="https://www.baeldung.com/linux/bash-single-vs-double-brackets"
+class="uri">https://www.baeldung.com/linux/bash-single-vs-double-brackets</a></p>
+<p>The management of wildcard (*):</p>
+<p><a
+href="https://unix.stackexchange.com/questions/597850/why-does-using-double-brackets-to-check-if-wildcard-matched-files-exists-fa"
+class="uri">https://unix.stackexchange.com/questions/597850/why-does-using-double-brackets-to-check-if-wildcard-matched-files-exists-fa</a></p>
+<p>Other:</p>
+<p><a
+href="http://stackoverflow.com/questions/2188199/how-to-use-double-or-single-bracket-parentheses-curly-braces"
+class="uri">http://stackoverflow.com/questions/2188199/how-to-use-double-or-single-bracket-parentheses-curly-braces</a></p>
+<p><a
+href="http://stackoverflow.com/questions/13617843/unary-operator-expected"
+class="uri">http://stackoverflow.com/questions/13617843/unary-operator-expected</a></p>
+<p><a
+href="http://stackoverflow.com/questions/17843889/how-to-remove-the-extension-of-a-file"
+class="uri">http://stackoverflow.com/questions/17843889/how-to-remove-the-extension-of-a-file</a></p>
+<h2 id="comparison"><span class="header-section-number">15</span>
+Comparison<a class="headerlink" href="#comparison" title="Link to this heading"></a></h2>
+<p>Comparison of elements:</p>
+<p><a href="http://tldp.org/LDP/abs/html/comparison-ops.html"
+class="uri">http://tldp.org/LDP/abs/html/comparison-ops.html</a></p>
+<p>For files and attributes:</p>
+<p><a
+href="http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html"
+class="uri">http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html</a></p>
+<p>To display the result of a comparison:</p>
+<pre><code>[[ &quot;a&quot; == &quot;a&quot; ]] &amp;&amp; echo true || echo false
+[[ ! &quot;ATCG&quot; =~ [-NATGC.]* ]] &amp;&amp; echo true || echo false</code></pre>
+<h2 id="internal-field-separator-ifs"><span
+class="header-section-number">16</span> Internal field separator
+(IFS)<a class="headerlink" href="#internal-field-separator-ifs" title="Link to this heading"></a></h2>
+<p><a
+href="http://unix.stackexchange.com/questions/26784/understanding-ifs"
+class="uri">http://unix.stackexchange.com/questions/26784/understanding-ifs</a></p>
+<h2 id="date"><span class="header-section-number">17</span>
+Date<a class="headerlink" href="#date" title="Link to this heading"></a></h2>
+<p><a
+href="http://stackoverflow.com/questions/1401482/yyyy-mm-dd-format-date-in-shell-script"
+class="uri">http://stackoverflow.com/questions/1401482/yyyy-mm-dd-format-date-in-shell-script</a></p>
+<p>Beware: <code>STOPTIME=$(date) ; date -d "$STOPTIME"</code> is
+sensitive to the language used by the terminal to display the date. If
+the date is displayed in french, it creates bugs. Use
+<code>LANG=en_us_8859_1</code> at a beginning of a script to use the
+english language</p>
+<h2 id="cron"><span class="header-section-number">18</span>
+CRON<a class="headerlink" href="#cron" title="Link to this heading"></a></h2>
+<p>Linux system to run a job on a regular basis.</p>
+<p>Put a shell script in one of these folders: /etc/cron.daily,
+/etc/cron.hourly, /etc/cron.monthly or /etc/cron.weekly.</p>
+<p>If these are not enough for you, you can add more specific tasks e.g.
+twice a month or every 5 minutes. Go to the terminal and type:</p>
+<pre><code>crontab -e</code></pre>
+<p>First time, it will ask for an editor (nano for instance).</p>
+<p>Then it will open your personal crontab (cron configuration file).
+The first line in that file explains it all! In every line you can
+define one command to run and its schedule, and the format is quite
+simple when you get the hang of it. The structure is:</p>
+<pre><code>minute hour day-of-month month day-of-week command</code></pre>
+<p>For instance:</p>
+<p><code>0 15 * * 1-5 (cd /home/rsg/Projects/ &amp;&amp; git add . &amp;&amp; git commit -m "</code>⏰<code>" &amp;&amp; git push)</code></p>
+<p>Means: at 3pm, every day of month, from monday to friday, execute</p>
+<p><a
+href="https://askubuntu.com/questions/2368/how-do-i-set-up-a-cron-job"
+class="uri">https://askubuntu.com/questions/2368/how-do-i-set-up-a-cron-job</a></p>
+<h2 id="white-space-in-path"><span
+class="header-section-number">19</span> White space in
+path<a class="headerlink" href="#white-space-in-path" title="Link to this heading"></a></h2>
+<p>Use simple or double quotes for the path, or \ before the space if no
+quotes. With assignement into a variable, it is mandatory to execute the
+variable between "". Examples:</p>
+<pre><code>/cygdrive/c/Program\ Files/merlin-win1.1.2/merlin
+MERLIN_CONF=/cygdrive/c/Program\ Files/merlin-win1.1.2/merlin ; &quot;$MERLIN_CONF&quot;</code></pre>
+<h2 id="quotes-inside-quotes"><span
+class="header-section-number">20</span> Quotes inside
+quotes<a class="headerlink" href="#quotes-inside-quotes" title="Link to this heading"></a></h2>
+<p>Example: '<code>awk 'print $0' file'</code></p>
+<blockquote>
+<p>Solution: '<code>awk '"'"'print $0'"'"' file'</code></p>
+</blockquote>
+<p>Or '<code>awk '\''print $0'\'' file'</code></p>
+<h2 id="division-in-bash"><span class="header-section-number">21</span>
+Division in
+bash<a class="headerlink" href="#division-in-bash" title="Link to this heading"></a></h2>
+<p><a
+href="http://unix.stackexchange.com/questions/167058/how-to-round-floating-point-numbers-in-shell"
+class="uri">http://unix.stackexchange.com/questions/167058/how-to-round-floating-point-numbers-in-shell</a></p>
+<p>Bash only display the quotient (integer result, eg 2/3 -&gt; 0) of a
+division, neither the decimal number (eg, 2/3 -&gt; 0.666666) nor the
+modulo (remainder of the division, eg 6666666). example:</p>
+<pre><code>x=2
+y=3
+echo $(( $x / $y )) # gives 0</code></pre>
+<p>To do so:</p>
+<pre><code>echo $&quot; $x / $y &quot; | bc -l</code></pre>
+<p>To round the result:</p>
+<pre><code>printf &#39;%.2f\n&#39; $(echo $&quot; $x / $y &quot; | bc -l) # the number highlighted in grey is the number of decimals</code></pre>
+<p>More complicate stuff:</p>
+<pre><code>echo -e &quot;READ LOSS: $(printf &#39;%.2f\n&#39; $(echo $&quot; 100 - $x / $y * 100 &quot; | bc -l))%&quot;</code></pre>
+<h2 id="the-for-loop"><span class="header-section-number">22</span> The
+for
+loop<a class="headerlink" href="#the-for-loop" title="Link to this heading"></a></h2>
+<pre><code>VAR=&quot;&quot;
+for i in $(seq 1 9) ; do #see below problems with seq
+VAR=&quot;$VAR $i&quot;
+done
+echo $VAR</code></pre>
+<pre><code>VAR=&quot;&quot;
+for i in &quot;01&quot; &quot;03&quot; &quot;05&quot; ; do
+VAR=&quot;$VAR $i&quot;
+done
+echo $VAR</code></pre>
+<pre><code># written as a single line. Beware: do not put tabulations before or after the separating semi colons (;). Creates bugs
+VAR=&quot;&quot;
+for i in &quot;01&quot; &quot;03&quot; &quot;05&quot; ; do VAR=&quot;$VAR $i&quot; ; done
+echo $VAR
+
+# variable as number of loop
+VAR=&quot;01 02 03&quot; # use space
+for i in $VAR ; do echo $i ; done
+
+# variable in seq
+#Warning: seq is sometimes difficult to use with variables
+VAR=5
+for i in $(seq 1  $VAR) ; do
+VAR=&quot;$VAR $i&quot;
+done
+echo $VAR # first is 5 because of VAR=&quot;$VAR $i&quot; but just to show that loop is not broken
+
+# Or
+VAR=5
+for i in `seq 0  $VAR` ; do
+VAR=&quot;$VAR $i&quot;
+done
+echo $VAR # first is 5 because of VAR=&quot;$VAR $i&quot; but just to show that loop is not broken
+
+# this can be better:
+VAR=5
+VAR2=&quot;&quot;
+for((i=0; i &lt;= VAR; ++i)); do
+VAR2=&quot;$VAR2 $i&quot; # VAR=&quot;$VAR $i&quot; does not work with this for loop
+done
+echo $VAR2
+
+# loop With an array
+ARRAY=($(seq 0  5)) # 0 to 5
+for i in $(seq 0 $(( ${#ARRAY[@]} - 1 )) ) ; do # $(( ${#ARRAY[@]} - 1 )) is length of the array - 1
+    echo $i
+    echo ${ARRAY[$i]}
+done</code></pre>
+<h2 id="the-case-analysis-alternative-to-if-else-comparison"><span
+class="header-section-number">23</span> The case analysis (alternative
+to if else
+comparison)<a class="headerlink" href="#the-case-analysis-alternative-to-if-else-comparison" title="Link to this heading"></a></h2>
+<p>Writting:</p>
+<pre><code>case EXPRESSION in
+CASE1)
+COMMAND-LIST;;
+CASE2|CASE3)
+COMMAND-LIST;;
+CASEN)
+COMMAND-LIST;;
+esac</code></pre>
+<p>Each case is an expression matching a pattern. The commands in the
+COMMAND-LIST for the first match are executed. The "|" symbol is used
+for separating multiple patterns, and the ")" operator terminates a
+pattern list. Each case plus its according commands are called a clause.
+Each clause must be terminated with ";;". Each case statement is ended
+with the esac statement. No possible # comment line inside case</p>
+<p>Examples:</p>
+<pre><code>VAR=&quot;dog cat horse\nfish bug&quot;
+# * means everything (every characters and symbols) and *\ * means anything before and after a space
+case &quot;$VAR&quot; in
+*\ *)
+echo -e &quot;SPACE DETECTED IN $VAR&quot;;;
+dog | cat)
+echo -e &quot;dog OR cat DETECTED IN $VAR&quot;;;
+*)
+echo -e &quot;NEITHER SPACE NOR dog NOR cat DETECTED IN $VAR&quot;;;
+esac
+
+TEMPO_SPACE_COUNT=$(grep -o &#39; &#39; /cygdrive/c/Users/Gael/Desktop/Archive_Guillaume/Famille1/Famille1.txt | wc -l)
+echo -e $TEMPO_SPACE_COUNT</code></pre>
+<p>Beware: if the first case is true, then the following ones are not
+treated. Thus, the cases order is very important !</p>
+<p>Finish by <code>*)</code> to be sure to have all the alternative
+treated</p>
+<p>Other example:</p>
+<pre><code># *\ * to detect single space
+case $INPUT_DIR_PATH/${INPUT_DIR_NAME}.txt in
+*\ *)
+echo -e &quot;SPACES DETECTED IN $INPUT_DIR_PATH/${INPUT_DIR_NAME}.txt\n&quot; ;;
+*)
+echo -e &quot;NO SPACES DETECTED IN $INPUT_DIR_PATH/${INPUT_DIR_NAME}.txt\n&quot;;;
+esac</code></pre>
+<h2 id="the-getopts-command"><span
+class="header-section-number">24</span> the getopts
+command<a class="headerlink" href="#the-getopts-command" title="Link to this heading"></a></h2>
+<p>Beware: declare all the variable locally when used in functions: see
+bash_main_functions_gael_20171218.conf</p>
+<p><a href="http://aplawrence.com/Unix/getopts.html"
+class="uri">http://aplawrence.com/Unix/getopts.html</a></p>
+<p><a
+href="https://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/"
+class="uri">https://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/</a></p>
+<p><a href="http://wiki.bash-hackers.org/howto/getopts_tutorial"
+class="uri">http://wiki.bash-hackers.org/howto/getopts_tutorial</a></p>
+<h2 id="variable-incrementation"><span
+class="header-section-number">25</span> Variable
+incrementation<a class="headerlink" href="#variable-incrementation" title="Link to this heading"></a></h2>
+<pre><code>var=1 # then test the following line then echo $var
+var=$((var+1))
+((var=var+1))
+((var+=1))
+((var++))
+let &quot;var=var+1&quot;
+let &quot;var+=1&quot;
+let &quot;var++&quot;</code></pre>
+<p><a
+href="https://askubuntu.com/questions/385528/how-to-increment-a-variable-in-bash"
+class="uri">https://askubuntu.com/questions/385528/how-to-increment-a-variable-in-bash</a></p>
+<h2 id="conversion-lower-case---upper-case"><span
+class="header-section-number">26</span> conversion lower case &lt;-&gt;
+upper
+case<a class="headerlink" href="#conversion-lower-case---upper-case" title="Link to this heading"></a></h2>
+<p>See <code>tr</code> function below.</p>
+<p>In bash 4, there are some tricks ( see <a
+href="https://linuxhint.com/bash_lowercase_uppercase_strings/"
+class="uri">https://linuxhint.com/bash_lowercase_uppercase_strings/</a>):</p>
+<pre><code>var=&quot;sdfrAvgBBB-_(]&quot;
+
+# convert first letter to upper case
+echo ${var^}
+
+# convert all letters to upper case
+echo ${var^^}
+
+# convert first letter to lower case
+echo ${var,}
+
+# convert all letters to lower case
+echo ${var,,}</code></pre>
+<p><code>Awk</code> has the <code>tolower()</code> and
+<code>toupper()</code> function:</p>
+<pre><code>echo $var | awk &#39;{print tolower($0)}&#39;</code></pre>
+<h2 id="write-bash-function"><span
+class="header-section-number">27</span> Write bash
+function<a class="headerlink" href="#write-bash-function" title="Link to this heading"></a></h2>
+<h3 id="variable"><span class="header-section-number">27.1</span>
+variable<a class="headerlink" href="#variable" title="Link to this heading"></a></h3>
+<p>Warning: by default, variables in functiosn are global:</p>
+<pre><code>function myfunc()
+{
+    myresult=&#39;some value&#39;
+}
+myfunc
+echo $myresult</code></pre>
+<p>To make it local :</p>
+<pre><code>function myfunc()
+{
+    local  myresult=&#39;some value&#39;
+    echo &quot;$myresult&quot;
+}
+myfunc
+echo $myresult
+result=$(myfunc)   # or result=`myfunc`
+echo $result</code></pre>
+<h3 id="how-to-return-a-value"><span
+class="header-section-number">27.2</span> How to return a
+value<a class="headerlink" href="#how-to-return-a-value" title="Link to this heading"></a></h3>
+<h4 id="warning-with-the-return-command"><span
+class="header-section-number">27.2.1</span> Warning with the return
+command<a class="headerlink" href="#warning-with-the-return-command" title="Link to this heading"></a></h4>
+<p><a
+href="https://www.linuxjournal.com/content/return-values-bash-functions"
+class="uri">https://www.linuxjournal.com/content/return-values-bash-functions</a></p>
+<p>Bash functions, unlike functions in most programming languages do not
+allow you to return a value to the caller. When a bash function ends its
+return value is its status: zero for success, non-zero for failure. To
+return values, you can set a global variable with the result, or use
+command substitution, or you can pass in the name of a variable to use
+as the result variable. The examples below describe these different
+mechanisms.</p>
+<p>Although bash has a return statement, the only thing you can specify
+with it is the function's status, which is a numeric value like the
+value specified in an exit statement. The status value is stored in the
+$? variable. If a function does not contain a return statement, its
+status is set based on the status of the last statement executed in the
+function. To actually return arbitrary values to the caller you must use
+other mechanisms.</p>
+<p>The simplest way to return a value from a bash function is to just
+set a global variable to the result. Since all variables in bash are
+global by default this is easy:</p>
+<pre><code>function myfunc()
+{
+    myresult=&#39;some value&#39;
+}
+myfunc
+echo $myresult</code></pre>
+<p>The code above sets the global variable myresult to the function
+result. Reasonably simple, but as we all know, using global variables,
+particularly in large programs, can lead to difficult to find bugs.</p>
+<p>A better approach is to use local variables in your functions. The
+problem then becomes how do you get the result to the caller. One
+mechanism is to use command substitution:</p>
+<pre><code>function myfunc()
+{
+    local  myresult=&#39;some value&#39;
+    echo &quot;$myresult&quot;
+}
+result=$(myfunc)   # or result=`myfunc`
+echo $result</code></pre>
+<p>Here the result is output to the stdout and the caller uses command
+substitution to capture the value in a variable. The variable can then
+be used as needed.</p>
+<h4 id="simplest-way"><span class="header-section-number">27.2.2</span>
+Simplest
+way<a class="headerlink" href="#simplest-way" title="Link to this heading"></a></h4>
+<p>The simpliest way I found was to use a global variable, original
+enough to do not overwrite another variable</p>
+<pre><code>function file_pattern_detection_fun(){
+    if [[ &quot;1&quot; == &quot;1&quot; ]] ; then
+        echo -e &quot;\nfile_pattern_detection_fun MESSAGE: NO\n&quot;
+        file_pattern_detection_fun_RETURN=2
+        return 0
+    else
+        file_pattern_detection_fun_RETURN=3
+        return 0
+    fi
+}
+file_pattern_detection_fun
+echo -e &quot;\n caca4\n&quot;
+echo -e $file_pattern_detection_fun_RETURN
+echo -e &quot;\n caca5\n&quot;</code></pre>
+<h4 id="the-stdout-way"><span
+class="header-section-number">27.2.3</span> the stdout
+way<a class="headerlink" href="#the-stdout-way" title="Link to this heading"></a></h4>
+<p><span class="red">Do not work:</span></p>
+<pre><code>function file_pattern_detection_fun(){
+    if [[ &quot;1&quot; == &quot;1&quot; ]] ; then
+        echo -e &quot;\nfile_pattern_detection_fun MESSAGE: NO\n&quot;
+        2 &gt;&amp;1
+        return 0
+    else
+        3 &gt;&amp;1
+        return 0
+    fi
+}
+TEMPO=$(file_pattern_detection_fun)
+echo $TEMPO</code></pre>
+<h4 id="warning-with-the-echo-command"><span
+class="header-section-number">27.2.4</span> Warning with the echo
+command<a class="headerlink" href="#warning-with-the-echo-command" title="Link to this heading"></a></h4>
+<p>This code returns the 2 echos:</p>
+<pre><code>function file_pattern_detection_fun(){
+    if [[ &quot;1&quot; == &quot;1&quot; ]] ; then
+        echo -e &quot;\nfile_pattern_detection_fun MESSAGE: NO\n&quot;
+        echo &quot;2&quot;
+    else
+        echo &quot;3&quot;
+    fi
+}
+TEMPO_RETURN_4=$(file_pattern_detection_fun) # removal of lines starting by # or empty lines
+echo -e &quot;\n caca4\n&quot;
+echo -e $TEMPO_RETURN_4
+echo -e &quot;\n caca5\n&quot;</code></pre>
+<p>Not only the last one.</p>
+<h2 id="manage-the-signal-of-interruption"><span
+class="header-section-number">28</span> Manage the Signal of
+interruption<a class="headerlink" href="#manage-the-signal-of-interruption" title="Link to this heading"></a></h2>
+<p>In bash, Ctrl+C is the SIGnal of INTerruption (SIGINT) of a running
+execution.</p>
+<p>To remove the SIGINT:</p>
+<pre><code>trap &#39;&#39; SIGINT</code></pre>
+<p>Ctrl+C does not work anymore to stop a process</p>
+<p>To reactivate the SIGINT:</p>
+<pre><code>trap - SIGINT</code></pre>
+<p>To change the keyboard shortcut of SIGINT:</p>
+<pre><code>trap - SIGINT ; stty intr &#39;^X&#39; # Ctrl+X now replace Ctrl+C to interrupt an execution. trap - SIGINT means that SIGnal of INTERRUPTION is active. Contrary to trap &#39;&#39; SIGINT</code></pre>
+<p>To reassignate Ctrl+C for the keyboard shortcut of SIGINT:</p>
+<pre><code>trap - SIGINT ; stty intr &#39;^C&#39;</code></pre>
+<p>Warning: some command, like nextflow run, reinitialize SIGINT. In
+such situation, the best is to write in the .profile:</p>
+<pre><code>echo -e &quot;\n\nWARNING: Ctrl+C is disabled and replaced by Ctrl+X (SIGINT reattribution)\n\n&quot;
+trap - SIGINT # Do not disable Ctrl+C (SIGINT)
+stty intr ^X # Remap Ctrl+X to send SIGINT (normally Ctrl+C)
+# keep the setting after executions that reinitialize SIGINT
+restore_terminal_settings() {
+    trap &#39;&#39; SIGINT
+    stty intr ^X
+}
+PROMPT_COMMAND=&quot;restore_terminal_settings; $PROMPT_COMMAND&quot;
+# end keep the setting after executions that reinitialize SIGINT</code></pre>
+<h2 id="basic-bash-commands"><span
+class="header-section-number">29</span> Basic bash
+commands<a class="headerlink" href="#basic-bash-commands" title="Link to this heading"></a></h2>
+<p>See also <a href="140-wsl2-linux-on-windows.html">protocol
+140</a>.</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>echo "$BASH_VERSION"</code></td>
+<td>version of bash used</td>
+</tr>
+<tr>
+<td><code>lscpu</code></td>
+<td>info about cpu. This provides the number of threads:
+<code>AVAIL_THREADS=\$(grep ^cpu\\scores /proc/cpuinfo | uniq |  awk '{print \$4}')</code></td>
+</tr>
+<tr>
+<td><code>lshw</code></td>
+<td>info about hardware (cpu, mem, etc.). See <a
+href="https://www.binarytides.com/linux-commands-hardware-info/"
+class="uri">https://www.binarytides.com/linux-commands-hardware-info/</a></td>
+</tr>
+<tr>
+<td><code>hwinfo</code></td>
+<td>info about hardware (cpu, mem, etc.)</td>
+</tr>
+<tr>
+<td><code>ncdu</code></td>
+<td>linux tool that gives the size of folders and files at the current
+position. ncdu (NCurses Disk Usage). See <a
+href="https://en.wikipedia.org/wiki/Ncdu"
+class="uri">https://en.wikipedia.org/wiki/Ncdu</a>. To install it,
+copy-paste the ncdu file located here
+<code>\\wsl$\Ubuntu-20.04\home\gmillot\bin</code>.</td>
+</tr>
+<tr>
+<td><code>lsb_release -a</code></td>
+<td>OS (operating system) used. Or use
+<code>cat /etc/lsb-release</code></td>
+</tr>
+<tr>
+<td><code>cat /etc/os-release</code></td>
+<td>OS (operating system) used</td>
+</tr>
+<tr>
+<td><code>hostnamectl</code></td>
+<td>OS (operating system) used</td>
+</tr>
+<tr>
+<td><code>uname -r</code></td>
+<td>OS (operating system) used (will display that it is WSL2)</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>print user and group information for the specified USER (to know all
+my access). Example: <code>id gmillot</code>. <code>id</code> alone give
+the current user. Note that commands exist for user ID (UID) or group ID
+(GID) permissions: see <code>chmod</code></td>
+</tr>
+<tr>
+<td><code>\</code></td>
+<td>means that the line has an end of line (EL) but is not finished.
+Warning: no space allowed after \</td>
+</tr>
+<tr>
+<td><code>''</code></td>
+<td>indicate a string (no regex interpretation, no variable
+expansion)</td>
+</tr>
+<tr>
+<td><code>""</code></td>
+<td>same as '' but interpret the variables (variable expansion) and the
+regex</td>
+</tr>
+<tr>
+<td><code>true false</code></td>
+<td>in bash, are equivalent to 0 and 1 respectively. Because FALSE is a
+kind of error and bash distinguish different kind of error from 1 to
+255</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>greater than (in comparison) or overwrite in a file (if the target
+file already exists, it is overwritten). Beware: do not write into a
+variable. When we say "file", it means that a file is created on the
+computer in the default directory (like the command write() of R). To
+write in a variable, i.e., to assign, use <code>=</code>. Of note
+<code>&gt; x</code> with nothing before create (or overwrite toward) an
+empty file</td>
+</tr>
+<tr>
+<td><code>&gt;()</code></td>
+<td>process substitution. See <a
+href="https://tldp.org/LDP/abs/html/process-sub.html"
+class="uri">https://tldp.org/LDP/abs/html/process-sub.html</a> and <a
+href="https://unix.stackexchange.com/questions/156084/why-does-process-substitution-result-in-a-file-called-dev-fd-63-which-is-a-pipe"
+class="uri">https://unix.stackexchange.com/questions/156084/why-does-process-substitution-result-in-a-file-called-dev-fd-63-which-is-a-pipe</a></td>
+</tr>
+<tr>
+<td><code>&lt;()</code></td>
+<td>see <code>&gt;()</code></td>
+</tr>
+<tr>
+<td><code>&gt;&gt;</code></td>
+<td>append text in a file (add) and create the file if does not already
+exist</td>
+</tr>
+<tr>
+<td><code>&lt;&lt;</code></td>
+<td>is known as here-document structure. You let the program know what
+will be the ending text, and whenever that delimiter is seen, the
+program will read all the stuff you've given to the program as input and
+perform a task upon it. See <a
+href="https://askubuntu.com/questions/678915/whats-the-difference-between-and-in-bash"
+class="uri">https://askubuntu.com/questions/678915/whats-the-difference-between-and-in-bash</a></td>
+</tr>
+<tr>
+<td><code>&lt;&lt;&lt;</code></td>
+<td>is known as here-string. Instead of typing in text, you give a
+pre-made string of text to a program. For example, with such program as
+bc we can do bc &lt;&lt;&lt; 5*4 to just get output for that specific
+case, no need to run bc interactively. Think of it as the equivalent of
+echo '5*4' | bc. See <a
+href="https://askubuntu.com/questions/678915/whats-the-difference-between-and-in-bash"
+class="uri">https://askubuntu.com/questions/678915/whats-the-difference-between-and-in-bash</a></td>
+</tr>
+<tr>
+<td><code>=</code></td>
+<td>assignement. No space before and after. Example <code>a=1</code>.
+Beware: the assignment create or replace local variables. They are not
+saved on the computer</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>recover the content of a variable. Is also the way to deal with name
+and arguments of a shell script. See <a
+href="http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables"
+class="uri">http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables</a></td>
+</tr>
+<tr>
+<td><code>${}</code></td>
+<td>replace a pattern in a string. The writting is
+<code>${parameter/pattern/string}</code> for a single occurence and
+<code>${parameter//pattern/string}</code> for all accurences. It can
+also be written
+<code>echo $(echo "$firstString" | sed "s/Suzi/$secondString/")</code>.
+See <a
+href="https://stackoverflow.com/questions/13210880/replace-one-substring-for-another-string-in-shell-script"
+class="uri">https://stackoverflow.com/questions/13210880/replace-one-substring-for-another-string-in-shell-script</a></td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>to comment a scrip</td>
+</tr>
+<tr>
+<td><code>info</code></td>
+<td>help command <code>(</code>q to quit, arrow keys or mouse scroll
+wheel, example <code>info cd</code>)</td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td>help command <code>(</code>example <code>help cd</code>). REquired
+for buildin functions</td>
+</tr>
+<tr>
+<td><code>whereis</code></td>
+<td>show the path of binary for a command. Example
+<code>whereis echo</code></td>
+</tr>
+<tr>
+<td><code>man</code></td>
+<td>help command (q to exit)</td>
+</tr>
+<tr>
+<td><code>apropos</code></td>
+<td>seek for command info</td>
+</tr>
+<tr>
+<td><code>whatis</code></td>
+<td>brief command description</td>
+</tr>
+<tr>
+<td><code>which</code></td>
+<td>give the command origin (path of the file or script). Try
+<code>which man</code> and <code>which conda</code> (sometimes, conda is
+a script)</td>
+</tr>
+<tr>
+<td><code>strace</code></td>
+<td>idem to <code>which</code> but complete</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>display the code a function. Example: <code>type help</code></td>
+</tr>
+<tr>
+<td><code>set</code></td>
+<td>display, set or unset values of shell attributes and positional
+parameters. More information: <a href="https://manned.org/set"
+class="uri">https://manned.org/set</a></td>
+</tr>
+<tr>
+<td><code>set -e</code></td>
+<td>when any command fails or return an exit status greater than zero,
+the shell immediately shall exit. See <a href="https://manned.org/set"
+class="uri">https://manned.org/set</a></td>
+</tr>
+<tr>
+<td><code>set -u</code></td>
+<td>return an error and stop if a variable if used but non defined</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>home path (<code>cd ~</code> to return to the home directory, or
+just <code>cd</code>)</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td>to execute a command in background: finish the instruction by
+<code>&amp;</code>. Give a number important when job killing is
+required. When adding a double <code>&amp;&amp;</code>, allow to start a
+background job when the first (single <code>&amp;</code>) is finished
+(see also <a
+href="https://openclassrooms.com/courses/reprenez-le-controle-a-l-aide-de-linux/executer-des-programmes-en-arriere-plan"
+class="uri">https://openclassrooms.com/courses/reprenez-le-controle-a-l-aide-de-linux/executer-des-programmes-en-arriere-plan</a>).</td>
+</tr>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td>Evaluate the second expression if the first one is true. Example
+with <code>a &amp;&amp; b</code>: if a returns true, then b is evaluated
+(equivalent of AND but oriented. See <a
+href="http://stackoverflow.com/questions/4510640/command-line-what-is-the-purpose-of"
+class="uri">http://stackoverflow.com/questions/4510640/command-line-what-is-the-purpose-of</a>)</td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>Different things, but important to mention that it can be used to
+call a standard output after a ppe (see below). See also <a
+href="https://unix.stackexchange.com/questions/16357/usage-of-dash-in-place-of-a-filename"
+class="uri">https://unix.stackexchange.com/questions/16357/usage-of-dash-in-place-of-a-filename</a></td>
+</tr>
+<tr>
+<td><code>|</code></td>
+<td>instead of being printed, the standard output (stdout) of a program
+is redirected as the standard input (stdin) of another one. This is
+called "pipe". Example
+<code>cat file1 | wc -l # nb of lines of a file, which can also be written cat file1 | wc -l -</code>.
+Warning: piping is a tricking stuff, as it works in subshells (i.e.,
+left side of the pipe is the actual (normal) shell, right side of the
+pipe is a child/sub shell), which can have expected but unwanted
+behavior. See <a href="https://mywiki.wooledge.org/BashFAQ/024"
+class="uri">https://mywiki.wooledge.org/BashFAQ/024</a>. For instance:
+<code>VAR=0 ; echo "caca" | VAR=1 ; echo $VAR</code> returns 0. VAR=1 is
+discarded when going back to the parent shell. Use {
+<code>VAR=0 ; echo "caca" } &gt; &gt;(VAR=1 ; echo $VAR)</code>
+instead</td>
+</tr>
+<tr>
+<td><code>||</code></td>
+<td>As <code>&amp;&amp;</code> except that the second expression is
+evaluated if the first is FALSE (equivalent of OR but oriented).</td>
+</tr>
+<tr>
+<td><code>./</code></td>
+<td>current location. Required when calling variable or a executing a
+function, because depending on the PATH, the system can seek somewhere
+else but not locally.</td>
+</tr>
+<tr>
+<td><code>Crtl+L</code></td>
+<td>to clear the console</td>
+</tr>
+<tr>
+<td><code>Crtl+C</code></td>
+<td>kill a forground running job</td>
+</tr>
+<tr>
+<td><code>Crtl+D</code></td>
+<td>logout</td>
+</tr>
+<tr>
+<td><code>chmod</code></td>
+<td>change the rights of a file or directory. See <a
+href="https://ss64.com/bash/chmod.html"
+class="uri">https://ss64.com/bash/chmod.html</a> and section <a
+href="#to-change-permission">To change permission</a>. Example
+<code>chmod 0755 snparray_cnv_freq.py</code> to get -rwxr-xr-x. Note
+that commands exist for user ID (UID) or group ID (GID) permissions:
+<code>chown</code> and <code>chgrp</code></td>
+</tr>
+<tr>
+<td><code>chown</code></td>
+<td>change the owner and group of a file or directory. Usage
+<code>chown [OPTION]... [OWNER][:[GROUP]] FILE...</code> Example
+changing just the owner: <code>chown gmillot: snparray.py</code>.
+Example that change both the owner and group, and all the inside files
+and folders (thanks to -R):
+<code>sudo chown -R gael:gael .ssh</code></td>
+</tr>
+<tr>
+<td><code>mount</code></td>
+<td>mount (render accessible) a network drive into an existing folder.
+Example that mount Y: into y: <code>mount -t drvfs Y: /mnt/y</code></td>
+</tr>
+<tr>
+<td><code>bc</code></td>
+<td>basic calculator</td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td>manipulate symbolic links (see above)</td>
+</tr>
+<tr>
+<td><code>unlink</code></td>
+<td>remove symbolic links (see above)</td>
+</tr>
+<tr>
+<td><code>alias</code></td>
+<td>to know the created alias in .bashrc. Use
+<code>shopt -s expand_aliases</code> to be sure that aliases are
+expended to the different environments</td>
+</tr>
+<tr>
+<td><code>less</code></td>
+<td>to read a file (<code>q</code> to exit). <code>less -S</code> to do
+not have large tables with line return (use the arrow keys to move
+inside the display). Use / to find some pattern</td>
+</tr>
+<tr>
+<td><code>du</code></td>
+<td>to have the size of each dir/file in kilobytes (1 byte in english =
+1 octet in french: 1 byte = 8 bits (bit = allocation 0 or 1) in most
+computers). Use <code>-h</code> to have a human representation (Kilo,
+Mega, Giga, etc.), -a to have all files, not just directories. Beware,
+when executed in the home, display many information. To know the total
+content of a directory, use
+<code>nice du -hs /pasteur/homes/gmillot</code>. To know the total
+content of all subdirectories, use
+<code>nice du -hs /pasteur/homes/gmillot/*</code></td>
+</tr>
+<tr>
+<td><code>echo $0</code></td>
+<td>to know the shell used</td>
+</tr>
+<tr>
+<td><code>cat</code></td>
+<td>concatenate and print (display) the content of files</td>
+</tr>
+<tr>
+<td><code>cat -A</code></td>
+<td>to see all the invisible characters (^I for tabs, ^M for CR, $ for
+LF, etc., spaces displayed as spaces)</td>
+</tr>
+<tr>
+<td><code>comm</code></td>
+<td>compare the content of 2 <u>sorted</u> files. -1 suppress lines
+unique to FILE1, -2 suppress lines unique to FILE2, -3 suppress lines
+that appear in both files. Example
+<code>comm -2 -3 file1 file2 &gt; file3</code>. If they are not sorted:
+<code>comm -2 -3 &lt;(sort file1) &lt;(sort file2) &gt; file3</code>.</td>
+</tr>
+<tr>
+<td><code>realpath ./</code></td>
+<td>to know the absolute path</td>
+</tr>
+<tr>
+<td><code>pwd</code></td>
+<td>to know the absolute path</td>
+</tr>
+<tr>
+<td><code>jobs</code></td>
+<td>know the process running in background, <code>-l</code> to have the
+PID job</td>
+</tr>
+<tr>
+<td><code>top</code></td>
+<td>all the job of all the users, <code>top -u gmillot</code> for my own
+jobs, and use <code>q</code> to quit, <code>k</code> to kill a
+process</td>
+</tr>
+<tr>
+<td><code>atop</code></td>
+<td>see what was the top before something happens. It is a log file that
+can be consulted indicating the date (<code>20200430</code>) and time
+(<code>11:16</code>). Example:
+<code>atop -r /var/log/atop/atop_20200430 -b 11:16</code></td>
+</tr>
+<tr>
+<td><code>htop</code></td>
+<td>much more info than top. See <a
+href="https://www.geeksforgeeks.org/htop-command-in-linux-with-examples/"
+class="uri">https://www.geeksforgeeks.org/htop-command-in-linux-with-examples/</a></td>
+</tr>
+<tr>
+<td><code>kill</code></td>
+<td>kill a job process (type <code>jobs -l</code> or
+<code>top -u gmillot</code> to have the job number (PID), then
+<code>kill 6796</code> to kill job 6796 or use <code>kill %1</code> to
+kill the first job). The 6796 number is called the PID</td>
+</tr>
+<tr>
+<td><code>kill -9</code></td>
+<td>strongest way to kill a job (tape <code>kill -9 6796</code>). Type
+<code>kill -l</code> to have the list of the possible number</td>
+</tr>
+<tr>
+<td><code>kill R</code></td>
+<td>kill a process (R for instance)</td>
+</tr>
+<tr>
+<td><code>nice</code></td>
+<td>run an instruction with lower priority</td>
+</tr>
+<tr>
+<td><code>lsof x</code></td>
+<td>(list open files) determine if the file x is currently processed
+(and gives a PID that can be used to kill the process). Interesting when
+<code>jobs</code> display nothing. In the absence of any options, lsof
+lists all open files belonging to all active processes. Use
+<code>lsof -u gmillot</code> to have the process of the gmillot
+user.</td>
+</tr>
+<tr>
+<td><code>fg</code></td>
+<td>put a background job in front</td>
+</tr>
+<tr>
+<td><code>mkdir</code></td>
+<td>create new directory/folder (<code>mkdir bob</code> in the current
+folder or <code>mkdir /bioinfo/guests/gmillot/bob</code> elsewhere). Use
+<code>mkdir -p</code> to also create the intermediate directories,
+without error message and without erasing inside the directory if they
+already exist.</td>
+</tr>
+<tr>
+<td><code>cd</code></td>
+<td>change Directory (<code>cd ..</code> to go up,
+<code>cd 2015_Heloise_Muller</code> or
+<code>cd 2015_Heloise_Muller/</code> to go down to next folder,
+<code>cd</code> to go to the home directory)</td>
+</tr>
+<tr>
+<td><code>rm</code></td>
+<td>remove files (<code>rm *</code> to remove all the files of the
+current directory, <code>rm G75T*_process.*</code> to remove some
+directories). <u>DO NOT USE</u> "remove a file present several times in
+a folder and subfolders: <code>rm -fr `find . -name Thumbs.db`</code>
+(or <code>find ./ -name Thumbs.db -exec rm -rf '{}' +</code> or
+<code>rm -f **/Thumbs.db</code>") because other files are also removed.
+In fact the most secure is to use <code>rm</code> only when the whole
+content must be removed. Or use
+<code>rm -ir `find . -name Thumbs.db`</code> with -i (ask for each found
+file) to be sure of what is removing and without -f which forces the
+removal and inactivates -i</td>
+</tr>
+<tr>
+<td><code>rmdir</code></td>
+<td>remove directory/folder (<code>rmdir bob</code> for empty bob
+folder, <code>rm -r bob</code> for non-empty bob folder (remove
+everything inside) and <code>rm -rf bob</code> for non-empty bob folder
+without any alert, <code>rm -i bob</code> should also work.</td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td>list the content of the current folder (<code>ls -la</code> for
+supplemental info). Colors are as follow:</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>Blue: Directory</p>
+<p>Green: Executable or recognized data file</p>
+<p>Cyan (Sky Blue): Symbolic link file</p>
+<p>Yellow with black background: Device</p>
+<p>Magenta (Pink): Graphic image file</p>
+<p>Red: Archive file</p>
+<p>Red with black background: Broken link</p>
+<p>A code to see all the colors for the different file kinds:</p>
+</blockquote>
+<pre><code>eval $(echo &quot;no:global default;fi:normal file;di:directory;ln:symbolic link;pi:named pipe;so:socket;do:door;bd:block device;cd:character device;or:orphan symlink;mi:missing file;su:set uid;sg:set gid;tw:sticky other writable;ow:other writable;st:sticky;ex:executable;&quot;|sed -e &#39;s/:/=&quot;/g; s/\;/&quot;\n/g&#39;)
+{
+  IFS=:
+  for i in $LS_COLORS
+  do
+    echo -e &quot;\e[${i#*=}m$( x=${i%=*}; [ &quot;${!x}&quot; ] &amp;&amp; echo &quot;${!x}&quot; || echo &quot;$x&quot; )\e[m&quot;
+  done
+}</code></pre>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>cp</code></td>
+<td>copy. See <a href="http://www.rapidtables.com/code/linux/cp.htm"
+class="uri">http://www.rapidtables.com/code/linux/cp.htm</a>. Use
+<code>cp -r</code> to also copy the subdirectories (r for recursive, ie,
+apply the same for all subdir), <code>cp -p</code> to keep the
+permissions (p for protective). Warning, if * is used, make sure it is
+outside quotes. Example: <code>cp "source/"* dest</code></td>
+</tr>
+<tr>
+<td><code>rsync</code></td>
+<td>copy of a folder and subfolders / files excluding some of them.
+Example excluding <code>work/</code> and <code>.nextflow/</code>
+subfolders in three levels:
+<code>rsync -av --exclude='work/' --exclude='.nextflow/' --exclude='*/work/' --exclude='*/.nextflow/' --exclude='*/*/work/' --exclude='*/*/.nextflow/' --exclude='*/*/*/work/' --exclude='*/*/*/.nextflow/' ./Alice ./Alice_saved</code></td>
+</tr>
+<tr>
+<td><code>scp</code></td>
+<td>ssh copy. See protocole 48. -r to copy directories</td>
+</tr>
+<tr>
+<td><code>wget</code></td>
+<td>http and ftp copy into local directory. For instance, use:
+<code>wget -r --user=gmillot --password='[REDACTED]' http://zerkalo.curie.fr:8080/partage/RARE/backup/</code>.
+The password must be between ''. The -r option is to download all the
+sub directories and files.</td>
+</tr>
+<tr>
+<td><code>head</code></td>
+<td>display a certain number of first line of a file. Example:
+<code>head -10</code> displays the 10 first lines. A pipe can be used
+like less caca | <code>head -10</code></td>
+</tr>
+<tr>
+<td><code>tail</code></td>
+<td>display a certain number of last line of a file. Example:
+<code>tail -10</code> displays the 10 last lines</td>
+</tr>
+<tr>
+<td><code>wc</code></td>
+<td>display some file information: -c (--bytes) for byte counts, -m
+(--chars) for character counts, -l (--lines) for newline counts, -L
+(--max-line-length) for length of the longest line, -w (--words) for
+word counts. To have the number of lines in a file :
+<code>wc -l file | cut -f1 -d' '</code>, the cut expression meaning
+"extract the field number 1 using a space as a delimiter". Indeed, the
+wc function return the number of lines and the file name (with a space
+separator)</td>
+</tr>
+<tr>
+<td><code>bash</code></td>
+<td>execute a .sh script file. See also <code>sh</code> which is another
+shell. See shebang, that set the shell that will be used, at the
+beginning of a script (see <a
+href="https://stackoverflow.com/questions/10376206/what-is-the-preferred-bash-shebang"
+class="uri">https://stackoverflow.com/questions/10376206/what-is-the-preferred-bash-shebang</a>).
+Warning: in a shebang, <code>bash -eu</code> is equivalent to
+<code>set -eu</code></td>
+</tr>
+<tr>
+<td><code>bash -l</code></td>
+<td>in a shebang, the -l option makes "bash act as if it had been
+invoked as a login shell". Login shells read certain initialization
+files from your home directory, such as .bash_profile. Warning: if
+variables are set in the .bash_profile, the value you set on the command
+line gets overridden when bash launches.</td>
+</tr>
+<tr>
+<td><code>sh</code></td>
+<td>execute a .sh script file. See also <code>bash</code></td>
+</tr>
+<tr>
+<td><code>eval</code></td>
+<td>execute a string script. Example
+<code>eval ""wc -l file.txt""</code>. Warning: do not use it for a .sh
+script file. Example <code>eval x.sh</code>. Because it is possible that
+the execution is not in the expected local environment, which could be a
+problem for variable calling</td>
+</tr>
+<tr>
+<td><code>tr</code></td>
+<td>replace, squeeze, and/or delete characters in a string. Beware tr
+works for charaters replacement, not pattern replacement (string). See
+sed for that (example of replacement of <code>~</code> by
+<code>==</code>: <code>echo "a~b" | sed 's/~/==/g'</code>). To remove
+windows carriage returns \r: <code>tr -d '\r' file.txt</code></td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td>sort lines of text files. Examples:</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre><code>sort x # sort ascendingly the x file according to column 1 to the end of line (the whole line)
+sort -r x # sort the x file according to descending order
+sort -k1 x # idem sort x
+sort -k2 x # sort the x file according to column 2 to the end of line
+sort -k1,1 -k3,3 x # sort the x file according to column 1 (-k1,1 to say that start at 1 and finish at 1), then according to column 3</code></pre>
+<p><code>paste</code> paste lines from file1 with lines from file2 (work
+line by line). Example:</p>
+<pre><code>paste file1 file2 &gt; output</code></pre>
+<p><code>grep</code> seek for pattern in a file and return the rows that
+match (grep means <u>G</u>lobal <u>R</u>egulal <u>E</u>xpression search
+and <u>P</u>rint). Extended pattern globally like in R. See <a
+href="https://en.wikipedia.org/wiki/Regular_expression#POSIX_extended"
+class="uri">https://en.wikipedia.org/wiki/Regular_expression#POSIX_extended</a>
+and <a
+href="https://unix.stackexchange.com/questions/37313/how-do-i-grep-for-multiple-patterns-with-pattern-having-a-pipe-character"
+class="uri">https://unix.stackexchange.com/questions/37313/how-do-i-grep-for-multiple-patterns-with-pattern-having-a-pipe-character</a>.
+Example:</p>
+<pre><code>grep -E &#39;liv&#39; file1 # seek for all the liv string in file1 # always use -E (extended) or -P (perl). Otherwise, no + (among other) in BRE (basic regex)
+grep -vE &#39;liv&#39; file1 # -v for everything except
+grep -q &#39;liv&#39; file1 # logical grep as -q is for returning the exit code, with zero exit code mapped to &quot;true&quot; and a non-zero exit code mapped to false (thus, equivalent to grepl from R). Example with if: if grep -Eq &quot;Liv&quot; file1 ; then # does not work without [[]]
+VAR=&quot;Bonjour Liv. Ca va Liv?&quot; ; echo $VAR | grep -Ebo &#39;Liv&#39; # -b to get the position (starting at 0 !) of the pattern in the string, -o to have only the part of a line matching PATTERN
+VAR=&quot;Bonjour Liv. Ca va Liv?&quot; ; echo $VAR | grep -Ebo &#39;Liv&#39; | sed &#39;s/:.*$//&#39; # to keep only the position</code></pre>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>cut</code></td>
+<td>extract some columns from a file. For instance,
+<code>cut -f 2 myfile.txt</code> take only the second column in the file
+having tab separator (default). To specify separator, use -d. Example:
+<code>cut -d \;</code> for semi-colon separator,
+<code>cut -d $'\t'</code> or <code>cut -d '</code></td>
+<td><code>'</code> (use ctrl + v then tab to write it in the console)
+for tab delim. Example: <code>cut -d \  -f 5- myfile.txt</code> keep the
+columns 5 and more (remove columns 1 to 4), space separated. Example:
+<code>cut -d, -f-4,6-6,8-10,12-</code> to remove (delete) 5, 7, and 11,
+comma spearated</td>
+</tr>
+<tr>
+<td><code>uniq</code></td>
+<td>report or filter out duplicated lines in a file. For instance,
+<code>uniq -d myfile.txt</code> print the duplicated lines only</td>
+<td></td>
+</tr>
+<tr>
+<td><code>sed</code></td>
+<td>replace, squeeze, and/or delete patterns in a file. To replace in a
+string, use echo and tr (see below) or see <code>${}</code>. The base is
+<code>sed 's///g' x</code>, with x the file to modify, s for substitute
+command and g flag for "apply the replacement to all matches to the
+regexp, not just the first". Put the pattern to search between the two
+first slashes, and the replacement pattern between the two last slashes.
+Use -i to modifie the input file, otherwise the result is printed.
+<u>Use double quotes if a variable is used as pattern</u>. See <a
+href="https://www.gnu.org/software/sed/manual/sed.html"
+class="uri">https://www.gnu.org/software/sed/manual/sed.html</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><a
+href="http://unix.stackexchange.com/questions/69112/how-can-i-use-variables-when-doing-a-sed"
+class="uri">http://unix.stackexchange.com/questions/69112/how-can-i-use-variables-when-doing-a-sed</a></p>
+<p>Examples:</p>
+</blockquote>
+<pre><code>sed -e &#39;s/\r//g&#39; # remove the windows carriage return
+sed -i &#39;s/ /./g&#39; x # each space replaced by a dot in all the x file containing character strings, -i to assign the modification into x. Can be written sed -i &#39;s/[[:space:]]/./g&#39; x. Beware: for [[:space:]], sed -E might need to be written, for extended regular expression
+sed &#39;s/ /./g&#39; x &gt; y # same except that the result is assign into y
+sed &#39;s/ \{1,\}/,/g&#39; x # the same except that each group of several consecutive spaces are replaced by a comma
+sed &#39;s/\//./g ; s/ADP=//g&#39; x # replace the special character / (written \/)
+sed &#39;s/ /./g ; s/ADP=//g&#39; x # 2 patterns modifed: space and ADP=
+sed -i &#39;1d&#39; x # remove/delete first line of a file
+sed &#39;/^N*$/d&#39; file1 # remove/delete lines (rows) that are exclusively made of N
+sed &#39;/^#C/{q}&#39; file1 # print all the lines starting by #
+sed -n 1p x # print first line (header for instance) of a file (equivalent to head -1 x)
+sed -i &quot;1 s/^/$(echo -e $y)\n/&quot; x # to add a first line (indicated by 1) which is represented by $(echo -e $y). BEWARE: use double &quot; to interpret the variables. Otherwise, sed add literally $(echo -e $y) at the beginning of the file
+sed -i &#39;1 s/a/bc/g&#39; x # to replace all the a by bc in the first line
+sed &#39;s/.*//&#39; x # to replace every character by nothing: dot means any character and * means any number of times so the g flag is not necessary here
+sed &#39;s/[[:space:]]\+/\ /g&#39; x # to replace every block of consecutive white separtor by a single space. \+ is the metacharacter of at least one. Beware: /[[:space:]]*/ or / */ replace 0 or more white separator in sed, but 1 or more in grep. Use \  for space instead of white separator
+sed &quot;s/$var/a/g&quot; x # use double quotes for variable. No / must be present in $var, otherwise see next
+sed &quot;s|$var|a|g&quot; x # when / in the $var variable, change separator with one not present in $var
+sed -r &#39;s/(^[1-9]\t)/0\1/&#39; x &gt; y # replace the content of a case in the x table by something else. -r to declare &quot;extended regexp&quot; and to be able to use it. (^[1-9]\t) is the expression to replace. Means everything between the beginning of the line (^) and a tabulation (\t) that is 1 or 2 or ... 9. The parentheses are added for the replacement. In the replacement section, 0\1 means take the first regexp between parentheses that match and add a zero before. Finally, save that in the y file
+sed -i -r &#39;s/^X\t/23\t/&#39; $OUTPUT # idem previous line but replace X by 23. In that case, no parenthese needed, but tabulation must be signaled after 23
+var1=&quot;_._&quot; ; var2=$(echo &quot;a b c&quot; | sed &quot;s/ /$var1/g&quot;) ; echo $var2
+sed &#39;1140063q;d&#39; file1 # display/extract the line 1140063 of the file1 file, then quit (q) then print (d). With variable, use double quotes: sed &quot;${VAR1}q;d&quot; file1</code></pre>
+<blockquote>
+<p>To remove lines with a pattern:</p>
+</blockquote>
+<pre><code>sed -i -r &quot;/(^na\tna\tmin.*)|(^na\tna\tmax.*)/d&quot; file.txt #remove lines taht start by &quot;na   na  min&quot; or &quot;na na  max&quot;</code></pre>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>history</code></td>
+<td>display the instruction history. See also the history section</td>
+</tr>
+<tr>
+<td><code>find</code></td>
+<td>find files. Example: <code>find . -name "*.mp3"</code> seek for list
+filenames ending in .mp3, searching in the current folder and all
+subfolders. To get all the files in subdirectories together with their
+relative path: <code>find . -type f</code></td>
+</tr>
+<tr>
+<td><code>tee</code></td>
+<td>output all what is diplayed in the console in a file, when a .sh job
+is executed. Use for instance
+<code>sh process_Merlin_gael.sh | tee log.txt</code>. Use -a to append.
+See <a
+href="https://www.hostinger.fr/tutoriels/commande-tee-linux-avec-exemples"
+class="uri">https://www.hostinger.fr/tutoriels/commande-tee-linux-avec-exemples</a>.
+Warning: <code>sh process_Merlin_gael.sh |&amp; tee log.txt</code> pipes
+standard and error output -&gt; errors occuring inside
+<code>process_Merlin_gael.sh</code> do not stop the execution anymore.
+Warning: <code>sh process_Merlin_gael.sh | tee log.txt</code>. can
+behave so that subprocess with errors in
+<code>sh process_Merlin_gael.sh</code> does not stop the execution
+because of the pipe. See <a
+href="https://stackoverflow.com/questions/73352910/why-does-exit-not-exit-my-script-when-i-pipe-it-to-tee"
+class="uri">https://stackoverflow.com/questions/73352910/why-does-exit-not-exit-my-script-when-i-pipe-it-to-tee</a>
+and see "|" above. Use
+<code>sh process_Merlin_gael.sh &gt; &gt;(tee log.txt)</code>
+instead</td>
+</tr>
+<tr>
+<td><code>tree</code></td>
+<td>useful alias that displays the arborescence from the current
+location. Copy-paste
+<code>alias tree="find . -print | sed -e 's;[^/]*/;|--;g;s;____|; |;g'".</code>
+See also .profile in protocol 94 to install the tree command</td>
+</tr>
+<tr>
+<td><code>mv</code></td>
+<td>rename or move a file. For instance x is renamed y:
+<code>mv x y</code>. To move the content of a folder one level up:
+<code>mv myfolder/* .</code></td>
+</tr>
+<tr>
+<td><code>rename</code></td>
+<td>rename a single file. Cannot work with * to indicate multiple files.
+Example: <code>rename 's/-/_/' file-1.txt</code></td>
+</tr>
+<tr>
+<td><code>pushd .</code></td>
+<td>(push directory) record the path of the current location and put it
+into a stack. Very cool when we are working in two distant locations.
+Elements of this stack can be recover from the last entered element,
+using <code>popd</code> and also from the first entered element.</td>
+</tr>
+<tr>
+<td><code>popd</code></td>
+<td>(pop directory) relocate using the last entered path of
+<code>pushd</code>. The <code>popd</code> command takes out the last
+element (see above) of the <code>pushd</code> stack. Beware: an element
+used (taken out) is not anymore present in the stack. This means that
+popd used twice does not send to the same location (last and previous
+last that becomes the last when the last is removed from the
+stack).</td>
+</tr>
+<tr>
+<td><code>awk</code></td>
+<td>Find and Replace text, or database sort/validate/index. The syntaxe
+is <code>awk ' ' file</code>. Everything between the apostrophes is the
+program to execute.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>Beware with locales, notably how the locale deals with decimal
+separator (comma or dot):<a
+href="https://stackoverflow.com/questions/18946689/why-does-awk-refuse-to-sum-up-floats"
+class="uri">https://stackoverflow.com/questions/18946689/why-does-awk-refuse-to-sum-up-floats</a></p>
+<p>Beware, inside this field, the code is not bash but is awk (see <a
+href="https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html"
+class="uri">https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html</a>
+and for printf in awk, see <a
+href="http://www.linuxnix.com/awk-scripting-8-awk-printf-statements-examples/"
+class="uri">http://www.linuxnix.com/awk-scripting-8-awk-printf-statements-examples/</a>).
+For special variables of awk, like:</p>
+<p>FS (Input Field Separator, ie, columns separator)</p>
+<p>OFS (Output Field Separator, default: single space character)</p>
+<p>RS (Input Record Separator, step by step separator, line by default,
+a record being a line)</p>
+<p>ORS (Output Record Separator)</p>
+<p>NR (Record Number, ie, line number being processed. For instance
+<code>if(NR==1)</code> means "if it is the first line" . Warning: if
+several files, NR will go up to the total number of lines of all
+files)</p>
+<p>FN (Number of Fields in a record, ie, number of columns)</p>
+<p>FILENAME (File Name)</p>
+<p>FNR (Number of Records in the current File Name being processed. For
+instance <code>if(FNR==1)</code> means "if it is the first line in the
+current file". Warning: if several files, FNR will reset when starting
+the new file)</p>
+<p>see <a
+href="http://www.thegeekstuff.com/2010/01/8-powerful-awk-built-in-variables-fs-ofs-rs-ors-nr-nf-filename-fnr/?ref=binfind.com/web"
+class="uri">http://www.thegeekstuff.com/2010/01/8-powerful-awk-built-in-variables-fs-ofs-rs-ors-nr-nf-filename-fnr/?ref=binfind.com/web</a>.</p>
+<p>Variables and functions in awk: <a
+href="https://www.shortcutfoo.com/app/dojos/awk/cheatsheet"
+class="uri">https://www.shortcutfoo.com/app/dojos/awk/cheatsheet</a></p>
+<p>General rules:</p>
+<p>awk scan each line of a file, whatever happens. First line is 0</p>
+<p>By default, awk print the whole line, i.e., <code>print $0</code></p>
+<p>The structure is <code>condition{instruction}</code></p>
+<p>But <code>{instruction}</code> alone means that the instruction will
+be applied for all lines</p>
+<p>But <code>condition</code> alone means that <code>print $0</code>
+will be applied for all <code>TRUE (1), false is 0</code></p>
+<p>The program is divided into <code>//{}</code>. And in fact divided
+into <code>BEGIN{} //{} //{} ... END{}</code> Between the slash is the
+regular expression (pattern, see <a
+href="https://opensource.com/article/19/11/how-regular-expressions-awk"
+class="uri">https://opensource.com/article/19/11/how-regular-expressions-awk</a>)
+to identify (optional, can be replaced by a condition which is not
+between //) and between the braces is the action to apply. The command
+works per line, called "record", in arrays or matrices, with $0 meaning
+the full line, $1 the first element, called "field", $2 the second
+element, etc. -F to specify the separator field (default tabulation),
+with the separator between apostrophe.</p>
+<p>Beware: as said above, there are implicit executions. For instance,
+nothing in awk means print $0. Another example:
+<code>{if($2 in a){print $0}}</code> can be written
+<code>$2 in a.</code></p>
+<p>Beware: by default, awk does not like CR (carriage return at the end
+of line). Check files first with <code>cat -A</code> and remove with
+<code>tr -d '\r'</code> or <code>sed -e 's/\r//g'</code></p>
+<p>To deal with single and double quotes:
+'<code>awk '"'"'print $0'"'"' file' # see below</code></p>
+<p>Or '<code>awk '\''print $0'\'' file'</code>. <a
+href="https://www.gnu.org/software/gawk/manual/gawk.html#Quoting"
+class="uri">https://www.gnu.org/software/gawk/manual/gawk.html#Quoting</a></p>
+<p><a
+href="https://askubuntu.com/questions/475243/why-does-using-double-quotes-to-enclose-awks-action-statements-produce-differen"
+class="uri">https://askubuntu.com/questions/475243/why-does-using-double-quotes-to-enclose-awks-action-statements-produce-differen</a></p>
+<p><a
+href="https://stackoverflow.com/questions/44445852/difference-between-single-and-double-quotes-in-awk"
+class="uri">https://stackoverflow.com/questions/44445852/difference-between-single-and-double-quotes-in-awk</a></p>
+<p><a
+href="https://stackoverflow.com/questions/9899001/how-to-escape-a-single-quote-inside-awk"
+class="uri">https://stackoverflow.com/questions/9899001/how-to-escape-a-single-quote-inside-awk</a></p>
+<p>To escape a special character in regex, use <code>\</code>. Example
+of () escape: <code>awk '! /eval\(ee\)/{print $0}'</code></p>
+<p>A few examples:</p>
+<p>To select the lines for which the 5th element is more than 30, in the
+<code>G75T01_chr1_Q20.sam</code> file, with tabulation as separator:</p>
+</blockquote>
+<pre><code>awk &#39;{print $2}&#39; G75T01_chr1_Q20.sam # print the second column of a sam file. Or samtools view G75T01_test.bam | awk &#39;{print $2}&#39;
+awk &#39;$0 ~ /^(N*)$/ {print $0}&#39; G75T01_chr1_Q20.sam # print the lines/rows that are made of N only. Can be simplify as this: awk &#39;/^(N*)$/ {print $0}&#39; G75T01_chr1_Q20.sam. Not advised to remove the ()
+awk &#39;$0 ~ !/^(N*)$/ {print $0}&#39; G75T01_chr1_Q20.sam # remove/delete lines/rows that are made of N only. Can be simplify as this: awk &#39;!/^(N*)$/ {print $0}&#39; G75T01_chr1_Q20.sam. Not advised to remove the ()
+awk &#39;$0 ~ /^N*$/ {print $0}&#39; G75T01_chr1_Q20.sam # print the lines/rows that are made of N only
+awk &#39;$0 ~ /^N*$/ {print $0 ; exit}&#39; G75T01_chr1_Q20.sam # print the lines/rows that are made of N only and stop (exit, end) after that
+awk -F &#39;\t&#39; &#39;BEGIN{OFS=&quot;&quot;} {print $1}&#39; x &gt; y # recover first column of the x file and save it into y file. BEGIN{OFS=&quot;&quot;} garantees no output file separator (OFS)
+awk -F &#39;\t&#39; &#39;$5 &gt; 30 {print $0}&#39; G75T01_chr1_Q20.sam # -F &#39;\t&#39; to specify the tabulation as separator field, $5 &gt; 30 {print $0} is the program (no // because no regular expression used, just a condition), print $0 to output the whole line result
+awk -F &#39;,&#39; &#39;//{if (int($5) &gt; 30){print $0}}&#39; G75T01_chr1_Q20.sam # other way to write it (except that the separator is a comma). // because empty pattern, if (int($5) &gt; 30){print $0} is the action, int($5) to specify that the value in $5 is an integer and not a character string
+awk -F &#39;\t&#39; &#39;$3 ~ /chr3/ {print $0} /^@/ {print $0}&#39; G75T01_chr1_Q20.sam # between the &#39;&#39; is $3 ~ /chr3/ {print $0} /^@/ {print $0} which is made of 2 actions: the first is $3 ~ /chr3/ {print $0}, which test that $3 match (written ~) the regular expression chr3 (written between // because regular expression) and the second that take all the lines starting with @ (^@ written between // because it is a regular expression). Finally, akw takes the lines with chr3 in third column ($3) OR lines starting by @
+awk -F &#39;\t&#39; &#39;$3 ~ /chr[1-3]/ &amp;&amp; $2 &gt; 100 {print $0}&#39; G75T01_chr1_Q20.sam # test that $3 match (written ~) the regular expression chr1, chr2 or chr3 (written between // because regular expression) AND (written &amp;&amp;) test that $2 sup to 100 (not written between // because it is not a regular expression)
+awk -F &#39;\t&#39; -v var1=$i &#39;$3 ~ var1 {print $0}&#39; G75T01_chr1_Q20.sam # awk -v to create the variable var1, which is a local variable of awk, which is used without //. This trick allows to use awk in a loop by testing $i. Of note, between &#39;&#39;, there is no interpretation ,meaning that &#39;$3 ~ $i {print $0}&#39; does not work</code></pre>
+<blockquote>
+<p>To print a range of fields:</p>
+</blockquote>
+<pre><code>awk -v var1=2 -v var2=7 &#39;BEGIN{FS=OFS=&quot;\t&quot;}{for(i=var1;i&lt;=var2;i++){printf &quot;%s%s&quot;, $i, (i&lt;e ? OFS : ORS)}}&#39; file</code></pre>
+<blockquote>
+<p>To print into 2 files:</p>
+</blockquote>
+<pre><code>awk &#39;{print $0 &gt; &quot;name.txt&quot; ; print $0 &gt; &quot;seq.txt&quot;}&#39; file1 &gt; /dev/null</code></pre>
+<blockquote>
+<p>To print into several files:</p>
+</blockquote>
+<pre><code>awk &#39;BEGIN {FS=&quot;\t&quot;}; {print $2,FS,$3,FS,$4 &gt;&gt; &quot;output_file_&quot;$5} input_file.txt &gt; /dev/null</code></pre>
+<blockquote>
+<p>To print several files into several files:</p>
+</blockquote>
+<pre><code>awk &#39;BEGIN {FS=&quot;\t&quot;}; {print $2,FS,$3,FS,$4 &gt;&gt; &quot;output_file_&quot;$5} *.txt &gt; /dev/null</code></pre>
+<blockquote>
+<p>To split a variable and store in an array:</p>
+</blockquote>
+<pre><code>VAR1=&quot;CHROM POS ID REF ALT QUAL FILTER INFO FORMAT&quot;
+awk -v header=&quot;$VAR1&quot; &#39;BEGIN{split(header, array1, &quot; &quot;) ; for (key in array1) {print array1[key]}}&#39;
+# does not work: header=&#39;$VAR1&#39; or header=$VAR1
+# does not work: split(header, array1, &quot;[:space:]&quot;)</code></pre>
+<blockquote>
+<p>To know the max or min value in column 1 (example with max):</p>
+</blockquote>
+<pre><code>awk -v max=0 &#39;{if($1&gt;max){max=$1}}END{print max} &#39; file</code></pre>
+<blockquote>
+<p>To remove lines with a pattern:</p>
+</blockquote>
+<pre><code>awk &#39;!/^@/{print $0}&#39; G75T01_chr1_Q20.sam # remove the header of the sam file. ^ defines the first character of the string, here @, in !/^@/ the ! is &quot;do not take lines with this pattern /^@/&quot;</code></pre>
+<blockquote>
+<p>To keep lines with a pattern and add a condition:</p>
+</blockquote>
+<pre><code>awk &#39;!/^@/{if (int($5) &gt; 30){print $0}}&#39; G75T01_chr1_Q20.sam # remove the header of the sam file and perform a condition on the remaining lines</code></pre>
+<blockquote>
+<p>To keep lines with a pattern in a variable:</p>
+</blockquote>
+<pre><code>TEMPO_IND=&quot;1\|2\|3&quot; # the |OR will be used as a regex
+awk -v var1=$TEMPO_IND &#39;BEGIN{FS=&quot;\t&quot; ; OFS=&quot;\t&quot; ; ORS=&quot;\n&quot;}{if ( $2 ~ &quot;^(&quot; var1 &quot;)$&quot; ) print $0 }&#39; x &gt; y # print the whole line if column is exactly /^(1|2|3)$/</code></pre>
+<blockquote>
+<p>To extract lines with patterns and condition in a loop:</p>
+</blockquote>
+<pre><code>for i in $(seq 0 5) ;  do
+awk -F &#39;\t&#39; -v var1=$i &#39;$1 ~ /chr13/ &amp;&amp; $19 &gt;= var1 {print $0}&#39; $INPUT &gt; $OUTPUT_$i ;
+done
+# the INPUT file is parsed for the chr13 pattern in the first column ($1) and for the fact that values in column 19 ($19) are &gt;= to var1 which is i. Beware, bash comparison operators, like -ne, -eq, -ge, etc. do not work inside awk</code></pre>
+<blockquote>
+<p>To replace a pattern in a specific column:</p>
+</blockquote>
+<pre><code>awk -F &#39;\t&#39; &#39;BEGIN{OFS=&quot;\t&quot;} {gsub(/:/, &quot;\t&quot;, $50) ; print $0}&#39; G75T01_chr1_Q20.sam # replace colon (:) by a tabulation in column 50 only. Several gsub() can be used, separated by semi colons (;). See https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html. BEGIN{OFS=&quot;\t&quot;} guarantees that the output is tab delimited (OFS is Output File Separator)</code></pre>
+<blockquote>
+<p>To replace square brackets or single quote in a specific column:</p>
+<p>See <a href="135-apptainer.html">protocol 135 Nextflow</a>.</p>
+<p>To add the computation of columns (sum and division) into a new
+column:</p>
+</blockquote>
+<pre><code>awk &#39;BEGIN{OFS=&quot;\t&quot;} {printf &quot;%s\t%s\n&quot;, $0,($1+$2)/($1+$2+$3)}&#39; x &gt; y # printf print with a special format. Between double quotes, %s means &quot;print the first argument as string&quot;, then tabulation then &quot;print the second argument as string&quot;. The arguments are defined after the commas, first for $0 (all the line) and second for the computation on specific coulumns of the line</code></pre>
+<blockquote>
+<p>To add a header, remove column 2 and fuse column 3 and 4:</p>
+</blockquote>
+<pre><code>awk -F &#39;\t&#39; &#39;BEGIN{FS=&quot;\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot; ; print &quot;SNP_ID\t[REDACTED]\n&quot;} {print $1&quot;\t&quot;$3$4&quot;\n&quot;}&#39; ID_[REDACTED]_GT.txt &gt; ID43_gm_modified.txt</code></pre>
+<blockquote>
+<p>To print multiple columns:</p>
+</blockquote>
+<pre><code>TEMPO_IND=&quot;1\|2\|3&quot; # the |OR will be used as a regex
+awk -v var1=$TEMPO_IND &#39;BEGIN{FS=&quot;\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot;}{if(NR==1){for (j=1; j&lt;=NF; j++){if ($j ~ &quot;^(&quot; var1 &quot;)_Call$&quot; ) {col_nb[j] = j ; print $j&quot;\t&quot; }} print &quot;\n&quot; }} {if(NR&gt;1){for (j=1; j&lt;=NF; j++){if (j==col_nb[j]) {print $j&quot;\t&quot;}} print &quot;\n&quot; }}&#39; x &gt; y</code></pre>
+<blockquote>
+<p>To print multiple columns and add columns with 0:</p>
+</blockquote>
+<pre><code>awk &#39;BEGIN{OFS=&quot;&quot; ; ORS=&quot;&quot;} {print $1&quot;\t&quot;$2&quot;\t0\t0\t0\t0\n&quot;}&#39; FinalReport_lifted.lgen &gt; FinalReport_lifted.fam # OFS=&quot;&quot; ; ORS=&quot;&quot; inactivate the outup file separator and line end</code></pre>
+<blockquote>
+<p>To escape a single quote or \n (line end):</p>
+</blockquote>
+<pre><code>see https://stackoverflow.com/questions/1250079/how-to-escape-single-quotes-within-single-quoted-strings
+echo -e &#39;#!/bin/sh\nawk &#39;&quot;&#39;&quot;&#39;BEGIN{FS=&quot;\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot;}{for ( j=1; j&lt;=NF; ++j ) {if ( j ~ /^[1-7]$/ ) print $j&quot;\t&quot; } print &quot;\\n&quot; }&#39;&quot;&#39;&quot;&#39; test_file &gt; chrX_freq_file&#39; &gt; testX_job.sh # the &#39;&quot;&#39;&quot;&#39; string escapes &#39; and \\n escape \n (this has to be escaped because of echo -e
+testX_job.sh</code></pre>
+<blockquote>
+<p>To print a line except if character present in a colum:</p>
+</blockquote>
+<pre><code>awk &#39;BEGIN{FS=&quot;\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot;} { if ($3 != &quot;.&quot; &amp;&amp; $4 !~ /^.*[,].*$/) {for ( j=1; j&lt;=NF; ++j ) {if ( j ~ /^[1-7]$/ || $j ~ /AF_NFE=/ ) print $j&quot;\t&quot; } print &quot;\n&quot; }}&#39; # check if column 3 not made of a single dot, and column 4 and 5 not containing a comma . If the case, then print the 1-7 columns, then the column that contain AF_NFE=
+# BEWARE: $3 != &quot;.&quot; can be written $3 !~ /^\.$/
+# BEWARE: $3 != &quot;.&quot; &amp;&amp; $4 !~ /^.*[,].*$/ can be written ! ($3 == &quot;.&quot; || $4 ~ /^.*[,].*$/)</code></pre>
+<blockquote>
+<p>To cross (merge) the content of two files (compare multiple/several
+files) and print the lines of file 2 if element also present in file 1
+(see tricks below):</p>
+</blockquote>
+<pre><code>awk -F &quot;\t&quot; &#39;{if(FNR==NR){a[$1] ; next}} {if($3 in a){print $0}}&#39; file1 file2
+# file1 is a multi column file, containing the elements to cross in column 1. Elements of file 2 to cross are in column 3 ($3)
+# File 2 is the file to print with element of file 1 in it
+# a[$1] take $1 in file 1 and put it as a key in array a (key is like name in R of a data frame column or compartment list)
+# Normally, awk scan the first file, then the second. In this command:
+# awk &#39;NR==FNR{a[$1]}&#39; file1 file2  NR==FNR prevents the scan of file2 (see echo -e &quot;a\nb\nc&quot; &gt; file1 ; echo -e &quot;d\ne&quot; &gt; file2 ; awk &#39;{print FILENAME, NR, FNR, $0}&#39; file1 file2). Thus only file1 is used to fill a
+# awk &#39;NR==FNR{a[$1] ; next}&#39; file1 file2   next is important to to go to the next line of file1 and repeat the process
+# if($3 in a){print $0} print file 2 line when $3 of file 2 is anywhere in a
+# Beware, {if(FNR==NR){a[$1] ; next}} can be written FNR==NR{a[$1] ; next}
+# Beware, {if($3 in a){print $0}} can be written ($3 in a){print $0}
+# see also tricks below</code></pre>
+<blockquote>
+<p>else if and else command in awk:</p>
+</blockquote>
+<pre><code>https://www.thegeekstuff.com/2010/02/awk-conditional-statements</code></pre>
+<p><code>vi</code> text editor. <a href="http://ss64.com/vi.html"
+class="uri">http://ss64.com/vi.html</a>.</p>
+<blockquote>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>O</td>
+<td>open line above cursor</td>
+</tr>
+<tr>
+<td>i</td>
+<td>insert text at cursor</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>ESC to swith toward command mode. Then type : to have the ability to
+write commands.</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>:w</td>
+<td>save</td>
+</tr>
+<tr>
+<td>:q</td>
+<td>quite</td>
+</tr>
+<tr>
+<td>:wq</td>
+<td>save and quit</td>
+</tr>
+<tr>
+<td>:q!</td>
+<td>quit without saving</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="../md/img/044-bash/image4.png" style="width:49.0%"
+loading="lazy" /></p>
+</blockquote>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>(())</code></td>
+<td>simple calcul. For instance <code>echo $((7+4))</code></td>
+</tr>
+<tr>
+<td><code>[[]]</code></td>
+<td>Specify a comparison. See section <a
+href="#comparison">Comparison</a>. Example:
+<code>y="fastq"; if [[ $y == "fastq" ]]; then echo "x"; fi</code> gives
+<code>x</code>. These <code>[[]]</code> accepts double quotes or not for
+each compared element. Example: <code>[[ "$y" == "fastq" ]]</code> or
+<code>[[ $y == fastq ]]</code>. Another example:
+<code>x=1; if [[ $x == "1" ]] ; then echo "ok" ; else echo "no"; fi # remove or add quotes in x=1 and $x == "1".</code>
+Warning: <code>x=""</code> is equivalent to empty. Example:
+<code>x="" ; if [[ ! -z $x ]] ; then echo "empty" ; else echo "nonempty" ;  fi</code>.
+Use: <code>!</code> for opposite. Example:
+<code>if [[ ! -z $x ]]</code>. Warning: wildcard cannot work with
+<code>[[]]</code>, as there is no expansion.</td>
+</tr>
+<tr>
+<td><code>[]</code></td>
+<td>Specify a comparison. See section <a
+href="#comparison">Comparison</a>. Warning: <code>[]</code> doe not like
+<code>=~</code>:
+<code>y="fastq"; if [ "$y" =~ "fastq" ]; then echo "x"; fi</code>
+generates an error, which is not the case with <code>[[]]</code>.
+Warning: use quotes with <code>[]</code>, except if wildcard is used.
+Example: <code>if [ -f "$file" ]</code>. It is advised to use
+<code>[[]]</code> as it uses more functions. See <a
+href="https://www.baeldung.com/linux/bash-single-vs-double-brackets"
+class="uri">https://www.baeldung.com/linux/bash-single-vs-double-brackets</a></td>
+</tr>
+<tr>
+<td><code>=~</code></td>
+<td>take the regular expression(s) on the right side and gives true (0)
+if it matches the left side. Order and capital letter are considered.
+Example: <code>y="fastq"; if [[ $y =~ fastq ]]; then echo "x"; fi</code>
+gives <code>x</code>, <code>[[ $y =~ fas ]]</code> gives also
+<code>x</code> but <code>[[ $y =~ o ]]</code> or
+<code>[[ $y =~ FAStq ]]</code> or <code>[[ $y =~ saf ]]</code> gives
+nothing (false). Beware: never use double quotes after <code>=~</code>
+except if " is part of what as to be detected. For instance,
+<code>[[ $y =~ "^a$" ]]</code> will recognize this pattern
+<code>"^a$"</code> and the regex will not be applied</td>
+</tr>
+<tr>
+<td><code>set -e</code></td>
+<td>stop the process if a command return something different from 0 in
+$?. Use <code>set -ex</code> to have the blocking line. It is important
+to know that each instruction executed send a result in $? Either 0
+(true) or something else (different from 0). Beware: Cygwin seems to
+unlike it during a copy-paste. In fact, <code>set -e</code> is usefull
+when sourcing or calling a file script (.sh)</td>
+</tr>
+<tr>
+<td><code>printenv</code></td>
+<td>print/display all the variables of the current environment</td>
+</tr>
+<tr>
+<td><code>printf</code></td>
+<td>print nicely</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>To print elements of an array separated by \n:</p>
+</blockquote>
+<pre><code>printf &#39;%s\n&#39; &quot;${ARRAY[@]}&quot;</code></pre>
+<blockquote>
+<p>Comma separator of thousands:</p>
+</blockquote>
+<pre><code>LC_NUMERIC=&quot;en_US.UTF-8&quot; # printf does not work with some locales
+printf &quot;%&#39;d\n&quot; 1234567 # \n to have a end of line after the printing</code></pre>
+<h2 id="bash-tricks"><span class="header-section-number">30</span> Bash
+tricks<a class="headerlink" href="#bash-tricks" title="Link to this heading"></a></h2>
+<h3 id="global"><span class="header-section-number">30.1</span>
+Global<a class="headerlink" href="#global" title="Link to this heading"></a></h3>
+<p>An instruction in bash is a standard input (entrée standard, may be
+value 0 for the position), a standard output (sortie standard, value 1)
+and an error output (value 2). See <a
+href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html"
+class="uri">http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html</a>. See
+<a
+href="http://unix.stackexchange.com/questions/16357/usage-of-dash-in-place-of-a-filename"
+class="uri">http://unix.stackexchange.com/questions/16357/usage-of-dash-in-place-of-a-filename</a>
+for the dash use.</p>
+<p>When using <code>man</code> or <code>less</code> commands, write
+<code>/-h</code> to find all the -h strings in the page, then
+<code>n</code> (next) for next occurence, <code>b</code> (back) for
+previous occurence, <code>q</code> for quit.</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>echo -n "" &gt; x</code></td>
+<td>creation of the empty file x</td>
+</tr>
+<tr>
+<td><code>&gt; x</code></td>
+<td>overwrite the x file by an empty x file, or create an empty x
+file</td>
+</tr>
+<tr>
+<td><code>x=``</code></td>
+<td>the instruction between backquotes `` (AltGr 7) is executed in a
+subprocess (not the same memory space) and the result is assigned to the
+variable x. Example <code>x=`man sort`</code></td>
+</tr>
+<tr>
+<td><code>x=$()</code></td>
+<td>idem. Example:
+<code>x=$(samtools view G75T01_chr10_ReorderSam.bam | awk -F '\t' '{print $4}' -)</code></td>
+</tr>
+<tr>
+<td><code>x=("1" "2" "3")</code></td>
+<td>to create an array. Beware <code>echo $a</code> does not display all
+the array but only the first element. Use</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>echo ${x[0]}</code></td>
+<td>gives the first element of an array, <code>${x[1]}</code> gives the
+second, etc...</td>
+</tr>
+<tr>
+<td><code>echo ${#x[@]}</code></td>
+<td>number of elements in the array variable x.
+<code>echo ${x[@]}</code> (or sometimes <code>echo $x[@]</code>) print
+all the elements of the array (because of <code>[@]</code> which takes
+everything). <code>{#}</code> gives the length. For the number of
+character in the string variable x: <code>echo ${#x}</code>. For the
+number of lines of a file:
+<code>length=`cat BAM/G75T01/TMP_BAM/test_order | wc -l`</code></td>
+</tr>
+<tr>
+<td><code>echo ${x[-1]}</code></td>
+<td>gives the first last element of an array, <code>${x[-2]}</code>
+gives the seconf last, etc... Warning: works only for bash v4.2 and
+later. Before, use: <code>echo ${x[${#x[@]}-1]}</code></td>
+</tr>
+<tr>
+<td><code>y=( ${x[@]} )</code></td>
+<td>assign an array into a new array variable</td>
+</tr>
+<tr>
+<td><code>printf '%s\n' "${OUTPUT_ARRAY[@]}"</code></td>
+<td>print all the elements of the array separated by \n</td>
+</tr>
+</tbody>
+</table>
+</div>
+</blockquote>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>declare -p x 2&gt; /dev/null</code></td>
+<td><span class="red">display the created variables in the environement.
+Use</span>
+<code>declare -p x 2&gt; /dev/null | grep 'declare \-a'</code> <span
+class="red">or other grep to filter</span></td>
+</tr>
+<tr>
+<td><code>declare -a x</code></td>
+<td>display the content of the variable x (string, array, etc.)</td>
+</tr>
+<tr>
+<td><code>dev/null</code></td>
+<td>null device typically used for disposing of unwanted output streams
+of a process, or as a convenient empty file for input streams</td>
+</tr>
+<tr>
+<td><code>x=""</code></td>
+<td>equivalent to empty. Example:
+<code>x="" ; if [[ -z $x ]] ; then echo "empty" ; else echo "nonempty" ;  fi</code></td>
+</tr>
+<tr>
+<td><code>a="x y"</code></td>
+<td>to concatenate strings. This also works:
+<code>a="x"; b="y"; c=$a$b; echo $c</code> or <code>c="$a $b"</code> to
+respect the space. The + operator is nice to add string:
+<code>a="x"; a+="y"; echo $a</code>.</td>
+</tr>
+<tr>
+<td><code>echo -e "10\n2\n3"</code></td>
+<td>-e in <code>echo</code> interpret the end of line, otherwise display
+the <code>\n</code></td>
+</tr>
+<tr>
+<td><code>echo $x | tr " " "\n"</code></td>
+<td>replace space by end of line. Or
+<code>echo $x | tr [:space:] '\n'.</code> Beware:
+<code>x=`echo $x | tr " " "\n"`</code> does not work because the
+assignation does not take the end of line. Beware tr works for charaters
+replacement, not pattern replacement (string). See sed for that.</td>
+</tr>
+<tr>
+<td><code>history | grep x</code></td>
+<td>to filter the history output with only the script containing x</td>
+</tr>
+<tr>
+<td><code>2&gt;&amp;1</code></td>
+<td>redirect the error into the standard output. At first,
+<code>2&gt;1</code> may look like a good way to redirect stderr to
+stdout. However, it will actually be interpreted as "redirect stderr to
+a file named 1". <code>&amp;</code> indicates that what follows is a
+file descriptor and not a filename. So the construct becomes:
+<code>2&gt;&amp;1</code>. Put an espace after the command and the
+arguments. Example <code>sort -c $x 2&gt;&amp;1 | echo</code> test if
+the values of x are sorted and fusion the two outputs</td>
+</tr>
+<tr>
+<td><code>arr=($x)</code></td>
+<td>transform the variable x into an array. Example
+<code>x="1 2 3" ; arr=($x) ; echo $x ; echo ${arr[2]} ; echo ${arr[@]}</code>.
+Beware: bash uses the zero index, ie first case of the array is obtained
+with <code>echo ${arr[0]}</code>. See <a
+href="http://www.tecmint.com/working-with-arrays-in-linux-shell-scripting/"
+class="uri">http://www.tecmint.com/working-with-arrays-in-linux-shell-scripting/</a></td>
+</tr>
+<tr>
+<td><code>y=("${x[@]}")</code></td>
+<td>the new array y takes the values of the array x (y identical to
+x)</td>
+</tr>
+<tr>
+<td><code>for n in {1..100}; do echo $n; done</code></td>
+<td>Display number 1 to 100. Use also <code>{a..z}</code> or
+<code>{5..-1}</code> or <code>eval echo {0..$a}</code> or
+<code>for ((i=0; i&lt;=$a; i++)) do</code></td>
+</tr>
+<tr>
+<td><code>for a in "chr"{1..25}; do echo $a; done</code></td>
+<td>Display chr1, chr2, ..., chr25. Use
+<code>for a in "chr"{01..25}; do echo $a; done</code> to display chr01,
+chr02, ..., chr25. Use also <code>"chr"{1..2}{1..9}</code> to create
+chr11 to chr29 and <code>"chr"{1..2} "chr"{4..9}</code> to exclude chr4.
+See tricks below to deal with variable (seek for "..")</td>
+</tr>
+<tr>
+<td><code>x_wo_path=${x##*/}</code></td>
+<td>recover the last name after the last /. Cool to get the last name in
+a path</td>
+</tr>
+<tr>
+<td><code>unset x</code></td>
+<td>suppress the x variable in the environment</td>
+</tr>
+<tr>
+<td><code>bash -n script.sh</code></td>
+<td>test error in script without executing it. Can also be written
+<code>sh -n script.sh.</code> See <a
+href="http://stackoverflow.com/questions/171924/how-do-i-check-syntax-in-bash-without-running-the-script"
+class="uri">http://stackoverflow.com/questions/171924/how-do-i-check-syntax-in-bash-without-running-the-script</a></td>
+</tr>
+<tr>
+<td><code>echo $?</code></td>
+<td>give the result of the last command. 0, success or true; 1, failure
+or false; 2,</td>
+</tr>
+<tr>
+<td><code>[ "a" == "b" ] ; echo $?</code></td>
+<td>compare the character string "a" equivalent to "b" ? and display the
+logical result (0, true; 1, false)</td>
+</tr>
+<tr>
+<td><code>[ "a" == "b" ] &amp;&amp; ([ "c" == "d" ] || [ "c" == "c" ]) ; echo $?</code></td>
+<td>use the () to prioritize the comparisons. Otherwise, bash compare
+from left to right. Here the result is false (1) with the () and true
+(0) without (see the predecence of comparison operators <a
+href="http://unix.stackexchange.com/questions/88850/precedence-of-the-shell-logical-operators"
+class="uri">http://unix.stackexchange.com/questions/88850/precedence-of-the-shell-logical-operators</a>)</td>
+</tr>
+<tr>
+<td><code>dirname $0</code></td>
+<td>used inside a .sh script to recover the name of the directory where
+the executed script is. Beware: it does not come with the absolute path.
+May be
+<code>DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &amp;&amp; pwd )"</code>
+should work. See <a
+href="http://stackoverflow.com/questions/59895/can-a-bash-script-tell-which-directory-it-is-stored-in"
+class="uri">http://stackoverflow.com/questions/59895/can-a-bash-script-tell-which-directory-it-is-stored-in</a></td>
+</tr>
+<tr>
+<td><code>basename $0</code></td>
+<td>used inside a .sh script to recover the name of the executed script.
+To recover a file name:
+<code>FILENAME=$(basename -- "${INPUT_DIR_PATH}/${INPUT}")</code>, or
+with wild card and a single unknown file:
+<code>FILENAME=$(basename -- ${INPUT_DIR_PATH}/*.*)</code>. To recover a
+file extention: <code>FILE_EXTENSION="${FILENAME##*.}"</code></td>
+</tr>
+<tr>
+<td><code>function_name () { command1 ; command2 ; }</code></td>
+<td>function. Danger: variables declared inside function are not local.
+They are global. Use local VAR="caca" to set the variable as local.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><a
+href="http://www.linuxjournal.com/content/return-values-bash-functions"
+class="uri">http://www.linuxjournal.com/content/return-values-bash-functions</a></p>
+</blockquote>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>${x%.*}</code></td>
+<td>if x contains a character string, start from the right of the
+string, detect the substring on the right of the first dot and remove it
+including the dot. This is equivalent to remove the extension of the
+variable x. The instruction .* is for "match on the period and all
+characters after it". The instruction % is for work on the right side of
+the string. If the filter can't match anything, it returns the same as
+the original string. Replace the dot by any other character...</td>
+</tr>
+<tr>
+<td><code>IFS='.' read -r -a y &lt;&lt;&lt; "$x"</code></td>
+<td>split the character string x according to IFS and send that into the
+array y. Beware: <code>IFS='._' read -r -a y &lt;&lt;&lt; "$x"</code>
+split each time . or _ is met (does not take ._ as a single delimiter).
+Use \ for special characters, like \\ for \). IFS stands for "internal
+field separator". See <a
+href="http://unix.stackexchange.com/questions/184863/what-is-the-meaning-of-ifs-n-in-bash-scripting"
+class="uri">http://unix.stackexchange.com/questions/184863/what-is-the-meaning-of-ifs-n-in-bash-scripting</a>.
+Use <code>unset IFS</code> to set IFS to the default value of
+space-tab-newline (equivalent of <code>IFS=$' \t\n'</code>). Use
+<code>IFS=</code> turns off field splitting (empty IFS). See <a
+href="https://unix.stackexchange.com/questions/97481/ifs-null-is-not-the-same-as-unset-ifs"
+class="uri">https://unix.stackexchange.com/questions/97481/ifs-null-is-not-the-same-as-unset-ifs</a></td>
+</tr>
+<tr>
+<td><code>ls x*_a*</code></td>
+<td>list all the files that start by x, then any characters in type and
+length between x and _a, then anything after.</td>
+</tr>
+<tr>
+<td><code>a=/pasteur/homes/gmillot/caca ; b="a" ; echo ${!b}</code></td>
+<td>print the content of a variable a when the name of a is in the
+variable b. Or <code>eval echo \${$b}</code> but less nice. Can be used
+in a loop with a variable contatenated (pasted, assembled, aggregated)
+to a string, to get the content of this assembled variable</td>
+</tr>
+<tr>
+<td><code>echo '${LOCAL_USER_VAR2[1]}: $(echo "${!LOCAL_USER_VAR2[1]}")'</code></td>
+<td>print the name of the 2nd case in an array ([1]) and the value of
+the name (which is a variable)</td>
+</tr>
+<tr>
+<td><code>awk -F '\t' -v var1='NR==1{print NF}' 'NF != var1{print NR, $0}' file</code></td>
+<td>print the lines of a data frame that do not have the correct number
+of columns.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To recover the lines with a different number of columns in a file,
+and to stop (end, exit) after that:</p>
+<pre><code>tempo=$(awk -F &#39;\t&#39; &#39;NR==1{print NF ; exit}&#39; /cygdrive/c/Users/Gael/Desktop/Famille1.txt) ; echo $tempo # recover the number of columns of the first line of a file. NR is the row number (for number of record), NF is the number of columns. $() can be replaced by ``
+awk -F &#39;\t&#39; -v var1=$tempo &#39;NF!=var1{print NR, $0}&#39; /cygdrive/c/Users/Gael/Desktop/Famille1.txt &gt; /cygdrive/c/Users/Gael/Desktop/Famille1_line_errors.txt # print in the file Famille1_line_errors.txt the line number and the whole line of the file Famille1.txt which are different from the tempo value</code></pre>
+<p>To recover data from awk into an array:</p>
+<pre><code># do not add !/^#/, otherwise, cannot find C0011JY
+# it is a way to save multiple output from awk -&gt; into array https://stackoverflow.com/questions/29158506/awk-outputs-to-multiple-shell-variables</code></pre>
+<p>How to replace characters in a variable or character string (for a
+file, see sed):</p>
+<p>To recover the lines with a different number of columns in a
+file:</p>
+<pre><code># first example
+var1=$(echo &quot;caca&quot; | sed &#39;s/a/o/g&#39;)
+echo $var1
+
+# second example (inline shell string replacement http://tldp.org/LDP/abs/html/string-manipulation.html)
+var2=&quot;caca&quot;
+var3=${var2//a/o} # replace all a
+echo $var3
+
+# second example
+var2=&quot;caca&quot;
+var3=${var2//a/o} # /a replace all a, do not work with regex
+echo $var3
+
+# third example
+var5=$(echo &quot;caca&quot; | tr &quot;a&quot; &quot;o&quot;) # work with \n but do not work with regex -&gt; use example 1
+echo $var5</code></pre>
+<p><span class="red">To recover all the variables I have created in the
+current environment:</span></p>
+<pre><code>varenv_ini=$(( set -o posix ; set ) | less)
+varenv_ini=($varenv_ini) #convert into array
+echo ${varenv_ini[@]} # display all the arry
+echo ${#varenv_ini[@]} # number of lines
+caca=1
+varenv=$(( set -o posix ; set ) | less)
+varenv=($varenv) #convert into array
+echo ${varenv[@]} # display all the array
+echo ${#varenv[@]} # number of lines</code></pre>
+<p>To detect first lines in a file (for instance empty lines or starting
+by #)</p>
+<pre><code>TEMPO_WEIRD_LINE_COUNT=0
+INPUT_FUN=/cygdrive/c/Users/Gael/Desktop/Archive_Guillaume/Famille1/pedfile.pro
+cat &quot;$INPUT_FUN&quot; | while read INPUT_FUN_LINE ; do # read command reads each line
+    if [[ -z &quot;$INPUT_FUN_LINE&quot; || &quot;$INPUT_FUN_LINE&quot; == \#* ]] ; then # count the number of first lines emmpty or starting by # (or &quot;$ARG1_LINE&quot; =~ ^#)
+        ((TEMPO_WEIRD_LINE_COUNT++))
+    else
+        break
+    fi
+done
+echo $TEMPO_WEIRD_LINE_COUNT
+cat $INPUT_FILE | head -n $TEMPO_WEIRD_LINE_COUNT</code></pre>
+<p>Interesting code to test extension but more simple way</p>
+<pre><code>            TEST_VAR=1 # false
+            for i in /$REF_GENOME_PATH/*; do
+                IFS=&#39;.&#39; read -ra array_tempo &lt;&lt;&lt; &quot;$i&quot; # see below
+                if [[ ${array_tempo[-1]} =~ .1.bt2|.2.bt2|.3.bt2|.4.bt2|.rev.1.bt2|.rev.2.bt2.|.fa ]] # suffix of files generated by bowtie2-build http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml#the-bowtie2-build-indexer
+                    TEST_VAR=0
+                    unset IFS # security. Set IFS back to default value
+                fi
+            done</code></pre>
+<p>To cross the content of two files (compare multiple files), or to
+remove lines from a file according to the lines from a second file:</p>
+<p><a
+href="https://stackoverflow.com/questions/4366533/how-to-remove-the-lines-which-appear-on-file-b-from-another-file-a"
+class="uri">https://stackoverflow.com/questions/4366533/how-to-remove-the-lines-which-appear-on-file-b-from-another-file-a</a></p>
+<p>To compare to larges files line per line, and get what is unique in
+file 1:</p>
+<pre><code>comm -23 &lt;(zcat file1.gz | sort) &lt;(zcat file2.gz | sort) &gt; test.tsv</code></pre>
+<p>See the options</p>
+<p>To convert a column into a character string and then to remove lines
+according to line number</p>
+<pre><code># Beware: by default, awk does not like CR (carriage return at the end of line).  remove with tr -d &#39;\r&#39; or sed -e &#39;s/\r//g&#39;
+awk -F &#39;\t&#39; &#39;BEGIN{OFS=&quot;&quot;} {print $1}&#39; ${INPUT_FUN}_lines_removed &gt; ${INPUT_FUN}_lines_removed2 # recover first column
+x=$(awk &#39;$1=$1&#39; ORS=&#39;d;&#39; ${INPUT_FUN}_lines_removed2) # recover the first column of ${INPUT_FUN}_lines_removed and convert into string with  values separated by ;d (necessary for sed -e)
+rm ${INPUT_FUN}_lines_removed2
+sed -e &quot;$x&quot; ${INPUT_FUN} &gt; ${INPUT_FUN}_wo_pattern # https://stackoverflow.com/questions/2112469/delete-specific-line-numbers-from-a-text-file-using-sed
+# do not understand why the 2 following lines do not work to replace the 4 precedent lines
+# local x=$(awk -F &#39;\t&#39; &#39;BEGIN{OFS=&quot;&quot;;ORS=&quot;d;&quot;} $1=$1&#39; ${INPUT_FUN}_lines_removed) # recover the first column of ${INPUT_FUN}_lines_removed and convert into string with  values separated by ;d (necessary for sed -e)
+# sed -e &quot;$x&quot; ${INPUT_FUN} &gt; ${INPUT_FUN}_wo_pattern # https://stackoverflow.com/questions/2112469/delete-specific-line-numbers-from-a-text-file-using-sed</code></pre>
+<p>To print specific lines of a file:</p>
+<pre><code>sed &#39;1140063q;d&#39; GenedysOmni1_56.lgen
+head -1140063 GenedysOmni1_56.lgen | tail -1</code></pre>
+<p>To print some of the columns, depending on regular expressions
+(regex) and taking some columns systematically:</p>
+<pre><code>for i in seq(1 22) &quot;X&quot; ; do
+gzip -dc /pasteur/homes/gmillot/dyslexia/storage.googleapis.com/gnomad-public/release/2.0.2/vcf/genomes/gnomad.genomes.r2.0.2.sites.chr${i}.vcf.bgz | sed &#39;s/;/\t/g&#39; | awk &#39;BEGIN{FS=&quot;\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot;} !/^#/{ for ( j=1; j&lt;=NF; ++j ) {if ( j ~ /^[1-7]$/ || $j ~ /HOM_NFE|AC_NFE|AN_NFE|AF_NFE|GC_NFE/ ) print $j&quot;\t&quot; } print &quot;\n&quot; }&#39; &gt; chr${i}_freq_file
+done
+# gzip -dc : unzip the file. -c --stdout --to-stdout, -d --decompress
+# sed to replace the ; by tabulations
+# awk with OFS=&quot;&quot; ; ORS=&quot;&quot;: inactive the OFS and ORS (because special print used at the end
+# !/^#/ to remove the lines starting by # (voir regexp). Regex ecrit entre // et ^ pour say first character of string
+# loop to parse each column of a line
+# j ~ /^[1-7]$/ : if j equal to 1 to 7 exactement (regex)
+# or $j ~ /HOM_NFE|AC_NFE|AN_NFE|AF_NFE|GC_NFE/ ) : content of column ($j) contain one of these character string
+# Then print $j plus a tab, and after the loop, print end of line</code></pre>
+<p>To assign in a name contained in a variable (see also
+<code>echo ${!b}</code>):</p>
+<pre><code>x=&quot;caca&quot;
+export $x=3
+echo $caca</code></pre>
+<p>To assign in a name contained in a variable (see also
+<code>echo ${!b}</code>):</p>
+<pre><code>caca=1
+x=&quot;caca&quot;
+ARG1=$(echo $x)
+echo &quot;ARG1: $ARG1&quot;
+ARG2=$(echo ${!ARG1})
+echo &quot;ARG2: $ARG2&quot;
+    if [[ -z &quot;$ARG2&quot; ]] ; then
+        echo -e &quot;\n### ERROR ### caca\n&quot;
+    else
+        echo $(echo $x)
+        echo -e &quot;\nGOOD\n&quot;
+    fi</code></pre>
+<p>To assign in an existing array:</p>
+<pre><code>x=(&quot;1&quot; &quot;2&quot; &quot;3&quot;)
+echo ${x[@]}
+x[1]=&quot;caca&quot;
+echo ${x[@]}</code></pre>
+<p>To assign in an existing array containing variable names:</p>
+<pre><code>x=(&quot;a&quot; &quot;b&quot; &quot;c&quot;)
+a=&quot;1&quot;
+b=&quot;2&quot;
+c=&quot;3&quot;
+d=&quot;caca&quot;
+echo ${x[@]}
+echo ${!x[@]}
+echo ${!x[1]}
+echo $b
+# This modify the b variable, the b variable called through the array but not the display of the full array !
+export $(echo ${x[1]})=$d
+echo ${x[@]}
+echo ${!x[@]}
+echo ${!x[1]}
+echo $b</code></pre>
+<p>To test empty variable:</p>
+<p><a
+href="https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash"
+class="uri">https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash</a></p>
+<p>To write a script in a single line and to execute the script the line
+after:</p>
+<pre><code>echo -e &#39;#!/bin/sh\necho &quot;caca&quot;&#39; &gt; caca.sh # to escape
+sh caca.sh
+rm caca.sh</code></pre>
+<p>To recover the extension of a file name (see also
+little_bash_functions):</p>
+<pre><code># to recover a test the extension of a file name. See https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+FILENAME=$(basename -- &quot;${INPUT_DIR_PATH}/${INPUT}&quot;) # recover a file name without path
+FILE_EXTENSION=&quot;${FILENAME##*.}&quot; #  ## means &quot;delete the longest regex starting at the beginning of the tested string&quot;. If nothing, delete nothing. Thus ##*. means delete the longest string finishing by a dot. Use # instead of ## for &quot;delete the shortest regex starting at the beginning of the tested string&quot;
+if [[ ! &quot;${FILE_EXTENSION}&quot; =~ txt ]] ; then
+    echo -e &quot;\n### ERROR ###  PROBLEM WITH THE ${INPUT_DIR_PATH}/${INPUT} FILE: EXTENSION INA THE FILE NAME MUST BE .txt\n&quot;
+    exit 1
+else
+    FILENAME=&quot;${FILENAME%.*}&quot; #  % means &quot;delete the shortest regex starting at the end of the tested string&quot;. If nothing, delete nothing. Thus %.* means delete the shortest string at the end of the string and starting by a dot. Use %% instead of %% for &quot;delete the longest regex starting at the end of the tested string&quot;
+fi</code></pre>
+<p>To concatenate strings like {..} but dealing with variables:</p>
+<p>var=4</p>
+<pre><code>echo &quot;caca&quot;{1..$var} # do not work
+echo &quot;caca&quot;$(eval echo {1..$var}) # does not work
+echo $(for((i=1 ; i &lt;= $var ; i++)) ; do echo &quot;caca&quot;$i ; done) # work !!</code></pre>
+<p>In awk, to deal with the merge of two files (or cross the content of
+two files), using an array:</p>
+<pre><code># Beware: by default, awk does not like CR (carriage return at the end of line).  remove with tr -d &#39;\r&#39; or sed -e &#39;s/\r//g&#39;
+# In awk, an array is defined by an index and a content. The content of the array is called using the index and the []. For instance, a[&quot;A&quot;] = 4, means that index &quot;A&quot; has content 4.
+
+echo -e &quot;aa1\t123\nb\t456\nc\taa2\naa3\t000\ne\tc&quot; &gt; caca1 # testing file
+echo -e &quot;bb1\taa1\t1\naa2\tbb2\t2\nbb3\taa3\t3&quot; &gt; caca2
+cat caca1
+cat caca2
+# show how array a is filed (here index of a is col 1 of caca1 and content of a is full line of caca1:
+awk -F &quot;\t&quot; &#39;{a[$1] = $0; print a[$1]; next}&#39; caca1 &gt; caca3
+cat caca3</code></pre>
+<pre><code># if not filed, the array is empty (nothing assigned into the array, print only eol):
+awk -F &quot;\t&quot; &#39;{a[$1]; print a[$1]; next}&#39; caca1 &gt; caca3
+cat caca3</code></pre>
+<pre><code># This is tricky, for each line, use col 1 as index and fill with the whole line, then, test if col 2 is indexed in the whole array and print if yes
+awk -F &quot;\t&quot; &#39;{a[$1] = $0; print a[$2]; next}&#39; caca1 &gt; caca3 # the $ represent the column of caca1. a[$1] means take $1 as index of a, a[$2] means is $2 an index of a ?
+cat caca3</code></pre>
+<pre><code># to play with several columns of caca1, better to do this (inverse col 1 and 2 in caca1):
+awk -F &quot;\t&quot; &#39;{a[$1] = $1; b[$1] = $2 ; print b[$1]&quot;\t&quot;a[$1]; next}&#39; caca1 &gt; caca3
+cat caca3</code></pre>
+<pre><code># Now with two files. print (all the line of caca2) + Print (all the line of caca1 at the end of line of caca 2) when col 2 of caca2 is present in col 1 of caca1:
+awk -F &quot;\t&quot; &#39;{if(FNR==NR){a[$1] = $0; next}} {if($2 in a){print $0&quot;\t&quot;a[$2]}}&#39; caca1 caca2 &gt; caca3
+# between the first {} and blue colors mean columns of caca1, between the second {} and orange colors mean columns of caca2
+# See that the index is used in ($2 in a) for the comparison, not the content of a
+# print $0&quot;\t&quot;a[$2], because we want to print the content of a for index of a == to $2
+cat caca3</code></pre>
+<pre><code># With several columns to print, here print all the line of caca1 when col 2 of caca2 is present in col 1 of caca1 + add the index of a and b used as 2 new columns:
+awk -F &quot;\t&quot; &#39;{if(FNR==NR){a[$1] = $2; b[$1] = $1 ; next}} {if($2 in a){print $0&quot;\t&quot;a[$2]&quot;\t&quot;b[$2]}}&#39; caca1 caca2 &gt; caca3
+cat caca3
+
+# same result using a simplier writting:
+awk -F &quot;\t&quot; &#39;{if(FNR==NR){a[$1] = $2&quot;\t&quot;$1 ; next}} {if($2 in a){print $0&quot;\t&quot;a[$2]}}&#39; caca1 caca2 &gt; caca3
+cat caca3
+
+awk -F &quot;\t&quot; &#39;{if(FNR==NR){a[$13] = $2 ; b[$13] = $13 ; next}} {if($1 in b){print $0&quot;\t&quot;a[$1]&quot;\t&quot;b[$1]}}&#39; /cygdrive/c/Users/Gael/Desktop/caca3 /cygdrive/z/dyslexia/supp_info_code/Franck_ramus_info/GenedysAll_final_pour_analyses_pheno_sex_fam.txt &gt; /cygdrive/c/Users/Gael/Desktop/caca4</code></pre>
+<p>To work in blocs/groups of lines in a file:</p>
+<pre><code>awk &#39;{lineKind=(NR-1)%4}if(lineKind==0){print $0}&#39; file1 &gt; out.fasta
+# Every line is scanned by awk
+# (NR-1)%4 means that for the line NR of the file, compute (NR-1)%4, i.e., take the modulo (integer rest of the division) of (NR-1)/4. Example: if line NR=10, then (10-1)%4=1, because 9/4 = 2 and remains 1. This is a very good way to work in blocks of lines</code></pre>
+<p>To get the n first characters of a string in a file or in a single
+string:</p>
+<p><a
+href="https://stackoverflow.com/questions/1405611/how-to-extract-the-first-two-characters-of-a-string-in-shell-scripting"
+class="uri">https://stackoverflow.com/questions/1405611/how-to-extract-the-first-two-characters-of-a-string-in-shell-scripting</a></p>
+<pre><code>cut -c1-5 file1 # to have the 5 first of each line of file1</code></pre>
+<p>To get a specific line in a file, using the line number (or the nth
+line):</p>
+<p><a
+href="https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file"
+class="uri">https://stackoverflow.com/questions/6022384/bash-tool-to-get-nth-line-from-a-file</a></p>
+<pre><code>sed &#39;10q;d&#39; file # for line 10 or NUM=10 ; sed &quot;${NUM}q;d&quot; file</code></pre>
+<p>To move files according to a string inside the files:</p>
+<pre><code>INPUT_DIR=&quot;/cygdrive/c/Users/Gael/Desktop/&quot;
+OUTPUT=&quot;/cygdrive/c/Users/Gael/Desktop/res/&quot;
+for i0 in $(find $INPUT_DIR -type f) ; do # recover all the files names also in subdir
+    FILENAME=$(basename -- &quot;$i0&quot;) # recover a file name without path
+    FILE_EXTENSION=&quot;${FILENAME##*.}&quot; #  ## means &quot;delete the longest regex starting at the beginning of the tested string&quot;. If nothing, delete nothing. Thus ##*. means delete the longest string finishing by a dot. Use # instead of ## for &quot;delete the shortest regex starting at the beginning of the tested string&quot;
+    if [[ &quot;${FILE_EXTENSION}&quot; =~ txt ]] ; then
+        if [[ $(grep -E &#39;\-\-&gt;|timestamp&#39; $i0) || $() ]] ; then # detect files that contain &quot;--&gt;&quot; (\ to say that it is not special character) or &quot;timestamp&quot;
+            cp $i0 $OUTPUT
+        fi
+    fi
+done</code></pre>
+<p>To create a folder for a file (with the name of the file without
+extension) where the file is, and to move the file into this folder.
+Example with .mkv files</p>
+<pre><code>for x in ./*.mkv; do
+  mkdir &quot;${x%.*}&quot;
+  mv &quot;$x&quot; &quot;${x%.*}&quot;
+done</code></pre>
+<p>To reorder columns of a file by groups:</p>
+<pre><code>header_line_nb = 147 # line nb corresponding to the header
+affected_patients_col_nb=&quot;10 12 14&quot; # column nb
+unaffected_patients_col_nb=&quot;15 16&quot; # column nb
+# the code below will reorder starting with other columns, then affected columns, then unaffected columns
+awk -v line=&quot;$header_line_nb&quot; -v aff=&quot;$affected_patients_col_nb&quot; -v unaff=&quot;$unaffected_patients_col_nb&quot; &#39;
+        BEGIN{
+            FS=&quot;\\t&quot;
+            split(aff, array1, &quot; &quot;) # aff=&quot;10 12 14&quot; and is added into the array1 array such that index 1 points to 10, index 2 to 12 and index 3 to 14
+            for(i in array1){
+                aff_arr[array1[i]]++ # a new aff_arr array is created such that the first index is 10 and points to 1, the second is 12 and points to 2, etc.
+            }
+            split(unaff, array2, &quot; &quot;)
+            for(i in array2){
+                unaff_arr[array2[i]]++
+            }
+        }{
+        if(NR &lt; line){
+            print $0
+        }else{
+            OFS=&quot;&quot;
+            ORS=&quot;&quot;
+            for(i=1;i&lt;=NF;i++){
+                if( ! (i in aff_arr) &amp;&amp; ! ( i in unff_arr)){ # warning: ! is only for the next (), not after. Otherwise, the in operator on arrays checks the array index. Thus, creating aff_arr was the simpliest way to have i in &quot;12 14 16&quot;
+                    print $i&quot;\t&quot;
+                }
+            }
+            for(i in array1){
+                print $array1[i]&quot;\t&quot;
+            }
+            for(i in array2){
+                print $array2[i]&quot;\t&quot;
+            }
+            print &quot;\n&quot;
+        }
+    }&#39; test.vcf # see C:\Users\gael\Documents\Git_projects\project_c\dataset</code></pre>
+<p>To split the rows of a file according to a value in the last column
+of the file (keeping the header of the file in each split files):</p>
+<pre><code>FILENAME=$(basename -- &quot;merge_parse-select_clone-pass.tsv&quot;) # recover a file name without path
+    awk -v var1=$FILENAME -F &quot;\t&quot; &#39;{
+        if(NR == 1){
+            header=$0 ; next
+        }else{
+            if(system( &quot;[ -f &quot; $NF&quot;_&quot;var1 &quot; ] &quot; ) &gt; 0){ # test if a file exists
+                print header &gt; $NF&quot;_&quot;var1
+            }
+            print $0 &gt; $NF&quot;_&quot;var1
+        }
+    }&#39; $FILENAME
+# $NF is the last column of the file. The value in the last column is used as name
+#  print $0 &gt; $NF&quot;_&quot;var1 print the line into the file named $NF&quot;_&quot;var1
+# Warning: &gt; append in awk, meaning that if the file already exists, a new line is added into this file</code></pre>
+<p>Rows with the same value are in the same file.</p>
+<p>To merge a column of file1 into file2 according to an index column
+present in both files:</p>
+<pre><code>awk &#39;
+    FNR==NR{ # means that work only on the first file
+        var1=$1
+        a[var1] = var1 # a is name
+        b[var1] = $2 # b is sequence
+        next
+    }{ # mean that works only for the second file
+        if(FNR==1){
+            print $0&quot;\tsequence_alignment_aa&quot; &gt; &quot;translation.tsv&quot;
+            for(i4=1; i4&lt;=NF; i4++){
+                if($i4==&quot;sequence_id&quot;){COL_NAME=i4}
+            }
+            # no need the recheck as above because already done above
+        }else{
+            if($COL_NAME in a){print $0&quot;\t&quot;b[$COL_NAME] &gt; &quot;translation.tsv&quot;}
+        }
+    }
+&#39; aa.tsv ${select_ch} |&amp; tee -a translation.log
+# end add the aa seq into the translation.tsv
+sed -i &#39;1i sequence_id\tsequence_alignment&#39; aa.tsv # header added</code></pre>
+<p>To recover the column value in a row according to another column
+value (and check the header):</p>
+<pre><code>CHR_INFO=&quot;/mnt/c/Users/gmillot/Documents/Git_projects/genetic_linkage/dataset/hg19_grch37p5_chr_size_cumul.txt&quot;
+CHR=&quot;19&quot;
+CHR_LENGTH=$(
+    awk -v var1=$CHR &#39;BEGIN{FS=&quot;\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot;}
+        NR==1{
+            if( ! ($2 == &quot;BP_LENGTH&quot; &amp;&amp; $8 == &quot;DIGIT2_CHR_NB&quot;)){
+                print &quot;\n\n========\n\nERROR: CHROMO INFO FILE MUST HAVE COLUMN 2 NAMED \&quot;BP_LENGTH\&quot; AND 8 NAMED \&quot;DIGIT2_CHR_NB\&quot;\n\n========\n\n&quot;
+                exit 1
+            }
+        }
+        NR &gt; 1{
+            if($8 == var1){print $2}
+        }
+    &#39; ${CHR_INFO}
+)</code></pre>
+<p>Control variables:</p>
+<pre><code>CHR_INFO=&quot;/mnt/c/Users/gmillot/Documents/Git_projects/genetic_linkage/dataset/hg19_grch37p5_chr_size_cumul.txt&quot;
+CHR=&quot;19&quot; # warning: use double digit and 23
+BEGIN=&quot;50000000&quot;
+END=&quot;60000000&quot;
+awk -v var1=$CHR -v var2=$END -v var3=$BEGIN &#39;
+    BEGIN{
+        FS=&quot;\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot;
+        if(var3 &gt;= var2){
+            print &quot;\n\n========\n\nERROR: THE END PARAMETER MUST BE LESS THAN THE BEGIN PARAMETER (&quot;var2&quot; VERSUS &quot; var3&quot;)\n\n========\n\n&quot;
+            exit 1
+        }
+    }
+    NR==1{
+        if( ! ($2 == &quot;BP_LENGTH&quot; &amp;&amp; $8 == &quot;DIGIT2_CHR_NB&quot;)){
+            print &quot;\n\n========\n\nERROR: CHROMO INFO FILE MUST HAVE COLUMN 2 NAMED \&quot;BP_LENGTH\&quot; AND COLUMN 8 NAMED \&quot;DIGIT2_CHR_NB\&quot;\n\n========\n\n&quot;
+            exit 1
+        }
+    }
+    NR &gt; 1{
+        if($8 == var1 &amp;&amp; var2 &gt; $2){
+            print &quot;\n\n========\n\nERROR: THE END PARAMETER IF OVER THE LENGTH OF THE CHR PARAMETER (&quot;var2&quot; VERSUS &quot;$2&quot;)\n\n========\n\n&quot;
+            exit 1
+        }
+    }
+&#39; ${CHR_INFO}</code></pre>
+<p>Remove (replace) the spaces in all the file names in a folder:</p>
+<pre><code>for f in *; do
+  # Check if the filename contains a space
+  if [[ &quot;$f&quot; == *&quot; &quot;* ]]; then
+    # Replace spaces with underscores (or any other character)
+    new_name=&quot;${f// /_}&quot;
+    # Rename the file
+    mv &quot;$f&quot; &quot;$new_name&quot;
+  fi
+done</code></pre>
+<h3 id="sequence-specific-one-sequence-per-line"><span
+class="header-section-number">30.2</span> Sequence specific (one
+sequence per
+line)<a class="headerlink" href="#sequence-specific-one-sequence-per-line" title="Link to this heading"></a></h3>
+<h4
+id="base-frequency-or-counting-the-number-of-bases-per-position"><span
+class="header-section-number">30.2.1</span> Base frequency (or counting
+the number of bases) per
+position:<a class="headerlink" href="#base-frequency-or-counting-the-number-of-bases-per-position" title="Link to this heading"></a></h4>
+<p>Warning: work only with ATGC- in the sequences in a single file</p>
+<pre><code># from https://bioinformatics.stackexchange.com/questions/3089/calculating-nucleotide-frequency-per-column
+# BEWARE: need recent awk/gawk. See INSTALLATION OF BASH UTILITIES section
+# BEWARE: use uppercase sequences (see the corresponding section)
+gawk &#39;{
+        L=length($0);
+        for(i=1;i&lt;=L;i++) {
+            B=substr($0,i,1); # in $0, take i and extend 1 (single base selected)
+            T[i][B]++; # array of array https://www.gnu.org/software/gawk/manual/html_node/Arrays-of-Arrays.html
+        }
+      }
+      END{
+            for(BI=0;BI&lt;5;BI++) {
+                B=(BI==0?&quot;A&quot;:(BI==1?&quot;C&quot;:(BI==2?&quot;G&quot;:(BI==3?&quot;T&quot;:&quot;-&quot;))));
+                printf(&quot;%s&quot;,B);
+                for(i in T) {
+                    tot=0.0;
+                    for(B2 in T[i]){
+                        tot+=T[i][B2];
+                    }
+                printf(&quot;\t%0.5f&quot;,(T[i][B])); # T[i][B]/tot for proportion instead of frequency
+                }
+            printf(&quot;\n&quot;);
+            }
+}&#39; /pasteur/homes/gmillot/project_a/results/20200520_res_project_a_newtrim_align/good_file_project_a_trim.5pAttc.1-29.sq &gt; /pasteur/homes/gmillot/project_a/results/20200520_res_project_a_newtrim_align/good_file_project_a_trim.5pAttc.1-29.stat</code></pre>
+<h4 id="reverse-complement-of-a-sequence"><span
+class="header-section-number">30.2.2</span> Reverse complement of a
+sequence<a class="headerlink" href="#reverse-complement-of-a-sequence" title="Link to this heading"></a></h4>
+<pre><code>ANTI=$(echo $REF_GENOME | rev | tr &quot;ATGC&quot; &quot;TACG&quot;) # sequence in the working env</code></pre>
+<pre><code>ANTI=$(cat $REF_GENOME | rev | tr &quot;ATGC&quot; &quot;TACG&quot;) # sequence in a file</code></pre>
+<h4 id="test-if-a-fasta-file-is-made-of-nucleotids-or-aa"><span
+class="header-section-number">30.2.3</span> Test if a fasta file is made
+of nucleotids or
+aa:<a class="headerlink" href="#test-if-a-fasta-file-is-made-of-nucleotids-or-aa" title="Link to this heading"></a></h4>
+<pre><code>AA=true # kind of seq either true (AA) or false (NUC)
+awk -v var1=$AA &#39;BEGIN{FS=&quot;\t&quot; ; ORS=&quot;\n&quot; ; OFS=&quot;\t&quot;}{
+        if($0!~/^[-NATGC.]*$/ &amp;&amp; var1==&quot;false&quot;){
+            print &quot;\n\n========\n\nERROR: INPUT FILE MUST BE A NUCLEOTIDE SEQUENCE IF THE AA PARAMETER IS SET TO false\nHERE IT SEEMS TO BE MADE OF AMINO ACIDS:\n&quot;$0&quot;\n\n========\n\n&quot;
+            exit 1
+        }
+        if($0~/^[-NATGC.]*$/ &amp;&amp; var1==&quot;true&quot;){
+            print &quot;\n\n========\n\nERROR: INPUT FILE MUST BE A AMINO ACID SEQUENCE IF THE AA PARAMETER IS SET TO true\nHERE IT SEEMS TO BE MADE OF NUCLEOTIDS:\n&quot;$0&quot;\n\n========\n\n&quot;
+            exit 1
+        }
+}&#39; file</code></pre>
+<h3 id="fasta-specific"><span class="header-section-number">30.3</span>
+Fasta
+specific<a class="headerlink" href="#fasta-specific" title="Link to this heading"></a></h3>
+<p><a
+href="See%20also%20https:/cheatography.com/melissamlwong/cheat-sheets/awk-one-liners-for-fasta-manipulation-version-1-0/">See
+also
+https://cheatography.com/melissamlwong/cheat-sheets/awk-one-liners-for-fasta-manipulation-version-1-0/</a></p>
+<p>Remove fasta sequence titles (only sequences remaining separated by
+\n):</p>
+<pre><code>sed &#39;/^&gt;.*$/d&#39; ref_seq/adapters_TruSeq_B2699.fasta &gt; tempo.adap.seq # d for delete</code></pre>
+<p>Remove &gt; at the beginning of fasta title</p>
+<pre><code>awk &#39;FNR==NR{lineKind=(NR-1)%2 ; if(lineKind==0){sub(/^&gt;/,&quot;&quot;) ; print}}&#39; fasta1 &gt; file</code></pre>
+<p>Remove &gt; at the beginning of fasta title and convert to a table
+with first column as name and second column as sequence:</p>
+<pre><code>    awk &#39;{
+            lineKind=(NR-1)%2 # value is 0 or 1
+            if(lineKind==0){
+                gsub(&quot;&gt; *&quot;, &quot;&quot;, $0)
+                var1=$0
+            }
+            if(lineKind==1){
+                var2=$0
+                print(var1&quot;\t&quot;var2)
+            }
+    }&#39; integrases.fasta &gt; file2</code></pre>
+<p>Remove &gt; at the beginning of fasta title and add the sequence of
+this file to another file according to the fasta title without &gt;</p>
+<pre><code>awk &#39;
+FNR==NR{ # means that work only on the first file
+lineKind=(NR-1)%2 ;
+if(lineKind==0){
+gsub(&quot;&gt;&quot;, &quot;&quot;, $0) ; # WARNING: gsub(/&gt;/, &quot;&quot;, $0) does not work
+var1=$0 ; # WARNING: var1=gsub(&quot;&gt;&quot;, &quot;&quot;, $0) does not work
+a[var1] = var1
+} ;
+if(lineKind==1){b[var1] = $0} ;
+next
+}{ # mean that works only for the second file. The fourth field of the file1 is used
+if($4 in a){print $0&quot;\t&quot;a[$4]&quot;\t&quot;b[$4]}
+}
+&#39; fasta1 file1 &gt; file2</code></pre>
+<p>Remove \n end of line / line feed / LF in fasta file to have the
+sequence in a single line (Warning: does not work if \r are
+present):</p>
+<pre><code>awk &#39;BEGIN{ORS=&quot;&quot;}{if($0~/^&gt;.*/){if(NR&gt;1){print &quot;\n&quot;} ; print $0&quot;\n&quot;} else {print $0 ; next}}END{print &quot;\n&quot;}&#39; file.fasta &gt; out.fasta # the most simple expression is awk &#39;BEGIN{ORS=&quot;&quot;}{print $0}&#39; file.fasta. END{print &quot;\n&quot;} to have the last sequence finishing by \n, otherwise, the number of lines in the file is not good</code></pre>
+<p>Check if some fasta sequences are made of gaps and/or N only:</p>
+<pre><code># WARNING: does not work if the fasta file contains \r (CR carriage return, instead or in addition of \n, LF line feed)
+# WARNING: if a single character other than - or N is present, the sequence is not considered as problematic
+# detect
+awk &#39;BEGIN{ORS=&quot;&quot;}{if($0~/^&gt;.*/){if(NR&gt;1){print &quot;\n&quot;} ; print $0&quot;\n&quot;} else {print $0 ; next}}&#39; test.fasta | awk &#39;{lineKind=(NR-1)%2;}lineKind==0{record=$0; next}lineKind==1{toGet=$0~/^[-|N]*$/; if(toGet) print record}toGet&#39; &gt; problem.fasta
+
+# remove
+awk &#39;BEGIN{ORS=&quot;&quot;}{if($0~/^&gt;.*/){if(NR&gt;1){print &quot;\n&quot;} ; print $0&quot;\n&quot;} else {print $0 ; next}}&#39; test.fasta | awk &#39;{lineKind=(NR-1)%2;}lineKind==0{record=$0; next}lineKind==1{toGet=$0!~/^[-|N]*$/; if(toGet) print record}toGet&#39; &gt; clean.fasta</code></pre>
+<p>Get the base at position X in the sequence:</p>
+<pre><code>echo ${$(sed -e &#39;s/\r//g&#39; file.fasta | sed &#39;/^&gt;.*$/d&#39; | awk &#39;BEGIN{ORS=&quot;&quot;}{print $0}&#39;):X:1}</code></pre>
+<p>Cut in many blocs of max NB sequences</p>
+<pre><code>NB=100
+FASTA_FILE=&quot;test.fasta&quot;
+awk -v slice_size=$NB -v prefix=&quot;cut&quot; &#39;$1 ~ /^&gt;/{nbSeq++; currSlice=int((nbSeq-1)/slice_size)+1; myOutFile=prefix&quot;_&quot;currSlice&quot;.fasta&quot;}{print $0 &gt; myOutFile}&#39; ${FASTA_FILE}</code></pre>
+<p>Separate fasta file according to an ID list</p>
+<pre><code>myFasta=[Name of the fasta file from submitters]
+myList=[name of a file with the id of the sequences: 1 line per ID]
+outListed=sequence_in_the_list.fasta
+outNotListed=other_sequences.fasta
+
+awk -v outListed=${outListed} -v outNotListed=${outNotListed} &#39;
+      NR==FNR{inlist[$1]++;inlist[&quot;&gt;&quot;$1]++;next}
+      $1 ~ /^&gt;/{flag=0}
+      $1 in inlist{flag=1}
+      flag==0{print $0 &gt; outNotListed}
+      flag==1{print $0 &gt; outListed }
+&#39; ${myList} ${myFasta}</code></pre>
+<p>Sequence size (length) :</p>
+<pre><code>awk &#39;{lineKind=(NR-1)%2}lineKind==1{print length($0)}&#39; file1 &gt; out.stat # no need of &quot;\n&quot; here, numbers will be print with \n after</code></pre>
+<p>Sequence summary(number of each nucleotide, total length and GC
+content) of a fasta:</p>
+<pre><code>awk &#39;BEGIN{RS=&quot;&gt;&quot;;FS=&quot;\n&quot;;print &quot;name\tA\tC\tG\tT\tOther\tlength\tGC%&quot;}NR&gt;1{sumA=0;sumT=0;sumC=0;sumG=0;sumN=0;seq=&quot;&quot;;for (i=2;i&lt;=NF;i++) seq=seq&quot;&quot;$i; k=length(seq); for (i=1;i&lt;=k;i++) {if (substr(seq,i,1)==&quot;T&quot;) sumT+=1; else if (substr(seq,i,1)==&quot;A&quot;) sumA+=1; else if (substr(seq,i,1)==&quot;G&quot;) sumG+=1; else if (substr(seq,i,1)==&quot;C&quot;) sumC+=1; else sumN+=1}; print $1&quot;\t&quot;sumA&quot;\t&quot;sumC&quot;\t&quot;sumG&quot;\t&quot;sumT&quot;\t&quot;sumN&quot;\t&quot;k&quot;\t&quot;(sumC+sumG)/k*100}&#39; file.fa</code></pre>
+<p>Centering a genome region in a fasta (Replication origin OriC from E
+coli for instance:</p>
+<p>see C:\Users\Gael\Documents\Hub projects\20200310
+project_a\labbook_project_a</p>
+<p>Counting the number of patterns/motifs in each sequence:</p>
+<pre><code>awk &#39;{lineKind=(NR-1)%2}lineKind==1{print gsub(/G[AT]T/, &quot;&quot;)}&#39; file1 &gt; out.stat # gsub(regexp, replacement [, target]) # gsub() replace pattern but output the numbr of change made. This is what is used here; See http://bigdatums.net/2016/10/18/count-number-of-occurrences-of-characters-with-awk/ for a single sequence: grep -oE G[AT]T file1 | wc -l</code></pre>
+<p>To recover the name and sequence of fasta files into a .tsv file:</p>
+<pre><code>for i2 in $(ls aa) ; do
+    awk &#39;{
+        lineKind=(NR-1)%2 ;
+        if(lineKind==0){
+            gsub(&quot;&gt; *&quot;, &quot;&quot;, $0)
+            print $0 &gt;&gt; &quot;name.txt&quot;
+        }
+        if(lineKind==1){
+            print $0 &gt;&gt; &quot;seq.txt&quot;
+        }
+    }&#39; aa/${i2} |&amp; tee -a translation.log
+done
+paste --delimiters=&#39;\t&#39; name.txt seq.txt &gt; aa.tsv</code></pre>
+<p>Split a multi fasta file into single fasta files (containing a single
+sequence):</p>
+<pre><code>#!/bin/bash
+
+# Input multi-FASTA file
+input_file=&quot;your_multifasta_file.fasta&quot;
+
+# Output directory for single FASTA files
+output_dir=&quot;single_fastas&quot;
+
+# Create output directory if it doesn&#39;t exist
+mkdir -p &quot;$output_dir&quot;
+
+# Use awk to process the multi-FASTA file
+awk -v output_dir=&quot;$output_dir&quot; &#39;
+  /^&gt;/ {
+    if (seq) {
+      print seq &gt; output_file
+    }
+    header = substr($0, 2) # Remove the &quot;&gt;&quot; from the header
+    gsub(/[^a-zA-Z0-9]/, &quot;_&quot;, header) # Replace non-alphanumeric characters with &quot;_&quot;
+    output_file = output_dir &quot;/&quot; header &quot;.fasta&quot;
+    print $0 &gt; output_file
+    seq = &quot;&quot;
+    next
+  }
+  {
+    seq = seq $0 &quot;\n&quot;
+  }
+  END {
+    if (seq) {
+      print seq &gt; output_file
+    }
+  }
+&#39; &quot;$input_file&quot;</code></pre>
+<p>Split a multi fasta file (sequences in a single line, see above to
+convert) into 2 multi fasta files according to a pattern in the
+header:</p>
+<pre><code>PATTERN=&#39;LEADING_16|LAGGING_16&#39; # 16 for FLAG=16 in the SAM format (i.e., reverse strand)
+awk -v var1=$PATTERN &#39;
+    BEGIN{ORS=&quot;\n&quot;}
+    {lineKind=(NR-1)%2} # never forget to add {} if no testing condition, otherwise $0 is printed
+    lineKind==0{record=$0 ; next}
+    lineKind==1{
+        pattern=&quot;^.*&quot; var1 &quot;.*$&quot;
+        toGet=(record ~ var1)
+        if(toGet){
+            print record &gt; &quot;in.fasta&quot;
+            print $0 &gt; &quot;in.fasta&quot;
+        }else{
+            print record &gt; &quot;out.fasta&quot;
+            print $0 &gt; &quot;out.fasta&quot;
+        }
+        next
+    }
+&#39; fasta # &gt; /dev/null is no required if {lineKind=(NR-1)%2} is between {}
+# no need of &quot;\n&quot; here, numbers will be print with \n after</code></pre>
+<p>Split a multi fasta file (sequences in a single line, see above to
+convert) into 2 multi fasta files according to a pattern in the
+sequence:</p>
+<pre><code>PATTERN=&quot;caccgt&quot; #
+awk -v var1=&quot;$PATTERN&quot; &#39;
+    BEGIN{ORS=&quot;\n&quot;}
+    {lineKind=(NR-1)%2} # never forget to add {} if no testing condition, otherwise $0 is printed
+    lineKind==0{record=$0 ; next}
+    lineKind==1{
+        pattern=&quot;^.*&quot; var1 &quot;.*$&quot;
+        toGet=($0 ~ var1)
+        if(toGet){
+            print record &gt; &quot;in.fasta&quot;
+            print $0 &gt; &quot;in.fasta&quot;
+        }else{
+            print record &gt; &quot;out.fasta&quot;
+            print $0 &gt; &quot;out.fasta&quot;
+        }
+        next
+    }
+&#39; imgt_human_IGHC.fasta # &gt; /dev/null is no required if {lineKind=(NR-1)%2} is between {}
+# no need of &quot;\n&quot; here, numbers will be print with \n after</code></pre>
+<p>Remove duplicated data in a fasta file according to duplicated
+header:</p>
+<pre><code>awk &#39;
+    /^&gt;/{f=!d[$1];d[$1]=1}f
+&#39; fasta
+# /^&gt;/: when matches line start with &gt; do this block {f=!d[$1];d[$1]=1}. f=!d[$1]: f is false only if sequence name does exists in d[$1], and keeps being false until new sequence. d[$1]=1: register sequence name; f is true, print line
+# https://www.biosmaestro.org/p/143617/</code></pre>
+<p>Recover a part of the headers:</p>
+<pre><code>grep -E &#39;^&gt;.*$&#39; fasta | cut -f2 -d&#39;|&#39; &gt; out.tsv # detect line starting by &gt; and extract the 2nd field after cutting the header by each |</code></pre>
+<p>Make fasta files from a tsv file, using the name column and sequence
+column:</p>
+<pre><code>awk &#39;BEGIN{IFS=&quot;\t&quot; ; ORS=&quot;\n&quot; ; OFS=&quot;\t&quot;}{
+    if(NR==1){
+        COL_NAME=&quot;FALSE&quot;
+        COL_SEQ=&quot;FALSE&quot;
+        for(i4=1; i4&lt;=NF; i4++){
+            if($i4==&quot;sequence_id&quot;){COL_NAME=i4}
+            if($i4==&quot;sequence_alignment&quot;){COL_SEQ=i4}
+        }
+        if(COL_NAME==&quot;FALSE&quot;){
+            print &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION OF THE translation PROCESS\n\nNO sequence_id COLUMN NAME FOUND IN THE INPUT FILE\n\n========\n\n&quot;
+            exit 1
+        }
+        if(COL_SEQ==&quot;FALSE&quot;){
+            print &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION OF THE translation PROCESS\n\nNO sequence_alignment COLUMN NAME FOUND IN THE INPUT FILE\n\n========\n\n&quot;
+            exit 1
+        }
+    }else{
+        if($COL_SEQ!~/^[NATGC.]*$/){
+            print &quot;\n\n========\n\nERROR IN NEXTFLOW EXECUTION OF THE translation PROCESS\n\nsequence_alignment COLUMN NAME OF THE INPUT FILE MUST BE A NUCLEOTIDE SEQUENCE IF THE igblast_aa PARAMETER IS SET TO false\nHERE IT SEEMS TO BE MADE OF AMINO ACIDS:\n&quot;$0&quot;\n\n========\n\n&quot;
+            exit 1
+        }
+        print &quot;&gt;&quot;$COL_NAME&quot;\n&quot;$COL_SEQ &gt;&gt; &quot;./aligned_seq/&quot;$COL_NAME&quot;.fasta&quot; # make fasta files of the aligned nuc sequences
+    }
+}&#39; ${select_ch}</code></pre>
+<p>Translate fasta files:</p>
+<pre><code>for i2 in $(ls aligned_seq) ; do
+    seqkit translate -T 1 -f 1 --allow-unknown-codon aligned_seq/$i2 &gt; aa/${i2}_tempo |&amp; tee -a translation.log #warning |&amp; pipe standard and error output -&gt; error do not stop the execution anymore
+        # no trim, no translate unknown code to &#39;X&#39;
+        # -T 1 : human genetic code
+        # -f 1 : only the first frame is translated
+        # --allow-unknown-codon : convert unknown codon (for instance ...) to X
+    awk &#39;BEGIN{ORS=&quot;&quot;}{if($0~/^&gt;.*/){if(NR&gt;1){print &quot;\n&quot;} ; print $0&quot;\n&quot;} else {print $0 ; next}}END{print &quot;\n&quot;}&#39; aa/${i2}_tempo &gt; aa/${i2} |&amp; tee -a translation.log # remove \n
+    rm aa/${i2}_tempo |&amp; tee -a translation.log
+done</code></pre>
+<h3 id="fastq-specific"><span class="header-section-number">30.4</span>
+Fastq
+specific<a class="headerlink" href="#fastq-specific" title="Link to this heading"></a></h3>
+<p>To remove/delete sequences (lines/rows) from a fastq, according to a
+regex expression:</p>
+<pre><code>awk &#39;{lineKind=(NR-1)%4}lineKind==0{record=$0; next}lineKind==1{toGet=!($0~/^N*$/); if(toGet) print record}toGet&#39; file1 &gt; out.fq
+# Every line is scanned by awk
+# (NR-1)%4 see above
+# first, the variable lineKind take the value 0, 1, 2, or 3, depending on the modulo
+# lineKind==0{record=$0; next} # if lineKind==0, then the record variable takes the value $0. next is added to prevent awk to read further. Means go to the next line directly
+# lineKind==1{toGet=!($0~/^N*$/); if(toGet) print record} # if lineKind==1, the variable toGet take 1 or 0 (boolean) depending on !($0~/^N*$/), which means $0 is made of N? If true, print record
+# toGet # the last section is a condition alone, which is read if lineKind==1 (because no next for 1) or 2 or 3, and because it is TRUE (1) because of the previous line, it means print $0
+# finally, 4 lines will be printed when the second line is not made of NNNNNNNNNN
+# if a varaible is used as regex, like -v var1=&quot;^N*$&quot;, then use !($0 ~ var1)</code></pre>
+<p>To get the n first nucleotides in a fastq:</p>
+<p><a
+href="https://stackoverflow.com/questions/1405611/how-to-extract-the-first-two-characters-of-a-string-in-shell-scripting"
+class="uri">https://stackoverflow.com/questions/1405611/how-to-extract-the-first-two-characters-of-a-string-in-shell-scripting</a></p>
+<pre><code>awk &#39;{lineKind=(NR-1)%4}lineKind==1{print $0}&#39; file1 | cut -c1-5 &gt; out.fasta # to have the 5 first Nuc of each sequence of file1</code></pre>
+<p>Sequence size (length):</p>
+<p><a
+href="https://unix.stackexchange.com/questions/18736/how-to-count-the-number-of-a-specific-character-in-each-line"
+class="uri">https://unix.stackexchange.com/questions/18736/how-to-count-the-number-of-a-specific-character-in-each-line</a></p>
+<pre><code>awk &#39;{lineKind=(NR-1)%4}lineKind==1{print length($0)}&#39; file1 &gt; out.stat # no need of &quot;\n&quot; here, numbers will be print with \n after</code></pre>
+<p>Remove the reads made of N only in a batch of files:</p>
+<p>see
+<code>C:\Users\gael\Documents\Hub projects\20200505 project_d\labbook_gael_project_d.docx</code></p>
+<p>Detect primer in extremities of reads in a batch of files:</p>
+<p>see
+<code>C:\Users\gael\Documents\Hub projects\20200505 project_d\labbook_gael_project_d.docx</code></p>
+<p>Remove primer in extremities of reads in a batch of files:</p>
+<p>see
+<code>C:\Users\gael\Documents\Hub projects\20200505 project_d\labbook_gael_project_d.docx</code></p>
+<p>Fastq QC in a batch of files:</p>
+<p>see
+<code>C:\Users\gael\Documents\Hub projects\20200505 project_d\labbook_gael_project_d.docx</code></p>
+<p>Convert to fasta:</p>
+<pre><code>tmux
+salloc -p common --ntasks=50
+salloc -p common,dedicated -q fast --ntasks=50
+module load SeqKit/2.8.2
+seqkit fq2fa R1.fastq.gz -o R1.fasta</code></pre>
+<h3 id="bamsam-specific"><span class="header-section-number">30.5</span>
+Bam/Sam
+specific<a class="headerlink" href="#bamsam-specific" title="Link to this heading"></a></h3>
+<p>See section 24.5 in
+<code>C:\Users\Gael\Documents\Hub projects\20200310 project_a/labbook_gael_project_a.docx</code>
+for:</p>
+<p>Create a custom tag</p>
+<p>Sort according a custom tag</p>
+<p>Remove duplicates using 5' and 3' coordinates</p>
+<p>Check if soft clipping present in reads</p>
+<h3 id="vcf-specific"><span class="header-section-number">30.6</span>
+VCF
+specific<a class="headerlink" href="#vcf-specific" title="Link to this heading"></a></h3>
+<p>To split a VCF in lines of 100 without the header:</p>
+<pre><code>grep -v &quot;^#&quot; ${vcf} | split -l 100 - &quot;split_vcf&quot; # split 100 lines into each new file with a name starting by &quot;split_vcf&quot; (without the header, using grep -v). The hyphen is for the piped file</code></pre>
+<p>To remove the header:</p>
+<pre><code>bcftools view --no-header --output-type z --write-index ${vcf} &gt; extracted.vcf.gz</code></pre>
+<p>Or:</p>
+<pre><code>    if [[ &quot;${FILE_EXTENSION}&quot; =~ gz ]] ; then
+        zcat ${vcf} | awk &#39;{
+            if($0 ~ &quot;^##.*&quot;){
+                print $0
+            }else{
+                exit 0
+            }
+        }&#39; &gt;&gt; res_fisher.vcf
+    else
+        awk &#39;{
+            if($0 ~ &quot;^##.*&quot;){
+                print $0
+            }else{
+                exit 0
+            }
+        }&#39; ${vcf} &gt;&gt; res_fisher.vcf
+    fi</code></pre>
+<p><span class="red">To add in a VCF:</span></p>
+<pre><code>    PREHEADER=&#39;##fileformat=VCFv4.2;build by main.nf\\n##WARNING: This file is not a true VCF since FORMAT AND sample (indiv) columns are not present&#39;
+    HEADER=&#39;#CHROM\\tPOS\\tID\\tREF\\tALT\\tQUAL\\tFILTER\\tINFO&#39;
+    echo -e \$PREHEADER &gt; res_fisher.vcf
+    awk -v var1=\$HEADER &#39;BEGIN{FS=&quot;\\t&quot; ; OFS=&quot;&quot; ; ORS=&quot;&quot;}
+        NR==1{
+            print &quot;##WARNING: 5 first names of the header of the initial file: &quot;\$1&quot; &quot;\$2&quot; &quot;\$3&quot; &quot;\$4&quot; &quot;\$5&quot;\\n&quot; ;
+            print &quot;##WARNING: if the 5 first columns of the .tsv file are not CHROM POS REF ALT INFO, then the .vcf file produced by this process is not good\\n&quot; ;
+            print &quot;##INFO=&lt;ID=FISHER,Number=.,Type=String,Description=\&quot;&quot;Fisher exact tests based on the presence/absence of the variant in the affected/unaffected indiv. Format: &quot; ;
+            for(i=6;i&lt;=NF;i++){print \$i ; if(i &lt; NF){print &quot;|&quot;}} ;
+            print &quot;\&quot;&quot;&gt;\\n&quot; ;
+            print var1&quot;\\n&quot;
+        }
+        NR &gt; 1{
+            gsub(&quot;[\\\\[\\\\]\\&#39;&quot;&#39;&quot;&#39;]&quot;, &quot;&quot;, \$4)
+            print \$1&quot;\\t&quot;\$2&quot;\\t.\\t&quot;\$3&quot;\\t&quot;\$4&quot;\\t.\\t.\\t&quot;\$5&quot;;FISHER=&quot; ;
+            for(i=6;i&lt;=NF;i++){print \$i ; if(i &lt; NF){print &quot;|&quot;}} ;
+            print &quot;\\n&quot;
+        }
+    &#39; ${fisher} &gt;&gt; ./TEMPO.txt | tee tsv2vcf_report.txt # append after the vcf header
+    bgzip -f -l 9 ./TEMPO.txt &gt; res_fisher.vcf.gz | tee -a tsv2vcf_report.txt # htslib command, -l 9 best compression, -c to standard output, -f to force without asking
+    tabix -p vcf res_fisher.vcf.gz | tee -a tsv2vcf_report.txt # htslib command</code></pre>
+<h2 id="installation-of-bash-utilities"><span
+class="header-section-number">31</span> Installation of bash
+utilities<a class="headerlink" href="#installation-of-bash-utilities" title="Link to this heading"></a></h2>
+<h3 id="updated-sort-command"><span
+class="header-section-number">31.1</span> Updated sort
+command<a class="headerlink" href="#updated-sort-command" title="Link to this heading"></a></h3>
+<p>MAESTRO use a old sort command, which cannot parallelize.</p>
+<pre><code># wget does not work from salloc
+# mkdir /pasteur/homes/gmillot/softwares/bash_utils # already done
+cd /pasteur/homes/gmillot/softwares/bash_utils
+wget http://ftp.gnu.org/gnu/coreutils/coreutils-8.30.tar.xz
+# switch to salloc
+tar -xf coreutils-8.30.tar.xz # unzip, a bit long, have to wait
+cd /pasteur/homes/gmillot/softwares/bash_utils/coreutils-8.30
+
+chmod u=rwx /pasteur/homes/gmillot/softwares/bash_utils/coreutils-8.30/configure
+module add gcc/8.2.0
+./configure --prefix=/pasteur/homes/gmillot/softwares/bash_utils/coreutils-8.30 # execute the configure file present in the unzipped folder. The --prefix is the folder where the executable will be placed
+srun -q hubbioit -p hubbioit -c 5 make -j 5 # -c 5 for 5 cpus and make to make with option -j 5 to say that the make function will indeed use 5 cpu, see make --help
+make install</code></pre>
+<p>Then add this in the .profile file:</p>
+<pre><code>export PATH=&quot;/pasteur/homes/gmillot/softwares/bash_utils/coreutils-8.30/bin:$PATH&quot; # for updated commands of bash</code></pre>
+<h3 id="updated-awk-gawk-command"><span
+class="header-section-number">31.2</span> Updated awk gawk
+command<a class="headerlink" href="#updated-awk-gawk-command" title="Link to this heading"></a></h3>
+<p>MAESTRO use a old awk command, which cannot use array of array.</p>
+<pre><code># wget does not work from salloc
+# mkdir /pasteur/homes/gmillot/softwares/bash_utils #already done
+cd /pasteur/homes/gmillot/softwares/bash_utils
+wget https://ftp.gnu.org/gnu/gawk/gawk-5.1.0.tar.gz
+# switch to salloc
+tar -xf gawk-5.1.0.tar.gz # unzip, a bit long, have to wait
+cd /pasteur/homes/gmillot/softwares/bash_utils/gawk-5.1.0
+
+chmod u=rwx /pasteur/homes/gmillot/softwares/bash_utils/gawk-5.1.0/configure
+module add gcc/8.2.0
+./configure --prefix=/pasteur/homes/gmillot/softwares/bash_utils/gawk-5.1.0 # execute the configure file present in the unzipped folder. The --prefix is the folder where the executable will be placed
+srun -q hubbioit -p hubbioit -c 5 make -j 5 # -c 5 for 5 cpus and make to make with option -j 5 to say that the make function will indeed use 5 cpu, see make --help
+make install</code></pre>
+<p>Then add this in the .profile file:</p>
+<pre><code>export PATH=&quot;/pasteur/homes/gmillot/softwares/bash_utils/gawk-5.1.0/bin:$PATH&quot; # for updated commands of bash</code></pre>
+<h3 id="tldr"><span class="header-section-number">31.3</span>
+tldr<a class="headerlink" href="#tldr" title="Link to this heading"></a></h3>
+<p>tldr is a python package that provide nice examples of main bash
+commands.</p>
+<p><a
+href="https://github.com/tldr-pages/tldr-python-client/blob/master/README.md"
+class="uri">https://github.com/tldr-pages/tldr-python-client/blob/master/README.md</a></p>
+<p>To install:</p>
+<pre><code>conda activate condaenv_py371
+/pasteur/homes/gmillot/softwares/anaconda3/bin/pip install tldr</code></pre>
+<p>Example:</p>
+<p><img src="../md/img/044-bash/image5.png" style="width:63.0%"
+loading="lazy" /></p>
+<p>Also a web page:</p>
+<p><a href="https://tldr.ostera.io/grep"
+class="uri">https://tldr.ostera.io/grep</a></p>
+<p><img src="../md/img/044-bash/image6.png" style="width:66.0%"
+loading="lazy" /></p>
+<h3 id="other"><span class="header-section-number">31.4</span>
+Other<a class="headerlink" href="#other" title="Link to this heading"></a></h3>
+<p><a
+href="https://www.ebi.ac.uk/about/vertebrate-genomics/software/exonerate"
+class="uri">https://www.ebi.ac.uk/about/vertebrate-genomics/software/exonerate</a></p>
+<p><a href="https://github.com/louiejtaylor/grabseqs"
+class="uri">https://github.com/louiejtaylor/grabseqs</a></p>
+<p><a href="http://renozao.github.io/NMF/master/index.html"
+class="uri">http://renozao.github.io/NMF/master/index.html</a></p>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="140-wsl2-linux-on-windows.html" class="btn btn-neutral float-right" title="Windows
+Subsystem for Linux
+(WSL)" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>

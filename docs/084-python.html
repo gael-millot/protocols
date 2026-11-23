@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Python · protocol 84 · Bioinformatics protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="044-bash.html"><span class="nav-num">44</span>Bash</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux (WSL)</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul class="current">
+          <li class="toctree-l1 current"><a class="reference internal current" href="084-python.html"><span class="nav-num">84</span>Python</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#introduction"><span class="sec-num">1</span>Introduction</a></li><li class="toctree-l2"><a class="reference internal" href="#installation"><span class="sec-num">2</span>Installation</a></li><li class="toctree-l2"><a class="reference internal" href="#classical-interfaces"><span class="sec-num">3</span>Classical interfaces</a><ul><li class="toctree-l3"><a class="reference internal" href="#ipython"><span class="sec-num">3.1</span>IPython</a></li><li class="toctree-l3"><a class="reference internal" href="#jupyter-notebook"><span class="sec-num">3.2</span>Jupyter Notebook</a></li><li class="toctree-l3"><a class="reference internal" href="#spyder"><span class="sec-num">3.3</span>Spyder</a></li><li class="toctree-l3"><a class="reference internal" href="#pycharm"><span class="sec-num">3.4</span>PyCharm</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#basic-commands-in-jupyter"><span class="sec-num">4</span>Basic commands in Jupyter</a></li><li class="toctree-l2"><a class="reference internal" href="#how-to-convert-a-code-in-jupyter-into-a-classical-code-for-sublime-text"><span class="sec-num">5</span>How to convert a code in Jupyter into a classical code for Sublime Text</a></li><li class="toctree-l2"><a class="reference internal" href="#to-know-the-version-of-python-installed-in-the-shell"><span class="sec-num">6</span>To know the version of python installed in the shell</a></li><li class="toctree-l2"><a class="reference internal" href="#import-packages"><span class="sec-num">7</span>Import packages</a><ul><li class="toctree-l3"><a class="reference internal" href="#pip-example-on-windows-with-the-intervaltree-package"><span class="sec-num">7.1</span>pip: example on windows with the intervaltree package</a></li><li class="toctree-l3"><a class="reference internal" href="#pip-example-on-linux-with-the-serpentine-package"><span class="sec-num">7.2</span>pip: example on linux with the serpentine package</a></li><li class="toctree-l3"><a class="reference internal" href="#conda-declaration"><span class="sec-num">7.3</span>Conda declaration</a></li><li class="toctree-l3"><a class="reference internal" href="#conda-to-install-packages"><span class="sec-num">7.4</span>Conda to install packages</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#import-module-and-own-script-for-execution"><span class="sec-num">8</span>Import module and own script for execution</a><ul><li class="toctree-l3"><a class="reference internal" href="#description"><span class="sec-num">8.1</span>Description</a></li><li class="toctree-l3"><a class="reference internal" href="#function-that-manage-modules"><span class="sec-num">8.2</span>Function that manage modules</a></li><li class="toctree-l3"><a class="reference internal" href="#list-of-useful-modules"><span class="sec-num">8.3</span>List of useful modules</a></li><li class="toctree-l3"><a class="reference internal" href="#get-the-source-code-of-a-function-from-a-module"><span class="sec-num">8.4</span>Get the source code of a function from a module</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#absolute-rules-in-python-good-practices"><span class="sec-num">9</span>Absolute rules in python &amp; good practices</a></li><li class="toctree-l2"><a class="reference internal" href="#to-run-a-python-script-in-a-shell"><span class="sec-num">10</span>To run a Python script in a shell</a></li><li class="toctree-l2"><a class="reference internal" href="#basic-notions-in-python"><span class="sec-num">11</span>Basic notions in python</a><ul><li class="toctree-l3"><a class="reference internal" href="#cheatsheet"><span class="sec-num">11.1</span>Cheatsheet</a></li><li class="toctree-l3"><a class="reference internal" href="#help"><span class="sec-num">11.2</span>Help</a></li><li class="toctree-l3"><a class="reference internal" href="#the-notion-of-classes-and-object"><span class="sec-num">11.3</span>The notion of classes and object</a></li><li class="toctree-l3"><a class="reference internal" href="#variable-object"><span class="sec-num">11.4</span>Variable | object</a></li><li class="toctree-l3"><a class="reference internal" href="#assignation-in-a-variable"><span class="sec-num">11.5</span>Assignation in a variable</a></li><li class="toctree-l3"><a class="reference internal" href="#variable-name"><span class="sec-num">11.6</span>Variable name</a></li><li class="toctree-l3"><a class="reference internal" href="#reserved-keywords"><span class="sec-num">11.7</span>Reserved keywords</a></li><li class="toctree-l3"><a class="reference internal" href="#type-of-objects"><span class="sec-num">11.8</span>Type of objects</a></li><li class="toctree-l3"><a class="reference internal" href="#data-structure"><span class="sec-num">11.9</span>Data structure</a></li><li class="toctree-l3"><a class="reference internal" href="#notion-of-mutable-and-immutable-objects"><span class="sec-num">11.10</span>Notion of mutable and immutable objects</a></li><li class="toctree-l3"><a class="reference internal" href="#list-object"><span class="sec-num">11.11</span>List object</a></li><li class="toctree-l3"><a class="reference internal" href="#tuple-object"><span class="sec-num">11.12</span>Tuple object</a></li><li class="toctree-l3"><a class="reference internal" href="#dictionnary-object"><span class="sec-num">11.13</span>Dictionnary object</a></li><li class="toctree-l3"><a class="reference internal" href="#data-frame"><span class="sec-num">11.14</span>Data frame</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#variable-incrementation"><span class="sec-num">12</span>Variable incrementation</a></li><li class="toctree-l2"><a class="reference internal" href="#calculator"><span class="sec-num">13</span>Calculator</a></li><li class="toctree-l2"><a class="reference internal" href="#comparison"><span class="sec-num">14</span>Comparison</a></li><li class="toctree-l2"><a class="reference internal" href="#boolean"><span class="sec-num">15</span>Boolean</a></li><li class="toctree-l2"><a class="reference internal" href="#strings"><span class="sec-num">16</span>Strings</a></li><li class="toctree-l2"><a class="reference internal" href="#about-pattern-matching-and-regular-expression-regex"><span class="sec-num">17</span>About pattern matching and regular expression (regex)</a></li><li class="toctree-l2"><a class="reference internal" href="#the-for-loop"><span class="sec-num">18</span>The for loop</a></li><li class="toctree-l2"><a class="reference internal" href="#create-a-functions"><span class="sec-num">19</span>Create a functions</a></li><li class="toctree-l2"><a class="reference internal" href="#modify-a-primitive-function"><span class="sec-num">20</span>Modify a primitive function</a></li><li class="toctree-l2"><a class="reference internal" href="#create-a-class"><span class="sec-num">21</span>Create a class</a></li><li class="toctree-l2"><a class="reference internal" href="#equivalent-of-r-basic-functions-in-python-pandas"><span class="sec-num">22</span>Equivalent of R basic functions in Python pandas</a></li><li class="toctree-l2"><a class="reference internal" href="#basic-python-commands"><span class="sec-num">23</span>Basic python commands</a></li><li class="toctree-l2"><a class="reference internal" href="#python-tricks"><span class="sec-num">24</span>Python tricks</a></li><li class="toctree-l2"><a class="reference internal" href="#use-python-from-r-and-vice-versa"><span class="sec-num">25</span>Use python from R and vice-versa</a></li><li class="toctree-l2"><a class="reference internal" href="#function-description-section"><span class="sec-num">26</span>function: description section</a></li></ul></li>
+          <li class="toctree-l1"><a class="reference internal" href="165-java.html"><span class="nav-num">165</span>Java</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="134-docker.html"><span class="nav-num">134</span>Docker</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">R, Python and Java</li>
+            <li class="breadcrumb-item active">Protocol 84</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/084-python.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Python</h1>
+<p class="protocol-meta"><span>Protocol 84</span><span>revision 0</span><span>last update 2023-11-28</span></p>
+<h2 id="introduction"><span class="header-section-number">1</span>
+Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>Python is not compiled (ie, it is interpreted) like C or C++ so a bit
+slower than these languages...</p>
+<p>Python was not a scientific language at the beginning but a general
+language.</p>
+<p>Two versions: Python 2 and Python 3. So be careful...</p>
+<p>Jupyter is a notebook for python (mix text, results, images and code
+like R Markdown)</p>
+<p>Python has its own interface but not so nice. So Ipython is
+classically used instead.</p>
+<p>Part of Python is compiled so we have to compile it, which is
+difficult. Conda is a project focused on the precompiled tools for
+Python users</p>
+<h2 id="installation"><span class="header-section-number">2</span>
+Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>See protocol 138</p>
+<h2 id="classical-interfaces"><span
+class="header-section-number">3</span> Classical
+interfaces<a class="headerlink" href="#classical-interfaces" title="Link to this heading"></a></h2>
+<p>Some of these interfaces (Spyder, Jupyter) are in Anaconda.</p>
+<h3 id="ipython"><span class="header-section-number">3.1</span>
+IPython<a class="headerlink" href="#ipython" title="Link to this heading"></a></h3>
+<p>Interactive Python (IPython) is a command shell notebook interface
+for Python</p>
+<p><a href="https://en.wikipedia.org/wiki/IPython"
+class="uri">https://en.wikipedia.org/wiki/IPython</a></p>
+<p><img src="../md/img/084-python/image1.png" style="width:51.0%"
+loading="lazy" /></p>
+<h3 id="jupyter-notebook"><span class="header-section-number">3.2</span>
+Jupyter
+Notebook<a class="headerlink" href="#jupyter-notebook" title="Link to this heading"></a></h3>
+<p>It's another version of IPython (spin off the IPython project) that
+manages JUlia - PYThon - R.</p>
+<p><a href="https://en.wikipedia.org/wiki/IPython#Project_Jupyter"
+class="uri">https://en.wikipedia.org/wiki/IPython#Project_Jupyter</a></p>
+<p><img src="../md/img/084-python/image2.png" style="width:71.0%"
+loading="lazy" /></p>
+<p><a
+href="https://askubuntu.com/questions/1197891/ubuntu-18-04-open-jupyter-notebook-with-double-click"
+class="uri">https://askubuntu.com/questions/1197891/ubuntu-18-04-open-jupyter-notebook-with-double-click</a></p>
+<h3 id="spyder"><span class="header-section-number">3.3</span>
+Spyder<a class="headerlink" href="#spyder" title="Link to this heading"></a></h3>
+<p>Spyder is an open source cross-platform integrated development
+environment (IDE) for scientific programming in the Python language.
+Spyder integrates with a number of prominent packages in the scientific
+Python stack, including NumPy, SciPy, Matplotlib, pandas, IPython, SymPy
+and Cython, as well as other open source software</p>
+<p>Jupyter has not this included by default.</p>
+<p>Spyder seems more like RStudio.</p>
+<p><a href="https://en.wikipedia.org/wiki/Spyder_(software)"
+class="uri">https://en.wikipedia.org/wiki/Spyder_(software)</a>.</p>
+<p><img src="../md/img/084-python/image3.png" style="width:74.0%"
+loading="lazy" /></p>
+<p>Packages classically installed via WSL2 are not necessary available
+in Spider. Trick to install packages available for Spyder:</p>
+<p>Open Spider and type in the console:</p>
+<pre><code>&gt;&gt;&gt; import os
+&gt;&gt;&gt; os.system(&quot;pip install &lt;PACKAGE_NAME&gt;&quot;)</code></pre>
+<h3 id="pycharm"><span class="header-section-number">3.4</span>
+PyCharm<a class="headerlink" href="#pycharm" title="Link to this heading"></a></h3>
+<p>PyCharm is an open source cross-platform integrated development
+environment (IDE) for scientific programming in the Python language.</p>
+<p><a href="https://www.jetbrains.com/pycharm/"
+class="uri">https://www.jetbrains.com/pycharm/</a></p>
+<p>Color themes:</p>
+<p><a
+href="http://color-themes.com/?view=index&amp;page=1&amp;order=popular&amp;search=sublime&amp;layout=Generic"
+class="uri">http://color-themes.com/?view=index&amp;page=1&amp;order=popular&amp;search=sublime&amp;layout=Generic</a></p>
+<p><img src="../md/img/084-python/image4.png" loading="lazy" /></p>
+<p>Download the Monokai Sublime Text 3.jar file.</p>
+<p>Open PyCharm</p>
+<p>Menu File/Import settings and import the .jar file</p>
+<p>Then, in menu File/settings, the new color theme is here:</p>
+<p><img src="../md/img/084-python/image5.png" style="width:70.0%"
+loading="lazy" /></p>
+<p>See also <a
+href="https://plugins.jetbrains.com/plugin/7275-codeglance"
+class="uri">https://plugins.jetbrains.com/plugin/7275-codeglance</a> to
+have a code minimap similar to the one found in Sublime into the editor
+pane.</p>
+<h2 id="basic-commands-in-jupyter"><span
+class="header-section-number">4</span> Basic commands in
+Jupyter<a class="headerlink" href="#basic-commands-in-jupyter" title="Link to this heading"></a></h2>
+<p>Open Jupyter</p>
+<p><img src="../md/img/084-python/image6.png" style="width:48.0%"
+loading="lazy" /></p>
+<p>Two windows opened, a CLI and a web interface.</p>
+<p>The CLI is the base of Jupyter. In this interface:
+<code>Ctrl+C</code> quit Jupyter</p>
+<p>The web interface is the top lawer of the interface.</p>
+<p>The root is:</p>
+<p>[REDACTED]</p>
+<p>Select a working directory by clicing on the folders</p>
+<p><img src="../md/img/084-python/image7.png" loading="lazy" /></p>
+<p>Note the pass in the web address and in the file Tab</p>
+<p>Create a new working folder</p>
+<p>To rename, select the new folder and clic on the new "Rename"
+icon</p>
+<p><img src="../md/img/084-python/image8.png" loading="lazy" /></p>
+<p>Then create a new Python 3 notebook</p>
+<p><img src="../md/img/084-python/image9.png" loading="lazy" /></p>
+<p>Shortcut commands:</p>
+<p><code>Shift + Enter</code> execute a cell</p>
+<h2
+id="how-to-convert-a-code-in-jupyter-into-a-classical-code-for-sublime-text"><span
+class="header-section-number">5</span> How to convert a code in Jupyter
+into a classical code for Sublime
+Text<a class="headerlink" href="#how-to-convert-a-code-in-jupyter-into-a-classical-code-for-sublime-text" title="Link to this heading"></a></h2>
+<p>Menu Edit/Merge cells</p>
+<p>Menu File/Download/.py file</p>
+<h2 id="to-know-the-version-of-python-installed-in-the-shell"><span
+class="header-section-number">6</span> To know the version of python
+installed in the
+shell<a class="headerlink" href="#to-know-the-version-of-python-installed-in-the-shell" title="Link to this heading"></a></h2>
+<p>Open Cygwin (see protocol 94).</p>
+<p>Type:</p>
+<pre><code>python</code></pre>
+<p><img src="../md/img/084-python/image10.png" style="width:81.0%"
+loading="lazy" /></p>
+<p>Beware: in cygwin, python3 command does not exist. The command python
+used python3.</p>
+<p>Idem for pip. See <a
+href="https://stackoverflow.com/questions/30863501/installing-new-versions-of-python-on-cygwin-does-not-install-pip"
+class="uri">https://stackoverflow.com/questions/30863501/installing-new-versions-of-python-on-cygwin-does-not-install-pip</a>
+to upgrade to pip3</p>
+<h2 id="import-packages"><span class="header-section-number">7</span>
+Import
+packages<a class="headerlink" href="#import-packages" title="Link to this heading"></a></h2>
+<p><span class="red">Run Cygwin as administrator</span></p>
+<h3 id="pip-example-on-windows-with-the-intervaltree-package"><span
+class="header-section-number">7.1</span> pip: example on windows with
+the intervaltree
+package<a class="headerlink" href="#pip-example-on-windows-with-the-intervaltree-package" title="Link to this heading"></a></h3>
+<p>Better to use pip than conda.</p>
+<p>Differences between pip and conda:</p>
+<p><a
+href="https://stackoverflow.com/questions/20994716/what-is-the-difference-between-pip-and-conda"
+class="uri">https://stackoverflow.com/questions/20994716/what-is-the-difference-between-pip-and-conda</a></p>
+<p>See conda below to have package in several environments</p>
+<p>Open Cygwin (see protocol 94).</p>
+<p>See the pip3 problem above in cygwin</p>
+<p>Type:</p>
+<pre><code>pip install intervaltree # to install on the computer the intervaltree package # normally pip3 for Python3 and pip for the others, but pip for python3 in cygwin</code></pre>
+<p><img src="../md/img/084-python/image11.png" loading="lazy" /></p>
+<p>To know where the package is installed:</p>
+<pre><code>pip show intervaltree # normally pip3 for Python3 and pip for the others, but pip for python3 in cygwin and other windows python interfaces</code></pre>
+<p><img src="../md/img/084-python/image12.png" style="width:69.0%"
+loading="lazy" /></p>
+<p>On windows, the file is installed in:</p>
+<p><code>C:\programdata\anaconda3\lib\site-packages</code> (if --user is
+not used during installation)</p>
+<p><code>C:\users\gael\appdata\roaming\python\python36\site-packages</code>
+(with --user during installation)</p>
+<p>On a server, it is installed in
+Z:\.local\lib\python3.6\site-packages\intervaltree</p>
+<h3 id="pip-example-on-linux-with-the-serpentine-package"><span
+class="header-section-number">7.2</span> pip: example on linux with the
+serpentine
+package<a class="headerlink" href="#pip-example-on-linux-with-the-serpentine-package" title="Link to this heading"></a></h3>
+<p>Better to use pip than conda.</p>
+<p>Differences between pip and conda:</p>
+<p><a
+href="https://stackoverflow.com/questions/20994716/what-is-the-difference-between-pip-and-conda"
+class="uri">https://stackoverflow.com/questions/20994716/what-is-the-difference-between-pip-and-conda</a></p>
+<p>But it can be very interesting to use pip from a conda environment
+(see protocol 107 or see conda below to have package in several
+environments)</p>
+<pre><code>pip install serpentine</code></pre>
+<p>Then test the serpentine installation by typing:</p>
+<pre><code>serpentine # or  python -m serpentine</code></pre>
+<p>If does not work, try:</p>
+<pre><code>pip install --user -e git+https://github.com/koszullab/serpentine.git@master#egg=serpentine</code></pre>
+<p>But very not efficient, as most of the time, does not install in
+<code>/softwares/anaconda3/lib/python3.7/site-packages</code></p>
+<h3 id="conda-declaration"><span
+class="header-section-number">7.3</span> Conda
+declaration<a class="headerlink" href="#conda-declaration" title="Link to this heading"></a></h3>
+<p>See <a
+href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html"
+class="uri">https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html</a>
+for the tuto</p>
+<p>First a problem of declaration has to be solved.</p>
+<p>When conda is properly installed, this is added in the .bashrc
+file:</p>
+<pre><code># added by Anaconda3 2018.12 installer
+# &gt;&gt;&gt; conda init &gt;&gt;&gt;
+# !! Contents within this block are managed by &#39;conda init&#39; !!
+__conda_setup=&quot;$(CONDA_REPORT_ERRORS=false &#39;/pasteur/homes/gmillot/softwares/anaconda3/bin/conda&#39; shell.bash hook 2&gt; /dev/null)&quot;
+if [ $? -eq 0 ]; then # $? return value of the last executed command, 0 for succes, -eq means equal to
+    \eval &quot;$__conda_setup&quot;
+else
+    if [ -f &quot;/pasteur/homes/gmillot/softwares/anaconda3/etc/profile.d/conda.sh&quot; ]; then
+        . &quot;/pasteur/homes/gmillot/softwares/anaconda3/etc/profile.d/conda.sh&quot;
+        CONDA_CHANGEPS1=false conda activate base
+    else
+        \export PATH=&quot;/pasteur/homes/gmillot/softwares/anaconda3/bin:$PATH&quot;
+    fi
+fi
+unset __conda_setup
+# &lt;&lt;&lt; conda init &lt;&lt;&lt;</code></pre>
+<p>To test if this works, exit TARS and reopen it. Then:</p>
+<pre><code>conda activate # activation of the base conda environment</code></pre>
+<p>If the prompt appears like this, ok:</p>
+<pre><code>(base) gmillot@tars-submit0:~$</code></pre>
+<p>Otherwise, copy paste the conda code in the .bashrc and put it in the
+.profile file.</p>
+<p>To test if this works, exit TARS and reopen it. Then:</p>
+<pre><code>conda activate # activation of the base conda environment</code></pre>
+<p>The code added by conda means:</p>
+<pre><code>source ~/softwares/anaconda3/etc/profile.d/conda.sh # or . /pasteur/homes/gmillot/softwares/anaconda3/etc/profile.d/conda.sh # . is like source</code></pre>
+<p>What can also be done is to leave the code in the .bashrc file and
+add in the .profile file (see protocole 44):</p>
+<pre><code># incorporation of the .bashrc file
+if [ -n &quot;$BASH_VERSION&quot; ]; then
+    # include .bashrc if it exists
+    if [ -f &quot;$HOME/.bashrc&quot; ]; then
+        . &quot;$HOME/.bashrc&quot;
+    fi
+fi</code></pre>
+<p>To deactivate the environment:</p>
+<pre><code>conda deactivate # do not precise the name of the environment</code></pre>
+<p>The prompt appears like this, ok:</p>
+<pre><code>gmillot@tars-submit0:~$</code></pre>
+<h3 id="conda-to-install-packages"><span
+class="header-section-number">7.4</span> Conda to install
+packages<a class="headerlink" href="#conda-to-install-packages" title="Link to this heading"></a></h3>
+<p>See <a
+href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html"
+class="uri">https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html</a>
+for the tuto</p>
+<p>Beware: sometimes, conda does not like writing like this, mainly
+using <code>conda activate</code>:</p>
+<pre><code>/pasteur/homes/gmillot/softwares/anaconda3/bin/conda</code></pre>
+<p>So, better use:</p>
+<pre><code>conda</code></pre>
+<p>Beware: always create a specific environment, never use the base one,
+because if the env is not good, easy to remade. Otherwise, conda must be
+uninstall and reinstall and all the created env must be redone.</p>
+<p>To create an environment named <code>condaenv_py371</code>:</p>
+<pre><code>/pasteur/homes/gmillot/softwares/anaconda3/bin/conda create --name condaenv_py371 # or -n</code></pre>
+<p>The env is created in:</p>
+<pre><code>/pasteur/homes/gmillot/softwares/anaconda3/envs/condaenv_py371</code></pre>
+<p>Then to install packages managed by conda in the env:</p>
+<pre><code>/pasteur/homes/gmillot/softwares/anaconda3/bin/conda install -n condaenv_py371 -c bioconda minimap2 bowtie2 samtools python=3.7.1 # -c for channel. Conda has several repo (forge bioconda, etc.) and -c force the repo to check first, here bioconda (the second will be the standard one)</code></pre>
+<p>Conda environment Activation: very important: create a new package
+path for python, meaning that python can check for dependencies into
+this activated env. For instance, hicstuff is not in the conda env
+<code>condaenv_py371</code>. But this tool require dependencies that are
+only in <code>condaenv_py371</code>, like samtools. Activating this env
+allows to use the hicstuff command</p>
+<pre><code>conda activate condaenv_py371</code></pre>
+<p>Note: if a conda environment is activated, then using
+<code>pip</code> should install the package in the standard anaconda lib
+directory but with a link in the conda env activated.</p>
+<h2 id="import-module-and-own-script-for-execution"><span
+class="header-section-number">8</span> Import module and own script for
+execution<a class="headerlink" href="#import-module-and-own-script-for-execution" title="Link to this heading"></a></h2>
+<h3 id="description"><span class="header-section-number">8.1</span>
+Description<a class="headerlink" href="#description" title="Link to this heading"></a></h3>
+<p>A module is a Python script, a .py file. The list of available
+modules is here:</p>
+<p><a href="https://docs.python.org/3.7/py-modindex.html"
+class="uri">https://docs.python.org/3.7/py-modindex.html</a></p>
+<p>Python environment do not contain all the module that are available
+in the basic version. They have to be imported. Some examples:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>import math</code></td>
+<td>import all the functions of the math module but remains in the math
+space. It is not in the local space (working space). Then use
+<code>math.pi</code> to have the pi number (see the dot operator)</td>
+</tr>
+<tr>
+<td><code>import math as m</code></td>
+<td>alias are possible on the module itself. Then use <code>m.pi</code>
+to have the pi number (see the dot operator)</td>
+</tr>
+<tr>
+<td><code>from math import pi</code></td>
+<td>import just what we need in the working space, here only pi (more
+efficient). Then use <code>pi</code> to have the pi number</td>
+</tr>
+<tr>
+<td><code>from math import pi as PI</code></td>
+<td>from the module math, the pi function is imported and is called PI.
+Then use <code>PI</code> to have the pi number</td>
+</tr>
+<tr>
+<td><code>from math import *</code></td>
+<td>Beware: import everything from the module into the working
+environment and override existing objects that have the same names</td>
+</tr>
+<tr>
+<td><code>import x</code></td>
+<td>import the personal x.py script</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="function-that-manage-modules"><span
+class="header-section-number">8.2</span> Function that manage
+modules<a class="headerlink" href="#function-that-manage-modules" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>!ls -a</code></td>
+<td>unix command that display the imported modules. But do not work
+everywhere</td>
+</tr>
+<tr>
+<td><code>sys.path</code></td>
+<td>sys module. Display the differents path in which Python look for
+modules</td>
+</tr>
+<tr>
+<td><code>sys.path.append("y")</code></td>
+<td>sys module. add the new path in the path list. y can be
+<code>C:\\Users\\Gael\\Desktop</code> for instance</td>
+</tr>
+<tr>
+<td><code>import x</code></td>
+<td>import the personal x.py script located in one of the path list. In
+x.py, the code is
+<code>import math ; r = 4 ; phi = math.cos(r)**2 + math.sin(r)**2</code>.
+Then use <code>import x ; x.phi</code> to display the phi variable</td>
+</tr>
+<tr>
+<td><code>dir(math)</code></td>
+<td>show the content of the math module</td>
+</tr>
+<tr>
+<td><code>help(math)</code></td>
+<td>show information on the content of the math module</td>
+</tr>
+<tr>
+<td><code>help(math.pi)</code></td>
+<td>show information on the type (here float) of the pi variable of
+math</td>
+</tr>
+<tr>
+<td><code>os.listdir()</code></td>
+<td>os module. Display the list dir</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="list-of-useful-modules"><span
+class="header-section-number">8.3</span> List of useful
+modules<a class="headerlink" href="#list-of-useful-modules" title="Link to this heading"></a></h3>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>math</code></td>
+<td>math functions</td>
+</tr>
+<tr>
+<td><code>sys</code></td>
+<td>basic system functions</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td>time access and conversion</td>
+</tr>
+<tr>
+<td><code>pandas</code></td>
+<td>data frames handling</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="get-the-source-code-of-a-function-from-a-module"><span
+class="header-section-number">8.4</span> Get the source code of a
+function from a
+module<a class="headerlink" href="#get-the-source-code-of-a-function-from-a-module" title="Link to this heading"></a></h3>
+<p>The <code>__code__</code> method, generally present in modules,
+provide the path where to find the file:</p>
+<pre><code>&gt;&gt;&gt; import scipy.stats as stats
+&gt;&gt;&gt; stats.fisher_exact.__code__</code></pre>
+<h2 id="absolute-rules-in-python-good-practices"><span
+class="header-section-number">9</span> Absolute rules in python &amp;
+good
+practices<a class="headerlink" href="#absolute-rules-in-python-good-practices" title="Link to this heading"></a></h2>
+<p>1) Python use the space or tabulation indentation to know if inside a
+loop or conditional instruction, etc.</p>
+<p>2) Never mix tab and space</p>
+<p>3) Use "four spaces" for each indentation: this is the block
+recognized by Python.</p>
+<p>4) Start any script with a shebang to be sure that the correct
+running program (and version) is used for this script. In python, the
+classical one is <code>#!/usr/bin/env python</code></p>
+<p>5) Python distinguish lower and uppercase, like R.</p>
+<p>6) 0 is the first position inside objects</p>
+<p>Good practices:</p>
+<p><a href="https://www.python.org/dev/peps/pep-0008/"
+class="uri">https://www.python.org/dev/peps/pep-0008/</a></p>
+<h2 id="to-run-a-python-script-in-a-shell"><span
+class="header-section-number">10</span> To run a Python script in a
+shell<a class="headerlink" href="#to-run-a-python-script-in-a-shell" title="Link to this heading"></a></h2>
+<p><a href="https://docs.python.org/3/using/cmdline.html"
+class="uri">https://docs.python.org/3/using/cmdline.html</a></p>
+<h2 id="basic-notions-in-python"><span
+class="header-section-number">11</span> Basic notions in
+python<a class="headerlink" href="#basic-notions-in-python" title="Link to this heading"></a></h2>
+<h3 id="cheatsheet"><span class="header-section-number">11.1</span>
+Cheatsheet<a class="headerlink" href="#cheatsheet" title="Link to this heading"></a></h3>
+<p>See
+<code>C:\Users\Gael\Documents\Manip\Protocoles bioinfo\Supp info\cheatsheet python.pdf</code></p>
+<h3 id="help"><span class="header-section-number">11.2</span>
+Help<a class="headerlink" href="#help" title="Link to this heading"></a></h3>
+<p>Use help().</p>
+<p><a
+href="https://www.askpython.com/python/built-in-methods/python-help-method"
+class="uri">https://www.askpython.com/python/built-in-methods/python-help-method</a></p>
+<h3 id="the-notion-of-classes-and-object"><span
+class="header-section-number">11.3</span> The notion of classes and
+object<a class="headerlink" href="#the-notion-of-classes-and-object" title="Link to this heading"></a></h3>
+<p>Objects are variables (and are also called variables). A class is a
+template for creating and using objects. A class possesses a constructor
+(to be able to instantiate), some attributes and some methods. Object
+belonging to a same class share the same attributes and methods to
+manipulate them.</p>
+<p>Glossary:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>Attributes</td>
+<td>variables created inside the class to define it. Example, in the
+class car, I can create <code>tire_number = 4</code>. Then using
+<code>print(car.tire_number)</code>, 4 will be displayed. Therefore,
+tire_number is an atrribute of car</td>
+</tr>
+<tr>
+<td>methods</td>
+<td>functions created inside the class, that can be used on any object
+belonging to this class. For instance,
+<code>car.door_unlocking</code></td>
+</tr>
+<tr>
+<td>instantiation</td>
+<td>assign a class to a variable / object. This is direct: class and
+values assignation as well as object creation occur at the same time.
+For instance, <code>x = 4</code> (value 4 of class integer assigned to
+x), <code>x = float(4)</code> (value 4 converted to class float and
+assigned to x)</td>
+</tr>
+<tr>
+<td>instance</td>
+<td>object belonging to a certain class. For example, 4 is an instance
+of the class integer</td>
+</tr>
+<tr>
+<td>constructor</td>
+<td>part of the class that is able to instantiate</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Useful functions related to classes:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>class</code></td>
+<td>create a new kind of class</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>display the class object</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Important to remember that attributes can be displayed, and methods
+can be used very easily: <code>car.tire_number</code> , or
+<code>car.door_unlocking</code>.</p>
+<p>In R, those considerations are masked. For instance, it is possible
+to apply summary() on any kind of classes, matrix, data.frame, etc. But
+in fact, a summary function has been defined in each class. Writing
+<code>a &lt;- matrix(1:5) ; summary(a)</code> is equivalent to write
+<code>a.summary()</code> (the summary function of the class matrix will
+be executed because the object a belongs to class matrix).</p>
+<p>See the class creation section below.</p>
+<p><a
+href="https://www.hackerearth.com/fr/practice/python/object-oriented-programming/classes-and-objects-i/tutorial/"
+class="uri">https://www.hackerearth.com/fr/practice/python/object-oriented-programming/classes-and-objects-i/tutorial/</a></p>
+<p><a href="https://www.w3schools.com/python/python_classes.asp"
+class="uri">https://www.w3schools.com/python/python_classes.asp</a></p>
+<h3 id="variable-object"><span class="header-section-number">11.4</span>
+Variable |
+object<a class="headerlink" href="#variable-object" title="Link to this heading"></a></h3>
+<p>An object is called a "Variable" or "object reference".</p>
+<h3 id="assignation-in-a-variable"><span
+class="header-section-number">11.5</span> Assignation in a
+variable<a class="headerlink" href="#assignation-in-a-variable" title="Link to this heading"></a></h3>
+<p><code>=</code> assignation operator, from right to left. Example:
+<code>a = 1</code></p>
+<h3 id="variable-name"><span class="header-section-number">11.6</span>
+Variable
+name<a class="headerlink" href="#variable-name" title="Link to this heading"></a></h3>
+<p>Same rules as in R:</p>
+<p>Variable names are unlimited in length</p>
+<p>Variable names start with a letter or underscore _ followed by
+letters, numbers or underscores.</p>
+<p>Variable names are case-sensitive</p>
+<p>Variable names conventionally have lower-case letters, with multiple
+words separated by underscores.</p>
+<p>Variable names cannot be named with special keywords</p>
+<h3 id="reserved-keywords"><span
+class="header-section-number">11.7</span> Reserved
+keywords<a class="headerlink" href="#reserved-keywords" title="Link to this heading"></a></h3>
+<pre><code>False</code></pre>
+<p><code>None</code> equivalent of NULL in R</p>
+<pre><code>True
+and
+not
+or
+
+if
+elif
+else
+
+for
+in
+return
+while
+break</code></pre>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>from</code></td>
+<td>import from a package</td>
+</tr>
+<tr>
+<td><code>import</code></td>
+<td>import a fonction into the environment</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre><code>global
+as
+
+assert
+class
+continue
+def
+del
+except
+finally
+is
+lambda
+nonlocal
+pass
+raise
+try
+with
+yield</code></pre>
+<p>To get the list of the reserved keywords, called "keywords":</p>
+<pre><code>import keyword ; print(keyword.kwlist)</code></pre>
+<h3 id="type-of-objects"><span class="header-section-number">11.8</span>
+Type of
+objects<a class="headerlink" href="#type-of-objects" title="Link to this heading"></a></h3>
+<p><img src="../md/img/084-python/image13.png" loading="lazy" /></p>
+<p><a
+href="http://localhost:8888/notebooks/Documents/Python_course/Day1.2_gael_comments.ipynb"
+class="uri">http://localhost:8888/notebooks/Documents/Python_course/Day1.2_gael_comments.ipynb</a></p>
+<p><a href="https://fr.wikiversity.org/wiki/Python/Les_types_de_base"
+class="uri">https://fr.wikiversity.org/wiki/Python/Les_types_de_base</a></p>
+<h3 id="data-structure"><span class="header-section-number">11.9</span>
+Data
+structure<a class="headerlink" href="#data-structure" title="Link to this heading"></a></h3>
+<p><a
+href="http://thomas-cokelaer.info/tutorials/python/data_structures.html"
+class="uri">http://thomas-cokelaer.info/tutorials/python/data_structures.html</a></p>
+<h3 id="notion-of-mutable-and-immutable-objects"><span
+class="header-section-number">11.10</span> Notion of mutable and
+immutable
+objects<a class="headerlink" href="#notion-of-mutable-and-immutable-objects" title="Link to this heading"></a></h3>
+<p>This notion is linked to the memory location of objects.</p>
+<p>Immutable objects are objects for which the memory location is
+changed if a element is changed in the object. Type of immutable
+objects: int, float, bool, str, tuple, unicode</p>
+<p>Mutable objects are objects for which the memory location is not
+changed if a element is changed in the object. Type of mutable objects:
+list, set, dict.</p>
+<p>Example of immutable object:</p>
+<pre><code>i = 1 # type integer
+id(i) # id() provide the memory location
+# ***704
+i += 1 # element of i is changed
+i
+2
+id(i) # memory location is changed
+# ***736 (different from ***704)</code></pre>
+<p>Example of mutable object:</p>
+<pre><code>x = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] # list
+x
+id(x)
+# 68320520
+x[1] = 4 # second element of the list is changed
+x
+id(x) # memory location not changed
+# 68320520</code></pre>
+<p>The strong benefit of mutable objects that modifing a mutable object
+is faster, notably when objects are big or complex. Indeed, for large
+and/or complex objects, creating a new copy of the object for every
+single change can be very costly and/or tedious. And for objects with a
+distinct identity, changing an existing objects is much more simple and
+intuitive than creating a new, modified copy of it.</p>
+<h3 id="list-object"><span class="header-section-number">11.11</span>
+List
+object<a class="headerlink" href="#list-object" title="Link to this heading"></a></h3>
+<p>Creation:</p>
+<pre><code>&gt;&gt;&gt; l = [1, 2, &quot;a&quot;]</code></pre>
+<p>Description:</p>
+<p>Object with compartments, each compartment is defined by elements
+(values) inside the compartment. Each value can be anything (another
+list, tuple, etc.). Could be equivalent to list in R. Compared to dict,
+no key (names) for the compartments. Example:</p>
+<pre><code>&gt;&gt;&gt; l = [1, 2, 3]
+&gt;&gt;&gt; l[0]
+1</code></pre>
+<p>Features:</p>
+<p>order is important. Value locations are based on the order number
+(called index).</p>
+<p>mutable.</p>
+<p><a href="http://thomas-cokelaer.info/tutorials/python/lists.html"
+class="uri">http://thomas-cokelaer.info/tutorials/python/lists.html</a></p>
+<p>Sometimes better to use numpy.array() more than list() since the
+former authorizes a single kind of mode.</p>
+<h3 id="tuple-object"><span class="header-section-number">11.12</span>
+Tuple
+object<a class="headerlink" href="#tuple-object" title="Link to this heading"></a></h3>
+<p>Creation:</p>
+<pre><code>&gt;&gt;&gt; l = (1, 2, 3)</code></pre>
+<p>Description:</p>
+<p>Idem as list but faster to use because immutable.</p>
+<p><a href="http://thomas-cokelaer.info/tutorials/python/tuples.html"
+class="uri">http://thomas-cokelaer.info/tutorials/python/tuples.html</a></p>
+<h3 id="dictionnary-object"><span
+class="header-section-number">11.13</span> Dictionnary
+object<a class="headerlink" href="#dictionnary-object" title="Link to this heading"></a></h3>
+<p>Creation:</p>
+<pre><code>&gt;&gt;&gt; d = {&quot;a&quot;:1, &quot;b&quot;:2}</code></pre>
+<p>Description:</p>
+<p>object with compartments, each compartment is defined by a key (name
+of the compartment) and by elements (values) inside the compartment.
+Could be equivalent to Data frame in R. . Example:</p>
+<pre><code>&gt;&gt;&gt; d = {&#39;first&#39;:&#39;string value&#39;, &#39;second&#39;:[1,2]}
+&gt;&gt;&gt; d.keys()
+[&#39;first&#39;, &#39;second&#39;]
+
+&gt;&gt;&gt; d.values()
+[&#39;string value&#39;, [1, 2]]</code></pre>
+<p>Features:</p>
+<p>no duplicated keys possible</p>
+<p>no order</p>
+<p>mutable</p>
+<p>Warning : fast but needs lots of memory if the number of fields
+becomes high.</p>
+<p><a href="http://thomas-cokelaer.info/tutorials/python/dicts.html"
+class="uri">http://thomas-cokelaer.info/tutorials/python/dicts.html</a></p>
+<h3 id="data-frame"><span class="header-section-number">11.14</span>
+Data
+frame<a class="headerlink" href="#data-frame" title="Link to this heading"></a></h3>
+<p><code>pandas.DataFrame</code> create a data frame. To assemble lists
+into a data frame for the data argument, use
+<code>pandas.DataFrame(data = [[x, y]])</code>. See <a
+href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html"
+class="uri">https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html</a></p>
+<p>To concatenate two data frames of same number of rows:</p>
+<pre><code>pandas.concat([df1.reset_index(drop = True), df2], axis = 1)</code></pre>
+<h2 id="variable-incrementation"><span
+class="header-section-number">12</span> Variable
+incrementation<a class="headerlink" href="#variable-incrementation" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>+=</code></td>
+<td>variable incrementation by addition</td>
+</tr>
+<tr>
+<td><code>*=</code></td>
+<td>variable incrementation by mutiplication</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>a = 10
+a += 2 # equivalent to a = a + 2
+a # gives 12
+
+a = 10
+a *= 2 # equivalent to a = a + 2
+a # gives 20</code></pre>
+<h2 id="calculator"><span class="header-section-number">13</span>
+Calculator<a class="headerlink" href="#calculator" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>=</code></td>
+<td>assign into a variable</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>sum</td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>subtraction</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>multiplication</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>division. Beware: in Python2 truncate and keep the integer part</td>
+</tr>
+<tr>
+<td><code>//</code></td>
+<td>division keeping the integer part (dropping the fractional
+part)</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>division providing the remainder. Example: <code>10 % 3</code> gives
+1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="comparison"><span class="header-section-number">14</span>
+Comparison<a class="headerlink" href="#comparison" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>==</code></td>
+<td>equal</td>
+</tr>
+<tr>
+<td><code>!=</code></td>
+<td>different</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>left strictly lower than right</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>left strictly greater than right</td>
+</tr>
+<tr>
+<td><code>&lt;=</code></td>
+<td>left lower or equal than right</td>
+</tr>
+<tr>
+<td><code>&gt;=</code></td>
+<td>left greater or equal than right</td>
+</tr>
+<tr>
+<td><code>is</code></td>
+<td>object identity</td>
+</tr>
+<tr>
+<td><code>is not</code></td>
+<td>object difference</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To compare two objects:</p>
+<p><a
+href="https://www.kite.com/python/answers/how-to-compare-two-objects-in-python"
+class="uri">https://www.kite.com/python/answers/how-to-compare-two-objects-in-python</a></p>
+<h2 id="boolean"><span class="header-section-number">15</span>
+Boolean<a class="headerlink" href="#boolean" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>and</code></td>
+<td>and</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td>and</td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td>or</td>
+</tr>
+<tr>
+<td><code>not</code></td>
+<td>negation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="strings"><span class="header-section-number">16</span>
+Strings<a class="headerlink" href="#strings" title="Link to this heading"></a></h2>
+<h2 id="about-pattern-matching-and-regular-expression-regex"><span
+class="header-section-number">17</span> About pattern matching and
+regular expression
+(regex)<a class="headerlink" href="#about-pattern-matching-and-regular-expression-regex" title="Link to this heading"></a></h2>
+<p><a href="https://docs.python.org/3/library/re.html"
+class="uri">https://docs.python.org/3/library/re.html</a></p>
+<p>See also the nice way of using \1 to replace surounding strings of
+something to keep: <a
+href="https://www.pythontutorial.net/python-regex/python-regex-sub/"
+class="uri">https://www.pythontutorial.net/python-regex/python-regex-sub/</a></p>
+<h2 id="the-for-loop"><span class="header-section-number">18</span> The
+for
+loop<a class="headerlink" href="#the-for-loop" title="Link to this heading"></a></h2>
+<pre><code>for this in [1, 2, 3]:
+    print(this)
+
+
+for i0 in list(range(1, 100)):
+    print i0</code></pre>
+<p>loop to get the content of objects called by a string:</p>
+<pre><code>a = [&#39;AC&#39;, &#39;QD&#39;] # list of strings
+AC = [1, 28, 3] #
+QD = [&#39;caca&#39;, &#39;bob&#39;] #
+d = {} # empty dictionary
+for i0 in a:
+    d[i0] = locals()[i0] # implementation of the d dict
+d</code></pre>
+<p>To return a text every n loops:</p>
+<pre><code>    LOG_EVERY_N = 1000
+    count = 0
+    report = open(report.log, &quot;a&quot;)
+    for v in vcf: # parse each line of vcf with the content of region in it
+        count = count + 1
+        if (count % LOG_EVERY_N) == 0:
+            report.write(&quot;NUMBER OF VCF LINES SCANNED: &quot; + str(count) + &quot;\n&quot;)
+
+    report.close()</code></pre>
+<p>See globals() and locals() in section <a
+href="#basic-python-commands">Basic python commands</a>.</p>
+<h2 id="create-a-functions"><span
+class="header-section-number">19</span> Create a
+functions<a class="headerlink" href="#create-a-functions" title="Link to this heading"></a></h2>
+<p>The structure is the following one:</p>
+<pre><code>def function_name ( arg1, arg2, ...) :
+    ......
+    # function body. Note the 4 dots indentation that signal the body
+    x = arg1 * arg2
+    return(x)</code></pre>
+<h2 id="modify-a-primitive-function"><span
+class="header-section-number">20</span> Modify a primitive
+function<a class="headerlink" href="#modify-a-primitive-function" title="Link to this heading"></a></h2>
+<p>Example with the print function:</p>
+<pre><code>print_file = &quot;&quot;C:/Users/Gael/Documents/test.txt&quot;
+if print_file is not None:
+    print = functools.partial(print, file=print_file)</code></pre>
+<p>the print default function is modified such as the print is now in
+the print_file path</p>
+<h2 id="create-a-class"><span class="header-section-number">21</span>
+Create a
+class<a class="headerlink" href="#create-a-class" title="Link to this heading"></a></h2>
+<p><a href="https://docs.python.org/2/tutorial/classes.html"
+class="uri">https://docs.python.org/2/tutorial/classes.html</a></p>
+<h2 id="equivalent-of-r-basic-functions-in-python-pandas"><span
+class="header-section-number">22</span> Equivalent of R basic functions
+in Python
+pandas<a class="headerlink" href="#equivalent-of-r-basic-functions-in-python-pandas" title="Link to this heading"></a></h2>
+<p><a
+href="https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_r.html"
+class="uri">https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_r.html</a></p>
+<p><a
+href="https://towardsdatascience.com/cheat-sheet-for-python-dataframe-r-dataframe-syntax-conversions-450f656b44ca"
+class="uri">https://towardsdatascience.com/cheat-sheet-for-python-dataframe-r-dataframe-syntax-conversions-450f656b44ca</a></p>
+<h2 id="basic-python-commands"><span
+class="header-section-number">23</span> Basic python
+commands<a class="headerlink" href="#basic-python-commands" title="Link to this heading"></a></h2>
+<p><a href="https://docs.python.org/3/library/index.html"
+class="uri">https://docs.python.org/3/library/index.html</a></p>
+<p>Builtin functions (valable for all classes):</p>
+<p><a href="https://docs.python.org/3/library/functions.html#open"
+class="uri">https://docs.python.org/3/library/functions.html#open</a></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>#</code></td>
+<td>to comment a scrip</td>
+</tr>
+<tr>
+<td><code>L</code></td>
+<td>long integer</td>
+</tr>
+<tr>
+<td><code>;</code></td>
+<td>instruction separator (similar to End of Line)</td>
+</tr>
+<tr>
+<td><code>,</code></td>
+<td>argument separator inside functions</td>
+</tr>
+<tr>
+<td><code>''</code></td>
+<td>string delimiter. " ", ''' ''', """ """ put inside ' ' will be
+considered as string and be printed</td>
+</tr>
+<tr>
+<td><code>""</code></td>
+<td>string delimiter. ' ', ''' ''', """ """ put inside " " will be
+considered as string and be printed</td>
+</tr>
+<tr>
+<td><code>''' '''</code></td>
+<td>string delimiter. " ", ' ' and """ """ put inside ''' ''' will be
+considered as string and be printed. Carriage return in string are
+interpreted as \n</td>
+</tr>
+<tr>
+<td><code>""" """</code></td>
+<td>string delimiter. " ", ' ' and ''' '''put inside """ """' will be
+considered as string and be printed. Carriage return in string are
+interpreted as \n</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>apply the function written after the dot to the content of an object
+written before the dot</td>
+</tr>
+<tr>
+<td><code>True False</code></td>
+<td>equivalent to 0 and 1 respectively</td>
+</tr>
+<tr>
+<td><code>is_integer()</code></td>
+<td>is integer? Use <code>math.pi.is_integer()</code> or
+<code>is_integer(math.pi)</code></td>
+</tr>
+<tr>
+<td><code>import</code></td>
+<td>import function</td>
+</tr>
+<tr>
+<td><code>from x import y,z</code></td>
+<td>import y and z functions from the package x</td>
+</tr>
+<tr>
+<td><code>sys.arg</code></td>
+<td>object generated when running a .py script from a shell.
+<code>sys.arg[1]</code> contains the first argument,
+<code>sys.arg[2]</code> the second, etc...</td>
+</tr>
+<tr>
+<td><code>set()</code></td>
+<td>define an empty variable for which the content will not be ordered
+and not be duplicated. The display order cannot be garanted</td>
+</tr>
+<tr>
+<td><code>type()</code></td>
+<td>define the type of the variable. Either integer (int), decimal
+(float) and string (str)</td>
+</tr>
+<tr>
+<td><code>csv.DictReader()</code></td>
+<td>import a csv table with header into a dict object</td>
+</tr>
+<tr>
+<td><code>int()</code></td>
+<td>convert into integer</td>
+</tr>
+<tr>
+<td><code>long()</code></td>
+<td>convert into long integer</td>
+</tr>
+<tr>
+<td><code>float()</code></td>
+<td>convert into float</td>
+</tr>
+<tr>
+<td><code>str()</code></td>
+<td>convert into character sting</td>
+</tr>
+<tr>
+<td><code>repr()</code></td>
+<td>as <code>str()</code></td>
+</tr>
+<tr>
+<td><code>eval()</code></td>
+<td>evaluate a character string (or expression?)</td>
+</tr>
+<tr>
+<td><code>unicode()</code></td>
+<td>convert into unicode character string</td>
+</tr>
+<tr>
+<td><code>id()</code></td>
+<td>identity of the location of the object in memory</td>
+</tr>
+<tr>
+<td><code>globals()</code></td>
+<td>display the global variables (as a dict)</td>
+</tr>
+<tr>
+<td><code>globals()[x] = "a"</code></td>
+<td>if x (or value of x) does not exist, create the x key in the
+globals() dict and assign "a" in this key. If x already exists,
+overwrite x</td>
+</tr>
+<tr>
+<td><code>random.choices</code></td>
+<td>sampling with replacement. See <a
+href="https://docs.python.org/3/library/random.html"
+class="uri">https://docs.python.org/3/library/random.html</a></td>
+</tr>
+<tr>
+<td><code>locals()</code></td>
+<td>display the local variables (as a dict). Has to be used when inside
+functions</td>
+</tr>
+<tr>
+<td><code>locals()[x] = "a"</code></td>
+<td>if x (or value of x) does not exist, create the x key in the local
+() dict and assign "a" in this key. If x already exists, overwrite
+x</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><span class="red">greater than (in comparison) or overwrite in a
+file (if the target file already exists, it is overwritten). Beware: do
+not write into a variable. When we say "file", it means that a file is
+created on the computer in the default directory (like the command
+write() of R). To write in a variable, i.e., to assign, use</span>
+<code>=</code><span class="red">. Of note</span> <code>&gt; x</code>
+<span class="red">with nothing before create (or overwrite toward) an
+empty file</span></td>
+</tr>
+<tr>
+<td><code>&gt;&gt;</code></td>
+<td><span class="red">append text in a file (add) and create the file if
+does not already exist</span></td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td><span class="red">recover the content of a variable. Is also the way
+to deal with name and arguments of a shell script. See <a
+href="http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables"
+class="uri">http://stackoverflow.com/questions/5163144/what-are-the-special-dollar-sign-shell-variables</a></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="python-tricks"><span class="header-section-number">24</span>
+Python
+tricks<a class="headerlink" href="#python-tricks" title="Link to this heading"></a></h2>
+<p>Convert a tuple into string:</p>
+<pre><code>fam_header = (&quot;FID&quot;, &quot;IID&quot;, &quot;Father&quot;, &quot;Mother&quot;, &quot;Sex&quot;, &quot;Pheno&quot;) # tuple
+var = &#39;\t&#39;.join(fam_header) # \t is the separator
+var</code></pre>
+<p>find duplicates in list:</p>
+<p><a
+href="https://stackoverflow.com/questions/9835762/how-do-i-find-the-duplicates-in-a-list-and-create-another-list-with-them"
+class="uri">https://stackoverflow.com/questions/9835762/how-do-i-find-the-duplicates-in-a-list-and-create-another-list-with-them</a></p>
+<h2 id="use-python-from-r-and-vice-versa"><span
+class="header-section-number">25</span> Use python from R and
+vice-versa<a class="headerlink" href="#use-python-from-r-and-vice-versa" title="Link to this heading"></a></h2>
+<p><a
+href="https://rstudio-pubs-static.s3.amazonaws.com/397064_bd288708515c4b71a6e78dfe91b8bb99.html"
+class="uri">https://rstudio-pubs-static.s3.amazonaws.com/397064_bd288708515c4b71a6e78dfe91b8bb99.html</a></p>
+<p><a
+href="https://towardsdatascience.com/from-r-vs-python-to-r-and-python-aa25db33ce17"
+class="uri">https://towardsdatascience.com/from-r-vs-python-to-r-and-python-aa25db33ce17</a></p>
+<p><a
+href="https://cran.r-project.org/web/packages/reticulate/vignettes/calling_python.html"
+class="uri">https://cran.r-project.org/web/packages/reticulate/vignettes/calling_python.html</a></p>
+<h2 id="function-description-section"><span
+class="header-section-number">26</span> function: description
+section<a class="headerlink" href="#function-description-section" title="Link to this heading"></a></h2>
+<p>Beware. Python can parse and integrate some comments, notably
+describing of script. Example:</p>
+<pre><code>#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+&quot;&quot;&quot;Serpentine binning
+
+An implementation of the so-called &#39;serpentine binning&#39; procedure described
+in Baudry et al.
+
+Command line::
+
+    Usage:
+        serpentine.py [&lt;matrixA&gt;] [&lt;matrixB&gt;] [--threshold=auto] [--verbose]
+                      [--min-threshold=auto] [--trend=high] [--triangular]
+                      [--limit=3] [--demo] [--demo-size=500]
+
+    Arguments:
+        matrixA                         The first input matrix, in plain text
+                                        CSV format. Optional in demo mode.
+        matrixB                         The second input matrix, in plain text
+                                        CSV format. Optional in demo mode or
+                                        single binning mode.
+
+    Options:
+        -h, --help                      Display this help message.
+        --version                       Display the program&#39;s current version.
+        -t auto, --threshold auto       Threshold value to trigger binning.
+                                        [default: auto]
+        -m auto, --min-threshold auto   Minimum value to force trigger binning
+                                        in either matrix. [default: auto]
+        --trend high                    Trend to subtract to the differential
+                                        matrix, possible values are &quot;mean&quot;:
+                                        equal amount of positive and negative
+                                        differences, and &quot;high&quot;: normalize
+                                        at the regions with higher coverage.
+                                        [default: high]
+        --triangular                    Treat the matrix as triangular,
+                                        useful when plotting matrices adjacent
+                                        to the diagonal. [default: False]
+        --print-file                    File for stdout redirection. [default: None]
+        --limit 3                       Set the z-axis limit on the
+                                        plot of the differential matrix.
+                                        [default: 3]
+        --demo                          Run a demo on randomly generated
+                                        matrices. [default: False]
+        --demo-size 500                 Size of the test matrix for the demo.
+                                        [default: 500]
+        -v, --verbose                   Show verbose output. [default: False]
+&quot;&quot;&quot;</code></pre>
+<p>Between brackets: elements are evaluated</p>
+<p>If an option is generated like this:</p>
+<pre><code>def _main():
+
+    arguments = _doc.docopt(__doc__, version=__version__)
+
+    inputA = arguments[&quot;&lt;matrixA&gt;&quot;]
+    inputB = arguments[&quot;&lt;matrixB&gt;&quot;]
+    threshold = arguments[&quot;--threshold&quot;]
+    minthreshold = arguments[&quot;--min-threshold&quot;]
+    size = int(arguments[&quot;--demo-size&quot;])
+    triangular = arguments[&quot;--triangular&quot;]
+    limit = int(arguments[&quot;--limit&quot;])
+    trend = arguments[&quot;--trend&quot;]
+    is_demo = int(arguments[&quot;--demo&quot;])
+    verbose = arguments[&quot;--verbose&quot;]
+    print_file = arguments[&quot;--print_file&quot;]</code></pre>
+<p>If print_file defined here but not in the command line section above,
+error message.</p>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="140-wsl2-linux-on-windows.html" class="btn btn-neutral float-left" title="Windows
+Subsystem for Linux
+(WSL)" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+            <a href="165-java.html" class="btn btn-neutral float-right" title="Java" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Apptainer · protocol 135 · Bioinformatics protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="044-bash.html"><span class="nav-num">44</span>Bash</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux (WSL)</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="084-python.html"><span class="nav-num">84</span>Python</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="165-java.html"><span class="nav-num">165</span>Java</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul class="current">
+          <li class="toctree-l1"><a class="reference internal" href="134-docker.html"><span class="nav-num">134</span>Docker</a></li>
+          <li class="toctree-l1 current"><a class="reference internal current" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#apptainer-vs-singularity"><span class="sec-num">1</span>Apptainer vs Singularity</a></li><li class="toctree-l2"><a class="reference internal" href="#documentation"><span class="sec-num">2</span>Documentation</a></li><li class="toctree-l2"><a class="reference internal" href="#acronyms-and-definitions"><span class="sec-num">3</span>Acronyms and definitions</a></li><li class="toctree-l2"><a class="reference internal" href="#main-commands"><span class="sec-num">4</span>Main commands</a></li><li class="toctree-l2"><a class="reference internal" href="#installation"><span class="sec-num">5</span>Installation</a><ul><li class="toctree-l3"><a class="reference internal" href="#on-linux"><span class="sec-num">5.1</span>On linux</a><ul><li class="toctree-l4"><a class="reference internal" href="#ubuntu-26.04-apt"><span class="sec-num">5.1.1</span>Ubuntu 26.04 (apt)</a></li><li class="toctree-l4"><a class="reference internal" href="#any-linux-from-source"><span class="sec-num">5.1.2</span>Any linux (from source)</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#on-windows"><span class="sec-num">5.2</span>On windows</a></li><li class="toctree-l3"><a class="reference internal" href="#onmac"><span class="sec-num">5.3</span>OnMac</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#container-handling"><span class="sec-num">6</span>Container handling</a><ul><li class="toctree-l3"><a class="reference internal" href="#definition-file-eq-of-dockerfile"><span class="sec-num">6.1</span>Definition file (eq of dockerfile)</a></li><li class="toctree-l3"><a class="reference internal" href="#options-of-the-definition-file"><span class="sec-num">6.2</span>Options of the definition file</a><ul><li class="toctree-l4"><a class="reference internal" href="#overview"><span class="sec-num">6.2.1</span>Overview</a></li><li class="toctree-l4"><a class="reference internal" href="#header"><span class="sec-num">6.2.2</span>Header</a></li><li class="toctree-l4"><a class="reference internal" href="#body"><span class="sec-num">6.2.3</span>Body</a></li><li class="toctree-l4"><a class="reference internal" href="#best-practices"><span class="sec-num">6.2.4</span>Best practices</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#image-building"><span class="sec-num">6.3</span>Image building</a></li><li class="toctree-l3"><a class="reference internal" href="#image-building-from-a-docker-image"><span class="sec-num">6.4</span>Image building from a docker image</a></li><li class="toctree-l3"><a class="reference internal" href="#image-managing"><span class="sec-num">6.5</span>Image managing</a></li><li class="toctree-l3"><a class="reference internal" href="#image-running"><span class="sec-num">6.6</span>Image running</a></li><li class="toctree-l3"><a class="reference internal" href="#container-managing"><span class="sec-num">6.7</span>container managing</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#apptainer-repositories"><span class="sec-num">7</span>Apptainer repositories</a></li><li class="toctree-l2"><a class="reference internal" href="#apptainer-files-repositories"><span class="sec-num">8</span>Apptainer files repositories</a></li><li class="toctree-l2"><a class="reference internal" href="#apptainer-on-the-cluster"><span class="sec-num">9</span>Apptainer on the cluster</a></li><li class="toctree-l2"><a class="reference internal" href="#examples"><span class="sec-num">10</span>Examples</a><ul><li class="toctree-l3"><a class="reference internal" href="#coreutils"><span class="sec-num">10.1</span>Coreutils</a><ul><li class="toctree-l4"><a class="reference internal" href="#definition-file-from-dockerhub"><span class="sec-num">10.1.1</span>Definition file from dockerhub</a></li><li class="toctree-l4"><a class="reference internal" href="#definition-file-from-scratch"><span class="sec-num">10.1.2</span>Definition file from scratch</a></li><li class="toctree-l4"><a class="reference internal" href="#next"><span class="sec-num">10.1.3</span>Next</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#r"><span class="sec-num">10.2</span>R</a></li></ul></li></ul></li>
+          <li class="toctree-l1"><a class="reference internal" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">Clusters, containers and
+workflows</li>
+            <li class="breadcrumb-item active">Protocol 135</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/135-apptainer.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Apptainer</h1>
+<p class="protocol-meta"><span>Protocol 135</span><span>revision 0</span><span>last update 2026-11-21</span></p>
+<h2 id="apptainer-vs-singularity"><span
+class="header-section-number">1</span> Apptainer vs
+Singularity<a class="headerlink" href="#apptainer-vs-singularity" title="Link to this heading"></a></h2>
+<p>Apptainer <a href="https://apptainer.org/"
+class="uri">https://apptainer.org/</a> is the new name of singularity,
+since its inclusion in the Linux Foundation.</p>
+<p>see <a
+href="https://apptainer.org/news/community-announcement-20211130/"
+class="uri">https://apptainer.org/news/community-announcement-20211130/</a></p>
+<p>Apptainer provides singularity as a command line link and maintains
+as much of the CLI and environment functionality as possible. From the
+user's perspective, very little, if anything, changes.</p>
+<p>You should switch your command lines eg:
+<code>singularity build|run|exec ...</code> to
+<code>apptainer build|run|exec ...</code></p>
+<p>NB all <code>SINGULARITY_</code> prefix environement  variables are
+now translated to <code>APPTAINER_</code> prefix ones. 
+<code>SINGULARITY_</code> prefix variables are still recognized but will
+generate a warning.</p>
+<p>See apptainer-1.0.0 changelog for more information:</p>
+<p><a href="https://github.com/apptainer/apptainer/releases/tag/v1.0.0"
+class="uri">https://github.com/apptainer/apptainer/releases/tag/v1.0.0</a></p>
+<p>We encourage you to use <code>apptainer</code> module instead of the
+<code>singularity</code> ones as soon as possible. We welcome any
+feedback. Please note that in the near future we plan to remove all
+<code>singularity</code> modules and keep only <code>apptainer</code>
+ones.</p>
+<h2 id="documentation"><span class="header-section-number">2</span>
+Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
+<p><a href="https://apptainer.org/docs/user/main/"
+class="uri">https://apptainer.org/docs/user/main/</a></p>
+<p>The different versions: <a
+href="https://apptainer.org/documentation/"
+class="uri">https://apptainer.org/documentation/</a></p>
+<h2 id="acronyms-and-definitions"><span
+class="header-section-number">3</span> Acronyms and
+definitions<a class="headerlink" href="#acronyms-and-definitions" title="Link to this heading"></a></h2>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>DAG</td>
+<td>Directed Acyclic Graph</td>
+</tr>
+<tr>
+<td>SIF</td>
+<td>Singularity Image Format</td>
+</tr>
+<tr>
+<td>SingularityCE</td>
+<td>Community Edition of Singularity.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="main-commands"><span class="header-section-number">4</span> Main
+commands<a class="headerlink" href="#main-commands" title="Link to this heading"></a></h2>
+<p>See <a href="https://apptainer.org/docs/user/main/cli.html"
+class="uri">https://apptainer.org/docs/user/main/cli.html</a></p>
+<p>All the commands start by <code>apptainer</code>.</p>
+<p>Some commands require <code>sudo</code>.</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>build</code></td>
+<td>build a container</td>
+</tr>
+<tr>
+<td><code>inspect</code></td>
+<td>inspect a container</td>
+</tr>
+<tr>
+<td><code>pull</code></td>
+<td>download a container from existing url</td>
+</tr>
+<tr>
+<td><code>exec</code></td>
+<td>execute an executable inside the container (Ctrl+C to exit). Require
+a script to execute defined after the image. Example:
+<code>apptainer exec [exec options...] &lt;container&gt; &lt;command&gt;</code>.
+See the difference with <code>run</code> in section <a
+href="#image-running">Image running</a></td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>launch an Apptainer container and execute a runscript if one is
+defined for that container. The runscript is a metadata file within the
+container that contains shell commands. If the file is present (and
+executable) then this command will execute that file within the
+container automatically. All arguments following the container name will
+be passed directly to the runscript). Example:
+<code>apptainer exec [exec options...] &lt;container&gt;</code>. See the
+difference with <code>exec</code> in section <a
+href="#image-running">Image running</a></td>
+</tr>
+<tr>
+<td><code>shell -- writable</code></td>
+<td>enter into the image environment. The prompt becomes
+<code>Apptainer&gt;</code>. exit to leave</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="installation"><span class="header-section-number">5</span>
+Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p><a href="https://github.com/apptainer/apptainer/blob/main/INSTALL.md"
+class="uri">https://github.com/apptainer/apptainer/blob/main/INSTALL.md</a></p>
+<h3 id="on-linux"><span class="header-section-number">5.1</span> On
+linux<a class="headerlink" href="#on-linux" title="Link to this heading"></a></h3>
+<h4 id="ubuntu-26.04-apt"><span
+class="header-section-number">5.1.1</span> Ubuntu 26.04
+(apt)<a class="headerlink" href="#ubuntu-26.04-apt" title="Link to this heading"></a></h4>
+<p>Tested on Ubuntu 26.04 (WSL2) on 2026-11-21: apptainer 1.4.5,
+squashfuse 0.5.2 and fuse2fs 1.47.2.</p>
+<p>Apptainer is in the universe repository of Ubuntu 26.04:</p>
+<pre><code>sudo apt update
+sudo apt install apptainer squashfuse fuse2fs
+apptainer --version # apptainer version 1.4.5</code></pre>
+<p>The singularity command is also installed (it runs apptainer).</p>
+<p>squashfuse and fuse2fs are not installed with the apptainer package,
+but they are required to run the images (.sif files) without extracting
+them. Without them, apptainer displays
+<code>INFO: squashfuse not found, will not be able to mount SIF or other squashfs files</code>
+and extracts each image into a temporary folder of /tmp (several GB per
+image), which can end with <code>no space left on device</code> (on
+Ubuntu 26.04 in WSL2, /tmp is in RAM). The temporary folder of apptainer
+can also be moved to the disk:</p>
+<pre><code>mkdir -p ~/apptainer_tmp
+export APPTAINER_TMPDIR=~/apptainer_tmp # add this line at the end of the ~/.bashrc file to keep it</code></pre>
+<p>Optional: <code>sudo apt install gocryptfs</code> (2.6.1 tested), to
+avoid the recurrent apptainer message about it.</p>
+<p>On older Ubuntu versions, if <code>apt-cache policy apptainer</code>
+shows no candidate, use the PPA of the apptainer team (see <a
+href="https://apptainer.org/docs/admin/main/installation.html"
+class="uri">https://apptainer.org/docs/admin/main/installation.html</a>):</p>
+<pre><code>sudo apt install -y software-properties-common
+sudo add-apt-repository -y ppa:apptainer/ppa
+sudo apt update
+sudo apt install -y apptainer squashfuse fuse2fs</code></pre>
+<h4 id="any-linux-from-source"><span
+class="header-section-number">5.1.2</span> Any linux (from
+source)<a class="headerlink" href="#any-linux-from-source" title="Link to this heading"></a></h4>
+<p>Uninstall singularity</p>
+<pre><code>sudo apt-get remove singularity # or sudo apt-get purge --auto-remove singularity</code></pre>
+<p>Installation of dependencies:</p>
+<pre><code>sudo apt-get update
+
+# reminder: \ means that the line has a EL but is not finished. WARNING: no space allowed after \
+sudo apt-get install -y \
+    build-essential \
+    libseccomp-dev \
+    pkg-config \
+    uidmap \
+    squashfs-tools \
+    squashfuse \
+    fuse2fs \
+    fuse-overlayfs \
+    fakeroot \
+    cryptsetup \
+    curl wget git</code></pre>
+<p>Installation of GO:</p>
+<p>Retrieve the Linux version of GO <a
+href="https://golang.org/doc/install"
+class="uri">https://golang.org/doc/install</a>, by selection the
+<strong>Linux</strong> tab below "Go install":</p>
+<p><img src="../md/img/135-apptainer/image1.png" loading="lazy" /></p>
+<p>The Download button switches to the Linux version.</p>
+<p>Click on download (1.27.4)</p>
+<p>A new <a href="https://go.dev/dl/" class="uri">https://go.dev/dl/</a>
+page opens.</p>
+<p>Download the file:</p>
+<p>go1.27.4.linux-amd64.tar.gz</p>
+<p>For older version, use</p>
+<p><a href="https://golang.org/dl/"
+class="uri">https://golang.org/dl/</a></p>
+<p>And take the go1.27.4.linux-amd64.tar.gz version.</p>
+<p>Then:</p>
+<pre><code>sudo rm -rf /usr/local/go # remove the precedent version of go
+sudo cp /mnt/c/Users/gmillot/Desktop/go1.27.4.linux-amd64.tar.gz /usr/local/
+sudo tar -C /usr/local -xzf /usr/local/go1.27.4.linux-amd64.tar.gz</code></pre>
+<p>Then update the .profile file with :</p>
+<pre><code>export PATH=&quot;/usr/local/go/bin:$PATH&quot; # for apptainer</code></pre>
+<p>See <a href="140-wsl2-linux-on-windows.html">protocol 140</a> for
+details about .profile update.</p>
+<p>Reopen the terminal and check that GO is correctly installed:</p>
+<pre><code>go version</code></pre>
+<p>Apptainer install:</p>
+<pre><code>cd # because it seems that singu can only be installed from the $HOME, where the go folder is present, after install of go in the /usr/local/ directory
+git clone https://github.com/apptainer/apptainer.git
+cd apptainer
+./mconfig
+cd ./builddir
+make
+sudo make install
+
+apptainer --version</code></pre>
+<p>If gocryptfs is required, see :</p>
+<p><a
+href="https://github.com/rfjakob/gocryptfs?tab=readme-ov-file#installation"
+class="uri">https://github.com/rfjakob/gocryptfs?tab=readme-ov-file#installation</a></p>
+<p>Go is already installed, so skip the first step.</p>
+<h3 id="on-windows"><span class="header-section-number">5.2</span> On
+windows<a class="headerlink" href="#on-windows" title="Link to this heading"></a></h3>
+<p>It is not possible to install it on Windows directly, only via
+WLS2.</p>
+<p><a
+href="https://apptainer.org/docs/admin/main/installation.html#installation-on-windows-or-mac"
+class="uri">https://apptainer.org/docs/admin/main/installation.html#installation-on-windows-or-mac</a></p>
+<h3 id="onmac"><span class="header-section-number">5.3</span>
+OnMac<a class="headerlink" href="#onmac" title="Link to this heading"></a></h3>
+<p>It is not possible to install it on Mac. The only way is to use a
+Linux virtual Machine.</p>
+<p><a
+href="https://apptainer.org/docs/admin/main/installation.html#installation-on-windows-or-mac"
+class="uri">https://apptainer.org/docs/admin/main/installation.html#installation-on-windows-or-mac</a></p>
+<h2 id="container-handling"><span class="header-section-number">6</span>
+Container
+handling<a class="headerlink" href="#container-handling" title="Link to this heading"></a></h2>
+<h3 id="definition-file-eq-of-dockerfile"><span
+class="header-section-number">6.1</span> Definition file (eq of
+dockerfile)<a class="headerlink" href="#definition-file-eq-of-dockerfile" title="Link to this heading"></a></h3>
+<p>Also called recipy.</p>
+<p>Must have this format:</p>
+<pre><code>Bootstrap: docker
+From: ubuntu:20.04
+
+%post
+apt-get install openjdk-8-jre-headless
+apt-get install wget unzip perl
+wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip
+unzip fastqc_v0.11.9.zip
+chmod 755 /FastQC/fastqc
+
+%environment
+export PATH=/FastQC:$PATH
+
+%runscript
+exec fastqc &quot;$@&quot;</code></pre>
+<p>To create a recipy, goes into:</p>
+<p><code>C:\Users\gmillot\Documents\Git_projects\apptainer_files</code></p>
+<p>And create a new fastqc file.</p>
+<p>Then copy-paste the code above into that file.</p>
+<p>And, from WSL2, copy the file into the linux environment.</p>
+<pre><code>cp /mnt/c/Users/gmillot/Documents/Git_projects/apptainer_files/fastqc /home/gael/apptainer_files/</code></pre>
+<h3 id="options-of-the-definition-file"><span
+class="header-section-number">6.2</span> Options of the definition
+file<a class="headerlink" href="#options-of-the-definition-file" title="Link to this heading"></a></h3>
+<h4 id="overview"><span class="header-section-number">6.2.1</span>
+Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h4>
+<p><a
+href="https://apptainer.org/docs/user/main/definition_files.html#definition-files"
+class="uri">https://apptainer.org/docs/user/main/definition_files.html#definition-files</a></p>
+<p>A definition file has a header and a body.</p>
+<p>The header determines the base container to begin with.</p>
+<p>The body is further divided into sections that perform things like
+software installation, environment setup, and copying files into the
+container from host system, etc.</p>
+<p>Example:</p>
+<pre><code>Bootstrap: library
+From: ubuntu:18.04
+Stage: gael_build
+
+
+%setup
+    touch /file1
+    touch ${APPTAINER_ROOTFS}/file2
+
+%files
+    /file1
+    /file1 /opt
+
+%environment
+    export LISTEN_PORT=12345
+    export LC_ALL=C
+
+%post
+    apt-get update &amp;&amp; apt-get install -y netcat
+    NOW=`date`
+    echo &quot;export NOW=\&quot;${NOW}\&quot;&quot; &gt;&gt; $APPTAINER_ENVIRONMENT
+
+%runscript
+    echo &quot;Container was created $NOW&quot;
+    echo &quot;Arguments received: $*&quot;
+    exec echo &quot;$@&quot;
+
+%startscript
+    nc -lp $LISTEN_PORT
+
+%test
+    grep -q NAME=\&quot;Ubuntu\&quot; /etc/os-release
+    if [ $? -eq 0 ]; then
+        echo &quot;Container base is Ubuntu as expected.&quot;
+    else
+        echo &quot;Container base is not Ubuntu.&quot;
+        exit 1
+    fi
+
+%labels
+    Author d@sylabs.io
+    Version v0.0.1
+
+%help
+    This is a demo container used to illustrate a def file that uses all
+    supported sections.</code></pre>
+<p>In this example, the header, made of <code>Bootstrap</code>,
+<code>From</code> and <code>Stage</code>, tells Apptainer to use a base
+Ubuntu 16.04 image from the Container Library.</p>
+<p>The stage section just names the section initiated by the header,
+since several headers (stages) can be in a single definition file. See
+<a
+href="https://apptainer.org/docs/user/main/definition_files.html#multi-stage-builds"
+class="uri">https://apptainer.org/docs/user/main/definition_files.html#multi-stage-builds</a></p>
+<h4 id="header"><span class="header-section-number">6.2.2</span>
+Header<a class="headerlink" href="#header" title="Link to this heading"></a></h4>
+<p>The only keyword that is required for every type of build is
+Bootstrap. It determines the bootstrap agent that will be used to create
+the base operating system you want to use. For example, the library
+bootstrap agent will pull a container from the Container Library as a
+base. Similarly, the docker bootstrap agent will pull docker layers from
+Docker Hub as a base OS to start your image.</p>
+<p>Starting with Singularity 3.2, the Bootstrap keyword needs to be the
+first entry in the header section. This breaks compatibility with older
+versions that allow the parameters of the header to appear in any
+order.</p>
+<p>Preferred bootstrap agents:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>library</code></td>
+<td>images hosted on the Container Library</td>
+</tr>
+<tr>
+<td><code>docker</code></td>
+<td>images hosted on Docker Hub</td>
+</tr>
+<tr>
+<td><code>shub</code></td>
+<td>deprecated</td>
+</tr>
+<tr>
+<td><code>scratch</code></td>
+<td>a flexible option for building a container from scratch</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>See <a
+href="https://apptainer.org/docs/user/main/definition_files.html#preferred-bootstrap-agents"
+class="uri">https://apptainer.org/docs/user/main/definition_files.html#preferred-bootstrap-agents</a></p>
+<h4 id="body"><span class="header-section-number">6.2.3</span>
+Body<a class="headerlink" href="#body" title="Link to this heading"></a></h4>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>%setup</code></td>
+<td>commands in this section are first executed on the host system
+outside of the container after the base OS has been installed. Warning:
+executed outside of the container on the host system itself, and is
+executed with elevated privileges. Can alter and potentially damage the
+host</td>
+</tr>
+<tr>
+<td><code>%file</code></td>
+<td>copy files into the container (greater safety than using the
+<code>%setup</code> section)</td>
+</tr>
+<tr>
+<td><code>%post</code></td>
+<td>execute within the container at build time after the base OS has
+been installed. The <code>%post</code> section is therefore the place to
+perform installations of new applications</td>
+</tr>
+<tr>
+<td><code>%environment</code></td>
+<td>defines some environment variables that will be available to the
+container at runtime</td>
+</tr>
+<tr>
+<td><code>%runscript</code></td>
+<td>this content is written to a file within the container that is
+executed when the container image is run (either via the singularity run
+command or by executing the container directly as a command)</td>
+</tr>
+<tr>
+<td><code>%test</code></td>
+<td>this section is run at the very end of the build process to validate
+the container</td>
+</tr>
+<tr>
+<td><code>%labels</code></td>
+<td>used to add metadata to the file /.singularity.d/labels.json within
+your container</td>
+</tr>
+<tr>
+<td><code>%help</code></td>
+<td>this section is transcribed into a metadata file in the container
+during the build. This text can then be displayed using the run-help
+command.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>See <a
+href="https://apptainer.org/docs/user/main/definition_files.html#sections"
+class="uri">https://apptainer.org/docs/user/main/definition_files.html#sections</a></p>
+<h4 id="best-practices"><span class="header-section-number">6.2.4</span>
+Best
+practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h4>
+<p><a
+href="https://apptainer.org/docs/user/main/definition_files.html#best-practices-for-writing-definition-files"
+class="uri">https://apptainer.org/docs/user/main/definition_files.html#best-practices-for-writing-definition-files</a></p>
+<h3 id="image-building"><span class="header-section-number">6.3</span>
+Image
+building<a class="headerlink" href="#image-building" title="Link to this heading"></a></h3>
+<pre><code>cd /home/gael/apptainer_files/
+sudo apptainer build fastqc.img fastqc</code></pre>
+<p>Contrary to Docker (<a href="134-docker.html">protocol 134</a>), the
+image location is easy to know, as it is specified:</p>
+<p><img src="../md/img/135-apptainer/image2.png" loading="lazy" /></p>
+<p><a href="https://apptainer.org/docs/user/main/build_a_container.html"
+class="uri">https://apptainer.org/docs/user/main/build_a_container.html</a></p>
+<h3 id="image-building-from-a-docker-image"><span
+class="header-section-number">6.4</span> Image building from a docker
+image<a class="headerlink" href="#image-building-from-a-docker-image" title="Link to this heading"></a></h3>
+<pre><code>apptainer build --sandbox my_container.img docker://ubuntu:latest</code></pre>
+<h3 id="image-managing"><span class="header-section-number">6.5</span>
+Image
+managing<a class="headerlink" href="#image-managing" title="Link to this heading"></a></h3>
+<p>All the commands start with <code>apptainer</code>.</p>
+<p>Some commands require <code>sudo</code>.</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td><code>build</code></td>
+<td>build an image</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>delete an image from the specified library</td>
+</tr>
+<tr>
+<td><code>inspect</code></td>
+<td>inspect an image (display the associated metadata)</td>
+</tr>
+<tr>
+<td><code>pull</code></td>
+<td>download an image from existing url</td>
+</tr>
+<tr>
+<td><code>exec</code></td>
+<td>execute an executable or a command inside the container (Ctrl+C to
+exit)</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>launch a Apptainer container from the indicated image and execute a
+runscript if one is defined for that container. The runscript is a
+metadata file within the container that contains shell commands. If the
+file is present (and executable) then this command will execute that
+file within the container automatically. All arguments following the
+container name will be passed directly to the runscript. Use exit to
+quit the container env</td>
+</tr>
+<tr>
+<td><code>shell -- writable</code></td>
+<td>enter into the image environment. The prompt becomes
+<code>Apptainer&gt;</code>. exit to leave</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="image-running"><span class="header-section-number">6.6</span>
+Image
+running<a class="headerlink" href="#image-running" title="Link to this heading"></a></h3>
+<p>Running an image creates a container and potentially run commands
+inside it. In such cases the container remains closed. Depending on the
+options, it is also possible to open the container and be in the
+container environment with the system and soft inside of the
+corresponding image. Once opened, we can work inside it. Example:</p>
+<pre><code>apptainer run fastqc.img</code></pre>
+<p>To mount a folder, the syntax is the same as for docker:</p>
+<pre><code>apptainer run -B $PWD:$PWD fastqc.img</code></pre>
+<p>With -B /src, it directly creates the /src path in the container.</p>
+<p>$PWD is the pwd displayed in the console before running the image.
+Here it means: 1) before the colon, mount that path inside the container
+and 2) after the colon, create inside the image a path (by creating all
+the intermediate directories) from the root that is $PWD. Thus, if PWD =
+<code>/mnt/c/Users/gmillot/Documents/Git_projects/project_a</code>, it
+means that this path is mounted into the container at this destination
+inside the container:
+<code>/mnt/c/Users/gmillot/Documents/Git_projects/project_a</code>. This
+facilitates the use of script inside the container because it looks like
+the local folder.</p>
+<p>To work in a container with bash:</p>
+<pre><code>apptainer shell fastqc.img</code></pre>
+<p>Difference between apptainer run and apptainer exec:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>apptainer run</td>
+<td>run the default command set for containers based on the specified
+image. This default command is set within the image metadata when the
+image is built. You do not specify a command to run when using apptainer
+run, you simply specify the image file name. As we saw earlier, you can
+use the apptainer inspect command to see what command is run by default
+when starting a new container based on an image.</td>
+</tr>
+<tr>
+<td>apptainer exec</td>
+<td>start a container based on the specified image and run the command
+provided on the command line following apptainer exec &lt;image file
+name&gt;. This will override any default command specified within the
+image metadata that would otherwise be run if you used apptainer
+run.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="container-managing"><span
+class="header-section-number">6.7</span> container
+managing<a class="headerlink" href="#container-managing" title="Link to this heading"></a></h3>
+<p><span class="red">No container to manage ?</span></p>
+<h2 id="apptainer-repositories"><span
+class="header-section-number">7</span> Apptainer
+repositories<a class="headerlink" href="#apptainer-repositories" title="Link to this heading"></a></h2>
+<p><a href="https://singularityhub.github.io/"
+class="uri">https://singularityhub.github.io/</a> seems deprecated.</p>
+<h2 id="apptainer-files-repositories"><span
+class="header-section-number">8</span> Apptainer files
+repositories<a class="headerlink" href="#apptainer-files-repositories" title="Link to this heading"></a></h2>
+<p>Does not exist.</p>
+<h2 id="apptainer-on-the-cluster"><span
+class="header-section-number">9</span> Apptainer on the
+cluster<a class="headerlink" href="#apptainer-on-the-cluster" title="Link to this heading"></a></h2>
+<p><a
+href="https://confluence.pasteur.fr/display/FAQA/Singularity@Pasteur"
+class="uri">https://confluence.pasteur.fr/display/FAQA/Singularity@Pasteur</a></p>
+<h2 id="examples"><span class="header-section-number">10</span>
+Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<h3 id="coreutils"><span class="header-section-number">10.1</span>
+Coreutils<a class="headerlink" href="#coreutils" title="Link to this heading"></a></h3>
+<h4 id="definition-file-from-dockerhub"><span
+class="header-section-number">10.1.1</span> Definition file from
+dockerhub<a class="headerlink" href="#definition-file-from-dockerhub" title="Link to this heading"></a></h4>
+<p>See <a href="134-docker.html">protocol 134</a></p>
+<pre><code>Bootstrap: docker
+From: gmillot/coreutils:8.30
+
+
+%labels
+    Author Gael Millot
+    Version v0.0.1</code></pre>
+<h4 id="definition-file-from-scratch"><span
+class="header-section-number">10.1.2</span> Definition file from
+scratch<a class="headerlink" href="#definition-file-from-scratch" title="Link to this heading"></a></h4>
+<p><code>C:\Users\gmillot\Documents\Git_projects\apptainer_files</code></p>
+<pre><code># Coreutils - GNU core utilities
+# https://www.gnu.org/software/coreutils/
+# v8.30
+
+# base image: ubuntu:16.04 from docker
+Bootstrap: docker
+From: ubuntu:16.04
+
+%post
+    apt-get update --fix-missing
+    # update apt-get
+    apt-get upgrade
+    apt-get install -y wget tar xz-utils make gcc dpkg libblkid1 libreadline6
+    # install the required dependencies
+    cd /usr/local/
+    wget http://ftp.gnu.org/gnu/coreutils/coreutils-8.30.tar.xz
+    tar -xf coreutils-8.30.tar.xz
+    cd coreutils-8.30
+    chmod u=rwx configure
+    export FORCE_UNSAFE_CONFIGURE=1
+    ./configure
+    make
+    make install
+    cd /usr/local/
+    rm -rf coreutils-8.30
+    # &amp;&amp; apt-get remove -y wget tar xz-utils make gcc # inactivated because generate errors of pkg dependency
+    # important to remove the dependencies after installation to save space in the image that will be built
+    apt-get autoremove -y
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+%labels
+    Author Gael Millot
+    Version v0.0.1</code></pre>
+<h4 id="next"><span class="header-section-number">10.1.3</span>
+Next<a class="headerlink" href="#next" title="Link to this heading"></a></h4>
+<p>Git push on the remote gitlab account, with the correct commit text
+to clearly identify the versions of each file.</p>
+<p>Copy the file:</p>
+<pre><code>cp /mnt/c/Users/gmillot/Documents/Git_projects/apptainer_files/apptainer.coreutils.v8.30 /home/gael/apptainer_files/</code></pre>
+<p>Build the image:</p>
+<pre><code>sudo apptainer build /home/gael/apptainer_files/apptainer.coreutils.v8.30.img /home/gael/apptainer_files/apptainer.coreutils.v8.30</code></pre>
+<p>Contrary to docker, the image is easy to find.</p>
+<p>Verify:</p>
+<pre><code>ls -la</code></pre>
+<p>Use:</p>
+<pre><code>echo &quot;echo &#39;Hello world&#39;&quot; | apptainer run apptainer.coreutils.v8.30.img</code></pre>
+<p>Use inside the image env:</p>
+<pre><code>apptainer run apptainer.coreutils.v8.30.img # or apptainer shell apptainer.coreutils.v8.30.img
+echo &#39;Hello world&#39;
+exit</code></pre>
+<h3 id="r"><span class="header-section-number">10.2</span>
+R<a class="headerlink" href="#r" title="Link to this heading"></a></h3>
+<p>See section <a href="#coreutils">Coreutils</a>.</p>
+<p>By default, R and Rscript executions files are in:</p>
+<pre><code>/usr/bin/</code></pre>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="134-docker.html" class="btn btn-neutral float-left" title="Docker" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+            <a href="136-nextflow-dsl1.html" class="btn btn-neutral float-right" title="Nextflow
+DSL1" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>
