@@ -2,7 +2,7 @@
 title: Nextflow DSL1
 protocol: 136
 revision: 0
-date: 2025-09-22
+date: 2026-11-23
 category: "Clusters, containers and workflows"
 public: true
 source: "Protocol 136-rev0 NEXTFLOW DSL1.docx"
@@ -335,7 +335,7 @@ Regex:
 
 <https://www.nextflow.io/docs/latest/script.html#regular-expressions>
 
-[https://web.archive.org/web/20170621185113/http://naleid.com/blog/2008/05/19/dont-fear-the-regexp/](https://web.archive.org/web/20170621185113/http:/naleid.com/blog/2008/05/19/dont-fear-the-regexp/)
+<https://web.archive.org/web/20170621185113/http://naleid.com/blog/2008/05/19/dont-fear-the-regexp/>
 
 <https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob>
 
@@ -2291,7 +2291,7 @@ Several scopes are interesting:
 
 ![](img/136-nextflow-dsl1/image11.png){width="75%"}
 
-dag graph in the dot format of the workflow. Graphviz software [(https://graphviz.org/download/](https:/graphviz.org/download/)) is required to see the graph. For formats other than dot, see <https://www.nextflow.io/docs/latest/tracing.html#dag-visualisation>. To install graphviz: <http://www.graphviz.org/download/>
+dag graph in the dot format of the workflow. Graphviz software (<https://graphviz.org/download/>) is required to see the graph. For formats other than dot, see <https://www.nextflow.io/docs/latest/tracing.html#dag-visualisation>. To install graphviz: <http://www.graphviz.org/download/>
 
 ```
 sudo apt install graphviz

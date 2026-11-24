@@ -2,7 +2,7 @@
 title: Bash
 protocol: 044
 revision: 0
-date: 2026-10-07
+date: 2026-11-23
 category: "Linux, shells and editors"
 public: true
 source: "Protocol 044-rev0 BASH.docx"
@@ -1972,7 +1972,7 @@ awk -v var1=$AA 'BEGIN{FS="\t" ; ORS="\n" ; OFS="\t"}{
 
 ## Fasta specific
 
-[See also https://cheatography.com/melissamlwong/cheat-sheets/awk-one-liners-for-fasta-manipulation-version-1-0/](See%20also%20https:/cheatography.com/melissamlwong/cheat-sheets/awk-one-liners-for-fasta-manipulation-version-1-0/)
+See also <https://cheatography.com/melissamlwong/cheat-sheets/awk-one-liners-for-fasta-manipulation-version-1-0/>
 
 Remove fasta sequence titles (only sequences remaining separated by \\n):
 

@@ -2,7 +2,7 @@
 title: Docker
 protocol: 134
 revision: 0
-date: 2026-10-27
+date: 2026-11-23
 category: "Clusters, containers and workflows"
 public: true
 source: "Protocol 134-rev0 DOCKER.docx"
@@ -554,7 +554,7 @@ docker start -a -i `docker ps -q -l`
 # -l list only last created container
 ```
 
-Or see [https://stackoverflow.com/questions/21928691/how-to-continue-a-docker-container-which-has-exited](%20https:/stackoverflow.com/questions/21928691/how-to-continue-a-docker-container-which-has-exited)
+Or see <https://stackoverflow.com/questions/21928691/how-to-continue-a-docker-container-which-has-exited>
 
 ### Go inside an exited container
 

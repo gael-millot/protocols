@@ -13,6 +13,8 @@ Actions:
   - remove manual numbering typed in headings (numbers are added at build time);
   - clean inlines (adjacent code, empty emphasis, useless anchors, trailing line breaks);
   - links: local file links -> code, "protocol NN" file links -> protocol:NN (resolved by docx2md.py);
+    addresses typed after words or spaces ("see%20http:/x.org") repaired, words out of the link;
+    addresses without host ("/download/x") -> text, with a warning;
   - image size as a percentage of the Word text width, no height, no automatic alt text;
   - tables with one-line cells written as pipe tables (column widths dropped);
   - code blocks: non-breaking spaces, trailing spaces, blank lines.
@@ -283,6 +285,61 @@ local pass_collect_links = {
   Link = function(el)
     local t = el.target
     if t:sub(1, 1) == "#" then link_targets[t:sub(2)] = true end
+  end,
+}
+
+-- A link address typed in Word after words or spaces ("see http://x.org", " https://x.org",
+-- "(https://x.org", "See also C:\dir\f.docx") is stored as a relative path: words kept, spaces
+-- as %20, "\" as "/" and the "//" of the URL collapsed ("see%20http:/x.org",
+-- "See%20also%20C:/dir/f.docx"), a broken link on the website.
+-- Returns the words (decoded, may be "") and the repaired address, or nil.
+local function typed_address(t)
+  local low = t:lower()
+  local a, b = low:find("%f[%a]https?:/+")
+  if not a then a, b = low:find("%f[%a]ftp:/+") end
+  local addr
+  if a then
+    local colon = low:find(":", a, true)
+    if a == 1 and b - colon == 2 then return nil end -- well-formed URL
+    addr = t:sub(a, colon) .. "//" .. t:sub(b + 1)
+  else
+    a = t:find("%f[%a]%a:/") -- local file (Windows drive)
+    if not a then return nil end
+    addr = "file:///" .. t:sub(a)
+  end
+  local words = t:sub(1, a - 1):gsub("%%20", " ")
+  if not words:match("^[%a%s%(:,;%.%-]*$") then return nil end -- part of a path or a query
+  return words, addr
+end
+
+local function text_inlines(s)
+  local out = pandoc.List()
+  for sp, word in s:gmatch("(%s*)(%S*)") do
+    if sp ~= "" then out:insert(pandoc.Space()) end
+    if word ~= "" then out:insert(pandoc.Str(word)) end
+  end
+  return out
+end
+
+local pass_word_links = {
+  Link = function(el)
+    local t = el.target:gsub("^%s+", ""):gsub("%s+$", "")
+    -- address of a copied web page, relative to its site ("/download/x"): no host to link to
+    if t:match("^/[^/]") then
+      io.stderr:write("link without host kept as text: [" .. stringify(el.content) .. "](" .. t .. ")\n")
+      return el.content
+    end
+    local words, addr = typed_address(t)
+    if not addr then return nil end
+    el.target = addr -- local files: then handled as the file: links (pass_anchors)
+    -- the words typed before the address, also at the start of the link text: out of the link
+    local w, txt = words:gsub("^%s+", ""), stringify(el.content)
+    local rest = txt:sub(#w + 1):gsub("^%s+", "")
+    if w == "" or txt:sub(1, #w) ~= w or rest == "" then return el end
+    el.content = text_inlines(rest)
+    local out = text_inlines(w)
+    out:insert(el)
+    return out
   end,
 }
 
@@ -673,6 +730,7 @@ function Pandoc(doc)
   doc = doc:walk(pass_untab)
   doc = doc:walk(pass_inlines)
   doc:walk(pass_collect_links)
+  doc = doc:walk(pass_word_links)
   doc = doc:walk(pass_anchors)
   doc = doc:walk(pass_math_links)
   doc = doc:walk(pass_urls)

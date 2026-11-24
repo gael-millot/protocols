@@ -71,7 +71,7 @@ workflows</li>
           <div itemprop="articleBody">
 <!--content-start-->
 <h1 class="page-title">Nextflow DSL2</h1>
-<p class="protocol-meta"><span>Protocol 152</span><span>revision 0</span><span>last update 2026-11-21</span><span class="draft-flag">draft</span></p>
+<p class="protocol-meta"><span>Protocol 152</span><span>revision 0</span><span>last update 2026-11-23</span><span class="draft-flag">draft</span></p>
 <h2 id="documentations"><span class="header-section-number">1</span>
 Documentations<a class="headerlink" href="#documentations" title="Link to this heading"></a></h2>
 <p><a href="https://www.nextflow.io/docs/latest/dsl2.html"
@@ -129,8 +129,8 @@ files<a class="headerlink" href="#names-of-the-files" title="Link to this headin
 nextflow.config.</p>
 <p>It is possible to modify these two names. But it will not work if the
 idea is to work from a distant repository (see section <a
-href="#_Ref83385591"><span class="red"><strong>Error! Reference source
-not found.</strong></span></a>).</p>
+href="136-nextflow-dsl1.html#precision-when-running-a-distant-nextflow-file">Precision
+when running a distant nextflow file</a> of protocol 136).</p>
 <h3 id="work-folders"><span class="header-section-number">3.2</span>
 work
 folders<a class="headerlink" href="#work-folders" title="Link to this heading"></a></h3>
@@ -163,9 +163,10 @@ script:
 cp ${fs} tempo.txt
 chmod 777 tempo.txt
 ...</code></pre>
-<p>See also section <a href="#_Ref82445048"><span
-class="red"><strong>Error! Reference source not
-found.</strong></span></a> for a better example of copy.</p>
+<p>See also section <a
+href="#protection-of-the-initial-files-if-modified-in-processes">Protection
+of the initial files if modified in processes</a> for a better example
+of copy.</p>
 <h3 id="the-resume-option"><span
 class="header-section-number">3.4</span> The resume
 option<a class="headerlink" href="#the-resume-option" title="Link to this heading"></a></h3>
@@ -623,7 +624,8 @@ class="uri">https://www.tutorialspoint.com/groovy/index.htm</a></p>
 href="https://www.nextflow.io/docs/latest/script.html#regular-expressions"
 class="uri">https://www.nextflow.io/docs/latest/script.html#regular-expressions</a></p>
 <p><a
-href="https://web.archive.org/web/20170621185113/http:/naleid.com/blog/2008/05/19/dont-fear-the-regexp/">https://web.archive.org/web/20170621185113/http://naleid.com/blog/2008/05/19/dont-fear-the-regexp/</a></p>
+href="https://web.archive.org/web/20170621185113/http://naleid.com/blog/2008/05/19/dont-fear-the-regexp/"
+class="uri">https://web.archive.org/web/20170621185113/http://naleid.com/blog/2008/05/19/dont-fear-the-regexp/</a></p>
 <p><a
 href="https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob"
 class="uri">https://docs.oracle.com/javase/tutorial/essential/io/fileOps.html#glob</a></p>
@@ -707,8 +709,9 @@ script if defined at the beginning of a nf script</td>
 <td><code>x.collectFile()</code></td>
 <td>collect all the files of channel x, means that it waits for the end
 of the parallelization of the process using the output channel x.
-Warning: see section <a href="#_Ref135663204"><strong>Error! Reference
-source not found.</strong></a>. Optional:
+Warning: see section <a
+href="136-nextflow-dsl1.html#weird-behavior-of-collectfile">weird
+behavior of collectFile()</a> of protocol 136. Optional:
 <code>x.collectFile(name:"all_consensus.fasta", skip: 1, keepHeader: true)</code></td>
 </tr>
 </tbody>
