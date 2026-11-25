@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="pandoc (tools/build.py)">
+<title>Slivar · protocol 143 · Bioinformatics protocols</title>
+<link rel="icon" href="../docs/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../docs/assets/theme.css">
+<link rel="stylesheet" href="../docs/assets/protocols.css">
+</head>
+<body class="wy-body-for-nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="wy-grid-for-nav">
+  <nav data-toggle="wy-nav-shift" class="wy-nav-side" aria-label="Protocols">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home site-title"> Bioinformatics protocols</a>
+        <div class="version"><a href="https://github.com/gael-millot/protocols">gael-millot/protocols</a></div>
+        <div role="search">
+          <form class="wy-form" action="../docs/search.html" method="get">
+            <input type="text" name="q" placeholder="Search protocols" aria-label="Search protocols">
+          </form>
+        </div>
+      </div>
+      <div class="wy-menu wy-menu-vertical" role="navigation" aria-label="Protocol list">
+        <p class="caption" role="heading"><span class="caption-text">Linux,
+shells and editors</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="044-bash.html"><span class="nav-num">44</span>Bash</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="140-wsl2-linux-on-windows.html"><span class="nav-num">140</span>Windows
+Subsystem for Linux (WSL)</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">R,
+Python and Java</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="084-python.html"><span class="nav-num">84</span>Python</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="165-java.html"><span class="nav-num">165</span>Java</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Clusters,
+containers and workflows</span></p>
+        <ul>
+          <li class="toctree-l1"><a class="reference internal" href="134-docker.html"><span class="nav-num">134</span>Docker</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="135-apptainer.html"><span class="nav-num">135</span>Apptainer</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="136-nextflow-dsl1.html"><span class="nav-num">136</span>Nextflow
+DSL1</a></li>
+          <li class="toctree-l1"><a class="reference internal" href="152-dsl2.html"><span class="nav-num">152</span>Nextflow
+DSL2</a></li>
+        </ul>
+        <p class="caption" role="heading"><span class="caption-text">Genomics
+and genetics</span></p>
+        <ul class="current">
+          <li class="toctree-l1 current"><a class="reference internal current" href="143-slivar.html"><span class="nav-num">143</span>Slivar</a><ul class="page-toc"><li class="toctree-l2"><a class="reference internal" href="#documentations"><span class="sec-num">1</span>Documentations</a></li><li class="toctree-l2"><a class="reference internal" href="#description"><span class="sec-num">2</span>Description</a></li><li class="toctree-l2"><a class="reference internal" href="#installation"><span class="sec-num">3</span>Installation</a><ul><li class="toctree-l3"><a class="reference internal" href="#local-or-cluster"><span class="sec-num">3.1</span>Local or cluster</a></li><li class="toctree-l3"><a class="reference internal" href="#docker-image"><span class="sec-num">3.2</span>Docker image</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="#commands"><span class="sec-num">4</span>Commands</a></li><li class="toctree-l2"><a class="reference internal" href="#slivar-functions.js-file"><span class="sec-num">5</span>slivar-functions.js file</a></li><li class="toctree-l2"><a class="reference internal" href="#annotation-file-input"><span class="sec-num">6</span>Annotation file input</a></li><li class="toctree-l2"><a class="reference internal" href="#description-of-outputs"><span class="sec-num">7</span>Description of outputs</a></li><li class="toctree-l2"><a class="reference internal" href="#expr-command"><span class="sec-num">8</span>Expr command</a></li><li class="toctree-l2"><a class="reference internal" href="#tsv-command"><span class="sec-num">9</span>Tsv command</a></li></ul></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+    <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+      <i data-toggle="wy-nav-top" class="fa fa-bars" role="button" tabindex="0" aria-label="Open the protocol list"></i>
+      <a href="../index.html">Bioinformatics protocols</a>
+    </nav>
+    <div class="wy-nav-content">
+      <div class="rst-content">
+        <div role="navigation" aria-label="Page navigation">
+          <ul class="wy-breadcrumbs">
+            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+            <li class="breadcrumb-item">Genomics and genetics</li>
+            <li class="breadcrumb-item active">Protocol 143</li>
+            <li class="wy-breadcrumbs-aside"><a href="https://github.com/gael-millot/protocols/blob/main/md/143-slivar.md" class="fa fa-github"> Markdown source</a></li>
+          </ul>
+          <hr>
+        </div>
+        <div role="main" class="document" id="main-content">
+          <div itemprop="articleBody">
+<!--content-start-->
+<h1 class="page-title">Slivar</h1>
+<p class="protocol-meta"><span>Protocol 143</span><span>revision 0</span><span>last update 2024-12-10</span><span class="draft-flag">draft</span></p>
+<h2 id="documentations"><span class="header-section-number">1</span>
+Documentations<a class="headerlink" href="#documentations" title="Link to this heading"></a></h2>
+<p><a href="https://github.com/brentp/slivar"
+class="uri">https://github.com/brentp/slivar</a></p>
+<h2 id="description"><span class="header-section-number">2</span>
+Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Slivar is a set of command-line tools that enables rapid querying and
+filtering of VCF files. It facilitates operations on trios and groups
+and allows arbitrary expressions using simple javascript.</p>
+<p>Annotation can also be performed without filtering (see section <a
+href="#annotation-file-input">Annotation file input</a>).</p>
+<h2 id="installation"><span class="header-section-number">3</span>
+Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<h3 id="local-or-cluster"><span class="header-section-number">3.1</span>
+Local or
+cluster<a class="headerlink" href="#local-or-cluster" title="Link to this heading"></a></h3>
+<p>Use the link</p>
+<p><a href="https://github.com/brentp/slivar/releases/tag/v0.2.7"
+class="uri">https://github.com/brentp/slivar/releases/tag/v0.2.7</a></p>
+<p>Select "slivar" and download the file.</p>
+<p>Move the file into</p>
+<p><code>\\wsl$\Ubuntu-20.04\home\gael\bin</code></p>
+<p>Or into</p>
+<p>/pasteur/zeus/projets/p01/BioIT/gmillot/bin</p>
+<h3 id="docker-image"><span class="header-section-number">3.2</span>
+Docker
+image<a class="headerlink" href="#docker-image" title="Link to this heading"></a></h3>
+<p><a href="https://hub.docker.com/r/gmillot/slivar_v1.0/"
+class="uri">https://hub.docker.com/r/gmillot/slivar_v1.0/</a></p>
+<p>See <a href="134-docker.html">protocol 134</a></p>
+<pre><code>sudo docker pull gmillot/slivar_v1.0:gitlab_v8.11</code></pre>
+<h2 id="commands"><span class="header-section-number">4</span>
+Commands<a class="headerlink" href="#commands" title="Link to this heading"></a></h2>
+<p><a href="https://github.com/brentp/slivar#attributes"
+class="uri">https://github.com/brentp/slivar#attributes</a></p>
+<p>Warning: any expression can be interpreted in bash before execution.
+To avoid this, use single quotes instead of double quotes.</p>
+<h2 id="slivar-functions.js-file"><span
+class="header-section-number">5</span> slivar-functions.js
+file<a class="headerlink" href="#slivar-functions.js-file" title="Link to this heading"></a></h2>
+<p>This file gather all the functions that can be used for the slivar
+executions. In the following link are basic functions :</p>
+<p><a
+href="https://github.com/brentp/slivar/blob/master/js/slivar-functions.js"
+class="uri">https://github.com/brentp/slivar/blob/master/js/slivar-functions.js</a></p>
+<p>But we can download and add additional homemade functions.</p>
+<p>Example:</p>
+<p>C:\Users\gael\Documents\Git_projects\project_c\bin\slivar-functions.js</p>
+<pre><code>var config = {min_GQ: 20, min_AB: 0.20, min_DP: 6}
+// hi quality variants
+function hq1(sample) {
+  if (sample.unknown || (sample.GQ &lt; config.min_GQ)) { return false; }
+  if ((sample.AD[0] + sample.AD[1]) &lt; config.min_DP) { return false; }
+  if (sample.hom_ref){
+      return sample.AB &lt; 0.02
+  }
+  if(sample.het) {
+      return sample.AB &gt;= config.min_AB &amp;&amp; sample.AB &lt;= (1 - config.min_AB)
+  }
+  return sample.AB &gt; 0.98
+}
+
+// functions to be use with --family-expr
+
+function find_het_aff_hom_ref_unaff(indiv) {
+  if(!hq1(indiv)){ return false; } // test first if quality is ok. It is faster since return false and go the the next line directly
+  return indiv.het == indiv.affected &amp;&amp; indiv.hom_ref == !indiv.affected
+  // indiv.het: take the GT field of FORMAT of indiv that is 0/1
+  // indiv.affected: take indiv that is 2 in the ped file
+  // indiv.hom_ref: the GT field of FORMAT of indiv that is 0/0
+  // !indiv.affected: take indiv that is 1 in the ped file
+}</code></pre>
+<h2 id="annotation-file-input"><span
+class="header-section-number">6</span> Annotation file
+input<a class="headerlink" href="#annotation-file-input" title="Link to this heading"></a></h2>
+<p>Use the ones from a colleague:</p>
+<blockquote>
+<p>Connect to maestro</p>
+<p>then</p>
+</blockquote>
+<pre><code>cd /pasteur/zeus/projets/p02/ghfc_wgs_zeus/references/GRCh37/slivar-gnotate</code></pre>
+<blockquote>
+<p><img src="../md/img/143-slivar/image1.png" loading="lazy" /></p>
+</blockquote>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>cadd-1.6-SNVs-phred10-GRCh37.zip</td>
+<td>phred10 because annotation only for variant with phred &gt;= 10
+(warning: not the phred of the base calling). Otherwise, too many
+variants (9 Billions). See <a href="https://cadd.gs.washington.edu/info"
+class="uri">https://cadd.gs.washington.edu/info</a> for phred. Phred10
+means that 90% of the variants are removed from the initial file.</td>
+</tr>
+<tr>
+<td>gnomad-2.1.1-genome-GRCh37.zip</td>
+<td>with a caution: contains only worldwide and non-finnish-european
+info to lighten the file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For annotation only, without filtering, see <a
+href="https://github.com/brentp/slivar/wiki/gnotate"
+class="uri">https://github.com/brentp/slivar/wiki/gnotate</a></p>
+<h2 id="description-of-outputs"><span
+class="header-section-number">7</span> Description of
+outputs<a class="headerlink" href="#description-of-outputs" title="Link to this heading"></a></h2>
+<p>The first fields, down to CSQ, come from gatk calling.</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>chr:pos:ref:alt</td>
+<td>as indicated</td>
+</tr>
+<tr>
+<td>genotype(sample,dad,mom)</td>
+<td>0 = homozygote REF, 1 = heterozygote, 2 = homozygote ALT</td>
+</tr>
+<tr>
+<td>AC</td>
+<td>Allele count among the individuals of the pedigree</td>
+</tr>
+<tr>
+<td>AF</td>
+<td>AC / AN, i.e., allele frequency <u>in the pedigree</u></td>
+</tr>
+<tr>
+<td>AN</td>
+<td>Allele number among the individuals of the pedigree (22 means 11
+individuals)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>BaseQRankSum</p>
+<p>DB</p>
+<p>DP depth of coverage</p>
+<p>ExcessHet</p>
+<p>FS</p>
+<p>InbreedingCoeff</p>
+<p>MLEAC</p>
+<p>MLEAF</p>
+<p>MQ Mapping quality (max 60).</p>
+<p>MQRankSum</p>
+<p>QD</p>
+<p>ReadPosRankSum</p>
+<p>SOR</p>
+<p><span class="red">VQSLOD</span></p>
+<p><span class="red">culprit</span></p>
+<p>VEP annotation:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>CSQ</td>
+<td>VEP annotation</td>
+</tr>
+<tr>
+<td>cadd_phred</td>
+<td>cadd and phred score from cadd-1.6-SNVs-phred10-GRCh37.zip. -1means
+1) no data, i.e., variant never seen before or 2) filtered out in the
+cadd annotation file used (phred10 cutoff for instance) or 3) indel. In
+the latter case, go the cadd website for the cadd of this specific indel
+<a href="https://cadd.gs.washington.edu/info"
+class="uri">https://cadd.gs.washington.edu/info</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Gnomad annotation:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>gno_non_neuro_af_all</td>
+<td>allele frequency of non neuro worldwide (all ancestries) cohorte in
+gnomade file gnomad-2.1.1-genome-GRCh37.zip</td>
+</tr>
+<tr>
+<td>gno_non_neuro_af_nfe</td>
+<td>idem but non-finnish europeans</td>
+</tr>
+<tr>
+<td>gno_non_neuro_nhomalt_all</td>
+<td>number of ALT homozygotes (it is to see the recessivity)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>gno_non_neuro_nhomalt_nfe</p>
+<p><span class="red">Slivar annotation:</span></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>highest_impact_order</td>
+<td>See <a
+href="https://github.com/brentp/slivar/blob/master/src/slivarpkg/default-order.txt"
+class="uri">https://github.com/brentp/slivar/blob/master/src/slivarpkg/default-order.txt</a>
+(from most impacting to less impacting). The order is defined by par
+Ensembl (<a
+href="http://www.ensembl.org/info/genome/variation/prediction/predicted_data.html"
+class="uri">http://www.ensembl.org/info/genome/variation/prediction/predicted_data.html</a>)
+and as they say, this order can be subjective</td>
+</tr>
+<tr>
+<td>aff_only</td>
+<td>example added by slivar, names of the affected indiv</td>
+</tr>
+<tr>
+<td>depths(sample,dad,mom)</td>
+<td>example added by slivar, depth of coverage</td>
+</tr>
+<tr>
+<td>allele_balance(sample,dad,mom)</td>
+<td>example added by slivar, proportion of reads carrying the ALT
+variant</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="expr-command"><span class="header-section-number">8</span> Expr
+command<a class="headerlink" href="#expr-command" title="Link to this heading"></a></h2>
+<p><a href="https://github.com/brentp/slivar#expr"
+class="uri">https://github.com/brentp/slivar#expr</a></p>
+<p>Label (and optionnally filter lines) a VCF according to trios or
+groups or family infos.</p>
+<p>The output VCF is never modified, except the labelling added in the
+INFO field for some of the variants that fit the filtering.</p>
+<p>Lines of the VCF can be selected for the filter labeling using the
+--pass-only option.</p>
+<p>Options:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>-v, --vcf=VCF</td>
+<td>path to VCF/BCF</td>
+</tr>
+<tr>
+<td>--region=REGION</td>
+<td>optional region to limit evaluation. e.g. chr1 or 1:222-333 (or a
+BED file of regions)</td>
+</tr>
+<tr>
+<td>-x, --exclude=EXCLUDE</td>
+<td>BED file of exclude regions (will never output excluded variants
+regardless of pass-only flag)</td>
+</tr>
+<tr>
+<td>-j, --js=JS</td>
+<td>path to javascript functions to expose to user</td>
+</tr>
+<tr>
+<td>-p, --ped=PED</td>
+<td>pedigree file with family relations, sex, and affected status</td>
+</tr>
+<tr>
+<td>-a, --alias=ALIAS</td>
+<td>path to file of group aliases</td>
+</tr>
+<tr>
+<td>-o, --out-vcf=OUT_VCF</td>
+<td>path to output VCF/BCF (default: /dev/stdout)</td>
+</tr>
+<tr>
+<td>--pass-only</td>
+<td>if not used, slivar expr only add filtering info in the INFO field
+of the VCF. If used, only output lines of the VCF (i.e., variants) that
+pass at least one of the 4 expression filters below</td>
+</tr>
+<tr>
+<td>--skip-non-variable</td>
+<td>don't evaluate expression unless at least 1 sample is variable at
+the variant this can improve speed</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em>The 4 following ones add a label in the INFO field of the
+VCF</em></p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>--trio=TRIO</td>
+<td>expression(s) applied to each trio where 'mom', 'dad', 'kid' labels
+are available; trios inferred from ped file.</td>
+</tr>
+<tr>
+<td>--family-expr=FAMILY_EXPR</td>
+<td>expression(s) applied to each family where 'fam' is available with a
+list of samples in each family from ped file.</td>
+</tr>
+<tr>
+<td>--group-expr=GROUP_EXPR</td>
+<td>expression(s) applied to the groups defined in the alias option
+[see: <a href="https://github.com/brentp/slivar/wiki/groups-in-slivar"
+class="uri">https://github.com/brentp/slivar/wiki/groups-in-slivar</a>].</td>
+</tr>
+<tr>
+<td>--sample-expr=SAMPLE_EXPR</td>
+<td>expression(s) applied to each sample in the VCF.</td>
+</tr>
+<tr>
+<td>--info=INFO</td>
+<td>expression using only attributes from the INFO field or variant. If
+this does not pass trio/group/sample expressions are not applied.</td>
+</tr>
+<tr>
+<td>-g, --gnotate=GNOTATE</td>
+<td>path(s) to compressed gnotate file(s) for "Genome anNOTATion"</td>
+</tr>
+<tr>
+<td>-h, --help</td>
+<td>Show this help</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>salloc -p common
+
+sample_path=&quot;/pasteur/zeus/projets/p02/ghfc_wgs_zeus/WGS/Dyslexia/vcf/Dyslexia.gatk-vqsr.splitted.norm.vep.merged.vcf.gz&quot;
+fun_path=&quot;/pasteur/zeus/projets/p01/BioIT/gmillot/project_c/bin/slivar-functions.js&quot;
+ped_path=&quot;/pasteur/zeus/projets/p01/BioIT/gmillot/project_c/dataset/Dyslexia.pedigree.txt&quot;
+annot1_path=&quot;/pasteur/zeus/projets/p02/ghfc_wgs_zeus/references/GRCh37/slivar-gnotate/cadd-1.6-SNVs-phred10-GRCh37.zip&quot;
+annot2_path=&quot;/pasteur/zeus/projets/p02/ghfc_wgs_zeus/references/GRCh37/slivar-gnotate/gnomad-2.1.1-genome-GRCh37.zip&quot;
+
+${ZEUSHOME}bin/slivar expr --js $fun_path -g $annot1_path -g $annot2_path --vcf $sample_path --ped $ped_path --pass-only -o &quot;res.vcf&quot; --family-expr &quot;aff_only:fam.every(find_het_aff_hom_ref_unaff)&quot;</code></pre>
+<h2 id="tsv-command"><span class="header-section-number">9</span> Tsv
+command<a class="headerlink" href="#tsv-command" title="Link to this heading"></a></h2>
+<p><a href="https://github.com/brentp/slivar#tsv"
+class="uri">https://github.com/brentp/slivar#tsv</a></p>
+<p><a
+href="https://github.com/brentp/slivar/wiki/tsv:-creating-a-spreadsheet-from-a-filtered-VCF"
+class="uri">https://github.com/brentp/slivar/wiki/tsv:-creating-a-spreadsheet-from-a-filtered-VCF</a></p>
+<p>Convert a filtered and annotated VCF to a TSV.</p>
+<p>One line per variant and per individual. Using "affected only", only
+the affected patients will be present in the tsv file.</p>
+<p>Options:</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>-p, --ped=PED</td>
+<td>required ped file describing the trios in the VCF</td>
+</tr>
+<tr>
+<td>-c, --csq-field=CSQ_FIELD</td>
+<td>INFO field containing the gene name and impact. Usually CSQ or
+BCSQ</td>
+</tr>
+<tr>
+<td>--csq-column=CSQ_COLUMN</td>
+<td>CSQ sub-field(s) to extract (in addition to gene, impact,
+transcript). may be specified multiple times.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>-s, --sample-field=SAMPLE_FIELD</p>
+<p>INFO field(s) that contains the sample names (indiv) that have passed
+previous filters. Can be specified multiple times.</p>
+<p>-g, --gene-description=GENE_DESCRIPTION</p>
+<p>tab-separated lookup of gene (column 1) to description (column 2) to
+add to output. the gene is case-sensitive. can be specified multiple
+times.</p>
+<p>--impact-order=IMPACT_ORDER</p>
+<p>ordering of impacts to override the default (<a
+href="https://raw.githubusercontent.com/brentp/slivar/master/src/slivarpkg/default-order.txt"
+class="uri">https://raw.githubusercontent.com/brentp/slivar/master/src/slivarpkg/default-order.txt</a>)</p>
+<p>-i, --info-field=INFO_FIELD</p>
+<p>INFO field(s) that should be added to output (e.g. gnomad_popmax_af)
+can also use 'ID' or 'QUAL' to report those variant fields.</p>
+<div class="wy-table-responsive">
+<table>
+<tbody>
+<tr>
+<td>-o, --out=OUT</td>
+<td>path to output tab-separated file (default: /dev/stdout)</td>
+</tr>
+<tr>
+<td>-h, --help</td>
+<td>Show this help</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example:</p>
+<pre><code>salloc -p common
+
+sample_path=&quot;/pasteur/zeus/projets/p01/BioIT/gmillot/project_c/results/family1_WGS_20211207&quot;
+ped_path=&quot;/pasteur/zeus/projets/p01/BioIT/gmillot/project_c/dataset/Dyslexia.pedigree.txt&quot;
+
+cd $sample_path
+${ZEUSHOME}bin/slivar tsv --ped $ped_path -s aff_only -i AC -i AF -i AN -i BaseQRankSum -i DB -i DP -i ExcessHet -i FS -i InbreedingCoeff -i MLEAC -i MLEAF -i MQ -i MQRankSum -i QD -i ReadPosRankSum -i SOR -i VQSLOD -i culprit -i CSQ -i cadd_phred -i gno_non_neuro_af_all -i gno_non_neuro_af_nfe -i gno_non_neuro_nhomalt_all -i gno_non_neuro_nhomalt_nfe -i highest_impact_order -i aff_only -c Allele $sample_path/res.vcf &gt; $sample_path/res.tsv
+
+# -p --ped  pedigree file
+# -s --sample-field field of --family-expr of slivar exp instruction, before the colon. Above it is aff_only
+# -c --csq-field    field of VEP info in the INFO column of the vcf file, identified by CSQ. Create a new column &quot;&quot;gene_impact_transcript&quot; in the tsv file. Possible to select only part of the info by using something like -c CSQ=. See the .vcf comments to have the field names of the CSQ field. Use -i CSQ to get the whole CSQ column
+#-i     field the INFO column in the vcf file</code></pre>
+<!--content-end-->
+          </div>
+        </div>
+        <footer>
+          <div class="rst-footer-buttons" role="navigation" aria-label="Previous and next protocols">
+            <a href="152-dsl2.html" class="btn btn-neutral float-left" title="Nextflow
+DSL2" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+          </div>
+          <hr>
+          <div role="contentinfo" class="site-footer">
+            <p>&copy; <a href="https://github.com/gael-millot">Gael A. Millot</a>, Institut Pasteur, Paris. Content under the <a href="https://github.com/gael-millot/protocols/blob/main/Licence.txt">GPL-3.0</a> licence.</p>
+            <p>Built with <a href="https://pandoc.org/">pandoc</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="../docs/assets/protocols.js"></script>
+</body>
+</html>
